@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hello on 焉知非鱼</title>
+    <link>http://ohmysunny.github.io/tags/hello/</link>
+    <description>Recent content in Hello on 焉知非鱼</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 Oct 2018 19:15:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://ohmysunny.github.io/tags/hello/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hello Hugo</title>
+      <link>http://ohmysunny.github.io/post/2018-10-03-hello/</link>
+      <pubDate>Wed, 03 Oct 2018 19:15:00 +0800</pubDate>
+      
+      <guid>http://ohmysunny.github.io/post/2018-10-03-hello/</guid>
+      <description>Hello World。
+橙红年代 天使江北。
+熊猫币 一个熊猫币约等于 21 个比特币。
+Attention Thanks for your attention!</description>
+    </item>
+    
+  </channel>
+</rss>

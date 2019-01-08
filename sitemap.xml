@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/2018-10-08-mapgroupswithstate/</loc>
+    <lastmod>2018-10-08T14:18:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</loc>
+    <lastmod>2018-10-03T21:33:03+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/2018-10-04-perl-6-code-in-rmarkdown/</loc>
+    <lastmod>2018-10-03T21:32:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/2018-10-03-a-naive-introduction-to-object-orientation-in-perl-6/</loc>
+    <lastmod>2018-10-03T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/page/about/</loc>
+    <lastmod>2018-10-03T20:09:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/2018-10-03-hello/</loc>
+    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/categories/attention/</loc>
+    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/categories/</loc>
+    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/tags/hello/</loc>
+    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/tags/main/</loc>
+    <lastmod>2018-10-03T21:33:03+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/tags/object/</loc>
+    <lastmod>2018-10-03T21:13:31+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/page/</loc>
+    <lastmod>2018-10-03T20:09:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/categories/perl6/</loc>
+    <lastmod>2018-10-03T21:33:03+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/post/</loc>
+    <lastmod>2018-10-08T14:18:20+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/tags/rmarkdown/</loc>
+    <lastmod>2018-10-03T21:32:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/tags/</loc>
+    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ohmysunny.github.io/</loc>
+    <lastmod>2018-10-08T14:18:20+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>
