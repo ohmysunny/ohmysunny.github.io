@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Main on 焉知非鱼</title>
-    <link>http://ohmysunny.github.io/tags/main/</link>
+    <link>https://ohmysunny.github.io/tags/main/</link>
     <description>Recent content in Main on 焉知非鱼</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 03 Oct 2018 21:33:03 +0800</lastBuildDate>
     
-	<atom:link href="http://ohmysunny.github.io/tags/main/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ohmysunny.github.io/tags/main/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Perl 6 中的命令行参数</title>
-      <link>http://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</link>
+      <link>https://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</link>
       <pubDate>Wed, 03 Oct 2018 21:33:03 +0800</pubDate>
       
-      <guid>http://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</guid>
+      <guid>https://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</guid>
       <description>Sub MAIN 在 Perl 6 中，命令行参数的解析是通过 MAIN 子例程完成的，MAIN 子例程是一种特殊的子例程，它根据 MAIN 子例程的签名解析命令行参数。与其他子例程一样，MAIN 子例程可以具有命名参数和位置参数、可选(和必需)参数、多重分派等等。
 有了 MAIN 子例程的定义，USAGE 子例程将由编译器自动生成。可以修改此子例程以返回定制的使用消息。所有命令行参数也可以在特殊变量 @*ARGS 中使用，它可以在 MAIN 处理之前发生转变。
 命名参数和位置参数 命名参数 让我们从一个简单的程序开始(保存为 prog.p6):
