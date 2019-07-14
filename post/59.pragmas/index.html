@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  编译指令 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/59.pragmas/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>编译指令</h1>
+    </header>
+
+    
+
+<p>在 Perl 6 中，<strong>pragma</strong> 是用于识别要使用的 Perl 6 的特定版本或以某种方式修改编译器的正常行为的指令。<code>use</code> 关键字开启编译指示（类似于你怎么 <code>use</code> 一个模块）。要禁用 pragma，请使用 <code>no</code> 关键字：</p>
+
+<pre><code class="language-perl6">use v6.c;   # use 6.c language version 
+no worries; # don't issue compile time warnings 
+</code></pre>
+
+<p>以下是一个编译指令列表，其中包含每个编译指令意图的简短描述或指向其使用的更多详细信息的链接。（注意：标记为“[NYI]”的编译指令尚未实现，标记为“[TBD]”的编号将在稍后定义。）</p>
+
+<h2 id="v6-x-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">v6.x</a></h2>
+
+<p>该编译指令 声明了将要使用的编译器的版本，如果它们是可选的，则开启它的功能。</p>
+
+<pre><code class="language-perl6">use v6;   # Load latest supported version (non-PREVIEW). 
+          # Also, useful for producing better errors when accidentally 
+          # executing the program with `perl` instead of `perl6` 
+use v6.c;         # Use the &quot;Christmas&quot; version of Perl 6 
+use v6.d;         # Use the &quot;Diwali&quot; version of Perl 6 
+use v6.d.PREVIEW; # On 6.d-capable compilers, enables 6.d features, 
+                  # otherwise enables the available experimental 
+                  # preview features for 6.d language 
+                  # This will only work on releases previous to 6.d. 
+</code></pre>
+
+<p>由于这些编译指令是在编译器版本上开启的，所以它们应该是文件中的第一个语句（前面的注释和 Pod 都没问题）。</p>
+
+<h2 id="monkey-guts-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">MONKEY-GUTS</a></h2>
+
+<p>该编译指令目前不是任何 Perl 6 规范的一部分，但作为 <code>use nqp</code> 的同义词存在于 Rakudo 中（见下文）。</p>
+
+<h2 id="monkey-see-no-eval-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">MONKEY-SEE-NO-EVAL</a></h2>
+
+<p><a href="https://docs.perl6.org/routine/EVAL">EVAL</a></p>
+
+<h2 id="monkey-typing-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">MONKEY-TYPING</a></h2>
+
+<p><a href="https://docs.perl6.org/syntax/augment">augment</a></p>
+
+<h2 id="monkey-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">MONKEY</a></h2>
+
+<pre><code class="language-perl6">use MONKEY;
+</code></pre>
+
+<p>打开所有可用的 <code>MONKEY</code> 编译指令，目前有上面的三个; 因此，它等同于：</p>
+
+<pre><code class="language-perl6">use MONKEY-TYPING;
+use MONKEY-SEE-NO-EVAL;
+use MONKEY-GUTS;
+</code></pre>
+
+<h2 id="experimental-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">experimental</a></h2>
+
+<p>允许使用<a href="https://docs.perl6.org/language/experimental">实验性功能</a></p>
+
+<h2 id="fatal-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">fatal</a></h2>
+
+<p>一个词法编译指令，使得<a href="https://docs.perl6.org/type/Failure">Failures</a>从例程致命错误中返回。例如，<a href="https://docs.perl6.org/type/Str">Str</a>上的 <code>+</code> 前缀将其强制转换为<a href="https://docs.perl6.org/type/Numeric">Numeric</a>，但如果字符串包含非数字字符，则返回<a href="https://docs.perl6.org/type/Failure">Failure</a>。在变量中保存该<a href="https://docs.perl6.org/type/Failure">Failure</a>可以防止它被下沉，因此下面的第一个代码块到达 <code>say $x.^name;</code> 行并在输出中打印 <code>Failure</code>。</p>
+
+<p>在第二个块中，<code>use fatal</code> 编译指定开启了，因此 <code>say</code> 永远不会到达该行，因为从前缀 <code>+</code> 返回的 <a href="https://docs.perl6.org/type/Failure">Failure</a> 中包含的 <a href="https://docs.perl6.org/type/Exception">Exception</a> 被抛出并且 <code>CATCH</code> 块被运行，打印出 <code>Caught...</code> 行。请注意，这两个块都是相同的程序，<code>use fatal</code> 只会影响它所使用的词法块：<code>Caught...use fatal</code></p>
+
+<pre><code class="language-perl6">{
+    my $x = +&quot;a&quot;;
+    say $x.^name;
+    CATCH { default { say &quot;Caught {.^name}&quot; } }
+} # OUTPUT: «Failure» 
+ 
+{
+    use fatal;
+    my $x = +&quot;a&quot;;
+    say $x.^name;
+    CATCH { default { say &quot;Caught {.^name}&quot; } }
+} # OUTPUT: «Caught X::Str::Numeric» 
+</code></pre>
+
+<p>在<a href="https://docs.perl6.org/language/exceptions#index-entry-try_blocks-try"><code>try</code></a> 块内部，默认开启 <code>fatal</code> 编译指令，您可以使用 <code>no fatal</code> *禁用*它：</p>
+
+<pre><code class="language-perl6">try {
+    my $x = +&quot;a&quot;;
+    say $x.^name;
+    CATCH { default { say &quot;Caught {.^name}&quot; } }
+} # OUTPUT: «Caught X::Str::Numeric» 
+ 
+try {
+    no fatal;
+    my $x = +&quot;a&quot;;
+    say $x.^name;
+    CATCH { default { say &quot;Caught {.^name}&quot; } }
+} # OUTPUT: «Failure» 
+</code></pre>
+
+<h2 id="internals-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">internals</a></h2>
+
+<p>[NYI]</p>
+
+<h2 id="invocant-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">invocant</a></h2>
+
+<p>[NYI]</p>
+
+<h2 id="isms-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">isms</a></h2>
+
+<pre><code>[2018.09 and later]
+</code></pre>
+
+<p>允许被认为是正常 Perl 6 编程中的警告和/或错误的陷阱的一些其他语言结构。目前，<code>Perl5</code> 和 <code>C++</code> 是被允许的。</p>
+
+<pre><code class="language-perl6">sub abs() { say &quot;foo&quot; }
+abs;
+# Unsupported use of bare &quot;abs&quot;; in Perl 6 please use .abs if you meant 
+# to call it as a method on $_, or use an explicit invocant or argument, 
+# or use &amp;abs to refer to the function as a noun 
+</code></pre>
+
+<p>在这种情况下，提供一个不带任何参数的 <code>abs</code> sub，并没有使编译错误消失。</p>
+
+<pre><code class="language-perl6">use isms &lt;Perl5&gt;;
+sub abs() { say &quot;foo&quot; }
+abs;   # foo 
+</code></pre>
+
+<p>有了这个，编译器将允许违规的 Perl 5 构造，允许实际执行代码。</p>
+
+<p>如果未指定任何语言，则允许使用所有已知语言结构。</p>
+
+<pre><code class="language-perl6">use isms;   # allow for Perl5 and C++ isms 
+</code></pre>
+
+<h2 id="lib-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">lib</a></h2>
+
+<p>该编译指令将子目录添加到库搜索路径，以便解释器可以<a href="https://docs.perl6.org/language/modules#Finding_modules">找到模块</a>。</p>
+
+<pre><code class="language-perl6">use lib &lt;lib /opt/lib /usr/local/lib&gt;;
+</code></pre>
+
+<p>这将搜索列表中传递的目录。有关更多示例，请查看<a href="https://docs.perl6.org/language/modules#use">模块文档</a>。</p>
+
+<h2 id="newline-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">newline</a></h2>
+
+<p>在调用的作用域内设置<a href="https://docs.perl6.org/language/variables#Compile-time_variables">$?NL</a>常量的值。可能的值有 <code>:lf</code>（默认值，表示换行），<code>:crlf</code>（表示回车，换行）和 <code>:cr</code>（表示回车）。</p>
+
+<h2 id="nqp-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">nqp</a></h2>
+
+<p>使用风险由您自己承担。</p>
+
+<p>这是一个 Rakudo 特有的编译指令。有了它，Rakudo 可以访问顶级命名空间中的<a href="https://github.com/perl6/nqp/blob/master/docs/ops.markdown">nqp操作码</a>：</p>
+
+<pre><code class="language-perl6">use nqp;
+nqp::say(&quot;hello world&quot;);
+</code></pre>
+
+<p>这使用底层的 nqp <code>say</code> 操作码而不是 Perl 6 例程。这个编译指示可能会使您的代码依赖于特定版本的 nqp，并且由于该代码不是 Perl 6 规范的一部分，因此不能保证它是稳定的。您可能会在 Rakudo 核心中找到大量用法，这些用法用于尽可能快地实现核心功能。Rakudo 代码生成的未来优化可能会废弃这些用法。</p>
+
+<h2 id="parameters-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">parameters</a></h2>
+
+<p>[NYI]</p>
+
+<h2 id="precompilation-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">precompilation</a></h2>
+
+<p>默认允许预编译源代码，特别是在模块中使用时。如果由于某种原因您不希望预编译（模块的）代码，您可以使用 <code>no precompilation</code>。这将阻止整个编译单元（通常是文件）被预编译。</p>
+
+<h2 id="soft-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">soft</a></h2>
+
+<p><a href="https://docs.perl6.org/language/functions#Re-dispatching">Re-dispatching</a>, <a href="https://docs.perl6.org/language/functions#index-entry-use_soft_%28pragma%29">inlining</a></p>
+
+<h2 id="strict-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">strict</a></h2>
+
+<p><code>strict</code> 是默认行为，并要求您在使用变量之前声明变量。你可以用 <code>no</code> 放松这个限制。</p>
+
+<pre><code class="language-perl6">no strict; $x = 42; # OK 
+</code></pre>
+
+<h2 id="trace-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">trace</a></h2>
+
+<p>当 <code>use trace</code> 被激活时，执行的代码的任何行将被写入 stderr。您可以使用 <code>no trace</code> 关闭该功能，因此这仅适用于某些代码段。</p>
+
+<h2 id="v6-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">v6</a></h2>
+
+<p><a href="https://docs.perl6.org/language/testing#Writing_tests">Writing Tests</a></p>
+
+<h2 id="variables-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">variables</a></h2>
+
+<p><a href="https://docs.perl6.org/language/variables#Default_defined_variables_pragma">Defined Variables Pragma</a></p>
+
+<h2 id="worries-https-docs-perl6-org-language-pragmas-top"><a href="https://docs.perl6.org/language/pragmas#___top">worries</a></h2>
+
+<p>词法地控制是否显示编译器生成的编译时警告。默认情况下启用。</p>
+
+<pre><code class="language-perl6">$ perl6 -e 'say :foo&lt;&gt;.Pair'
+Potential difficulties:
+  Pair with &lt;&gt; really means an empty list, not null string; use :foo('') to represent the null string,
+    or :foo() to represent the empty list more accurately
+  at -e:1
+  ------&gt; say :foo&lt;&gt;⏏.Pair
+foo =&gt; Nil
+ 
+$ perl6 -e 'no worries; say :foo&lt;&gt;.Pair'
+foo =&gt; Nil
+</code></pre>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

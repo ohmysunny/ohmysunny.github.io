@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Python 到 Perl 6 - 简而言之 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/11.python-to-perl6-nutshell/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Python 到 Perl 6 - 简而言之</h1>
+    </header>
+
+    
+
+<p>此页面试图为来自 Python 背景的人们提供学习 Perl 6 的方法。我们在 Perl 6 中讨论了许多 Python 构造和惯用法的等价语法。</p>
+
+<h2 id="基本语法">基本语法</h2>
+
+<h3 id="hello-world">Hello, world</h3>
+
+<p>让我们从打印 &ldquo;Hello, world!&rdquo; 开始吧。 Perl 6 中的 <a href="https://docs.perl6.org/routine/put">put</a> 关键字相当于 Python 中的 <a href="https://docs.perl6.org/routine/print">print</a>。与 Python 2 一样，括号是可选的。换行符添加到行尾。</p>
+
+<ul>
+<li>Python 2</li>
+</ul>
+
+<pre><code class="language-python">print &quot;Hello, world!&quot;
+</code></pre>
+
+<ul>
+<li>Python 3</li>
+</ul>
+
+<pre><code class="language-python">print(&quot;Hello, world!&quot;)
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">put &quot;Hello, world!&quot;
+</code></pre>
+
+<p>还有 <a href="https://docs.perl6.org/routine/say">say</a> 关键字，其行为类似，但会调用其参数的 <a href="https://docs.perl6.org/routine/gist">gist</a> 方法。</p>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $hello = &quot;Hello, world!&quot;;
+say $hello;  # also prints &quot;Hello, world!&quot; 
+             # same as: put $hello.gist 
+</code></pre>
+
+<p>在 Python 中 <code>'</code> 和 <code>&quot;</code> 是可互换的。在 Perl 6 中两者都可用于引用, 但双引号(<code>&quot;</code>)表示应该进行插值。例如, 以 <code>$</code> 开头的变量和包含在花括号中的表达式会被插值。</p>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $planet = 'earth';
+say &quot;Hello, $planet&quot;;   # Hello, earth 
+say 'Hello, $planet';   # Hello, $planet 
+say &quot;Hello, planet number { 1 + 2 }&quot;; # Hello, planet number 3 
+</code></pre>
+
+<h3 id="语句分隔符">语句分隔符</h3>
+
+<p>在 Python 中，换行符表示语句的结束。有一些例外：换行符之前的反斜杠继续跨行语句。此外，如果有一个不匹配的开括号，方括号或花括号，则该语句将继续跨行，直到匹配的花括号被关闭。</p>
+
+<p>在 Perl 6 中，分号表示语句的结束。如果分号是块的最后一个语句，则可以省略分号。如果有一个结束花括号后跟换行符，也可以省略分号。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">print 1 + 2 + \
+    3 + 4
+print ( 1 +
+    2 )
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">say 1 + 2 +
+    3 + 4;
+say 1 +
+    2;
+</code></pre>
+
+<h3 id="块儿">块儿</h3>
+
+<p>在 Python 中，缩进用于表示块。 Perl 6 使用花括号表示块儿。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">if 1 == 2:
+    print &quot;Wait, what?&quot;
+else:
+    print &quot;1 is not 2.&quot;
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">if 1 == 2 {
+    say &quot;Wait, what?&quot;
+} else {
+    say &quot;1 is not 2.&quot;
+}
+</code></pre>
+
+<p>对于条件句中的表达式，括号在两种语言中都是可选的，如上所示。</p>
+
+<h3 id="变量">变量</h3>
+
+<p>在 Python 中，变量是同时声明和初始化的：</p>
+
+<pre><code class="language-python">foo = 12
+bar = 19
+</code></pre>
+
+<p>在 Perl 6 中，<code>my</code> 声明符声明了一个词法变量。变量可以用 <code>=</code> 初始化。此变量可以先声明，然后再初始化或声明并立即初始化。</p>
+
+<pre><code class="language-perl6">my $foo;       # declare 
+$foo = 12;     # initialize 
+my $bar = 19;  # both at once 
+</code></pre>
+
+<p>此外，你可能已经注意到，Perl 6 中的变量通常以符号开头 - 符号表示其容器的类型。 以 <code>$</code> 开头的变量持有标量。 以 <code>@</code> 开头的变量持有数组和以 <code>%</code> 开头的变量持有一个 hash(dict)。 如果用 <code>\</code> 声明它们，则不可变变量可以是无符号的。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">s = 10
+l = [1, 2, 3]
+d = { a : 12, b : 99 }
+ 
+print s 
+print l[2]
+print d['a']
+# 10, 2, 12 
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $s = 10;
+my @l = 1, 2, 3;
+my %d = a =&gt; 12, b =&gt; 99;
+my \x = 99;
+ 
+say $s;
+say @l[1];
+say %d&lt;a&gt;;  # or %d{'a'} 
+say x;
+# 10, 2, 12, 99 
+</code></pre>
+
+<h3 id="作用域">作用域</h3>
+
+<p>在 Python 中，函数和类创建一个新的作用域，但没有其他的块构造函数（例如循环，条件）创建一个作用域。在 Python 2 中，列表推导不会创建新的作用域，但在 Python 3 中，它们创建新的作用域。</p>
+
+<p>在 Perl 6 中，每个块都创建了一个词法作用域</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">if True:
+    x = 10
+print x
+# x is now 10 
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">if True {
+    my $x = 10
+}
+say $x
+# error, $x is not declared in this scope 
+</code></pre>
+
+<pre><code class="language-perl6">my $x;
+if True {
+    $x = 10
+}
+say $x
+# ok, $x is 10 
+</code></pre>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">x = 10
+for x in 1, 2, 3:
+   pass
+print x
+# x is 3 
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my \x = 10;
+for 1, 2, 3 -&gt; \x {
+    # do nothing 
+    }
+say x;
+# x is 10 
+</code></pre>
+
+<p>Python 中的 Lambdas 可以在 Perl 6 中写为块或尖号块。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">l = lambda i: i + 12
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $l = -&gt; $i { $i + 12 }
+</code></pre>
+
+<p>构建 lambdas 的另一个Perl 6 惯用法是使用 Whatever star, <code>*</code>。</p>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $l = * + 12    # same as above 
+</code></pre>
+
+<p>表达式中的 <code>*</code> 将成为参数的占位符，并在编译时将表达式转换为 lambda。 表达式中的每个 <code>*</code> 都是一个单独的位置参数。</p>
+
+<p>有关子例程和块的更多结构，请参阅以下部分。</p>
+
+<p>另一个例子(来自Python <a href="https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result">FAQ</a>):</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">squares = []
+for x in range(5):
+    squares.append(lambda: x ** 2)
+print squares[2]()
+print squares[4]()
+# both 16 since there is only one x 
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my \squares = [];
+for ^5 -&gt; \x {
+    squares.append({ x² });
+}
+say squares[2]();
+say squares[4]();
+# 4, 16 since each loop iteration has a lexically scoped x, 
+</code></pre>
+
+<p>注意，<code>^N</code> 类似于 <code>range(N)</code>。 类似地，<code>N..^M</code> 的作用类似于 <code>range(N,M)</code>（从 N 到 M-1 的列表）。 范围 <code>N..M</code> 是从 N 到 M 的列表。<code>..</code> 之前或之后的 <code>^</code> 表示应排除列表的开始或结束端点（或两者都）。</p>
+
+<p>另外，<code>x²</code> 是一种编写 <code>x ** 2</code> 的可爱方式（也可以正常工作）; unicode 上标 2 是一个数字。 许多其他 unicode 运算符正如你所期望的那样工作(指数, 分数, π)，但是可以在 Perl 6 中使用的每个 unicode 运算符或符号都具有 ASCII 等价物。</p>
+
+<h3 id="控制流">控制流</h3>
+
+<p>Python 有 <code>for</code> 循环和 <code>while</code> 循环:</p>
+
+<pre><code class="language-python">for i in 1, 2:
+    print i
+j = 1
+while j &lt; 3:
+    print j
+    j += 1
+
+# 1,2,1,2    
+</code></pre>
+
+<p>Perl 6 也有 <code>for</code> 循环和 <code>while</code> 循环:</p>
+
+<pre><code class="language-perl6">for 1, 2 -&gt; $i {
+    say $i
+}
+my $j = 1;
+while $j &lt; 3 {
+    say $j;
+    $j += 1
+}
+</code></pre>
+
+<p>(Perl 6 还有一些循环结构：<code>repeat ... until</code>，<code>repeat ... while</code>，<code>until</code> 和 <code>loop</code>。)</p>
+
+<p><code>last</code> 在 Perl 6 中退出一个循环，类似于 Python 中的 <code>break</code>。 Python 中的 <code>continue</code> 在 Perl 6 中是 <code>next</code>。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">for i in range(10):
+    if i == 3:
+        continue
+    if i == 5:
+        break
+    print i
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">for ^10 -&gt; $i {
+    next if $i == 3;
+    last if $i == 5;
+    say $i;
+}
+</code></pre>
+
+<p>使用 <code>if</code> 作为语句修饰符(如上所述)在 Perl 6 中是可接受的，甚至在列表解析之外也可以。</p>
+
+<p>Python <code>for</code> 循环中的 <code>yield</code> 语句生成一个 <code>generator</code>，就像 Perl 6 中的 <code>gather/take</code> 构造一样。这两个都打印 1,2,3。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">def count():
+    for i in 1, 2, 3:
+        yield i
+ 
+for c in count():
+    print c
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">sub count {
+    gather {
+        for 1, 2, 3 -&gt; $i {
+            take $i
+        }
+    }
+}
+ 
+for count() -&gt; $c {
+    say $c;
+}
+</code></pre>
+
+<h3 id="lambdas-函数和子例程">Lambdas， 函数和子例程</h3>
+
+<p>在 Python 中用 <code>def</code> 声明的函数（子例程）在 Perl 6 中是用 <code>sub</code> 来完成的。</p>
+
+<pre><code class="language-perl6">def add(a, b):
+    return a + b
+ 
+sub add(\a, \b) {
+    return a + b
+}
+</code></pre>
+
+<p><code>return</code> 是可选的; 最后一个表达式的值被用作返回值:</p>
+
+<pre><code class="language-perl6">sub add(\a, \b) {
+    a + b
+}
+</code></pre>
+
+<pre><code class="language-perl6"># using variables with sigils 
+sub add($a, $b) {
+    $a + $b
+}
+</code></pre>
+
+<p>可以使用位置参数或关键字参数调用 Python 2 函数。这些是由调用者决定的。在 Python 3 中，一些参数可能是&rdquo;keyword only&rdquo;的。在 Perl 6 中，位置参数和命名参数由例程的签名确定。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">def speak(word, times):
+    for i in range(times):
+        print word
+speak('hi', 2)
+speak(word='hi', times=2)
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<p>位置参数</p>
+
+<pre><code class="language-perl6">sub speak($word, $times) {
+  say $word for ^$times
+}
+speak('hi', 2);
+</code></pre>
+
+<p>以冒号开头的命名参数:</p>
+
+<pre><code class="language-perl6">sub speak(:$word, :$times) {
+  say $word for ^$times
+}
+speak(word =&gt; 'hi', times =&gt; 2);
+speak(:word&lt;hi&gt;, :times&lt;2&gt;);      # Alternative, more idiomatic 
+</code></pre>
+
+<p>Perl 6 支持多重分派，因此可以通过将例程声明为 <code>multi</code> 来提供多个签名。</p>
+
+<pre><code class="language-perl6">multi sub speak($word, $times) {
+  say $word for ^$times
+}
+multi sub speak(:$word, :$times) {
+    speak($word, $times);
+}
+speak('hi', 2);
+speak(:word&lt;hi&gt;, :times&lt;2&gt;);
+</code></pre>
+
+<p>可以使用多种格式发送命名参数：</p>
+
+<pre><code class="language-perl6">sub hello {...};
+# all the same 
+hello(name =&gt; 'world'); # fat arrow syntax 
+hello(:name('world'));  # pair constructor 
+hello :name&lt;world&gt;;     # &lt;&gt; quotes words and makes a list 
+my $name = 'world';
+hello(:$name);          # lexical var with the same name 
+</code></pre>
+
+<p>创建匿名函数可以使用带有块或尖号块的 <code>sub</code> 来完成。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">square = lambda x: x ** 2
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $square = sub ($x) { $x ** 2 };  # anonymous sub 
+my $square = -&gt; $x { $x ** 2 };     # pointy block 
+my $square = { $^x ** 2 };          # placeholder variable 
+my $square = { $_ ** 2 };           # topic variable 
+</code></pre>
+
+<p>占位符变量按字典顺序排列以形成位置参数。 因此这些是相同的：</p>
+
+<pre><code class="language-perl6">my $power = { $^x ** $^y };
+my $power = -&gt; $x, $y { $x ** $y };
+</code></pre>
+
+<h3 id="列表解析">列表解析</h3>
+
+<p>可以组合 Postfix 语句修饰符和块以在 Perl 6 中轻松创建列表解析。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-perl6">print [ i * 2 for i in 3, 9 ]                      # OUTPUT: «[6, 18]␤» 
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">say ( $_ * 2 for 3, 9 );                           # OUTPUT: «(6 18)␤» 
+say ( { $^i * 2 } for 3, 9 );                      # OUTPUT: «(6 18)␤» 
+say ( -&gt; \i { i * 2 } for 3, 9 );                  # OUTPUT: «(6 18)␤» 
+</code></pre>
+
+<p>可以应用条件，但 <code>if</code> 关键字首先出现，而不像 Python 那样，<code>if</code> 是第二个出现。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">print [ x * 2 for x in 1, 2, 3 if x &gt; 1 ]          # OUTPUT: «[4, 6]␤» 
+</code></pre>
+
+<p>vs</p>
+
+<pre><code class="language-perl6">say ( $_ * 2 if $_ &gt; 1 for 1, 2, 3 );              # OUTPUT: «(4 6)␤» 
+</code></pre>
+
+<p>对于嵌套循环，交叉乘积运算符 <code>X</code> 将会有帮助：</p>
+
+<pre><code class="language-python">print [ i + j for i in 3,9 for j in 2,10 ]         # OUTPUT: «[5, 13, 11, 19]␤» 
+</code></pre>
+
+<p>变成以下任何一个：</p>
+
+<pre><code class="language-perl6">say ( { $_[0] + $_[1] } for (3,9) X (2,10) );      # OUTPUT: «(5 13 11 19)␤» 
+say ( -&gt; (\i, \j) { i + j } for (3,9) X (2,10) );  # OUTPUT: «(5 13 11 19)␤» 
+</code></pre>
+
+<p>使用 <code>map</code>（就像 Python 的 <code>map</code> 一样）和 <code>grep</code>（就像 Python 的 <code>filter</code> 一样）是另一种选择。</p>
+
+<h3 id="类和对象">类和对象</h3>
+
+<p>这是 Python <a href="https://docs.python.org/3/tutorial/classes.html#class-and-instance-variables">文档</a>中的一个示例。首先让我们回顾一下&rdquo;实例变量&rdquo;，这些变量在 Perl 6 中称为属性:</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">class Dog:
+    def __init__(self, name):
+        self.name = name
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">class Dog {
+    has $.name;
+}
+</code></pre>
+
+<p>对于每个创建的类，Perl 6 默认提供构造函数方法 <code>new</code>，它接受命名参数。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">d = Dog('Fido')
+e = Dog('Buddy')
+print d.name
+print e.name
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">my $d = Dog.new(:name&lt;Fido&gt;); # or: Dog.new(name =&gt; 'Fido') 
+my $e = Dog.new(:name&lt;Buddy&gt;);
+say $d.name;
+say $e.name;
+</code></pre>
+
+<p>Perl 6 中的类属性可以通过几种方式声明。一种方法是仅声明一个词法变量和一个访问它的方法。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">class Dog:
+    kind = 'canine'                # class attribute 
+    def __init__(self, name):
+        self.name = name           # instance attribute 
+d = Dog('Fido')
+e = Dog('Buddy')
+print d.kind
+print e.kind
+print d.name
+print e.name
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">class Dog {
+    my $kind = 'canine';           # class attribute 
+    method kind { $kind }
+    has $.name;                    # instance attribute 
+}
+ 
+my $d = Dog.new(:name&lt;Fido&gt;);
+my $e = Dog.new(:name&lt;Buddy&gt;);
+say $d.kind;
+say $e.kind;
+say $d.name;
+say $e.name;
+</code></pre>
+
+<p>为了在 Perl 6 中改变属性，必须在属性上使用 <code>is rw</code> trait：</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">class Dog:
+    def __init__(self, name):
+        self.name = name
+d = Dog()
+d.name = 'rover'
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">class Dog {
+    has $.name is rw;
+}
+my $d = Dog.new;
+$d.name = 'rover';
+</code></pre>
+
+<p>继承使用 <code>is</code> 来完成:</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">class Animal:
+    def jump(self):
+        print (&quot;I am jumping&quot;)
+ 
+class Dog(Animal):
+    pass
+ 
+d = Dog()
+d.jump()
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">class Animal {
+    method jump {
+        say &quot;I am jumping&quot;
+    }
+}
+ 
+class Dog is Animal {
+}
+ 
+my $d = Dog.new;
+$d.jump;
+</code></pre>
+
+<p>根据需要多次使用 <code>is</code> trait 可以实现多重继承。或者，它可以与 <code>also</code> 关键字一起使用。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">class Dog(Animal, Friend, Pet):
+    pass
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">class Animal {}; class Friend {}; class Pet {};
+...;
+class Dog is Animal is Friend is Pet {};
+</code></pre>
+
+<p>或</p>
+
+<pre><code class="language-perl6">class Animal {}; class Friend {}; class Pet {};
+...;
+class Dog is Animal {
+    also is Friend;
+    also is Pet;
+    ...
+}
+</code></pre>
+
+<h3 id="装饰器">装饰器</h3>
+
+<p>Python 中的装饰器是一种将函数包装在另一个函数中的方法。在 Perl 6 中，这是通过 <code>wrap</code> 完成的。</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code class="language-python">def greeter(f):
+    def new():
+        print 'hello'
+        f()
+    return new
+ 
+@greeter
+def world():
+    print 'world'
+ 
+world();
+</code></pre>
+
+<ul>
+<li>Perl 6</li>
+</ul>
+
+<pre><code class="language-perl6">sub world {
+    say 'world'
+}
+ 
+&amp;world.wrap(sub () {
+    say 'hello';
+    callsame;
+});
+ 
+world;
+</code></pre>
+
+<p>另一种方法是使用 trait：</p>
+
+<pre><code class="language-perl6"># declare the trait 'greeter' 
+multi sub trait_mod:&lt;is&gt;(Routine $r, :$greeter) {
+    $r.wrap(sub {
+        say 'hello';
+        callsame;
+    })
+}
+ 
+sub world is greeter {
+    say 'world';
+}
+ 
+world;
+</code></pre>
+
+<h3 id="上下文管理">上下文管理</h3>
+
+<p>Python 中的上下文管理器声明了在进入或退出作用域时发生的操作。</p>
+
+<p>这是一个 Python 上下文管理器，可以打印字符串&rsquo;hello&rsquo;，&rsquo;world&rsquo;和&rsquo;bye&rsquo;。</p>
+
+<pre><code class="language-python">class hello:
+    def __exit__(self, type, value, traceback):
+        print 'bye'
+    def __enter__(self):
+        print 'hello'
+ 
+with hello():
+    print 'world'
+</code></pre>
+
+<p>对于 &ldquo;enter&rdquo; 和 &ldquo;exit&rdquo; 事件，将块作为参数传递将是一种方法：</p>
+
+<pre><code class="language-perl6">sub hello(Block $b) {
+    say 'hello';
+    $b();
+    say 'bye';
+}
+ 
+hello {
+    say 'world';
+}
+</code></pre>
+
+<p>一个相关的想法是&rsquo;<a href="https://docs.perl6.org/language/phasers">Phasers</a>&lsquo;，它可以设置为在进入或离开一个区块时运行。</p>
+
+<pre><code class="language-perl6">{
+    LEAVE say 'bye';
+    ENTER say 'hello';
+    say 'world';
+}
+</code></pre>
+
+<h3 id="input">input</h3>
+
+<p>在 Python 3 中，<code>input</code> 关键字用于提示用户。可以为此关键字提供可选参数，该参数将写入标准输出而不带尾随换行符：</p>
+
+<pre><code class="language-python">user_input = input(&quot;Say hi → &quot;)
+print(user_input)
+</code></pre>
+
+<p>出现提示时，您可以输入 <code>Hi</code> 或任何其他字符串，这些字符串将存储在 <code>user_input</code> 变量中。这类似于 Perl 6 中的 <a href="https://docs.perl6.org/routine/prompt">prompt</a>：</p>
+
+<pre><code class="language-perl6">my $user_input = prompt(&quot;Say hi → &quot;);
+say $user_input; # OUTPUT: whatever you entered. 
+</code></pre>
+
+<p>原文： <a href="https://docs.perl6.org/language/py-nutshell">https://docs.perl6.org/language/py-nutshell</a></p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

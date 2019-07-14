@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  枚举 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/42.enumeration/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>枚举</h1>
+    </header>
+
+    <p>在 Perl 6 中，枚举(<code>enum</code>)类型比其他语言复杂得多，详细信息可在<a href="https://docs.perl6.org/language/typesystem#enum">此处</a>的类型描述中找到。</p>
+
+<p>这个简短的文档将给出一个简单的使用示例，就像在 C 语言中一样。</p>
+
+<p>假设我们有一个需要写入各种目录的程序; 我们想要一个函数，给定一个目录名，测试它（1）是否存在（2）它是否可以被该程序的用户写入; 这意味着从用户的角度来看有三种可能的状态：要么你可以写（<code>CanWrite</code>），要么没有目录（<code>NoDir</code>）或者目录存在，但你不能写（<code>NoWrite</code>）。 测试结果将决定程序接下来要采取的操作。</p>
+
+<pre><code class="language-perl6">enum DirStat &lt;CanWrite NoDir NoWrite&gt;;
+sub check-dir-status($dir --&gt; DirStat) {
+    if $dir.IO.d {
+        # dir exists, can the program user write to it? 
+        my $f = &quot;$dir/.tmp&quot;;
+        spurt $f, &quot;some text&quot;;
+        CATCH {
+            # unable to write for some reason 
+            return NoWrite;
+        }
+        # if we get here we must have successfully written to the dir 
+        unlink $f;
+        return CanWrite;
+    }
+    # if we get here the dir must not exist 
+    return NoDir;
+}
+ 
+# test each of three directories by a non-root user 
+my $dirs =
+    '/tmp',  # normally writable by any user 
+    '/',     # writable only by root 
+    '~/tmp'; # a non-existent dir in the user's home dir 
+for $dirs -&gt; $dir {
+    my $stat = check-dir-status $dir;
+    say &quot;status of dir '$dir': $stat&quot;;
+    if $stat ~~ CanWrite {
+        say &quot;  user can write to dir: $dir&quot;;
+    }
+}
+# output 
+#   status of dir '/tmp': CanWrite 
+#     user can write to dir: /tmp 
+#   status of dir '/': NoWrite 
+#   status of dir '~/tmp': NoDir 
+</code></pre>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

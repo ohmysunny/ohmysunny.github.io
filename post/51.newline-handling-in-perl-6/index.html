@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Perl 6 中的换行处理 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/51.newline-handling-in-perl-6/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Perl 6 中的换行处理</h1>
+    </header>
+
+    <p>不同的操作系统使用不同的字符或字符的组合来表示换行符。每种语言都有自己的一套规则来处理这个问题。 Perl 6 有以下几个规则：</p>
+
+<ul>
+<li>字符串字面量中的 <code>\n</code> 表示 Unicode 代码点 10。<br /></li>
+<li>由 <code>say</code> 附加到字符串的默认 <a href="https://docs.perl6.org/routine/nl-out">nl-out</a> 也是 <code>\n</code>。<br /></li>
+<li>在输出时，当在 Windows 上时，编码器默认将 <code>\n</code> 转换为 <code>\r\n</code>，当它转到文件，进程或终端时（但它不会在套接字上执行此操作）。</li>
+<li>在输入时，在任何平台上，解码器默认将 <code>\r\n</code> 标准化为 <code>\n</code>，以便从文件，进程或终端（同样不是套接字）输入。</li>
+<li>以上两点一起意味着你可以 - 把套接字编程放在一边 - 期望永远不会在你的程序中看到 <code>\r\n</code>（这也是许多其他语言的工作原理）。</li>
+<li><a href="https://docs.perl6.org/type/Encoding#method_decoder">:$translate-nl</a> 命名参数存在于控制此转换的各个位置，例如，在 <a href="https://docs.perl6.org/type/Proc::Async#method_new">Proc::Async.new</a> 和 <a href="https://docs.perl6.org/type/Proc::Async#method_Supply">Proc::Async.Supply</a> 中。<br /></li>
+<li>正则表达式语言中的 <code>\n</code> 是合乎逻辑的，并且匹配 <code>\r\n</code>。</li>
+</ul>
+
+<p>您可以通过在创建该句柄时设置 <code>:nl-out</code> 属性来更改特定句柄的默认行为。</p>
+
+<pre><code class="language-perl6">my $crlf-out = open(IO::Special.new('&lt;STDOUT&gt;'), :nl-out(&quot;\\\n\r&quot;));
+$*OUT.say: 1;     #OUTPUT: «1␤» 
+$crlf-out.say: 1; #OUTPUT: «1\␤␍» 
+</code></pre>
+
+<p>在这个例子中，我们通过使用 <a href="https://docs.perl6.org/type/IO::Special">IO::Special</a> 将标准输出复制到新句柄，我们在字符串的末尾附加一个 <code>\</code>，然后是换行符 <code>␤</code> 和回车符 <code>␍</code>; 我们打印到该句柄的所有内容都会在行尾添加这些字符，如图所示。</p>
+
+<p>在正则表达式中，<a href="https://docs.perl6.org/language/regexes#index-entry-regex_%5Cn-regex_%5CN-%5Cn_and_%5CN">\n</a> 是根据<a href="https://unicode.org/reports/tr18/#Line_Boundaries">逻辑换行符的Unicode定义</a>定义的。它会匹配 <code>.</code>, 还有 <code>\v</code>，以及包含空格的任何类。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

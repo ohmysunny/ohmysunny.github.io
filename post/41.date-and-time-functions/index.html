@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  日期和时间函数 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/41.date-and-time-functions/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>日期和时间函数</h1>
+    </header>
+
+    <p>Perl 6 包括几个处理时态信息的类：<a href="https://docs.perl6.org/type/Date">Date</a>，<a href="https://docs.perl6.org/type/DateTime">DateTime</a>，<a href="https://docs.perl6.org/type/Instant">Instant</a> 和 <a href="https://docs.perl6.org/type/Duration">Duration</a>。前三个是 dateish，所以它们混合了 <a href="https://docs.perl6.org/type/Dateish">Dateish</a> 角色，它定义了处理日期的类应该采用的所有方法和属性。它还包括以 <a href="https://docs.perl6.org/type/X::Temporal">X::Temporal</a> 为根的异常的类层次结构。</p>
+
+<p>我们将尝试在下一个（稍微扩展）的示例中说明这些类，这个示例可用于处理目录中的所有文件（默认情况下）。在目录中使用特定扩展名（默认为 <code>.p6</code>），根据他们的年龄对其进行排序，并计算每月创建的文件数量，以及在几个月的范围内表示的特定时期内修改的文件数量：</p>
+
+<pre><code class="language-perl6">use v6;
+ 
+sub MAIN( $path = &quot;.&quot;, $extension = &quot;p6&quot; ) {
+    my DateTime $right = DateTime.now;
+    my %metadata;
+    my %files-month;
+    my %files-period;
+    for dir($path).grep( / \.$extension $/ ) -&gt; $file {
+        CATCH {
+            when X::Temporal { say &quot;Date-related problem&quot;, .payload }
+            when X::IO { say &quot;File-related problem&quot;, .payload }
+            default { .payload.say }
+        }
+        my Instant $modified = $file.modified;
+        my Instant $accessed = $file.accessed;
+        my Duration $duration = $accessed - $modified;
+        my $age = $right - DateTime($accessed);
+        my $time-of-day = $file.changed.DateTime.hh-mm-ss but Dateish;
+        my $file-changed-date =  $file.changed.Date;
+        %metadata{$file} = %( modified =&gt; $modified,
+                              accessed =&gt; $accessed,
+                              age =&gt; $age,
+                              difference =&gt; $duration,
+                              changed-tod =&gt; $time-of-day,
+                              changed-date =&gt; $file-changed-date);
+        %files-month{$file-changed-date.month}++;
+        given $file-changed-date {
+            when Date.new(&quot;2018-01-01&quot;)..^Date.new(&quot;2018-04-01&quot;) { %files-period&lt;pre-grant&gt;++}
+            when Date.new(&quot;2018-04-01&quot;)..Date.new(&quot;2018-05-31&quot;) { %files-period&lt;grant&gt;++}
+            default { %files-period&lt;post-grant&gt;++};
+        }
+    }
+ 
+    %metadata.sort( { $^a.value&lt;age&gt; &lt;=&gt; $^b.value&lt;age&gt; } ).map: {
+        say $^x.key, &quot;, &quot;,
+        $^x.value&lt;accessed modified age difference changed-tod changed-date&gt;.join(&quot;, &quot;);
+    };
+    %files-month.keys.sort.map: {
+        say &quot;Month $^x → %files-month{$^x}&quot;
+    };
+ 
+    %files-period.keys.map: {
+        say &quot;Period $^x → %files-period{$^x}&quot;
+    };
+}
+</code></pre>
+
+<p>第 6 行使用 <code>DateTime</code> 来包含现在返回的当前日期和时间。</p>
+
+<p>CATCH phaser 在第 11 到 15 行中声明。其主要任务是区分与 <code>DateTime</code> 相关的异常和其他类型。这种异常可能来自<a href="https://docs.perl6.org/type/X::Temporal::InvalidFormat">无效格式</a>或<a href="https://docs.perl6.org/type/X::DateTime::TimezoneClash">时区冲突</a>。除非文件属性有些损坏，否则两者都是不可能的，但无论如何它们都应该被捕获并与其他类型的异常分开。</p>
+
+<p>我们使用第 16-17 行中的 <a href="https://docs.perl6.org/type/Instant">Instants</a> 来表示访问和修改文件的时刻。 Instant 是以原子秒为单位测量的，是对时间事件的非常低级别的描述;但是，第 18 行中声明的持续时间代表两个不同实例之间转换的时间，我们将使用它来表示年龄。</p>
+
+<p>对于某些变量，我们可能有兴趣用一些日期特征来处理它们。 <code>$time-of-day</code> 包含文件更改日期的时间; <code>changed</code> 将返回一个 Instant，但它将转换为日期（<code>Instant</code> 而不是 <code>Dateish</code>），然后从中提取时间。 <code>$time-of-day</code> 将有 <code>«Str+{Dateish}␤»</code> 类型。</p>
+
+<p>我们将使用此变量中的日期来查找文件更改的时间段。</p>
+
+<pre><code class="language-perl6">Date.new(&quot;2018-01-01&quot;)..^Date.new(&quot;2018-04-01&quot;)
+</code></pre>
+
+<p>创建一个日期<a href="https://docs.perl6.org/type/Range">范围</a>，<code>$file-changed-date</code> 与它进行智能匹配。日期可以这样使用;在这种情况下，它会创建一个排除其最后一个元素的 <code>Range</code>。</p>
+
+<p>这个变量也用于计算修改文件的一年中的月份。<a href="https://docs.perl6.org/type/Date">日期</a> 显然是 Dateish，然后有月份方法从中提取该属性。</p>
+
+<p>可以比较持续时间对象。这用于</p>
+
+<pre><code class="language-perl6">     %metadata.sort({
+         $^a.value&lt;age&gt; &lt;=&gt; $^b.value&lt;age&gt;
+     });
+</code></pre>
+
+<p>按年龄对文件进行排序。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

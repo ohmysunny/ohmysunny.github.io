@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Perl 6 原生类型 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/57.perl-6-native-types/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Perl 6 原生类型</h1>
+    </header>
+
+    
+
+<p>Perl 6 提供了一组原生类型，在内存中具有固定且已知的表示。此页面显示了存在哪些原生类型以及如何使用它们。有关它们的更多信息，请查看有关<a href="https://docs.perl6.org/language/numerics#Native_numerics">原生数字</a> 的页面。</p>
+
+<h1 id="types-with-native-representation-https-docs-perl6-org-language-nativetypes-top"><a href="https://docs.perl6.org/language/nativetypes#___top">Types with native representation</a></h1>
+
+<p>Perl 6 中的一些简单类型具有原生表示，表示它们将使用编译器，操作系统和原生提供的 C 语言表示。这些是可用的四种原生类型：</p>
+
+<table>
+<thead>
+<tr>
+<th>int</th>
+<th>Equivalent to Int (with limited range)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>uint</td>
+<td>Equivalent to Int (with limited range) with the unsigned trait</td>
+</tr>
+
+<tr>
+<td>num</td>
+<td>Equivalent to Num</td>
+</tr>
+
+<tr>
+<td>str</td>
+<td>Equivalent to Str</td>
+</tr>
+</tbody>
+</table>
+
+<p>但是，这些类型不一定具有 <a href="https://docs.perl6.org/language/nativecall">NativeCall</a> 接口所需的大小（例如，Perl 6 的 <code>int</code> 可以是 8 个字节，但 C 的 <code>int</code> 只有 4 个字节）; 必须使用以下类型而不是上面列出的 <code>int</code> 或 <code>num</code> 类型。</p>
+
+<p>通常，这些变量的行为与常规标量变量的行为方式相同，称为<a href="https://docs.perl6.org/language/numerics#Auto-boxing"><em>自动装箱</em></a>; 然而，存在一些差异，因为您实际宣称的是如何表示它们，而不是它们的实际类型。第一个是它们的类型实际上是它们的等效类型，而不是它们的原生类型。</p>
+
+<pre><code class="language-perl6">my int $intillo = 3;
+say $intillo.^name; # OUTPUT: «Int␤» 
+</code></pre>
+
+<p>这显然意味着他们将智能匹配他们的等效（自动装箱）类型，而不是他们的原生类型：</p>
+
+<pre><code class="language-perl6">my str $strillo = &quot;tres&quot;;
+say $strillo ~~ str; # OUTPUT: «False␤» 
+say $strillo ~~ Str; # OUTPUT: «True␤» 
+</code></pre>
+
+<p>并且与非原生对应物不同，他们将始终具有默认值：</p>
+
+<pre><code class="language-perl6">say (my Str $); # OUTPUT: «(Str)␤» 
+say (my str $); # OUTPUT: «␤» 
+say (my num $); # OUTPUT: «0␤» 
+</code></pre>
+
+<p><strong>注意</strong>: 在 v6.c 中，<code>num</code> 的默认值是 NaN。</p>
+
+<p>这是因为 Natives 不知道他们的类型，因为他们只是值，没有任何元数据。在<a href="https://docs.perl6.org/language/glossary#Multi-Dispatch">多重分派</a> 中，您可以拥有原生候选者，但无法区分相同原生类型的不同大小。也就是说，你可以有一个 <a href="https://docs.perl6.org/type/Int">Int</a> 和 <a href="https://docs.perl6.org/type/int">int</a> 候选者，但是 <a href="https://docs.perl6.org/type/int">int</a>, <a href="https://docs.perl6.org/type/atomicint">atomicint</a>, <a href="https://docs.perl6.org/type/int64">int64</a> 等候选者之间会有歧义。</p>
+
+<p>它们也不能被绑定。尝试做 <code>my num $numillo := 3.5</code> 会发出异常 <code>Cannot bind to natively typed variable '$variable-name'; use assignment instead</code>。</p>
+
+<p>原生类型也可以是复合的。</p>
+
+<pre><code class="language-perl6">my int @intillos = ^10_000_000;
+say [+] @intillos; # OUTPUT: «49999995000000␤» 
+</code></pre>
+
+<p>在这种情况下，*native*ness 扩展到复合类型，它将是 <code>array</code>。</p>
+
+<pre><code class="language-perl6">my num @many-pi  = ^8 »*» π ; say @many-pi.^name;  # OUTPUT: «array[num]␤» 
+</code></pre>
+
+<p>原生<code>数组</code>是 <a href="https://docs.perl6.org/type/Iterable">Iterable</a>，但它们不是 List 的子类。但是，它们的行为类似于 <a href="https://docs.perl6.org/type/Array">Array</a>; 例如，它们可以成形</p>
+
+<pre><code class="language-perl6">my str @letter-pairs[10] = 'a'..'j' Z~ 'A'..'J';
+say @letter-pairs.perl;
+# OUTPUT: «array[str].new(:shape(10,), [&quot;aA&quot;, &quot;bB&quot;, &quot;cC&quot;, &quot;dD&quot;, &quot;eE&quot;, &quot;fF&quot;, &quot;gG&quot;, &quot;hH&quot;, &quot;iI&quot;, &quot;jJ&quot;])␤» 
+</code></pre>
+
+<h1 id="types-with-native-representation-and-size-https-docs-perl6-org-language-nativetypes-top"><a href="https://docs.perl6.org/language/nativetypes#___top">Types with native representation and size</a></h1>
+
+<p>关于具有原生表示的类型的提及也适用于此;它们将自动装入 Perl 6 类型，并且不受限制。但是，下表中列出的这些类型具有可在 NativeCall](<a href="https://docs.perl6.org/language/nativecall#Passing_and_returning_values">https://docs.perl6.org/language/nativecall#Passing_and_returning_values</a>) 函数中使用的特性：</p>
+
+<table>
+<thead>
+<tr>
+<th>int8</th>
+<th>(int8_t in C, also used for char)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>int16</td>
+<td>(int16_t in C, also used for short)</td>
+</tr>
+
+<tr>
+<td>int32</td>
+<td>(int32_t in C, also used for int)</td>
+</tr>
+
+<tr>
+<td>int64</td>
+<td>(int64_t in C)</td>
+</tr>
+
+<tr>
+<td>byte, uint8</td>
+<td>(uint8_t in C, also used for unsigned char)</td>
+</tr>
+
+<tr>
+<td>uint16</td>
+<td>(uint16_t in C, also used for unsigned short)</td>
+</tr>
+
+<tr>
+<td>uint32</td>
+<td>(uint32_t in C, also used for unsigned int)</td>
+</tr>
+
+<tr>
+<td>uint64</td>
+<td>(uint64_t in C)</td>
+</tr>
+
+<tr>
+<td>num32</td>
+<td>(float in C)</td>
+</tr>
+
+<tr>
+<td>num64</td>
+<td>(double in C)</td>
+</tr>
+</tbody>
+</table>
+
+<p>这些类型具有固定大小的表示，它独立于平台，因此可以安全地用于那些原生调用。如果我们愿意，没有什么能阻止我们在任何其他环境中使用它们。与上述类型相同，在为此类型的变量赋值时，必须考虑此大小：</p>
+
+<pre><code class="language-perl6">my byte $intillo = 257;
+say $intillo; # OUTPUT: «1␤» 
+</code></pre>
+
+<p>由于 <code>byte</code> 只能容纳 8 位，因此它将换行并分配模值为 256 的原始值的结果，这就是所示的内容。</p>
+
+<p>声明原生大小的类型与没有声明原生大小的类型之间的主要区别是在声明中使用了 nativesize。例如，<code>int8</code> 以这种方式声明：</p>
+
+<pre><code class="language-perl6">my native int8 is repr('P6int') is Int is nativesize( 8) { }
+</code></pre>
+
+<p>表示除了整数表示（<code>P6int</code>）之外，它还将使用仅 8 位的原生大小。但是，这个特性并不打算在您的程序中使用，因为它不是 Perl 6 规范的一部分。</p>
+
+<h1 id="void-类型-https-docs-perl6-org-language-nativetypes-top"><a href="https://docs.perl6.org/language/nativetypes#___top"><code>void</code> 类型</a></h1>
+
+<p>原生 <code>void</code> 类型对应于 C 的 <code>void</code> 类型。虽然是有效类型，但您可以在表达式中使用它</p>
+
+<pre><code class="language-perl6">use NativeCall;
+my void $nothing;
+say $nothing.perl; # OUTPUT: «NativeCall::Types::void␤» 
+</code></pre>
+
+<p>实际上，它是一个很难单独使用的 <code>Uninstantiable</code> 类型，实际上它在 <a href="(https://docs.perl6.org/language/nativecall#Passing_and_returning_values)"><code>return</code></a> 类型中被明确禁止。但是，它通常在类型指针中找到，表示等效于 C 中的 <code>void *</code> 指针。</p>
+
+<pre><code class="language-perl6">sub malloc( int32 $size --&gt; Pointer[void] ) is native { * };
+my Pointer[void] $for-malloc = malloc( 32 );
+say $for-malloc.perl;
+</code></pre>
+
+<p>如果您需要在使用该类型的原生函数中使用它们，您还可以将 <a href="https://docs.perl6.org/type/Blob">Blob</a> <a href="https://docs.perl6.org/routine/nativecast">nativecast</a>  到此类指针上。</p>
+
+<pre><code class="language-perl6">use NativeCall;
+my Pointer[void] $native = nativecast(Pointer[void], Blob.new(0x22, 0x33));
+</code></pre>
+
+<p>但是，除此之外，它提供的功能非常有限，因为指向 <code>void</code> 的指针无法解引用：</p>
+
+<pre><code class="language-perl6">use NativeCall;
+my Pointer[void] $native = nativecast(Pointer[void], Buf.new(0x22, 0x33));
+say $native.deref; # ERROR OUTPUT: «Internal error: unhandled target type␤» 
+</code></pre>
+
+<h1 id="atomic-types-https-docs-perl6-org-language-nativetypes-top"><a href="https://docs.perl6.org/language/nativetypes#___top"><em>Atomic</em> types</a></h1>
+
+<p>在这种情况下，<em>atomic</em> 指的是线程下的安全操作。 Perl 6 提供了一个类型，<a href="https://docs.perl6.org/type/atomicint"><code>atomicint</code></a> 和<a href="https://docs.perl6.org/type/atomicint#Routines">一些操作</a>，它们共同保证了这一点。有关详细信息，请查看 <a href="(https://docs.perl6.org/language/numerics#Atomic_operations)">Numerics</a> 页面上的原子操作部分。</p>
+
+<h1 id="rakudo-specific-native-types-https-docs-perl6-org-language-nativetypes-top"><a href="https://docs.perl6.org/language/nativetypes#___top">Rakudo specific native types</a></h1>
+
+<p>本节中描述的类型是特定于 Rakudo 的，因此不保证它们在其他实现中或在将来的版本中保持不变。</p>
+
+<table>
+<thead>
+<tr>
+<th>long</th>
+<th>(long in C)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>longlong</td>
+<td>(longlong in C)</td>
+</tr>
+
+<tr>
+<td>ulong</td>
+<td>(long and unsigned in C)</td>
+</tr>
+
+<tr>
+<td>ulonglong</td>
+<td>(longlong and unsigned in C)</td>
+</tr>
+
+<tr>
+<td>size_t</td>
+<td>(size_t and unsigned in C)</td>
+</tr>
+
+<tr>
+<td>ssize_t</td>
+<td>(size_t in C)</td>
+</tr>
+
+<tr>
+<td>bool</td>
+<td>(bool in C)</td>
+</tr>
+</tbody>
+</table>
+
+<p>您可以像在本机 C 中使用它们一样使用它们：</p>
+
+<pre><code class="language-perl6">use NativeCall;
+ 
+my $just-an-array = CArray[int32].new( 1, 2, 3, 4, 5 );
+ 
+loop ( my size_t $i = 0; $i &lt; $just-an-array.elems; $i++ ) {
+    say $just-an-array[$i];
+}
+</code></pre>
+
+<p>这将打印数组的五个元素，因为它应该是你期望的。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

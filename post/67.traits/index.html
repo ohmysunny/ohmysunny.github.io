@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Traits · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/67.traits/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Traits</h1>
+    </header>
+
+    
+
+<p>在 Perl 6 中，*traits*是附加到对象和类的编译器钩子，它们修改了类和对象的默认行为，功能或表示。作为这样的编译器钩子，它们是在编译时定义的，尽管它们可以用于运行时。</p>
+
+<p>通过使用 <code>trait_mod</code> 关键字，已经将几个 traits 定义为语言或 Rakudo 编译器的一部分。接下来列出并解释它们。</p>
+
+<h1 id="is-trait-https-docs-perl6-org-language-traits-top"><a href="https://docs.perl6.org/language/traits#___top">is trait</a></h1>
+
+<p>定义为</p>
+
+<pre><code class="language-perl6">proto sub trait_mod:&lt;is&gt;(Mu $, |) {*}
+</code></pre>
+
+<p><code>is</code> 适用于任何类型的标量对象，并且可以接收任意数量的命名参数或位置参数。它是最常用的 trait，取决于第一个参数的类型，采用以下形式。</p>
+
+<h2 id="is-应用于类-https-docs-perl6-org-language-traits-top"><a href="https://docs.perl6.org/language/traits#___top"><code>is</code> 应用于类</a></h2>
+
+<p>最常见的形式涉及两个类，一个正在定义，另一个现有，定义为 <a href="https://docs.perl6.org/syntax/is">defines parenthood</a>。  <code>A is B</code>, 如果两个都是类，则将 A 定义为 B 的子类。</p>
+
+<p><code>is DEPRECATED</code> 可以应用于类，属性或例程，将它们标记为已弃用并发出警告消息（如果提供了的话）。</p>
+
+<p><code>is</code> 的几个实例被直接转换为它们引用的类的属性：<code>rw</code>，<code>nativesize</code>，<code>ctype</code>，<code>unsigned</code>，<code>hidden</code>，<code>array_type</code>。</p>
+
+<p>不可实例化的表示 trait 与表示没有多大关系，与特定类可以做什么有关; 它有效地防止以任何可能的方式创建类的实例。</p>
+
+<pre><code class="language-perl6">constant @IMM = &lt;Innie Minnie Moe&gt;;
+ 
+class don't-instantiate is repr('Uninstantiable') {
+    my $.counter;
+ 
+    method imm () {
+        return @IMM[ $.counter++ mod @IMM.elems ];
+    }
+}
+say don't-instantiate.imm for ^10;
+</code></pre>
+
+<p>不能实例化的类仍然可以通过它们的类变量和方法使用, 如上所示。尝试这样: <code>my $do-instantiate = don't-instantiate.new;</code> 来实例化它们会产生错误。</p>
+
+<h2 id="is-repr-和原生表示-https-docs-perl6-org-language-traits-top"><a href="https://docs.perl6.org/language/traits#___top"><code>is repr</code> 和原生表示</a></h2>
+
+<p>由于 <code>is</code> trait 通常指的是它们所应用的类或对象的性质，因此它们在<a href="(https://docs.perl6.org/language/nativecall)">原生调用</a>中被广泛使用，以指定将由原生函数通过 <code>is repr</code> 后缀处理的数据结构的<a href="https://docs.perl6.org/language/nativecall#Specifying_the_native_representation">表示</a>。同时，<code>is native</code> 用于通过原生函数实际实现的例程。这些是可以使用的表示：</p>
+
+<ul>
+<li>CStruct 对应于 C 语言中的 <code>struct</code>。它是一种复合数据结构，包括不同的异构和低级数据结构;请参阅<a href="https://docs.perl6.org/language/nativecall#Structs">此示例</a>和进一步说明。<br /></li>
+<li>类似地，CPPStruct 对应于 C++ 中的 <code>struct</code>。但是，这是暂时是 Rakudo 特定的。<br /></li>
+<li>CPointer 是任何这些语言的指针。它是一个动态数据结构，必须在使用之前进行实例化，可<a href="https://docs.perl6.org/language/nativecall#Basic_use_of_pointers">用于</a>其方法也是原生的类。<br /></li>
+<li>CUnion 将使用与 C 中的 <code>union</code> 相同的表示形式; 看一下<a href="https://docs.perl6.org/language/nativecall#CUnions">这个例子</a>。</li>
+</ul>
+
+<p>另一方面，P6opaque 是用于 Perl 6 中所有对象的默认表示。</p>
+
+<pre><code class="language-perl6">class Thar {};
+say Thar.REPR;    #OUTPUT: «P6opaque␤» 
+</code></pre>
+
+<p>除非另有说明，否则<a href="https://docs.perl6.org/language/mop">元对象协议</a>默认对每个对象和类使用它;因此，除非您有效地使用该接口，否则通常没有必要。</p>
+
+<h2 id="is-作用于例程-https-docs-perl6-org-language-traits-top"><a href="https://docs.perl6.org/language/traits#___top"><code>is</code> 作用于例程</a></h2>
+
+<p><code>is</code> trait 可用于定义方法和例程以建立<a href="https://docs.perl6.org/language/functions#Precedence">优先级</a>和<a href="https://docs.perl6.org/language/functions#Associativity">关联性</a>。它们充当使用 <a href="https://docs.perl6.org/type/Sub#Traits">trait_mod</a> 定义的子元素，该元素将要添加的 trait 的类型和名称作为参数。在子例程的情况下，trait 将是添加跨越类和角色层次结构的功能的一种方式，或者甚至可以用于向独立定义的例程添加行为。s</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

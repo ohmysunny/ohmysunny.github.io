@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  系统交互 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/66.system-interaction/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>系统交互</h1>
+    </header>
+
+    
+
+<h1 id="通过命令行获取参数-https-docs-perl6-org-language-system-top"><a href="https://docs.perl6.org/language/system#___top">通过命令行获取参数</a></h1>
+
+<p>最简单的方法是使用 <a href="https://docs.perl6.org/language/variables#%2524%252AARGS"><code>@*ARGS</code></a> 变量从命令行获取参数;此数组将包含程序名称后面的字符串。 <a href="https://docs.perl6.org/language/variables#Runtime_environment"><code>%*ENV</code></a> 将包含环境变量，因此如果您使用：</p>
+
+<pre><code class="language-perl6">export API_KEY=1967196417966160761fabc1511067
+./consume_api.p6
+</code></pre>
+
+<p>您可以通过以下方式在程序中使用它们：</p>
+
+<pre><code class="language-perl6">my $api-key = %*ENV&lt;API_KEY&gt; // die &quot;Need the API key&quot;;
+</code></pre>
+
+<p>如果先前未定义环境变量 <code>API_KEY</code>，则此操作将失败。</p>
+
+<p>Perl 6 有一个更好的方法来处理命令行参数，如果它们代表文件名：那么使用 <a href="https://docs.perl6.org/language/variables#%2524%252AARGFILES"><code>$*ARGFILES</code></a> 动态变量。</p>
+
+<pre><code class="language-perl6">for $*ARGFILES.lines -&gt; $l {
+    say &quot;Long lines in {$*ARGFILES.path}&quot;
+        if $l.chars &gt; 72 ;
+}
+</code></pre>
+
+<p>例如，你可以用 <code>argf​​iles.p6 *.p6</code> 的方式运行这个程序，每次找到一个超过72个字符的行时，它就会打印一个文件名。 <code>$*ARGFILES</code> 包含命令行中描述的所有文件的文件句柄 -  <code>.lines</code> 将依次读取每行文件的一行，每次处理新句柄时都会更改 <code>$*ARGFILES.path</code> 的值。通常，它为处理文件集的脚本提供了非常方便的 API。</p>
+
+<h1 id="以交互方式获取参数-https-docs-perl6-org-language-system-top"><a href="https://docs.perl6.org/language/system#___top">以交互方式获取参数</a></h1>
+
+<p>使用 <code>prompt</code> 让一个正在运行的程序向用户查询数据：</p>
+
+<pre><code class="language-perl6">my UInt $num-iters = prompt &quot;How many iterations to run: &quot;;
+</code></pre>
+
+<h1 id="同步和异步运行程序-https-docs-perl6-org-language-system-top"><a href="https://docs.perl6.org/language/system#___top">同步和异步运行程序</a></h1>
+
+<p>运行外部程序有两个例程：<a href="https://docs.perl6.org/routine/run"><code>run</code></a> 和 <a href="https://docs.perl6.org/routine/shell"><code>shell</code></a>。两者都存在于 <a href="https://docs.perl6.org/type/IO"><code>IO</code></a> 角色中，因此包含在混合该角色的所有类中，如 <a href="https://docs.perl6.org/type/IO::Path">IO::Path</a>。两者都返回一个 <a href="https://docs.perl6.org/type/Proc">Proc</a> 对象，但主要区别在于 <code>run</code> 会尽可能避免系统 shell，而 <code>shell</code> 会通过默认系统 shell 运行命令。</p>
+
+<p>运行所有外部程序的关键类是 <a href="https://docs.perl6.org/type/Proc::Async">Proc::Async</a>，它以异步方式运行进程，并允许与正在运行的进程进行<a href="https://docs.perl6.org/language/concurrency#Proc%3A%3AAsync">并发</a>交互。通常，通过这些高级抽象接口与系统进行交互是一种很好的做法。但是，Perl 6 提供了通过低级接口与系统交互的其他方式。</p>
+
+<h1 id="通过原生-api-进行操作系统调用-https-docs-perl6-org-language-system-top"><a href="https://docs.perl6.org/language/system#___top">通过原生 API 进行操作系统调用</a></h1>
+
+<p><a href="https://docs.perl6.org/language/nativecall"><code>NativeCall</code></a> 可用于与系统库以及任何其他可访问库进行交互。这个<a href="(https://docs.perl6.org/language/nativecall#Short_tutorial_on_calling_a_C_function)">简短的教程</a>解释了，例如，如何使用该接口调用系统函数，如 <code>getaddrinfo</code>;通过使用 NativeCall 接口的声明，也可以通过这种方式访问​​其他一些函数，例如 <a href="https://docs.perl6.org/language/5to6-perlfunc#kill"><code>kill</code></a>。</p>
+
+<p>幸运的是，您不必为所有原生功能执行此操作。作为将 Perl 5 作为生态系统的一部分移植到 Perl 6 的蝴蝶项目的一部分，<a href="https://github.com/lizmat">Elizabeth Mattijsen</a> 正在将许多系统功能移植到 <a href="https://github.com/lizmat/P5getprotobyname"><code>P5getprotobyname</code></a> 等模块中，这些功能包括 <code>endprotoent</code>，<code>getprotoent</code>，<code>getprotobyname</code> 等功能。 <code>getprotobynumber</code> 和 <code>setprotoent</code>。如果要使用p6y形式的那些功能，请搜索并安装<a href="https://modules.perl6.org/search/?q=p5">P5模块</a>。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Perl 5 到 Perl 6 指南 - 概览 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/4.perl-5-to-perl-6-guide-overview/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Perl 5 到 Perl 6 指南 - 概览</h1>
+    </header>
+
+    
+
+<p>这些文档不应该被误认为是初学者教程或 Perl 6 的宣传概述; 它旨在作为具有很强 Perl 5 背景的人学习 Perl 6 的技术参考，以及任何将 Perl 5 代码移植到 Perl 6 的人。</p>
+
+<h1 id="perl-6-in-a-nutshell-https-docs-perl6-org-language-5to6-overview-top"><a href="https://docs.perl6.org/language/5to6-overview#___top">Perl 6 in a nutshell</a></h1>
+
+<p><a href="https://docs.perl6.org/language/5to6-nutshell">果壳中的 Perl 6</a>提供了语法，运算符，复合语句，正则表达式，命令行标志以及各种其他零碎内容的快速概述。</p>
+
+<h1 id="句法差异-https-docs-perl6-org-language-5to6-overview-top"><a href="https://docs.perl6.org/language/5to6-overview#___top">句法差异</a></h1>
+
+<p><a href="https://docs.perl6.org/language/5to6-perlsyn">语法章节</a>提供的 Perl 5 和 Perl 6 之间的语法区别的一个概述：它是如何保持大部分形式自由的，写注释的其他方法，以及 <code>switch</code> 如何是一个很 Perl 6 的东西。</p>
+
+<h1 id="perl-6-中的运算符-https-docs-perl6-org-language-5to6-overview-top"><a href="https://docs.perl6.org/language/5to6-overview#___top">Perl 6 中的运算符</a></h1>
+
+<p><a href="https://docs.perl6.org/language/5to6-perlop">运算符章节</a>将引导您从<a href="https://metacpan.org/pod/distribution/perl/pod/perlop.pod">Perl 5 的 perlop</a>运算符在Perl 6 中的等价物。</p>
+
+<h1 id="perl-6-中的函数-https-docs-perl6-org-language-5to6-overview-top"><a href="https://docs.perl6.org/language/5to6-overview#___top">Perl 6 中的函数</a></h1>
+
+<p>该<a href="https://docs.perl6.org/language/5to6-perlfunc">函数章节</a>描述了所有的 Perl 5 函数和它们的 Perl 6 等价物和任何行为差异。它还提供了对提供 Perl 5 函数行为的生态系统模块的引用，这些函数存在于 Perl 6 中，具有稍微不同的语义（例如 <code>shift</code>），或者在 Perl 6 中不存在（例如 <code>tie</code>）。</p>
+
+<h1 id="perl-6-中的特殊变量-https-docs-perl6-org-language-5to6-overview-top"><a href="https://docs.perl6.org/language/5to6-overview#___top">Perl 6 中的特殊变量</a></h1>
+
+<p><a href="https://docs.perl6.org/language/5to6-perlvar">特殊变量章节</a>描述很多 Perl 5 中的特殊（标点符号）变量是否以及如何在 Perl 6 中的支持。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

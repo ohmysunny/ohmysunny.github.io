@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  创建操作符 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/26.creating-operators/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>创建操作符</h1>
+    </header>
+
+    <p>通过使用 <code>sub</code> 关键字后跟 <code>prefix</code>, <code>infix</code>, <code>postfix</code>, <code>circumfix</code>, 或 <code>postcircumfix;</code> 声明运算符; 然后是冒号结构中的冒号和运算符名称。对于（后）环缀操作符，用空格分隔这两部分。</p>
+
+<pre><code class="language-perl6">sub hello {
+    say &quot;Hello, world!&quot;;
+}
+ 
+say &amp;hello.^name;   # OUTPUT: «Sub␤» 
+hello;              # OUTPUT: «Hello, world!␤» 
+ 
+my $s = sub ($a, $b) { $a + $b };
+say $s.^name;       # OUTPUT: «Sub␤» 
+say $s(2, 5);       # OUTPUT: «7␤» 
+ 
+# Alternatively we could create a more 
+# general operator to sum n numbers 
+sub prefix:&lt;Σ&gt;( *@number-list ) {
+    [+] @number-list
+}
+ 
+say Σ (13, 16, 1); # OUTPUT: «30␤» 
+ 
+sub infix:&lt;:=:&gt;( $a is rw, $b is rw ) {
+    ($a, $b) = ($b, $a)
+}
+ 
+my ($num, $letter) = ('A', 3);
+say $num;          # OUTPUT: «A␤» 
+say $letter;       # OUTPUT: «3␤» 
+ 
+# Swap two variables' values 
+$num :=: $letter;
+ 
+say $num;          # OUTPUT: «3␤» 
+say $letter;       # OUTPUT: «A␤» 
+ 
+sub postfix:&lt;!&gt;( Int $num where * &gt;= 0 ) { [*] 1..$num }
+say 0!;            # OUTPUT: «1␤» 
+say 5!;            # OUTPUT: «120␤» 
+ 
+sub postfix:&lt;♥&gt;( $a ) { say „I love $a!“ }
+42♥;               # OUTPUT: «I love 42!␤» 
+ 
+sub postcircumfix:&lt;⸨ ⸩&gt;( Positional $a, Whatever ) {
+    say $a[0], '…', $a[*-1]
+}
+ 
+[1,2,3,4]⸨*⸩;      # OUTPUT: «1…4␤» 
+ 
+constant term:&lt;♥&gt; = &quot;♥&quot;; # We don't want to quote &quot;love&quot;, do we? 
+sub circumfix:&lt;α ω&gt;( $a ) {
+    say „$a is the beginning and the end.“
+};
+ 
+α♥ω;               # OUTPUT: «♥ is the beginning and the end.␤» 
+</code></pre>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

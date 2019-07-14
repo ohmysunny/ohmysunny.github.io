@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  输入和输出 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/20.input-and-output/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>输入和输出</h1>
+    </header>
+
+    
+
+<p>在这里，我们简要概述了与文件相关的输入/输出操作。详细信息可以在 <a href="https://docs.perl6.org/type/IO">IO</a> 角色的文档中找到，也可以在 <a href="https://docs.perl6.org/type/IO::Handle">IO::Handle</a>  和 <a href="https://docs.perl6.org/type/IO::Path">IO::Path</a> 类型中找到。</p>
+
+<h1 id="读取文件-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">读取文件</a></h1>
+
+<p>读取文件内容的一种方法是通过带有 <code>:r</code>（读取）文件模式选项的 <code>open</code> 函数打开文件，并吞噬内容：</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :r;
+my $contents = $fh.slurp;
+$fh.close;
+</code></pre>
+
+<p>这里我们使用 <code>IO::Handle</code> 对象上的 <code>close</code> 方法显式地关闭文件句柄。这是一种非常传统的读取文件内容的方法。但是，同样的事情可像这样更容易和更清楚地完成：</p>
+
+<pre><code class="language-perl6">my $contents = &quot;testfile&quot;.IO.slurp;
+# or in procedural form: 
+$contents = slurp &quot;testfile&quot;
+</code></pre>
+
+<p>通过将 <code>IO</code> 角色添加到文件名字符串中，我们实际上能够将字符串作为文件对象本身引用，从而直接吞噬其内容中。请注意，<code>slurp</code> 负责为你打开和关闭文件。</p>
+
+<h2 id="逐行读取-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">逐行读取</a></h2>
+
+<p>当然，我们也可以选择逐行读取文件。将排除新行分隔符（即  <code>$*IN.nl-in</code>）。</p>
+
+<pre><code class="language-perl6">for 'huge-csv'.IO.lines -&gt; $line {
+    # Do something with $line 
+}
+ 
+# or if you'll be processing later 
+my @lines = 'huge-csv'.IO.lines;
+</code></pre>
+
+<h1 id="写文件-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">写文件</a></h1>
+
+<p>要将数据写入文件，我们再次选择调用 <code>open</code> 函数的传统方法 - 这次使用 <code>:w</code>（write）选项 - 并将数据打印到文件中：</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :w;
+$fh.print(&quot;data and stuff\n&quot;);
+$fh.close;
+</code></pre>
+
+<p>或者使用等效的 <code>say</code>，因此不再需要显式的换行符了：</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :w;
+$fh.say(&quot;data and stuff&quot;);
+$fh.close;
+</code></pre>
+
+<p>我们可以通过使用 <code>spurt</code> 在写入模式下打开文件，将数据写入文件并再次为我们关闭来简化此操作：</p>
+
+<pre><code class="language-perl6">spurt &quot;testfile&quot;, &quot;data and stuff\n&quot;;
+</code></pre>
+
+<p>默认情况下，所有（文本）文件都写为 UTF-8，但是如果需要，可以通过 <code>:enc</code> 选项指定显式编码：</p>
+
+<pre><code class="language-perl6">spurt &quot;testfile&quot;, &quot;latin1 text: äöüß&quot;, enc =&gt; &quot;latin1&quot;;
+</code></pre>
+
+<p>要将格式化的字符串写入文件, 请使用 <a href="https://docs.perl6.org/type/IO::Handle">IO::Handle</a> 的 <a href="https://docs.perl6.org/routine/printf">printf</a> 函数。</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :w;
+$fh.printf(&quot;formatted data %04d\n&quot;, 42);
+$fh.close;
+</code></pre>
+
+<p>要追加到文件，请在显式地打开文件句柄时指定 <code>:a</code> 选项，</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :a;
+$fh.print(&quot;more data\n&quot;);
+$fh.close;
+</code></pre>
+
+<p>或者使用等效的 <code>say</code>，因此不再需要显式的换行符了,</p>
+
+<pre><code class="language-perl6">my $fh = open &quot;testfile&quot;, :a;
+$fh.say(&quot;more data&quot;);
+$fh.close;
+</code></pre>
+
+<p>或者甚至在调用 <code>spurt</code> 时加上 <code>:append</code> 选项:</p>
+
+<pre><code class="language-perl6">spurt &quot;testfile&quot;, &quot;more data\n&quot;, :append;
+</code></pre>
+
+<p>要将二进制数据显式地写入文件，请使用 <code>:bin</code> 选项打开它。然后输入/输出操作将使用 <code>Buf</code> 类型而不是 <code>Str</code> 类型。</p>
+
+<h1 id="复制和重命名文件-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">复制和重命名文件</a></h1>
+
+<p>例程 <code>copy</code>, <code>rename</code>, 和 <code>move</code> 是可用的以避免低级别的系统命令。 在 <a href="https://docs.perl6.org/routine/copy">copy</a>, <a href="https://docs.perl6.org/routine/rename">rename</a>, 和 <a href="https://docs.perl6.org/routine/move">move</a> 查看详情. 一些例子:</p>
+
+<pre><code class="language-perl6">my $filea = 'foo';
+my $fileb = 'foo.bak';
+my $filec = '/disk1/foo';  # note 'diskN' is assumed to be a physical storage device 
+ 
+copy $filea, $fileb;              # overwrites $fileb if it exists 
+copy $filea, $fileb, :createonly; # fails if $fileb exists 
+ 
+rename $filea, 'new-foo';              # overwrites 'new-foo' if it exists 
+rename $filea, 'new-foo', :createonly; # fails if 'new-foo' exists 
+ 
+# use move when a system-level rename may not work 
+move $fileb, '/disk2/foo';              # overwrites '/disk2/foo' if it exists 
+move $fileb, '/disk2/foo', :createonly; # fails if '/disk2/foo' exists 
+</code></pre>
+
+<h1 id="检查文件和目录-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">检查文件和目录</a></h1>
+
+<p>在 <code>IO::Handle</code> 对象上使用 <code>e</code> 方法来测试文件或目录是否存在。</p>
+
+<pre><code class="language-perl6">if &quot;nonexistent_file&quot;.IO.e {
+    say &quot;file exists&quot;;
+}
+else {
+    say &quot;file doesn't exist&quot;;
+}
+</code></pre>
+
+<p>也可以使用冒号对语法来实现相同的功能：</p>
+
+<pre><code class="language-perl6">if &quot;path/to/file&quot;.IO ~~ :e {
+    say 'file exists';
+}
+my $file = &quot;path/to/file&quot;;
+if $file.IO ~~ :e {
+    say 'file exists';
+}
+</code></pre>
+
+<p>与文件存在检查类似，也可以检查路径是否是目录。例如，假设文件 <code>testfile</code> 和目录  <code>lib</code> 存在，我们将从存在测试方法 <code>e</code> 获得相同的结果，即两者都存在：</p>
+
+<pre><code class="language-perl6">say &quot;testfile&quot;.IO.e;  # OUTPUT: «True␤» 
+say &quot;lib&quot;.IO.e;       # OUTPUT: «True␤» 
+</code></pre>
+
+<p>但是，由于它们中只有一个是目录，因此目录测试方法 <code>d</code> 将给出不同的结果：</p>
+
+<pre><code class="language-perl6">say &quot;testfile&quot;.IO.d;  # OUTPUT: «False␤» 
+say &quot;lib&quot;.IO.d;       # OUTPUT: «True␤» 
+</code></pre>
+
+<p>当我们通过文件测试方法 <code>f</code> 检查路径是否是文件时，结果自然会反过来：</p>
+
+<pre><code class="language-perl6">say &quot;testfile&quot;.IO.f;  # OUTPUT: «True␤» 
+say &quot;lib&quot;.IO.f;       # OUTPUT: «False␤» 
+</code></pre>
+
+<p>还有其他方法可用于查询文件或目录，一些有用的方法是：</p>
+
+<pre><code class="language-perl6">my $f = &quot;file&quot;;
+ 
+say $f.IO.modified; # return time of last file (or directory) change 
+say $f.IO.accessed; # return last time file (or directory) was read 
+say $f.IO.s;        # return size of file (or directory inode) in bytes 
+</code></pre>
+
+<p>更多方法和详细信息请查看 <a href="https://docs.perl6.org/type/IO::Path">IO::Path</a>.</p>
+
+<h1 id="获取目录列表-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">获取目录列表</a></h1>
+
+<p>要列出当前目录的内容，请使用 <code>dir</code> 函数。它返回 <a href="https://docs.perl6.org/type/IO::Path">IO::Path</a> 对象的列表。</p>
+
+<pre><code class="language-perl6">say dir;          # OUTPUT: «&quot;/path/to/testfile&quot;.IO &quot;/path/to/lib&quot;.IO␤» 
+</code></pre>
+
+<p>要列出给定目录中的文件和目录，只需将路径作为参数传递给 <code>dir</code>：</p>
+
+<pre><code class="language-perl6">say dir &quot;/etc/&quot;;  # OUTPUT: «&quot;/etc/ld.so.conf&quot;.IO &quot;/etc/shadow&quot;.IO ....␤» 
+</code></pre>
+
+<h1 id="创建和移除目录-https-docs-perl6-org-language-io-top"><a href="https://docs.perl6.org/language/io#___top">创建和移除目录</a></h1>
+
+<p>要创建一个新目录，只需使用目录名作为参数调用函数 <code>mkdir</code>：</p>
+
+<pre><code class="language-perl6">mkdir &quot;newdir&quot;;
+</code></pre>
+
+<p>该函数在成功时返回创建目录的名称，在失败时返回 <code>Nil</code>。因此，标准的 Perl 惯用法按预期工作：</p>
+
+<pre><code class="language-perl6">mkdir &quot;newdir&quot; or die &quot;$!&quot;;
+</code></pre>
+
+<p>使用 <code>rmdir</code> 来移除*空*目录:</p>
+
+<pre><code class="language-perl6">rmdir &quot;newdir&quot; or die &quot;$!&quot;;
+</code></pre>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

@@ -3,6 +3,371 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ohmysunny.github.io/post/2019-07-14-perldoc-translation/</loc>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/72.experimental-features/</loc>
+    <lastmod>2018-12-15T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/71.variables/</loc>
+    <lastmod>2018-12-14T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/70.unicode-versus-ascii-symbols/</loc>
+    <lastmod>2018-12-13T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/69.unicode/</loc>
+    <lastmod>2018-12-12T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/68.type-system/</loc>
+    <lastmod>2018-12-12T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/67.traits/</loc>
+    <lastmod>2018-12-11T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/66.system-interaction/</loc>
+    <lastmod>2018-12-10T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/65.syntax/</loc>
+    <lastmod>2018-12-09T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/64.subscripts/</loc>
+    <lastmod>2018-12-08T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/63.sets-bags-and-mixes/</loc>
+    <lastmod>2018-12-07T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/62.routines/</loc>
+    <lastmod>2018-12-06T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/61.regexes/</loc>
+    <lastmod>2018-12-05T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/60.quoting-constructs/</loc>
+    <lastmod>2018-12-04T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/59.pragmas/</loc>
+    <lastmod>2018-12-03T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/57.perl-6-native-types/</loc>
+    <lastmod>2018-12-02T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/58.phasers/</loc>
+    <lastmod>2018-12-02T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/56.performance/</loc>
+    <lastmod>2018-12-01T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/55.packages/</loc>
+    <lastmod>2018-11-30T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/54.operators/</loc>
+    <lastmod>2018-11-29T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/53.object-orientation/</loc>
+    <lastmod>2018-11-28T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/52.numerics/</loc>
+    <lastmod>2018-11-27T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/51.newline-handling-in-perl-6/</loc>
+    <lastmod>2018-11-26T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/50.native-calling-interface/</loc>
+    <lastmod>2018-11-25T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/49.meta-object-protocol-mop/</loc>
+    <lastmod>2018-11-24T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/48.lists-sequences-and-arrays/</loc>
+    <lastmod>2018-11-23T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/47.input-and-output-the-definitive-guide/</loc>
+    <lastmod>2018-11-22T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/46.hashes-and-maps/</loc>
+    <lastmod>2018-11-21T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/45.grammars/</loc>
+    <lastmod>2018-11-20T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/44.functions/</loc>
+    <lastmod>2018-11-19T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/43.exceptions/</loc>
+    <lastmod>2018-11-18T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/42.enumeration/</loc>
+    <lastmod>2018-11-17T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/41.date-and-time-functions/</loc>
+    <lastmod>2018-11-16T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/40.data-structures/</loc>
+    <lastmod>2018-11-15T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/39.control-flow/</loc>
+    <lastmod>2018-11-14T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/38.contexts-and-contextualizers/</loc>
+    <lastmod>2018-11-13T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/37.containers/</loc>
+    <lastmod>2018-11-12T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/36.traps-to-avoid/</loc>
+    <lastmod>2018-11-11T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/35.testing/</loc>
+    <lastmod>2018-11-10T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/34.terms/</loc>
+    <lastmod>2018-11-09T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/33.pod-6-tables/</loc>
+    <lastmod>2018-11-08T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/32.perl-6-pod/</loc>
+    <lastmod>2018-11-07T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/31.glossary/</loc>
+    <lastmod>2018-11-06T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/30.faq/</loc>
+    <lastmod>2018-11-05T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/29.community/</loc>
+    <lastmod>2018-11-04T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/28.about-the-docs/</loc>
+    <lastmod>2018-11-03T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/27.regexes-best-practices-and-gotchas/</loc>
+    <lastmod>2018-11-02T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/26.creating-operators/</loc>
+    <lastmod>2018-11-01T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/25.modules/</loc>
+    <lastmod>2018-10-31T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/24.module-packages/</loc>
+    <lastmod>2018-10-30T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/23.module-development-utilities/</loc>
+    <lastmod>2018-10-29T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/22.iterating/</loc>
+    <lastmod>2018-10-28T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/21.inter-process-communication/</loc>
+    <lastmod>2018-10-27T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/20.input-and-output/</loc>
+    <lastmod>2018-10-26T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/19.grammar-tutorial/</loc>
+    <lastmod>2018-10-25T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/18.entering-unicode-characters/</loc>
+    <lastmod>2018-10-24T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/17.doing-math-with-perl-6/</loc>
+    <lastmod>2018-10-23T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/16.core-modules/</loc>
+    <lastmod>2018-10-22T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/15.concurrency/</loc>
+    <lastmod>2018-10-21T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/14.command-line-interface/</loc>
+    <lastmod>2018-10-20T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/13.classes-and-objects/</loc>
+    <lastmod>2018-10-19T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/12.ruby-to-perl-6/</loc>
+    <lastmod>2018-10-18T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/11.python-to-perl6-nutshell/</loc>
+    <lastmod>2018-10-17T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/9.haskell-to-perl-6-nutshell/</loc>
+    <lastmod>2018-10-16T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/10.javascript-node.js-to-perl-6-nutshell/</loc>
+    <lastmod>2018-10-16T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/8.perl-5-to-perl-6-guide-special-variables/</loc>
+    <lastmod>2018-10-15T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/7.perl-5-to-perl-6-guide-syntax/</loc>
+    <lastmod>2018-10-14T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/6.perl-5-to-perl-6-guide-operators/</loc>
+    <lastmod>2018-10-13T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/5.perl-5-to-perl-6-guide-functions/</loc>
+    <lastmod>2018-10-12T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/4.perl-5-to-perl-6-guide-overview/</loc>
+    <lastmod>2018-10-12T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/3.perl-5-to-perl-6-guide-in-a-nutshell/</loc>
+    <lastmod>2018-10-11T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/2.perl-6-by-example-p6-101/</loc>
+    <lastmod>2018-10-10T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ohmysunny.github.io/post/1.brief-introduction/</loc>
+    <lastmod>2018-10-09T21:13:31+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ohmysunny.github.io/post/2018-10-08-mapgroupswithstate/</loc>
     <lastmod>2018-10-08T14:18:20+08:00</lastmod>
   </url>
@@ -45,6 +410,12 @@
   </url>
   
   <url>
+    <loc>https://ohmysunny.github.io/tags/doc/</loc>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ohmysunny.github.io/tags/hello/</loc>
     <lastmod>2018-10-03T19:15:00+08:00</lastmod>
     <priority>0</priority>
@@ -70,13 +441,13 @@
   
   <url>
     <loc>https://ohmysunny.github.io/categories/perl6/</loc>
-    <lastmod>2018-10-03T21:33:03+08:00</lastmod>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ohmysunny.github.io/post/</loc>
-    <lastmod>2018-10-08T14:18:20+08:00</lastmod>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -88,13 +459,13 @@
   
   <url>
     <loc>https://ohmysunny.github.io/tags/</loc>
-    <lastmod>2018-10-03T19:15:00+08:00</lastmod>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ohmysunny.github.io/</loc>
-    <lastmod>2018-10-08T14:18:20+08:00</lastmod>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  测试 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/35.testing/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>测试</h1>
+    </header>
+
+    
+
+<p>测试代码是软件开发不可或缺的一部分。测试提供代码行为的自动，可重复的验证，并确保您的代码按预期工作。</p>
+
+<p>在 Perl 6 中，<a href="https://docs.perl6.org/type/Test">Test</a> 模块提供了一个测试框架，也被 Perl 6 的官方 spectest 套件使用。</p>
+
+<p>测试函数发出符合 <a href="https://testanything.org/">Test Anything Protocol</a> 的输出。通常，它们用于 sink 上下文中：</p>
+
+<pre><code class="language-perl6">ok check-name($meta, :$relaxed-name), &quot;name has a hyphen rather than '::'&quot;
+</code></pre>
+
+<p>但是不论测试成功与否，所有函数都会返回布尔值，如果测试失败，可以使用它来打印消息：</p>
+
+<pre><code class="language-perl6">ok check-name($meta, :$relaxed-name), &quot;name has a hyphen rather than '::'&quot; \
+  or diag &quot;\nTo use hyphen in name, pass :relaxed-name to meta-ok\n&quot;;
+</code></pre>
+
+<h1 id="写测试-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">写测试</a></h1>
+
+<p>与任何 Perl 项目一样，测试位于项目基本目录的 <code>t</code> 目录下。</p>
+
+<p>典型的测试文件看起来像这样：</p>
+
+<pre><code class="language-perl6">use v6.c;
+use Test;      # a Standard module included with Rakudo 
+use lib 'lib';
+ 
+plan $num-tests;
+ 
+# .... tests 
+ 
+done-testing;  # optional with 'plan' 
+</code></pre>
+
+<p>我们确保通过 <code>use v6.c</code> 编译指令使用 Perl 6，然后加载 <code>Test</code> 模块并指定库的位置。然后我们指定我们*计划*运行多少个测试（这样测试框架可以告诉我们运行的测试是否比我们预期的要多），并且在完成测试后，我们使用*完成测试*来告诉框架我们已经完成。</p>
+
+<h2 id="线程安全-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">线程安全</a></h2>
+
+<p>请注意，<code>Test</code> 模块中的例程*不是*线程安全的。这意味着您不应该同时尝试在多个线程中使用测试例程，因为 <a href="https://testanything.org/">TAP</a> 输出可能会出现乱序并且会使解释它的程序迷惑。</p>
+
+<p>目前没有计划使其线程安全。如果线程测试对您至关重要，您可能会发现一些合适的<a href="https://modules.perl6.org/search/?q=Test">生态系统模块</a>，代替 <code>Test</code> 来满足您的测试需求。</p>
+
+<h1 id="运行测试-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">运行测试</a></h1>
+
+<p>可以通过在命令行上指定测试文件名来单独运行测试：</p>
+
+<pre><code class="language-shell">$ perl6 t/test-filename.t
+</code></pre>
+
+<p>或者通过 Perl 5 中的 <a href="https://perldoc.perl.org/prove.html">prove</a> 命令，其中 <code>--exec</code> 用于指定运行测试的可执行文件：</p>
+
+<pre><code class="language-shell">$ prove --exec perl6 -r t
+</code></pre>
+
+<p>要在第一次失败时中止测试套件，请设置 <code>PERL6_TEST_DIE_ON_FAIL</code> 环境变量：</p>
+
+<pre><code class="language-shell">$ PERL6_TEST_DIE_ON_FAIL=1 perl6 t/test-filename.t
+</code></pre>
+
+<p>可以在测试文件中使用相同的变量。在加载 <code>Test</code> 模块之前设置它：</p>
+
+<pre><code class="language-shell">BEGIN %*ENV&lt;PERL6_TEST_DIE_ON_FAIL&gt; = 1;
+use Test;
+...
+</code></pre>
+
+<h1 id="测试计划-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">测试计划</a></h1>
+
+<p>测试计划用 <a href="https://docs.perl6.org/type/Test#plan"><code>plan</code></a> 声明将要完成的计划数量，或者可能会跳过的计划数量。如果没有声明计划，<a href="https://docs.perl6.org/type/Test#done-testing"><code>done-testing</code></a> 则用于声明测试结束。</p>
+
+<h1 id="测试返回值-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">测试返回值</a></h1>
+
+<p><code>Test</code> 模块导出各种函数，用于检查给定表达式的返回值并生成标准化测试输出。</p>
+
+<p>在实践中，表达式通常是对要进行单元测试的函数或方法的调用。<a href="https://docs.perl6.org/type/Test#ok"><code>ok</code></a> 和 <a href="https://docs.perl6.org/type/Test#nok"><code>nok</code></a> 将匹配 <code>True</code> 和 <code>False</code>。但是，在可能的情况下，最好使用下面的一个专门的比较测试函数，因为它们可以在比较失败时打印更有用的诊断输出。</p>
+
+<h2 id="通过字符串比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过字符串比较</a></h2>
+
+<p><a href="https://docs.perl6.org/type/Test#is"><code>is</code></a> 和 <a href="https://docs.perl6.org/type/Test#isnt"><code>nok</code></a> 使用适当的运算符测试相等性，具体取决于它所处理的对象（或类）。</p>
+
+<h2 id="通过近似数字比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过近似数字比较</a></h2>
+
+<p><a href="https://docs.perl6.org/type/Test#is-approx"><code>is-approx</code></a> 比较具有一定精度的数字，可以是绝对的或相对的。它对于精度取决于内部表示的数值非常有用。</p>
+
+<h2 id="通过结构比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过结构比较</a></h2>
+
+<p>也可以使用 <a href="https://docs.perl6.org/type/Test#is-deeply"><code>is-deeply</code></a> 比较结构，这将检查所比较的对象的内部结构是否相同。</p>
+
+<h2 id="任意比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">任意比较</a></h2>
+
+<p>您可以使用 <a href="https://docs.perl6.org/type/Test#cmp-ok"><code>cmp-ok</code></a> 进行任何类型的比较，它将您想要用于比较的函数或运算符作为参数。</p>
+
+<h2 id="通过对象类型比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过对象类型比较</a></h2>
+
+<p><a href="https://docs.perl6.org/type/Test#isa-ok"><code>isa-ok</code></a> 测试对象是否属于某种类型。</p>
+
+<h2 id="通过方法名比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过方法名比较</a></h2>
+
+<p><a href="https://docs.perl6.org/type/Test#can-ok"><code>can-ok</code></a> 用于对象以检查它们是否具有该特定方法。</p>
+
+<h2 id="通过角色比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过角色比较</a></h2>
+
+<ul>
+<li>does-ok($variable, $role, $description?)</li>
+</ul>
+
+<p><a href="https://docs.perl6.org/type/Test#does-ok"><code>does-ok</code></a> 检查给定变量是否可以执行某个<a href="https://docs.perl6.org/language/objects#Roles">角色</a>。</p>
+
+<h2 id="通过正则表达式比较-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">通过正则表达式比较</a></h2>
+
+<p><a href="https://docs.perl6.org/type/Test#like"><code>like</code></a> 和 <a href="https://docs.perl6.org/type/Test#unlike"><code>unlike</code></a> 使用正则表达式检查; 在第一种情况下，如果存在匹配则通过，在第二种情况下则不通过。</p>
+
+<h1 id="测试模块-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">测试模块</a></h1>
+
+<p>用 <a href="https://docs.perl6.org/type/Test#use-ok"><code>use-ok</code></a> 实验性地加载模块，如果加载失败则会失败。</p>
+
+<h1 id="测试异常-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">测试异常</a></h1>
+
+<p><a href="https://docs.perl6.org/type/Test#dies-ok"><code>dies-ok</code></a> 和 <a href="https://docs.perl6.org/type/Test#lives-ok"><code>lives-ok</code></a> 是相反的测试代码的方法; 第一个检查是它抛出异常，第二个检查它不抛出异常; <a href="https://docs.perl6.org/type/Test#throws-like"><code>throws-like</code></a> 检查代码是否抛出了作为参数传递的特定异常; <a href="https://docs.perl6.org/type/Test#fails-like"><code>fails-like</code></a> 同样，检查代码是否返回特定类型的 <a href="https://docs.perl6.org/type/Failure">Failure</a>。<a href="https://docs.perl6.org/type/Test#eval-dies-ok"><code>eval-dies-ok</code></a> 和 <a href="https://docs.perl6.org/type/Test#eval-lives-ok"><code>eval-lives-ok</code></a> 在测试之前计算的字符串上工作类似。</p>
+
+<h1 id="grouping-tests-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">Grouping tests</a></h1>
+
+<p>只有在所有子测试都是 <code>ok</code> 的时候, 这组子测试的结果才是 <code>ok</code> 的; 他们按使用 <a href="https://docs.perl6.org/type/Test#subtest"><code>subtest</code></a> 分组。</p>
+
+<h1 id="跳过测试-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">跳过测试</a></h1>
+
+<p>有时测试还没准备好运行，例如某个功能可能尚未实现，在这种情况下，测试可以标记为 <a href="https://docs.perl6.org/type/Test#todo"><code>todo</code></a>。或者可能是某个特定功能仅适用于特定平台的情况 - 在这种情况下，可以在其他平台上 <a href="https://docs.perl6.org/type/Test#skip"><code>skip</code></a> 这个测试; <a href="https://docs.perl6.org/type/Test#skip-rest"><code>skip-rest</code></a> 将跳过剩余的测试，而不是跳过作为参数给出的特定数字的测试; <a href="https://docs.perl6.org/type/Test#bail-out"><code>bail-out</code></a> 将简单地带着一条消息退出测试。</p>
+
+<h1 id="手动控制-https-docs-perl6-org-language-testing-top"><a href="https://docs.perl6.org/language/testing#___top">手动控制</a></h1>
+
+<p>如果上面记录的便利功能不符合您的需要，您可以使用以下函数手动指导测试套输出; <a href="https://docs.perl6.org/type/Test#pass"><code>pass</code></a> 将打印测试已经通过，<a href="https://docs.perl6.org/type/Test#diag"><code>diag</code></a> 将打印（可能）信息性消息。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

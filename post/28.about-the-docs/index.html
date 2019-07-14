@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  关于文档 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/28.about-the-docs/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>关于文档</h1>
+    </header>
+
+    
+
+<p>本文档集代表了正在努力记录 Perl 6 编程语言的目标是：全面; 使用方便; 易于导航; 对新手和经验丰富的 Perl 6 程序员都很有用。</p>
+
+<p>该文档的 HTML 版本位于线上的 <a href="https://docs.perl6.org/">https://docs.perl6.org</a>。</p>
+
+<p>该文档的官方来源位于 <a href="https://github.com/perl6/doc">GitHub上的perl6/doc</a>。</p>
+
+<p>本特定文档快速概述了<a href="https://github.com/perl6/doc/blob/master/CONTRIBUTING.md">在GitHub上的贡献</a>中更详细描述的过程。本文档还简要介绍了编写 Perl 6 Pod 文件，这些文件可以渲染为 HTML 和其他格式。</p>
+
+<h1 id="结构-https-docs-perl6-org-language-about-top"><a href="https://docs.perl6.org/language/about#___top">结构</a></h1>
+
+<p>所有文档都是用 Perl 6 Pod 编写的，并保存在 <code>doc/</code> 目录 <code>doc/Language/</code> 和 <code>doc/Type/</code> 子目录中。这些文件作为定义集合或“文档”处理，然后进行后处理并链接在一起。</p>
+
+<h1 id="从-pod-生成-html-https-docs-perl6-org-language-about-top"><a href="https://docs.perl6.org/language/about#___top">从 Pod 生成 HTML</a></h1>
+
+<p>要从 Pod 文件生成 HTML，你需要：</p>
+
+<ul>
+<li>最新版本的 Rakudo Perl 6 编译器</li>
+<li>Perl 6 模块Pod::To::HTML，Pod::To::BigPage 和 URI::Escape（可以通过<a href="https://github.com/ugexe/zef">zef</a>安装）。</li>
+<li><strong>可选</strong>：<a href="https://www.graphviz.org/">GraphViz</a>，用于创建 Perl 6 类型之间关系的图形</li>
+<li><strong>可选</strong>：<a href="https://github.com/atom/highlights">Atom Highlights</a> 和 <a href="https://atom.io/packages/language-perl6">language-perl6</a>，用于语法高亮显示</li>
+</ul>
+
+<p>要在文件<code>html/</code>文件夹中生成文档，请运行：</p>
+
+<pre><code>perl6 htmlify.p6
+</code></pre>
+
+<p>要从 Web 服务器托管文档，请安装 Perl 5 和 Mojolicious::Lite，然后运行：</p>
+
+<pre><code>perl app.pl daemon
+</code></pre>
+
+<h1 id="贡献-https-docs-perl6-org-language-about-top"><a href="https://docs.perl6.org/language/about#___top">贡献</a></h1>
+
+<p>文档是用 Perl 6 Pod 编写的。</p>
+
+<p>有关 Perl 6 Pod 的快速介绍，请参阅<a href="https://docs.perl6.org/language/pod">Perl 6 Pod</a>。</p>
+
+<p>有关 Perl 6 Pod 规范的完整详细信息，请参见<a href="https://design.perl6.org/S26.html">概要26,文档</a>。</p>
+
+<h2 id="添加定义-https-docs-perl6-org-language-about-top"><a href="https://docs.perl6.org/language/about#___top">添加定义</a></h2>
+
+<p>Documentables 可以使用 <code>=headN</code> Pod 指令来定义，其中 <code>N</code> 大于零（例如，<code>=head1</code>，<code>=head2</code>，&hellip;）。</p>
+
+<p>该指令之后的所有段落和块，直到同一级别的下一个指令，将被视为可记录的一部分。所以，在：</p>
+
+<pre><code class="language-pod6">=head2 My Definition
+
+Some paragraphs, followed by some code:
+
+    my Code $examples = &quot;amazing&quot;;
+
+Mind === blown.
+
+=head3 Minor details about My Definition
+
+It's fantastic.
+
+=head2 And now, for something completely different
+
+…
+</code></pre>
+
+<p>可记录的 <code>My Definition</code> 延伸到了 <code>=head2 And now…</code>。</p>
+
+<p>可记录文件可能包含其他文件。例如，类可记录文件通常包含类实现的方法。</p>
+
+<p>定义必须采用下列形式之一才能被识别为名为 document 文件的起点。首先是文档源代码：</p>
+
+<pre><code class="language-pod6">=item X&lt;C&lt;How to use the þ infix&gt; | infix,þ&gt; (This a special case, which 
+is always considered a definition)
+ 
+=item C&lt;The þ Infix&gt; 
+ 
+=item B&lt;The C&lt;þ&gt; Infix&gt; 
+ 
+=item C&lt;Infix þ&gt; 
+ 
+=item B&lt;Infix C&lt;þ&gt;&gt; 
+ 
+=item C&lt;trait is cached&gt; (A special case for the L&lt;trait|/language/functions#Traits&gt; documentables) 
+ 
+</code></pre>
+
+<p>然后是渲染页面上的结果：</p>
+
+<ul>
+<li><code>How to use the þ infix</code> （这是一种特殊情况，始终被视为定义）</li>
+<li><code>The þ Infix</code></li>
+<li><strong>The þ Infix</strong></li>
+<li><code>Infix þ</code></li>
+<li><strong>Infix þ</strong></li>
+<li><code>trait is cached</code>（<a href="https://docs.perl6.org/language/functions#Traits">trait</a>文档的特例）</li>
+</ul>
+
+<p>现在可以使用 HTML 文档中的搜索字段搜索这些项。</p>
+
+<p>您可以使用粗体（<strong>B&lt;&gt;</strong>）或斜体（<strong>I&lt;&gt;</strong>）添加强调，可以使用或不使用代码格式（<strong>C&lt;&gt;</strong>）。由于当前的解析器限制，必须采取特殊步骤将<strong>X&lt;&gt;</strong>与其他格式代码一起使用; 例如：</p>
+
+<pre><code class="language-pod6">=item X&lt;B&lt;foo&gt;|foo&gt; a fancy subroutine 
+</code></pre>
+
+<p>像这样渲染</p>
+
+<ul>
+<li><strong>foo</strong> a fancy subroutine</li>
+</ul>
+
+<p>请注意，管道（“|”）之后的文本没有格式。另请注意，<strong>C&lt;&gt;</strong>保留空格并将文本视为逐字处理。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>

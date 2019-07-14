@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <meta name="description" content="ohmysunny&#39;s personal website">
+    <meta name="keywords" content="Perl6,Rakudo">
+
+    <base href="https://ohmysunny.github.io/">
+    <title>
+  Perl 5 到 Perl 6 指南 - 运算符 · 焉知非鱼
+</title>
+
+    <link rel="canonical" href="https://ohmysunny.github.io/post/6.perl-5-to-perl-6-guide-operators/">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:300,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.6130bcc37fe0899365dd962210d3a13994cf8c438aba750864bcaf4c548dc01a.css" integrity="sha256-YTC8w3/giZNl3ZYiENOhOZTPjEOKunUIZLyvTFSNwBo=" media="screen">
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ohmysunny.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    
+
+    <meta name="generator" content="Hugo 0.53" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://ohmysunny.github.io/">
+      焉知非鱼
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/post">博客</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/categories">归档</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/page/about/">关于</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="/tags">标签</a>
+          </li>
+        
+      
+      
+    </ul>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Perl 5 到 Perl 6 指南 - 运算符</h1>
+    </header>
+
+    
+
+<h1 id="描述-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">描述</a></h1>
+
+<p>一个（希望）全面的 Perl 5 运算符列表及其 Perl 6 等价物，并在必要时记录它们之间的差异。</p>
+
+<h1 id="注意-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">注意</a></h1>
+
+<p>本文档*没有*详细解释运算符。本文档旨在指导您从 Perl 5 <code>perlop</code> 文档中的操作符过渡到 Perl 6 中的等效文档。有关 Perl 6 等效文档的完整文档，请参阅<a href="https://docs.perl6.org/language/operators">Perl 6文档</a>。</p>
+
+<h2 id="运算符优先级和关联性-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">运算符优先级和关联性</a></h2>
+
+<p>运算符优先级表在 Perl 6 中与在 Perl 5 中有所不同，因此这里不再详述。如果您需要知道 Perl 6 中给定运算符的优先级和关联性，请参阅<a href="https://docs.perl6.org/language/operators#Operator_precedence">运算符优先级</a>。</p>
+
+<h2 id="项和列表运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">项和列表运算符</a></h2>
+
+<p>Perl 5 <code>perlop</code> 文档中列出的作为一元运算符和列表运算符的内容在这个章节里往往可以被视为函数，例如 <code>print</code> 和 <code>chdir</code>。因此，您可以在<a href="https://docs.perl6.org/language/5to6-perlfunc">函数</a>指南中找到有关它们的信息。括号仍用于分组。有一点需要注意：在 Perl 6 中，是<code>,</code>（逗号）创建列表<strong>而不是</strong>圆括号。所以：</p>
+
+<pre><code class="language-perl6">my @foo = 1,2,3,4,5;   # no parentheses needed 
+.say for 1,2,3,4,5;    # also no parentheses 
+ 
+my $scalar = (1);      # *not* a list, as there is no comma 
+my $list   = (1,);     # a List in a scalar container 
+</code></pre>
+
+<h2 id="箭头运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">箭头运算符</a></h2>
+
+<p>由于您通常不会在 Perl 6 中使用引用，因此箭头作为解除引用运算符可能不太有用。但是，如果您确实需要解引用某些内容，则箭头就是点号。它也是方法调用的中的点号。因此，Perl 5 中的 <code>$arrayref-&gt;[7]</code> 在 Perl 6 中变成 <code>$arrayref.[7]</code>，类似地, <code>$user-&gt;name</code> 变成了 <code>$user.name</code>。<code>=&gt;</code> 箭头用于构建 Pair 对，参考<a href="https://docs.perl6.org/language/terms#Pair">Pair 术语文档</a>。</p>
+
+<h2 id="自动递增和自动递减-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">自动递增和自动递减</a></h2>
+
+<p>和 Perl 5 中工作的一样。一个可能的警告是对于 <code>++</code> 它们调用 <code>succ</code> 方法, 对于 <code>--</code> 他们调用 <code>pred</code> 方法。对于内置数字类型，这是不太可能做一些不寻常的，但自定义类型可以定义自己的 <code>succ</code> 和 <code>pred</code> 方法，所以在这种情况下，你应该注意的是什么是 <code>++</code> 和 <code>--</code> *真正*能做的。</p>
+
+<h2 id="指数-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">指数</a></h2>
+
+<p>像你期望的那样工作。在 Perl 5 的 perlop 中关于 <code>**</code> 绑定比一元减号更紧密的警告（即 <code>-2 ** 4</code> 被计算为 <code>-(2 ** 4)</code> 而不是 <code>(-2) ** 4</code>）也适用于 Perl 6。</p>
+
+<h2 id="符号一元运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">符号一元运算符</a></h2>
+
+<p>如在 Perl 5 中那样，一元 <code>!</code> 和 <code>-</code> 进行逻辑和算术否定。<code>?^</code> 用于按位逻辑否定，文档指出这相当于 <code>!</code>。值得注意的是，这些分别强制他们的参数 为 <code>Bool</code> 和 <code>Numeric</code> 类型。</p>
+
+<p>一元 <code>~</code> 是 Perl 6 中的字符串上下文运算符，因此使用前缀 <code>+^</code> 进行逐位整数否定。假设两个补码。</p>
+
+<p><code>+</code> *确实*在 Perl 6 中产生作用，强转其参数为数值类型。</p>
+
+<p>一元 <code>\</code> 没有了。如果你真的想要对现有的命名变量进行“引用”，你可以使用项上下文，如下所示：<code>$aref = item(@array)</code> 或者可以通过更熟悉的前缀 <code>$</code>： <code>$aref = $@array</code>。请注意，您并没有真正获得引用，而是一个带有引用对象的标量容器。</p>
+
+<p>您可以使用 <code>&amp;</code> sigil 获取命名子例程的“引用” ：<code>$sref = &amp;foo</code>。匿名数组，散列和 sub 创建过程中<strong>立即</strong>返回底层对象：<code>$sref = sub { }</code>。</p>
+
+<h2 id="绑定运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">绑定运算符</a></h2>
+
+<p><code>=~</code> 和 <code>!~</code> 分别被 <code>~~</code> 和 <code>!~~</code> 取代。那些认为 Perl 5 中的智能匹配坏掉的人会很高兴听到它在 Perl 6 中运行得更好，因为更强的坚定意味着更少的猜测。有关<a href="https://docs.perl6.org/language/operators#index-entry-smartmatch_operator">smartmatch</a>在 Perl 6 中的工作原理的更详细说明，请参阅<a href="https://docs.perl6.org/language/operators#index-entry-smartmatch_operator">smartmatch 文档</a>。</p>
+
+<h2 id="乘法运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">乘法运算符</a></h2>
+
+<p>二元 <code>*</code>，<code>/</code> 和 <code>%</code> 分别执行乘法，除法和取模运算，和 Perl 5 中一样。</p>
+
+<p>二元 <code>x</code> 运算符在 Perl 6 中略有不同，并且他有一个同伴儿。<code>print '-' x 80;</code> 给你一个 80 个破折号的字符串，但是对于 <code>@ones = (1) x 80;</code> 给你一个 80 个 “1” 的列表的 Perl 5行为，你会使用 <code>@ones = 1 xx 80;</code>。</p>
+
+<h2 id="加法运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">加法运算符</a></h2>
+
+<p>二元 <code>+</code> 和 <code>-</code> 分别进行加法和减法运算，如您所料。</p>
+
+<p>由于 <code>.</code> 是方法调用运算符，所以二元 <code>~</code> 在 Perl 6 中充当字符串连接运算符。</p>
+
+<h2 id="shift-operators-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">Shift operators</a></h2>
+
+<p><code>&lt;&lt;</code> 和 <code>&gt;&gt;</code> 已被 <code>+&lt;</code> 和 <code>+&gt;</code> 取代。</p>
+
+<h2 id="命名一元运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">命名一元运算符</a></h2>
+
+<p>如上所述，您可以在<a href="https://docs.perl6.org/language/5to6-perlfunc">函数</a>指南中找到它们。</p>
+
+<h2 id="关系运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">关系运算符</a></h2>
+
+<p>这些都像 Perl 5 中那样工作。</p>
+
+<h2 id="相等运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">相等运算符</a></h2>
+
+<p><code>==</code> 和  <code>!=</code> 都像 Perl 5 中那样工作。</p>
+
+<p><code>&lt;=&gt;</code> 和 <code>cmp</code> 在 Perl 6 中有不同的行为。<code>&lt;=&gt;</code> 做数值比较，但返回 <code>Order::Less</code>、<code>Order::Same</code> 或者 <code>Order::More</code> 而不是Perl 5 中的 <code>-1</code>、<code>0</code> 或 <code>1</code>。要获得 <code>cmp</code> 的 Perl 5 行为（使用它返回 <code>Order</code> 对象而不是整数的更改），您应该使用 <code>leg</code> 运算符。</p>
+
+<p><code>cmp</code> 要么做 <code>&lt;=&gt;</code> 要么做 <code>leg</code>，这取决于其参数的现有类型。</p>
+
+<p><code>~~</code> 是 Perl 5 中的智能匹配运算符，但它也<em>只是</em> Perl 6 中的匹配运算符，如上所述。有关智能匹配在 Perl 6 中的工作原理，请参阅<a href="https://docs.perl6.org/language/operators#index-entry-smartmatch_operator">smartmatch文档</a>。</p>
+
+<h2 id="智能匹配运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">智能匹配运算符</a></h2>
+
+<p>有关<a href="https://docs.perl6.org/language/operators#index-entry-smartmatch_operator">smartmatch</a>在 Perl 6 中的工作原理的更详细说明，请参阅<a href="https://docs.perl6.org/language/operators#index-entry-smartmatch_operator">smartmatch文档</a>。</p>
+
+<h2 id="bitwise-and-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">Bitwise And</a></h2>
+
+<p>二元 <code>&amp;</code> 在 Perl 6 中是 <code>+&amp;</code>。</p>
+
+<h2 id="bitwise-or-and-exclusive-or-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">Bitwise Or and Exclusive Or</a></h2>
+
+<p>按位或已经从 Perl 5 中的 <code>|</code> 变成 Perl 6 中的 <code>+|</code>。同样地，按位 XOR <code>^</code> 变成了 <code>+^</code>。</p>
+
+<h2 id="c-style-的逻辑和-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">C-style 的逻辑和</a></h2>
+
+<p>不变。</p>
+
+<h2 id="c-style-逻辑或-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">C-style 逻辑或</a></h2>
+
+<p>不变。</p>
+
+<h2 id="logical-defined-or-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">Logical Defined-Or</a></h2>
+
+<p>在 Perl 6 中保持为 <code>//</code>。返回第一个有定义的操作数，或者返回最后一个操作数。此外，还有一个低优先级版本，称为 <code>orelse</code>。</p>
+
+<h2 id="range-运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">Range 运算符</a></h2>
+
+<p>在列表上下文中，<code>..</code> 作为范围运算符运行，不需要更改。也就是说，存在可能有用的排他性范围运算符。这些是：</p>
+
+<ul>
+<li>中缀 <code>..^</code> 不包括末端;<br /></li>
+<li>中缀 <code>^..</code> 不包括起点;<br /></li>
+<li>中缀 `<code>^..^</code> 不包括起点和末端;<br /></li>
+<li><code>^</code> 从零开始的前缀，不包括末端。<br /></li>
+</ul>
+
+<p>以下示例显示了所有上述范围运算符的效果（请注意圆括号仅用于允许方法调用）：</p>
+
+<pre><code class="language-perl6">(1..^5).list;  # (1 2 3 4) 
+(1^..5).list;  # (2 3 4 5) 
+(1^..^5).list; # (2 3 4) 
+(^5).list;     # (0 1 2 3 4) 
+</code></pre>
+
+<p>在 Perl 5 中，在标量上下文中，运算符 <code>..</code> 和 <code>...</code> 像触发器(flip-flop)操作符一样，即使它们鲜为人知且可能较少使用。Perl 6 中的那些运算符分别由<a href="https://docs.perl6.org/routine/ff">ff</a>和<a href="https://docs.perl6.org/routine/fff">fff</a>代替。</p>
+
+<h2 id="条件运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">条件运算符</a></h2>
+
+<p>条件运算符 <code>?:</code> 已替换为 <code>?? !!</code>:</p>
+
+<pre><code class="language-perl6">$x = $ok  ? $yes  : $no;  # Perl 5 
+$x = $ok ?? $yes !! $no;  # Perl 6 
+</code></pre>
+
+<h2 id="赋值运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">赋值运算符</a></h2>
+
+<p>虽然没有完整记录，但 S03 表明数学和逻辑赋值运算符应该像您期望的那样工作。一个值得注意的变化是 <code>.=</code> 在左侧的对象上调用可变方法（也可以是类型对象）。这允许以下有用的惯用法：</p>
+
+<pre><code class="language-perl6">class LongClassName {
+    has $.frobnicate;
+}
+my LongClassName $bar .= new( frobnicate =&gt; 42 ); # no need to repeat class name 
+</code></pre>
+
+<p>这确保了 <code>$bar</code> 只能包含一个 <code>LongClassName</code> 对象，并且不必重复（并且可能拼写错误）类名。</p>
+
+<p><code>~=</code> 是字符串连接赋值，正如您可能期望的更改 <code>.</code> 和 <code>~</code>。此外，按位赋值运算符可能不会分为数字和字符串版本（<code>&amp;=</code> 等等，相对 <code>&amp;.=</code> 等），因为该功能目前在 Perl 5 本身中是实验性的 - 尽管，这并没有具体记录。</p>
+
+<h2 id="逗号运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">逗号运算符</a></h2>
+
+<p>逗号运算符大多按预期工作，但从技术上讲，它创建<a href="https://docs.perl6.org/type/List">列表</a>）或分隔函数调用中的参数。此外，还有一个 <code>:</code> 变体可以将函数调用转换为方法调用 - 请参阅<a href="https://docs.perl6.org/language/operators#infix_%253A">此页面</a>。</p>
+
+<p><code>=&gt;</code>运算符，或*胖箭头*，工作方式类似于 Perl 5 的“胖逗号”，因为它允许在其左侧的无引号（普通）标识符，但在 Perl 6 中它构造 Pair 对象，而不是仅仅作为分隔符发挥作用。如果您试图将一行 Perl 5 代码直接翻译为 Perl 6，它应该会按预期运行。</p>
+
+<h2 id="列表运算符-rightward-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">列表运算符 (rightward)</a></h2>
+
+<p>与命名一元运算符一样，您可以在<a href="https://docs.perl6.org/language/5to6-perlfunc">函数</a>下找到这些。</p>
+
+<h2 id="逻辑非-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">逻辑非</a></h2>
+
+<p><code>!</code> 的优先级较低版本。对于 <code>!</code>，强转其参数为 <code>Bool</code>。</p>
+
+<h2 id="逻辑和-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">逻辑和</a></h2>
+
+<p>如 Perl 5 中的 较低优先级版本的 <code>&amp;&amp;</code> 一样。</p>
+
+<h2 id="逻辑或或独占或-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">逻辑或或独占或</a></h2>
+
+<p><code>or</code> 是低优先级版本的 <code>||</code>，并且 <code>xor</code> 是低优先级版本的 <code>^^</code>。</p>
+
+<p>此外，还有一个低优先级版本的 <code>//</code>，称为 <code>orelse</code>。</p>
+
+<h2 id="引用和引用类似的运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">引用和引用类似的运算符</a></h2>
+
+<p>有关引用构造的所有详细信息，请参阅<a href="https://docs.perl6.org/language/quoting">引用</a>。</p>
+
+<p>有一个引用运算符，允许绝对的文字字符串：<code>Q</code> 或者 <code>｢…｣</code>，尽管后者可能很难在你的键盘上找到，这取决于你的键盘&hellip;&hellip;反斜杠转义也*没有*应用在 <code>Q</code> 引用的字符串上。例如 <code>Q{This is still a closing curly brace → \}</code> 合成的是 &ldquo;This is still a closing curly brace → \&ldquo;。</p>
+
+<p><code>q</code> 做你期望的，允许反斜杠转义。例如 <code>q{This is not a closing curly brace → \}, but this is → }</code> 返回 &ldquo;This is not a closing curly brace → }, but this is →&rdquo;。与 Perl 5 一样，您可以使用单引号获得此行为。</p>
+
+<p><code>qq</code> 允许变量插值。但是，默认情况下，只插入标量变量。要获得其他变量插值，您需要在它们后面放置方括号（所谓的<a href="https://docs.perl6.org/language/subscripts#index-entry-Zen_slices">zen-slice</a>）以使它们进行插值。例如：</p>
+
+<pre><code class="language-perl6">my @a = &lt;1 2 3&gt;; 
+say qq/@a[] example@example.com/;
+</code></pre>
+
+<p>结果为 “1 2 3 example@example.com”。哈希以相同的方式进行插值：</p>
+
+<pre><code class="language-perl6">my %a = 1 =&gt; 2, 3 =&gt; 4;
+say &quot;%a{}&quot;;
+</code></pre>
+
+<p>导致空格分隔 Pair 对儿, Tab 将每对中的键与值分开（因为这是 <code>Pair</code> 的标准字符串化，并且哈希在字符串化时充当 <code>Pair</code> 的列表）。您还可以使用花括号在字符串中插入 Perl 6 代码。有关所有详细信息，请参阅<a href="https://docs.perl6.org/language/quoting#Interpolation%253A_qq">插值</a>。</p>
+
+<p><code>qw</code> 像 Perl 5 中那样工作，也可以呈现为 <code>&lt;...&gt;</code>。例如 <code>qw/a b c/</code> 相当于 <code>&lt;a b c&gt;</code>。</p>
+
+<p>还有一个能插值的 <code>qw</code> 版本，即 <code>qqw</code>。所以：</p>
+
+<pre><code class="language-perl6">my $a = 42;
+say qqw/$a b c/;
+</code></pre>
+
+<p>给你 “42 b c”。</p>
+
+<p>Shell 引用可以通过 <code>qx</code> 获得，但是你应该注意，反引号不像 Perl 5 那样进行 shell 引用，并且 Perl 变量*不*在 <code>qx</code> 字符串中进行插值。如果需要在 shell 命令字符串中插入 Perl 变量，则可以改为使用 <code>qqx</code>。</p>
+
+<p>Perl 6 中没有 <code>qr</code> 运算符了。</p>
+
+<p><code>tr///</code> 与 Perl 5 中的工作方式类似。需要注意的是范围的指定方式不同。您可以使用“a..z”代替使用范围“a-z”，即使用 Perl 的范围运算符。<code>tr///</code> 有一个方法版本，记录的更好，称为 <code>.trans</code>。<code>.trans</code> 使用 Pair 对儿的列表，如下所示：可以在<a href="https://design.perl6.org/S05.html#Transliteration">https://design.perl6.org/S05.html#Transliteration中</a>找到更广泛的使用说明。</p>
+
+<pre><code class="language-perl6">$x.trans(
+    ['a'..'c'] =&gt; ['A'..'C'], 
+    ['d'..'q'] =&gt; ['D'..'Q'], 
+    ['r'..'z'] =&gt; ['R'..'Z']
+    );
+</code></pre>
+
+<p>等价的 <code>y///</code> 已经废除了。</p>
+
+<p>在 Perl 6 中 <code>:to</code> 以不同方式指定了 Heredocs。您可以使用引号运算符，例如，<code>q:to/END/;</code> 将以 “END” 开头的 heredoc 结尾。类似地，您可以根据引用运算符进行转义和插值，即带有 <code>Q</code> 的文字值, 带有 <code>q</code>  的反斜杠转义和带有插值的 <code>qq</code>。</p>
+
+<h2 id="i-o-运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">I/O 运算符</a></h2>
+
+<p>有关 Perl 6 中输入/输出的完整详细信息，请参阅<a href="https://docs.perl6.org/language/io">io</a>。</p>
+
+<p>因为 <code>&lt;...&gt;</code> 与 Perl 6 中的 quote-words 构造一样，<code>&lt;&gt;</code> 不用于从文件中读取行。您可以通过 <code>IO</code> 从文件名创建对象或使用打开的文件句柄然后在任何一种情况下在它身上调用 <code>.lines</code> 来实现。或者例如 <code>my @a = &quot;filename&quot;.IO.lines;</code> 或 <code>my $fh = open &quot;filename&quot;, :r;my @a = $fh.lines;</code>（在后一种情况下，我们使用 <code>:r</code> 专门打开用于读取的文件）。要以迭代方式执行此操作，可以用以下方式 使用 <code>for</code> 循环：</p>
+
+<pre><code class="language-perl6">for 'huge-csv'.IO.lines -&gt; $line {
+    # Do something with $line 
+}
+</code></pre>
+
+<p>注意那里的 <code>-&gt;</code> 用法。这是块语法的一部分，而在 Perl 6 中要用在 <code>if</code>，<code>for</code>，<code>while</code> 等块中。</p>
+
+<p>如果你想将整个文件 slurp 为标量，你会惊讶的！- 使用 <code>.slurp</code> 方法。例如：</p>
+
+<pre><code class="language-perl6">my $x = &quot;filename&quot;.IO.slurp;
+# ... or ... 
+my $fh = open &quot;filename&quot;, :r;
+my $x = $fh.slurp;
+</code></pre>
+
+<p>如<a href="https://docs.perl6.org/language/5to6-perlvar">特殊变量</a>指南中所述，<code>ARGV</code> 魔术输入文件句柄已被替换 <code>$*ARGFILES</code>，并且<code>@ARGV</code> 命令行参数数组已被替换 <code>@*ARGS</code>。</p>
+
+<h2 id="no-ops-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">No-ops</a></h2>
+
+<p><code>1 while foo();</code> 与 Perl 5 中的工作方式相同，但它会生成警告。在 Perl 6 中，这个惯用法现在被写成了 <code>Nil while foo();</code>。</p>
+
+<h2 id="按位字符串运算符-https-docs-perl6-org-language-5to6-perlop-top"><a href="https://docs.perl6.org/language/5to6-perlop#___top">按位字符串运算符</a></h2>
+
+<p>单独记录在上面了，但总结如下&hellip;&hellip;</p>
+
+<p>按位整数否定加上前缀 <code>+^</code>。按位布尔否定是 <code>?^</code>。</p>
+
+<p>按位与是 <code>+&amp;</code>。</p>
+
+<p>按位整数或是 <code>+|</code>。按位整数 xor 是中缀 <code>+^</code>。按位布尔或是 <code>?|</code>。</p>
+
+<p>左移和右移是 <code>+&lt;</code> 和 <code>+&gt;</code>。</p>
+
+  </article>
+</section>
+
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>ohmysunny ❤ 2019</p>
+    
+     
+  </section>
+</footer>
+
+    </main>
+
+    
+
+  </body>
+
+</html>
