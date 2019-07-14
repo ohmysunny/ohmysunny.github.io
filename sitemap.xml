@@ -452,6 +452,12 @@
   </url>
   
   <url>
+    <loc>https://ohmysunny.github.io/</loc>
+    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ohmysunny.github.io/tags/rmarkdown/</loc>
     <lastmod>2018-10-03T21:32:27+08:00</lastmod>
     <priority>0</priority>
@@ -459,12 +465,6 @@
   
   <url>
     <loc>https://ohmysunny.github.io/tags/</loc>
-    <lastmod>2019-07-14T21:13:31+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ohmysunny.github.io/</loc>
     <lastmod>2019-07-14T21:13:31+08:00</lastmod>
     <priority>0</priority>
   </url>

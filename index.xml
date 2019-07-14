@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>焉知非鱼</title>
+    <title>Rakudo Star</title>
     <link>https://ohmysunny.github.io/</link>
-    <description>Recent content on 焉知非鱼</description>
+    <description>Recent content on Rakudo Star</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 14 Jul 2019 21:13:31 +0800</lastBuildDate>
@@ -1097,12 +1097,11 @@ Homework:1:50:25 Homework:2:50:25 Exam:1:75:50  您的任务是创建一个名�
       <pubDate>Wed, 03 Oct 2018 20:09:27 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/page/about/</guid>
-      <description> 关于我 大数据工程师, 目前就职于北京某车联网企业。
+      <description> 关于我 Camelia, 蝴蝶的一种, 有时候会有彩虹色。
 关于本站 使用了一个看起来很简洁的主题。
-技能  Scala
- Python
- Perl 6
-  </description>
+技能  Scala %25 Python %20
+ Perl 6 42%
+ Rust 10%  </description>
     </item>
     
     <item>
