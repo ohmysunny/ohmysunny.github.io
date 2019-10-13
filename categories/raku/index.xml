@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rakudo Star</title>
-    <link>https://ohmysunny.github.io/</link>
-    <description>Recent content on Rakudo Star</description>
+    <title>Raku on Rakudo Star</title>
+    <link>https://ohmysunny.github.io/categories/raku/</link>
+    <description>Recent content in Raku on Rakudo Star</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 14 Jul 2019 21:13:31 +0800</lastBuildDate>
     
-	<atom:link href="https://ohmysunny.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ohmysunny.github.io/categories/raku/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -1059,15 +1059,6 @@ raku.org 网站上的其他地方列出了许多有用的资源。这些包括�
     </item>
     
     <item>
-      <title>mapGroupsWithState</title>
-      <link>https://ohmysunny.github.io/post/2018-10-08-mapgroupswithstate/</link>
-      <pubDate>Mon, 08 Oct 2018 14:18:20 +0800</pubDate>
-      
-      <guid>https://ohmysunny.github.io/post/2018-10-08-mapgroupswithstate/</guid>
-      <description>/** * ::Experimental:: * (Scala-specific) * Applies the given function to each group of data, while maintaining a user-defined per-group * state. The result Dataset will represent the objects returned by the function. * For a static batch Dataset, the function will be invoked once per group. For a streaming * Dataset, the function will be invoked for each group repeatedly in every trigger, and * updates to each group&#39;s state will be saved across invocations.</description>
-    </item>
-    
-    <item>
       <title>Raku 中的命令行参数</title>
       <link>https://ohmysunny.github.io/post/2018-10-05-command-line-arguments-in-perl-6/</link>
       <pubDate>Wed, 03 Oct 2018 21:33:03 +0800</pubDate>
@@ -1104,27 +1095,6 @@ Bill Jones:1:35 Sara Tims:2:45 Sara Tims:1:39 Bill Jones:1:42 Bill Jones:E1:72  
 Bill Jones Ana Smith Sara Tims Frank Horza  除了 MATH-101，这位教授还教其他课程，并设计了一个扩展名为 .cfg 的配置文件来存储给定课程的配置格式。她这样做的目的是在她的其他课程中也使用它。配置文件格式指定了作业的类型、作业编号、作业的总分以及作业对最终课程成绩的贡献。她的数学101课程的 .cfg 文件如下:
 Homework:1:50:25 Homework:2:50:25 Exam:1:75:50  您的任务是创建一个名为 report.p6 的程序。该程序生成一个报告，其中列出了班级中每个学生的姓名、每次作业的分数和最终成绩。该程序应该假设具有扩展名 .cgf 和 .std 的文件在执行该程序的目录中可用。另一方面，包含学生成绩的文件必须通过命令行传递给程序。为了简单起见，您可以假设每个文件都是根据课程命名的。对于她的数学101课程，教授会有以下的文件: MATH-101, MATH-101.std 和 MATH-101.cfg，还有脚本 report.p6。
 分析 如果我们看问题陈述，我们可以把所有的东西分成三类:课程，学生和作业。就目前而言，每个类别都可以被视为具有状态和行为的类。我们将从最简单的类别，作业类别，到最一般的类别，课程类别。为了做到这一点，我们首先学习 Raku 中类的定义。</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://ohmysunny.github.io/page/about/</link>
-      <pubDate>Wed, 03 Oct 2018 20:09:27 +0800</pubDate>
-      
-      <guid>https://ohmysunny.github.io/page/about/</guid>
-      <description>关于我 Camelia, 蝴蝶的一种, 有时候会变成彩虹色, 就像我的好朋友龙葵一样。</description>
-    </item>
-    
-    <item>
-      <title>Hello Hugo</title>
-      <link>https://ohmysunny.github.io/post/2018-10-03-hello/</link>
-      <pubDate>Wed, 03 Oct 2018 19:15:00 +0800</pubDate>
-      
-      <guid>https://ohmysunny.github.io/post/2018-10-03-hello/</guid>
-      <description>Hello World。
-橙红年代 天使江北。
-熊猫币 一个熊猫币约等于 21 个比特币。
-Attention Thanks for your attention!</description>
     </item>
     
   </channel>

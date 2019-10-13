@@ -97,7 +97,7 @@
 
 <h3 id="grammars-的广义概念">grammars 的广义概念</h3>
 
-<p>正则表达式（<a href="https://docs.perl6.org/language/regexes">Regexes</a>）适用于查找字符串中的模式。然而，对于一些任务来说，如同时查找多个模式，或者组合模式，或者单独测试可能围绕字符串正则表达式的模式是不够的。</p>
+<p>正则表达式（<a href="https://docs.raku.org/language/regexes">Regexes</a>）适用于查找字符串中的模式。然而，对于一些任务来说，如同时查找多个模式，或者组合模式，或者单独测试可能围绕字符串正则表达式的模式是不够的。</p>
 
 <p>在使用 HTML 时，您可以定义一个 grammar 来识别 HTML 标记，包括开始和结束元素以及它们之间的文本。然后，您可以将这些元素组织到数据结构中，例如数组或散列。</p>
 
@@ -128,7 +128,7 @@
 
 <p>一旦你定义了你的 Grammar, 在你的程序中通过 Grammar 的名字调用它并传递你想解析的字符串。该字符串将通过你的 regex, token 和 rule “方法”定义的规则运行。 完成后，将返回一个 Match 对象，该对象已填充了用于定义方法的名称所结构化并存储的数据。</p>
 
-<pre><code class="language-perl6">my $matchObject = My::Gram.parse($what-a-big-string-you-have);
+<pre><code class="language-raku">my $matchObject = My::Gram.parse($what-a-big-string-you-have);
 </code></pre>
 
 <p>现在，你可能想知道，如果我让所有这些定义的正则表达式只返回他们的结果，那么这该如何帮助在字符串中向前或向后解析东西呢，或需要从多个那样的正则表达式组合的东西。 ..这就是 grammar action 发挥作用的地方。</p>
@@ -141,7 +141,7 @@
 
 <p>当方法(regex, token 或 rule)在 grammar 中匹配后, 匹配到的字符串被放入最终将返回的 Match 对象中, 并且它将使用与您选择命名的方法相同的名称。</p>
 
-<pre><code class="language-perl6">grammar My::Gram {
+<pre><code class="language-raku">grammar My::Gram {
   token TOP { &lt;thingy&gt; .* }
   token thingy { 'clever_text_keyword' }
 }
@@ -168,7 +168,7 @@
 
 <p>我们做的第一件事是定义 grammar 类。我们将需要定义我们的主题，命令和数据。我想我们将为他们使用 token，因为我们不关心正则表达式中的空格。</p>
 
-<pre><code class="language-perl6">grammar REST {
+<pre><code class="language-raku">grammar REST {
   token subject { \w+ }
   token command { \w+ }
   token data    { .*  }
@@ -179,7 +179,7 @@
 
 <p>但是在我们的大字符串中，我们不知道这些正则表达式匹配将会进入什么顺序。我们需要能够将这些匹配的 token 放在我们将作为该字符串传递的URI的更大的上下文中。 这就是 TOP 方法要做的。 因此，我们添加 TOP，并在其中放置我们的 token 名称，以及其它应该出现的有效字符串。</p>
 
-<pre><code class="language-perl6">grammar REST {
+<pre><code class="language-raku">grammar REST {
   token TOP { '/' &lt;subject&gt; '/' &lt;command&gt; '/' &lt;data&gt; }
   token subject { \w+ }
   token command { \w+ }
@@ -189,7 +189,7 @@
 
 <p>实际上，您可以用它从基本的 CRUD 的 URI 中提取您的数据，其中包含所有3个参数：</p>
 
-<pre><code class="language-perl6">my $match = REST.parse('/product/update/7/notify');
+<pre><code class="language-raku">my $match = REST.parse('/product/update/7/notify');
 say $match;
 </code></pre>
 
@@ -207,7 +207,7 @@ say $match;
 
 <p>到目前为止，REST语法将处理检索，删除和更新。 但是，create 命令没有第三部分（数据部分）。 这意味着如果我们尝试解析 creat URL，我们的 Grammar 将无法匹配。 为了避免这种情况，我们需要使最后一个数据位置匹配可选，以及它前面的&rsquo;/&lsquo;。 这很容易通过为分组的&rsquo;/&lsquo;和 TOP token 的数据组件添加一个问号来表示它们的可选性质，就像一个普通的正则表达式那样。 所以现在我们有：</p>
 
-<pre><code class="language-perl6">grammar REST {
+<pre><code class="language-raku">grammar REST {
     token TOP     { '/' &lt;subject&gt; '/' &lt;command&gt; [ '/' &lt;data&gt; ]? }
     token subject { \w+ }
     token command { \w+ }
@@ -222,7 +222,7 @@ say $m&lt;subject&gt;, $m&lt;command&gt;;
 
 <p>让我们想象，为了演示的目的，我们可能想允许用户从终端输入这些相同的 URI。 在这种情况下，他们可能在&rsquo;/&lsquo;之间放置空格，因为用户容易破坏事物。 如果我们想要适应这种可能性，我们可以用另一个 token 替换 TOP 中的 &lsquo;/&lsquo;，以允许在它的任何一边的空格。</p>
 
-<pre><code class="language-perl6">grammar REST {
+<pre><code class="language-raku">grammar REST {
     token TOP     { &lt;slash&gt;&lt;subject&gt;&lt;slash&gt;&lt;command&gt;[&lt;slash&gt;&lt;data&gt;]? }
     token subject { \w+ }
     token command { \w+ }
@@ -251,7 +251,7 @@ say $m;
 
 <p>有几种方法来完成这个。 例如，您可以更改 command 方法：</p>
 
-<pre><code class="language-perl6">token command { \w+ }
+<pre><code class="language-raku">token command { \w+ }
 
 # ...becomes...
 
@@ -264,7 +264,7 @@ token command { 'create'|'retrieve'|'update'|'delete' }
 
 <p>为了利用这些原型正则表达式（实际上是 multi methods）将我们限制为有效的 CRUD 选项，我们将用以下代替 <code>token command</code>:</p>
 
-<pre><code class="language-perl6">proto token command {*}
+<pre><code class="language-raku">proto token command {*}
 token command:sym&lt;create&gt;   { &lt;sym&gt; }
 token command:sym&lt;retrieve&gt; { &lt;sym&gt; }
 token command:sym&lt;update&gt;   { &lt;sym&gt; }
@@ -283,7 +283,7 @@ token command:sym&lt;delete&gt;   { &lt;sym&gt; }
 
 <p>目前为止我们的 RESTful URIs 的处理如下:</p>
 
-<pre><code class="language-perl6">grammar REST
+<pre><code class="language-raku">grammar REST
 {
     token TOP { &lt;slash&gt;&lt;subject&gt;&lt;slash&gt;&lt;command&gt;[&lt;slash&gt;&lt;data&gt;]? }
  
@@ -301,7 +301,7 @@ token command:sym&lt;delete&gt;   { &lt;sym&gt; }
 
 <p>让我们看看各种 URI，以及它们在通过我们的 Grammar 时是如何表现的。</p>
 
-<pre><code class="language-perl6">my @uris = ['/product/update/7/notify',
+<pre><code class="language-raku">my @uris = ['/product/update/7/notify',
             '/product/create',
             '/item/delete/4'];
  
@@ -329,7 +329,7 @@ for @uris -&gt; $uri {
 
 <p>要使用 action，可以使用名为 <code>actions</code> 的命名参数，它应该包含 action 类的一个实例。通过上面的代码，如果我们的 action 类调用了 REST-actions，我们会像这样解析 URI 字符串：</p>
 
-<pre><code class="language-perl6">my $matchObject = REST.parse($uri, actions =&gt; REST-actions.new);
+<pre><code class="language-raku">my $matchObject = REST.parse($uri, actions =&gt; REST-actions.new);
  
 #   …or if you prefer… 
  
@@ -342,7 +342,7 @@ my $matchObject = REST.parse($uri, :actions(REST-actions.new));
 
 <p>我们回到我们离开的地方:</p>
 
-<pre><code class="language-perl6">grammar REST
+<pre><code class="language-raku">grammar REST
 {
     token TOP { &lt;slash&gt;&lt;subject&gt;&lt;slash&gt;&lt;command&gt;[&lt;slash&gt;&lt;data&gt;]? }
  
@@ -360,7 +360,7 @@ my $matchObject = REST.parse($uri, :actions(REST-actions.new));
 
 <p>回想一下，我们想要进一步处理 data token &ldquo;7/notify&rdquo;, 以获得 7. 为此，我们将创建一个与具名 token 名称相同的方法的 action 类。在这种情况下，我们的 token 被命名为 <code>data</code>，因此我们的方法也被命名为 <code>data</code>。</p>
 
-<pre><code class="language-perl6">class REST-actions
+<pre><code class="language-raku">class REST-actions
 {
     method data($/) { $/.split('/') }
 }
@@ -372,13 +372,13 @@ my $matchObject = REST.parse($uri, :actions(REST-actions.new));
 
 <h3 id="用-make-和-made-使-grammars-保持整洁">用 &ldquo;make&rdquo; 和 &ldquo;made&rdquo; 使 grammars 保持整洁</h3>
 
-<p>如果 grammar 在 data 上调用上面的 action，那么 <em>data</em> 方法将被调用，但是返回到程序的大的 <code>TOP</code> grammar 匹配结果中不会显示任何内容。 为了使 action 的结果显示出来，我们需要在这个结果上调用 <a href="https://docs.perl6.org/routine/make">make</a>，这个结果可以是很多东西，包括字符串，数组或散列结构。</p>
+<p>如果 grammar 在 data 上调用上面的 action，那么 <em>data</em> 方法将被调用，但是返回到程序的大的 <code>TOP</code> grammar 匹配结果中不会显示任何内容。 为了使 action 的结果显示出来，我们需要在这个结果上调用 <a href="https://docs.raku.org/routine/make">make</a>，这个结果可以是很多东西，包括字符串，数组或散列结构。</p>
 
-<p>你可以想象，<code>make</code> 把该结果存到 grammar 中一个特殊的容器化区域中。 我们所制作(<code>make</code>)的所有东西，稍后都可以通过 <a href="https://docs.perl6.org/routine/made">made</a> 来访问。</p>
+<p>你可以想象，<code>make</code> 把该结果存到 grammar 中一个特殊的容器化区域中。 我们所制作(<code>make</code>)的所有东西，稍后都可以通过 <a href="https://docs.raku.org/routine/made">made</a> 来访问。</p>
 
 <p>因此，代替我们的上面的 REST-actions 类，我们应该写:</p>
 
-<pre><code class="language-perl6">class REST-actions
+<pre><code class="language-raku">class REST-actions
 {
     method data($/) { make $/.split('/') }
 }
@@ -388,7 +388,7 @@ my $matchObject = REST.parse($uri, :actions(REST-actions.new));
 
 <p>如果我们想从这个长的 URI 中访问 7 这个 ID, 那么我们访问从我们所制成的(<code>made</code>)的 <code>data</code> action 返回的列表的第一个元素：</p>
 
-<pre><code class="language-perl6">my $uri = '/product/update/7/notify';
+<pre><code class="language-raku">my $uri = '/product/update/7/notify';
  
 my $match = REST.parse($uri, actions =&gt; REST-actions.new);
  
@@ -404,7 +404,7 @@ say $match&lt;command&gt;.Str;   # OUTPUT: «update␤»
 
 <p>所以，我们的 action 类现在变成:</p>
 
-<pre><code class="language-perl6">class REST-actions
+<pre><code class="language-raku">class REST-actions
 {
     method TOP ($/) {
         make { subject =&gt; $&lt;subject&gt;.Str,
@@ -422,7 +422,7 @@ say $match&lt;command&gt;.Str;   # OUTPUT: «update␤»
 
 <p>我们在 grammar action 的 <code>TOP</code> 方法中构造(<code>make</code>)一些东西之后，我们可以通过在 grammar 结果对象上通过调用 <code>made</code> 方法来访问所有的自定义值。 代码现在变成:</p>
 
-<pre><code class="language-perl6">my $uri = '/product/update/7/notify';
+<pre><code class="language-raku">my $uri = '/product/update/7/notify';
  
 my $match = REST.parse($uri, actions =&gt; REST-actions.new);
  
@@ -434,7 +434,7 @@ say $rest&lt;subject&gt;;   # OUTPUT: «product␤»
 
 <p>如果你不需要完整的返回匹配对象，你可以从你的 actions 的 TOP 方法中只返回 made 后的数据。</p>
 
-<pre><code class="language-perl6">my $uri = '/product/update/7/notify';
+<pre><code class="language-raku">my $uri = '/product/update/7/notify';
  
 my $rest = REST.parse($uri, actions =&gt; REST-actions.new).made;
  
@@ -445,7 +445,7 @@ say $rest&lt;subject&gt;;   # OUTPUT: «product␤»
 
 <p>哦，我们忘了摆脱那个丑陋的数组元素编号了吗？ 嗯。 让我们在 <code>TOP</code> grammar 的自定义返回中构造(<code>make</code>) 一个新东西 - 我们称之为 <code>subject-id</code>，并将它设置为 <code>&lt;data&gt;</code> 的第0个元素。</p>
 
-<pre><code class="language-perl6">class REST-actions
+<pre><code class="language-raku">class REST-actions
 {
     method TOP ($/) {
         make { subject    =&gt; $&lt;subject&gt;.Str,
@@ -460,7 +460,7 @@ say $rest&lt;subject&gt;;   # OUTPUT: «product␤»
 
 <p>现在我们可以这样做:</p>
 
-<pre><code class="language-perl6">my $uri = '/product/update/7/notify';
+<pre><code class="language-raku">my $uri = '/product/update/7/notify';
  
 my $rest = REST.parse($uri, actions =&gt; REST-actions.new).made;
  
@@ -471,7 +471,7 @@ say $rest&lt;subject-id&gt;; # OUTPUT: «7␤»
 
 <p>下面是完整的代码：</p>
 
-<pre><code class="language-perl6">grammar REST
+<pre><code class="language-raku">grammar REST
 {
     token TOP { &lt;slash&gt;&lt;subject&gt;&lt;slash&gt;&lt;command&gt;[&lt;slash&gt;&lt;data&gt;]? }
  
@@ -504,7 +504,7 @@ class REST-actions
 
 <p>上面我们看到如何将 grammars 与 actions 对象相关联，并在匹配对象上执行 actions。但是，当我们想要处理匹配对象时，这不是唯一的方法。看下面的例子：</p>
 
-<pre><code class="language-perl6">grammar G {
+<pre><code class="language-raku">grammar G {
   rule TOP { &lt;function-define&gt; }
   rule function-define {
     'sub' &lt;identifier&gt;
@@ -527,8 +527,8 @@ G.parse('sub f ( a ) { }');
 
 <p>首先，我们可以在 grammar 本身中添加 action，一旦正则表达式的控制流到达它们，就会执行这些 action。请注意，action 对象的方法将始终在整个正则表达式项匹配后执行。其次，它展示了 <code>make</code> 真正做了什么，它不过是 <code>$/.made = ...</code> 的语法糖。这个技巧引入了一种从正则表达式 item 中传递消息的方法。</p>
 
-<p>希望这有助于向您介绍 Perl 6 中的 Grammar，并向您展示 grammar
-和 grammar action 类是如何协同工作的。有关更多信息，请查看更高级的 <a href="https://docs.perl6.org/language/grammars">Perl Grammar指南</a>。</p>
+<p>希望这有助于向您介绍 Raku 中的 Grammar，并向您展示 grammar
+和 grammar action 类是如何协同工作的。有关更多信息，请查看更高级的 <a href="https://docs.raku.org/language/grammars">Perl Grammar指南</a>。</p>
 
 <p>对于更多的 Grammar 调试，请参见 <a href="https://github.com/jnthn/grammar-debugger">Grammar::Debugger</a>。它为每个 grammar tokens 提供了断点调试和颜色高亮的匹配(MATCH)和匹配失败(FAIL)的输出。</p>
 

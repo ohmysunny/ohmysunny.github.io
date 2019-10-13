@@ -135,14 +135,14 @@
 
 <p>例子:</p>
 
-<pre><code class="language-perl6">my $square = 9 ** 2;
+<pre><code class="language-raku">my $square = 9 ** 2;
 my @array  = 1, 2, 3;   # Array variable with three elements
 my %hash   = London =&gt; 'UK', Berlin =&gt; 'Germany';
 </code></pre>
 
 <p>默认类型可以使用 <code>is</code> 关键字设置。</p>
 
-<pre><code class="language-perl6">class FailHash is Hash {
+<pre><code class="language-raku">class FailHash is Hash {
     has Bool $!final = False;
     multi method AT-KEY ( ::?CLASS:D: Str:D \key ){
         fail X::OutOfRange.new(:what(&quot;Hash key&quot;), :got(key), :range(self.keys)) if $!final &amp;&amp; !self.EXISTS-KEY(key);
@@ -163,7 +163,7 @@ CATCH { default { put .^name, ': ', .Str } }
 # OUTPUT «X::OutOfRange: Hash key out of range. Is: cherry, should be in (oranges bananas)»
 </code></pre>
 
-<p>不带符号的变量也是可行的, 查看 <a href="http://doc.perl6.org/language/variables#Sigilless_variables">无符号变量</a>.</p>
+<p>不带符号的变量也是可行的, 查看 <a href="http://doc.raku.org/language/variables#Sigilless_variables">无符号变量</a>.</p>
 
 <h2 id="项和列表赋值">项和列表赋值</h2>
 
@@ -171,11 +171,11 @@ CATCH { default { put .^name, ': ', .Str } }
 
 <p>Item 赋值把等号右侧的值放到左侧的变量(容器)中.</p>
 
-<p>例如, <a href="https://docs.perl6.org/type/Array">数组</a>变量(@符号)在列表赋值时清空数组自身, 然后把等号右侧的值都放进数组自身中. 跟 Item 赋值相比, 这意味着等号左侧的变量类型始终是 Array, 不管右侧是什么类型.</p>
+<p>例如, <a href="https://docs.raku.org/type/Array">数组</a>变量(@符号)在列表赋值时清空数组自身, 然后把等号右侧的值都放进数组自身中. 跟 Item 赋值相比, 这意味着等号左侧的变量类型始终是 Array, 不管右侧是什么类型.</p>
 
 <p>赋值类型(item 或 list)取决于当前表达式或声明符看到的第一个上下文:</p>
 
-<pre><code class="language-perl6">my $foo = 5;            # item assignment
+<pre><code class="language-raku">my $foo = 5;            # item assignment
 say $foo.perl;          # 5
 
 my @bar = 7, 9;         # list assignment
@@ -190,7 +190,7 @@ say $baz.perl;          # (11, 13)
 <p>因此, 包含在列表赋值中的赋值行为依赖于表达式或包含表达式的声明符。
 例如, 如果内部赋值是一个声明符(例如 my), 就使用 item 赋值, 它比逗号和列表赋值的优先级更高:</p>
 
-<pre><code class="language-perl6">my @array;
+<pre><code class="language-raku">my @array;
 @array = my $num = 42, &quot;str&quot;;   # item assignment: uses declarator
 say @array.perl;                # [42, &quot;str&quot;] (an Array)
 say $num.perl;                  # 42 (a Num)
@@ -198,7 +198,7 @@ say $num.perl;                  # 42 (a Num)
 
 <p>类似地, 如果内部赋值是一个用于声明符初始化的表达式, 则内部表达式的上下文决定赋值的类型:</p>
 
-<pre><code class="language-perl6">my $num;
+<pre><code class="language-raku">my $num;
 my @array = $num = 42, &quot;str&quot;;    # item assignment: uses expression
 say @array.perl;                 # [42, &quot;str&quot;] (an Array)
 say $num.perl;                   # 42 (a Num)
@@ -211,7 +211,7 @@ say $bar.perl;                   # $(42, &quot;str&quot;)  (a Parcel)
 
 <p>然而, 如果内部赋值既不是声明符又不是表达式, 而是更大的表达式的一部分, 更大的表达式的上下文决定赋值的类型:</p>
 
-<pre><code class="language-perl6">my ( @array, $num );
+<pre><code class="language-raku">my ( @array, $num );
 @array = $num = 42, &quot;str&quot;;    # list assignment
 say @array.perl;              # [42, &quot;str&quot;] (an Array)
 say $num.perl;                # [42, &quot;str&quot;] (an Array)
@@ -219,24 +219,24 @@ say $num.perl;                # [42, &quot;str&quot;] (an Array)
 
 <p>这是因为整个表达式是 <code>@array = $num = 42, &quot;str&quot;</code>, 而 <code>$num = 42</code> 不是单独的表达式.</p>
 
-<p>查看<a href="https://docs.perl6.org/language/operators">操作符</a>获取关于优先级的更多详情。</p>
+<p>查看<a href="https://docs.raku.org/language/operators">操作符</a>获取关于优先级的更多详情。</p>
 
 <h2 id="无符号变量">无符号变量</h2>
 
-<p>在 Perl 6 中创建不带符号的变量也是可能的:</p>
+<p>在 Raku 中创建不带符号的变量也是可能的:</p>
 
-<pre><code class="language-perl6">my \degrees = pi / 180;
+<pre><code class="language-raku">my \degrees = pi / 180;
 my \θ       = 15 * degrees;
 </code></pre>
 
-<p>然而, 这些无符号变量并不创建<a href="https://docs.perl6.org/language/containers">容器</a>. 那意味着上面的 <code>degrees</code> 和 <code>θ</code> 实际上直接代表 <code>Nums</code>. 为了说明, 我们定义一个无符号变量后再赋值:</p>
+<p>然而, 这些无符号变量并不创建<a href="https://docs.raku.org/language/containers">容器</a>. 那意味着上面的 <code>degrees</code> 和 <code>θ</code> 实际上直接代表 <code>Nums</code>. 为了说明, 我们定义一个无符号变量后再赋值:</p>
 
-<pre><code class="language-perl6">θ = 3; # Dies with the error &quot;Cannot modify an immutable Num&quot;
+<pre><code class="language-raku">θ = 3; # Dies with the error &quot;Cannot modify an immutable Num&quot;
 </code></pre>
 
 <p>无符号变量不强制上下文, 所以它们可被用于原样地传递某些东西:</p>
 
-<pre><code class="language-perl6">sub logged(&amp;f, |args) {
+<pre><code class="language-raku">sub logged(&amp;f, |args) {
     say('Calling ' ~ &amp;f.name ~ ' with arguments ' ~ args.perl);
     my \result = f(|args);
     #  ^^^^^^^ not enforcing any context here
@@ -309,7 +309,7 @@ my \θ       = 15 * degrees;
 
 <p>动态变量通过 caller 查找, 不是通过外部作用域。例如:</p>
 
-<pre><code class="language-perl6">    my $lexical   = 1;
+<pre><code class="language-raku">    my $lexical   = 1;
     my $*dynamic1 = 10;
     my $*dynamic2 = 100;
 
@@ -335,9 +335,9 @@ my \θ       = 15 * degrees;
 
 <p>第一次调用 <code>&amp;say-all</code> 时, 就像你期望的一样, 它打印 &ldquo;1, 10, 100&rdquo;。可是第二次它打印 &ldquo;1, 11, 101&rdquo;。 这是因为 <code>$lexical</code> 不是在调用者的作用域内被查找, 而是在 <code>&amp;say-all</code> 被定义的作用域里被查找的。这两个动态作用域变量在调用者的作用域内被查找, 所以值为 <code>11</code> 和 <code>101</code>。第三次调用 <code>&amp;say-all</code> 后,  <code>$*dynamic1</code> 不再是 11 了. 但是 <code>$*dynamic2</code> 仍然是 101。这源于我们在块中声明了一个新的动态变量 <code>$*dynamic1</code> 的事实并且没有像我们对待 <code>$*dynamic2</code> 那样把值赋值给旧的变量。</p>
 
-<p>动态变量与其他变量类型在引用一个未声明的动态变量上不同的是前者不是一个编译时错误，而是运行时 <a href="https://docs.perl6.org/type/Failure">failure</a>，这样一个动态变量可以在未定义时使用只要在把它用作任何其它东西的时候检查它是否定义过:</p>
+<p>动态变量与其他变量类型在引用一个未声明的动态变量上不同的是前者不是一个编译时错误，而是运行时 <a href="https://docs.raku.org/type/Failure">failure</a>，这样一个动态变量可以在未定义时使用只要在把它用作任何其它东西的时候检查它是否定义过:</p>
 
-<pre><code class="language-perl6">sub foo() {
+<pre><code class="language-raku">sub foo() {
     $*FOO // 'foo';
 }
 
@@ -352,7 +352,7 @@ say foo; # -&gt; 'bar'
 
 <p>属性是变量, 存在于每个类的实例中. 通过 <code>!</code> 符号它们可以从类的里面直接被访问到:</p>
 
-<pre><code class="language-perl6">    class Point {
+<pre><code class="language-raku">    class Point {
         has $.x;
         has $.y;
 
@@ -362,21 +362,21 @@ say foo; # -&gt; 'bar'
     }
 </code></pre>
 
-<p>注意属性是怎样被声明为 <code>$.x</code> 和 <code>$.y</code> 的, 但是仍然能够通过 <code>$!x</code> 和 <code>$!y</code> 访问到属性. 这是因为 在 Perl 6 中, 所有的属性都是<code>私有的</code>, 并且在类中能使用 <code>$!attribute-name</code> 直接访问这些属性. Perl 6 能自动为你生成访问方法. 关于对象、类和它们的属性和方法的详情, 请查看<a href="https://docs.perl6.org/language/objects">面向对象</a>.</p>
+<p>注意属性是怎样被声明为 <code>$.x</code> 和 <code>$.y</code> 的, 但是仍然能够通过 <code>$!x</code> 和 <code>$!y</code> 访问到属性. 这是因为 在 Raku 中, 所有的属性都是<code>私有的</code>, 并且在类中能使用 <code>$!attribute-name</code> 直接访问这些属性. Raku 能自动为你生成访问方法. 关于对象、类和它们的属性和方法的详情, 请查看<a href="https://docs.raku.org/language/objects">面向对象</a>.</p>
 
 <h2 id="twigil-2">? Twigil</h2>
 
 <p>编译时&rdquo;常量&rdquo;, 可通过 <code>?</code> twigil 访问. 编译器对它们很熟悉, 并且编译后不能被修改. 常用的一个例子如下:</p>
 
-<pre><code class="language-perl6">say &quot;$?FILE: $?LINE&quot;; # prints &quot;hello.pl: 23&quot; if this is the 23 line of a
+<pre><code class="language-raku">say &quot;$?FILE: $?LINE&quot;; # prints &quot;hello.pl: 23&quot; if this is the 23 line of a
                       # file named &quot;hello.pl&quot;.
 </code></pre>
 
-<p>关于这些特殊变量的列表请查看<a href="https://docs.perl6.org/language/variables#Compile-time_variables">编译时变量</a>。</p>
+<p>关于这些特殊变量的列表请查看<a href="https://docs.raku.org/language/variables#Compile-time_variables">编译时变量</a>。</p>
 
 <p>尽管不能在运行时改变它们, 用户可以(重新)定义这种常量.</p>
 
-<pre><code class="language-perl6">constant $?TABSTOP = 4; # this causes leading tabs in a heredoc or in a POD
+<pre><code class="language-raku">constant $?TABSTOP = 4; # this causes leading tabs in a heredoc or in a POD
                         # block's virtual margin to be counted as 4 spaces.
 </code></pre>
 
@@ -384,7 +384,7 @@ say foo; # -&gt; 'bar'
 
 <p><code>.</code> twigil 真的不是用于变量的. 实际上, 看下面的代码:</p>
 
-<pre><code class="language-perl6">    class Point {
+<pre><code class="language-raku">    class Point {
         has $.x;
         has $.y;
 
@@ -398,7 +398,7 @@ say foo; # -&gt; 'bar'
 
 <p><code>.</code> twigil 只是调用了一个方法也表明下面是可能的</p>
 
-<pre><code class="language-perl6">    class SaySomething {
+<pre><code class="language-raku">    class SaySomething {
         method a() { say &quot;a&quot;; }
         method b() { $.a; }
     }
@@ -406,24 +406,24 @@ say foo; # -&gt; 'bar'
     SaySomething.b; # prints &quot;a&quot;
 </code></pre>
 
-<p>关于对象、类和它们的属性和方法的详情, 请查看<a href="https://docs.perl6.org/language/objects">面向对象</a>.</p>
+<p>关于对象、类和它们的属性和方法的详情, 请查看<a href="https://docs.raku.org/language/objects">面向对象</a>.</p>
 
 <h2 id="twigil-4">&lt; Twigil</h2>
 
-<p><code>&lt;</code> twigil 是 <code>$/&lt;...&gt;</code> 的别名, 其中,  <code>$/</code> 是匹配变量. 关于匹配变量的更多详情请查看 <a href="https://docs.perl6.org/language/variables#The_%24%2F_Variable">$/变量</a>和<a href="https://docs.perl6.org/type/Match">类型匹配</a></p>
+<p><code>&lt;</code> twigil 是 <code>$/&lt;...&gt;</code> 的别名, 其中,  <code>$/</code> 是匹配变量. 关于匹配变量的更多详情请查看 <a href="https://docs.raku.org/language/variables#The_%24%2F_Variable">$/变量</a>和<a href="https://docs.raku.org/type/Match">类型匹配</a></p>
 
 <h2 id="twigil-5">^ Twigil</h2>
 
 <p><code>^</code> twigil 为 block 块 或 子例程 声明了一个形式位置参数.  形如 <code>$^variable</code> 的变量是一种占位变量. 它们可用在裸代码块中来声明代码块的形式参数. 看下面代码中的块:</p>
 
-<pre><code class="language-perl6">for ^4 {
+<pre><code class="language-raku">for ^4 {
     say &quot;$^seconds follows $^first&quot;;
 }
 </code></pre>
 
 <p>它打印出:</p>
 
-<pre><code class="language-perl6">1 follows 0
+<pre><code class="language-raku">1 follows 0
 3 follows 2
 </code></pre>
 
@@ -431,7 +431,7 @@ say foo; # -&gt; 'bar'
 
 <p>子例程也能使用占位符变量, 但是只有在子例程没有显式的参数列表时才行. 这对普通的块也适用</p>
 
-<pre><code class="language-perl6">sub say-it    { say $^a; } # valid
+<pre><code class="language-raku">sub say-it    { say $^a; } # valid
 sub say-it()  { say $^a; } # invalid
               { say $^a; } # valid
 -&gt; $x, $y, $x { say $^a; } # 非法, 已经有参数列表 $x,$y,$x 了
@@ -443,18 +443,18 @@ sub say-it()  { say $^a; } # invalid
 
 <p><code>:</code> twigil 为块或子例程声明了一个形式<strong>命名参数</strong>。使用这种形式声明的变量也是占位符变量的一种类型。因此适用于使用 <code>^</code> twigil 声明的变量的东西在这儿也适用(除了它们不是位置的以外, 因此没有使用 Unicode 顺序排序)。所以这个:</p>
 
-<pre><code class="language-perl6">say { $:add ?? $^a + $^b !! $^a - $^b }( 4, 5 ) :!add
+<pre><code class="language-raku">say { $:add ?? $^a + $^b !! $^a - $^b }( 4, 5 ) :!add
 # OUTPUT:
 # -1
 </code></pre>
 
-<p>查看 <sup class="footnote-ref" id="fnref:https-docs-perl6-org-routine-5E"><a href="#fn:https-docs-perl6-org-routine-5E">0</a></sup>获取关于占位符变量的更多细节。</p>
+<p>查看 <sup class="footnote-ref" id="fnref:https-docs-raku-org-routine-5E"><a href="#fn:https-docs-raku-org-routine-5E">0</a></sup>获取关于占位符变量的更多细节。</p>
 
 <h2 id="twigil-7">= Twigil</h2>
 
 <p><code>=</code> twigil 用于访问 Pod 变量。当前文件中的每个 Pod 块都能通过一个 Pod 对象访问到, 例如 <code>$=data</code>, <code>$=SYNOPSIS</code> 或 <code>=UserBlock</code>, 即：一个和想要的块同名的变量加上一个 <code>=</code> twigil。</p>
 
-<pre><code class="language-perl6">=begin Foo
+<pre><code class="language-raku">=begin Foo
 ...
 =end Foo
 
@@ -514,7 +514,7 @@ sub say-it()  { say $^a; } # invalid
 
 <p>你在你当前的词法作用域中扩充这些语言。</p>
 
-<pre><code class="language-perl6">use MONKEY-TYPING;
+<pre><code class="language-raku">use MONKEY-TYPING;
 augment slang Regex {  # derive from $~Regex and then modify $~Regex
     token backslash:std&lt;\Y&gt; { YY };
 }
@@ -524,11 +524,11 @@ augment slang Regex {  # derive from $~Regex and then modify $~Regex
 
 <p>通常, 使用 <code>my</code> 关键字创建一个新的变量就足够了:</p>
 
-<pre><code class="language-perl6">my $amazing-variable = &quot;World&quot;;
+<pre><code class="language-raku">my $amazing-variable = &quot;World&quot;;
 say &quot;Hello $amazing-variable!&quot;; # Hello World!
 </code></pre>
 
-<p>然而, 有很多声明符能在 <a href="https://docs.perl6.org/language/variables#Twigils">Twigils</a> 的能力之外改变作用域的细节。</p>
+<p>然而, 有很多声明符能在 <a href="https://docs.raku.org/language/variables#Twigils">Twigils</a> 的能力之外改变作用域的细节。</p>
 
 <table>
 <thead>
@@ -603,7 +603,7 @@ say &quot;Hello $amazing-variable!&quot;; # Hello World!
 
 <p>使用 <code>my</code> 声明一个变量给变量一个词法作用域. 这意味着变量只在当前块中存在.例如:</p>
 
-<pre><code class="language-perl6">{
+<pre><code class="language-raku">{
     my $foo = &quot;bar&quot;;
     say $foo; # -&gt; &quot;bar&quot;
 }
@@ -612,7 +612,7 @@ say $foo; # !!! &quot;Variable '$foo' is not declared&quot;
 
 <p>它抛出异常,因为只要我们在同一个作用域内 <code>$foo</code> 才被定义. 此外, 词法作用域意味着变量能在新的作用域内被临时地重新定义:</p>
 
-<pre><code class="language-perl6">
+<pre><code class="language-raku">
 my $location = &quot;outside&quot;;
 
 sub outer-location {
@@ -634,7 +634,7 @@ outer-location; # -&gt; &quot;outside&quot;
 <p>如果变量被重新定义了, 任何引用外部变量的代码会继续引用外部变量.
 所以, 在这儿, <code>&amp;outer-location</code> 仍然打印外部的 <code>$location</code>:</p>
 
-<pre><code class="language-perl6">sub new-location {
+<pre><code class="language-raku">sub new-location {
     my $location = &quot;nowhere&quot;
     outer-location;
 }
@@ -642,14 +642,14 @@ outer-location; # -&gt; &quot;outside&quot;
 new-location; # -&gt; &quot;outside&quot;
 </code></pre>
 
-<p>为了让 <code>new-location()</code> 能打印 <code>nowwhere</code>, 需要使用 <code>*</code> <a href="https://docs.perl6.org/language/variables#The_%2A_Twigil">twigil</a> 让 <code>$location</code> 变为动态变量.
+<p>为了让 <code>new-location()</code> 能打印 <code>nowwhere</code>, 需要使用 <code>*</code> <a href="https://docs.raku.org/language/variables#The_%2A_Twigil">twigil</a> 让 <code>$location</code> 变为动态变量.
 对于子例程来说, <code>my</code> 是默认作用域, 所以 <code>my sub x( ) { }</code> 和 <code>sub x( ) { }</code> 是一样的.</p>
 
 <h3 id="our-声明符">our 声明符</h3>
 
 <p>our 跟 <code>my</code> 的作用类似, 除了把别名引入到符号表之外:</p>
 
-<pre><code class="language-perl6">module M {
+<pre><code class="language-raku">module M {
     our $Var;
     # $Var available here
 }
@@ -661,19 +661,19 @@ new-location; # -&gt; &quot;outside&quot;
 
 <p>声明符 <code>my</code> 和 <code>our</code> 接收一组扩在圆括号中的变量作为参数来一次性声明多个变量。</p>
 
-<pre><code class="language-perl6">my (@a, $s, %h);
+<pre><code class="language-raku">my (@a, $s, %h);
 </code></pre>
 
 <p>这可以和解构赋值结合使用。任何对这样一个列表的赋值会取得左侧列表中提供的元素数量并且从右侧列表中把对应的值赋值给它们。没有得到赋值的元素会根据变量的类型得到一个未定义值。</p>
 
-<pre><code class="language-perl6">my (Str $a, Str $b, Int $c) = &lt;a b&gt;;
+<pre><code class="language-raku">my (Str $a, Str $b, Int $c) = &lt;a b&gt;;
 say [$a, $b, $c].perl;
 # OUTPUT«[&quot;a&quot;, &quot;b&quot;, Int]␤»
 </code></pre>
 
 <p>要把列表解构到一个单个的值中, 通过使用 <code>($var,)</code> 创建一个带有一个值的列表字面值。当使用了一个变量声明符时只在单个变量周围提供一个圆括号就足够了。</p>
 
-<pre><code class="language-perl6">sub f { 1,2,3 };
+<pre><code class="language-raku">sub f { 1,2,3 };
 my ($a) = f;
 say $a.perl;
 # OUTPUT«1␤»
@@ -681,7 +681,7 @@ say $a.perl;
 
 <p>要跳过列表中的元素, 使用匿名状态变量 <code>$</code>。</p>
 
-<pre><code class="language-perl6">my ($,$a,$,%h) = ('a', 'b', [1,2,3], {:1th});
+<pre><code class="language-raku">my ($,$a,$,%h) = ('a', 'b', [1,2,3], {:1th});
 say [$a, %h].perl;
 # OUTPUT«[&quot;b&quot;, {:th(1)}]␤»
 </code></pre>
@@ -690,14 +690,14 @@ say [$a, %h].perl;
 
 <p><code>has</code> 作用在类的实例或 role 的属性上, 还有类或 roles 的方法上. has 隐式作用于方法上, 所以 <code>has method x() {}</code> 和 <code>method x() {}</code> 做得是相同的事情。</p>
 
-<p>查看<a href="https://docs.perl6.org/language/objects">面向对象</a>获取更多文档和例子。</p>
+<p>查看<a href="https://docs.raku.org/language/objects">面向对象</a>获取更多文档和例子。</p>
 
-<pre><code class="language-perl6">has method x( ) { }
+<pre><code class="language-raku">has method x( ) { }
 </code></pre>
 
 <p>等价于:</p>
 
-<pre><code class="language-perl6">method x( ) { }
+<pre><code class="language-raku">method x( ) { }
 </code></pre>
 
 <h3 id="anon-声明符">anon 声明符</h3>
@@ -705,7 +705,7 @@ say [$a, %h].perl;
 <p><code>anon</code> 声明符阻止符号本安装在词法作用域内, 还有方法表中, 和其它任何地方.
 例如, 你可以使用 <code>anon</code> 声明一个知道自己名字的子例程, 但是仍然不会被安装到作用域内:</p>
 
-<pre><code class="language-perl6">my %operations =
+<pre><code class="language-raku">my %operations =
     half   =&gt; anon sub half($x)   { $x / 2  },
     square =&gt; anon sub square($x) { $x * $x },
     ;
@@ -719,7 +719,7 @@ say %operations&lt;square&gt;(8);         # 64
 
 <p>因此, 下面这个子例程:</p>
 
-<pre><code class="language-perl6">sub a {
+<pre><code class="language-raku">sub a {
     state @x;
     state $l = 'A';
     @x.push($l++);
@@ -740,7 +740,7 @@ say a for 1..6;
 
 <p>This works per &ldquo;clone&rdquo; of the containing code object, as in this example:</p>
 
-<pre><code class="language-perl6">({ state $i = 1; $i++.say; } xx 3).map: {$_(), $_()}; # says 1 then 2 thrice
+<pre><code class="language-raku">({ state $i = 1; $i++.say; } xx 3).map: {$_(), $_()}; # says 1 then 2 thrice
 </code></pre>
 
 <p>注意，这不是一个线程安全的解构, 当同一个 block 的同一个克隆运行在多个线程中时。要知道方法只有每个类一个克隆，而不是每个对象。</p>
@@ -749,7 +749,7 @@ say a for 1..6;
 
 <p>请注意，许多操作符都伴随着隐式绑定，什么会导致超距作用。使用 <code>.clone</code> 或强迫创建一个可以绑定的新容器。</p>
 
-<pre><code class="language-perl6">my @a;
+<pre><code class="language-raku">my @a;
 sub f() {
     state $i;
     $i++;
@@ -761,7 +761,7 @@ dd @a; # «Array $var = $[:k1(3), :k2(3), :k3(3)]»
 
 <p>所有的状态变量都是线程间共享的。这个结果可能是你不希望得到的或危险的。</p>
 
-<pre><code class="language-perl6">sub code(){ state $i = 0; say ++$i; $i };
+<pre><code class="language-raku">sub code(){ state $i = 0; say ++$i; $i };
 await
     start { loop { last if code() &gt;= 5 } },
     start { loop { last if code() &gt;= 5 } };
@@ -775,24 +775,24 @@ await
 
 <p>和显式地声明命名状态变量一样, <code>$</code> 能够用作不带显式状态声明的匿名状态变量。</p>
 
-<pre><code class="language-perl6">say &quot;1-a 2-b 3-c&quot;.subst(:g, /\d/, {&lt;one two three&gt;[$++]});
+<pre><code class="language-raku">say &quot;1-a 2-b 3-c&quot;.subst(:g, /\d/, {&lt;one two three&gt;[$++]});
 # OUTPUT«one-a two-b three-c␤»
 </code></pre>
 
 <p>更进一步, 状态变量不需要存在于子例程中。你可以, 举个例子, 在单行程序中使用 <code>$</code> 在文件中编号行号。</p>
 
-<pre><code class="language-perl6">perl6 -ne 'say ++$ ~ &quot; $_&quot;' example.txt
+<pre><code class="language-raku">raku -ne 'say ++$ ~ &quot; $_&quot;' example.txt
 </code></pre>
 
 <p>实际上词法范围内每个对 <code>$</code> 的引用都是是一个<strong>单独的</strong>变量。</p>
 
-<pre><code class="language-perl6">perl6 -e '{ say ++$; say $++  } for ^5'
+<pre><code class="language-raku">raku -e '{ say ++$; say $++  } for ^5'
 # OUTPUT«1␤0␤2␤1␤3␤2␤4␤3␤5␤4␤»
 </code></pre>
 
 <p>如果在作用域内你需要多次引用 <code>$</code> 的值, 那么它应该被拷贝到一个新的变量中。</p>
 
-<pre><code class="language-perl6">sub foo() {
+<pre><code class="language-raku">sub foo() {
     given ++$ {
         when 1 {
             say &quot;one&quot;;
@@ -817,7 +817,7 @@ foo() for ^3;
 
 <p>和 <code>$</code> 变量类似, 也有一个位置匿名状态变量 <code>@</code>。</p>
 
-<pre><code class="language-perl6">sub foo($x) {
+<pre><code class="language-raku">sub foo($x) {
     say (@).push($x);
 }
 
@@ -831,7 +831,7 @@ foo($_) for ^3;
 
 <p>这里的 <code>@</code> 是用圆括号括起来了以和名为 <code>@.push</code> 的类成员变量消除歧义。索引访问并不需要这种歧义，但你需要拷贝这个值，以便用它做任何有用的事情。</p>
 
-<pre><code class="language-perl6">sub foo($x) {
+<pre><code class="language-raku">sub foo($x) {
     my $v = @;
     $v[$x] = $x;
     say $v;
@@ -851,7 +851,7 @@ foo($_) for ^3;
 
 <p>最后, 还有一个关联匿名状态变量 <code>%</code>。</p>
 
-<pre><code class="language-perl6">sub foo($x) {
+<pre><code class="language-raku">sub foo($x) {
     say (%).push($x =&gt; $x);
 }
 
@@ -865,7 +865,7 @@ foo($_) for ^3;
 
 <p>关于歧义的同样警告适用。正如你可能期望，索引访问也有可能（使用复制以使之有用）。</p>
 
-<pre><code class="language-perl6">sub foo($x) {
+<pre><code class="language-raku">sub foo($x) {
     my $v = %;
     $v{$x} = $x;
     say $v;
@@ -887,7 +887,7 @@ foo($_) for ^3;
 
 <p>因为类通常使用 our 作用域, 因此是全局的, 这意味着修改全局状态, 这是强烈不鼓励的, 对于大部分情况, 有更好的方法.</p>
 
-<pre><code class="language-perl6"># don't do this
+<pre><code class="language-raku"># don't do this
 use MONKEY-TYPING;
 augment class Int {
     method is-answer { self == 42 }
@@ -899,7 +899,7 @@ say 42.is-answer;       # True
 
 <p>像 my 一样, temp 在作用域的末尾恢复旧的变量值. 然而, temp 不创建新的变量.</p>
 
-<pre><code class="language-perl6">my $in = 0; # temp will &quot;entangle&quot; the global variable with the call stack
+<pre><code class="language-raku">my $in = 0; # temp will &quot;entangle&quot; the global variable with the call stack
             # that keeps the calls at the bottom in order.
 sub f(*@c) {
     (temp $in)++;
@@ -936,7 +936,7 @@ print g(g(f(g()), g(), f()));
 
 <p>跟 temp 类似, 如果 block 没有成功退出则恢复之前的值。成功的退出意味着该 block 返回了一个定义过的值或一个列表。</p>
 
-<pre><code class="language-perl6">my $answer = 42;
+<pre><code class="language-raku">my $answer = 42;
 
 {
     let $answer = 84;
@@ -957,7 +957,7 @@ say $answer;
 
 <p>变量可以有类型约束, 约束在声明符和变量名之间:</p>
 
-<pre><code class="language-perl6">my Int $x = 42;
+<pre><code class="language-raku">my Int $x = 42;
 $x = 'a string'; # throws an X::TypeCheck::Assignment error
 CATCH { default { put .^name, ': ', .Str } }
 # OUTPUT: X::TypeCheck::Assignment: Type check failed in assignment to $x; expected Int but got Str (&quot;a string&quot;)
@@ -965,7 +965,7 @@ CATCH { default { put .^name, ': ', .Str } }
 
 <p>如果一个标量有类型约束但是没有初始值, 它会使用类型约束的类型对象来初始化.</p>
 
-<pre><code class="language-perl6">my Int $x;
+<pre><code class="language-raku">my Int $x;
 say $x.^name;    # Int
 say $x.defined;  # False
 </code></pre>
@@ -976,7 +976,7 @@ say $x.defined;  # False
 
 <p>变量的默认值可以使用 <code>is default</code> 特性设置, 通过把 Nil 赋值给变量来重新应用默认值:</p>
 
-<pre><code class="language-perl6">my Real $product is default(1);
+<pre><code class="language-raku">my Real $product is default(1);
 say $product;                       # 1
 $produce *= 5;
 say $product;                       # 5
@@ -988,7 +988,7 @@ say $product;                       # 1
 
 <p>为了强制所有的变量拥有一个有定义的约束, 使用 <code>use variables :D</code> 指令。这个指令是词法作用域的并且可以使用 <code>use variables :_</code> 指令进行切换。</p>
 
-<pre><code class="language-perl6">use variables :D;
+<pre><code class="language-raku">use variables :D;
 my Int $i;
 # OUTPUT«===SORRY!=== Error while compiling &lt;tmp&gt;␤Variable definition of type Int:D (implicit :D by pragma) requires an initializer ...
 my Int $i = 1; # that works
@@ -1033,7 +1033,7 @@ my Int $i = 1; # that works
 
 <p><code>$_</code> 是特殊变量，在没有显式标识的代码块中，它是默认参数。所以诸如 <code>for @array { ... }</code> 和 <code>given $var { ... }</code> 之类的结构会将变量绑定给 <code>$_</code>.</p>
 
-<pre><code class="language-perl6">for &lt;a b c&gt; { say $_ }  # sets $_ to 'a', 'b' and 'c' in turn
+<pre><code class="language-raku">for &lt;a b c&gt; { say $_ }  # sets $_ to 'a', 'b' and 'c' in turn
 say $_ for &lt;a b c&gt;;     # same, even though it's not a block
 given 'a'   { say $_ }  # sets $_ to 'a'
 say $_ given 'a';       # same, 尽管这不是一个块
@@ -1042,12 +1042,12 @@ say $_ given 'a';       # same, 尽管这不是一个块
 <p>CATCH 块将 <code>$_</code> 设置为捕获到的异常。 <code>~~</code> 智能匹配操作符。
 对 <code>$_</code> 调用一个方法可以省略特殊变量 <code>$_</code> 的名字，从而写的更短：</p>
 
-<pre><code class="language-perl6">.say;                   # 与 $_.say 相同
+<pre><code class="language-raku">.say;                   # 与 $_.say 相同
 </code></pre>
 
 <p><code>m/regex/</code> 和 <code>/regex/</code> 正则匹配 和 <code>s/regex/subst/</code> 替换是作用于 <code>$_</code> 上的.</p>
 
-<pre><code class="language-perl6">say &quot;Looking for strings with non-alphabetic characters...&quot;;
+<pre><code class="language-raku">say &quot;Looking for strings with non-alphabetic characters...&quot;;
 for &lt;ab:c d$e fgh ij*&gt; {
     .say if m/&lt;!alpha&gt;/;
 }
@@ -1055,7 +1055,7 @@ for &lt;ab:c d$e fgh ij*&gt; {
 
 <p>输出:</p>
 
-<pre><code class="language-perl6">Looking for strings with non-alphabetic characters...
+<pre><code class="language-raku">Looking for strings with non-alphabetic characters...
 ab:c
 d$e
 ij*
@@ -1063,15 +1063,15 @@ ij*
 
 <h3 id="toc_30">$/</h3>
 
-<p><code>$/</code> 是匹配变量。它存储着最近一次<a href="https://docs.perl6.org/language/regexes">正则</a>匹配的结果，通常包含 <a href="https://docs.perl6.org/type/Match">Match</a> 类型的对象。</p>
+<p><code>$/</code> 是匹配变量。它存储着最近一次<a href="https://docs.raku.org/language/regexes">正则</a>匹配的结果，通常包含 <a href="https://docs.raku.org/type/Match">Match</a> 类型的对象。</p>
 
-<pre><code class="language-perl6">'abc 12' ~~ /\w+/;  # 设置 $/ 为一个Match 对象
+<pre><code class="language-raku">'abc 12' ~~ /\w+/;  # 设置 $/ 为一个Match 对象
 say $/.Str;         # abc
 </code></pre>
 
 <p><code>Grammar.parse</code> 方法会把调用者的 <code>$/</code> 设置为 <code>Match object</code> 的结果。看下面的代码:</p>
 
-<pre><code class="language-perl6">use XML::Grammar; # panda install XML
+<pre><code class="language-raku">use XML::Grammar; # panda install XML
 XML.Grammar.parse(&quot;&lt;p&gt;some text&lt;/p&gt;&quot;);
 say $/;
 
@@ -1091,7 +1091,7 @@ say $/;
 
 <p>其他匹配变量是 <code>$/</code> 元素的别名：</p>
 
-<pre><code class="language-perl6">$0          # same as $/[0]
+<pre><code class="language-raku">$0          # same as $/[0]
 $1          # same as $/[1]
 $&lt;named&gt;    # same as $/&lt;named&gt;
 </code></pre>
@@ -1100,40 +1100,40 @@ $&lt;named&gt;    # same as $/&lt;named&gt;
 
 <p>如果正则中有捕获分组, <code>$/</code> 中会有位置属性. 它们由圆括号组成.</p>
 
-<pre><code class="language-perl6">'abbbbbcdddddeffg' ~~ / a (b+) c (d+ef+) g /;
+<pre><code class="language-raku">'abbbbbcdddddeffg' ~~ / a (b+) c (d+ef+) g /;
 say $/[0]; # ｢bbbbb｣
 say $/[1]; # ｢dddddeff｣
 </code></pre>
 
 <p>这些捕获分组也能使用 <code>$0</code>,<code>$1</code>,<code>$2</code> 等便捷形式取得:</p>
 
-<pre><code class="language-perl6">say $0; # ｢bbbbb｣
+<pre><code class="language-raku">say $0; # ｢bbbbb｣
 say $1; # ｢dddddeff｣
 </code></pre>
 
 <p>要获取所有的位置属性, 使用 <code>$/.list</code>, <code>@$/</code>,<code>@( )</code> 中的任意一个都可以:</p>
 
-<pre><code class="language-perl6">say @().join; # bbbbbdddddeff
+<pre><code class="language-raku">say @().join; # bbbbbdddddeff
 </code></pre>
 
 <h3 id="命名属性">命名属性</h3>
 
 <p>如果正则中有命名捕获分组, <code>$/</code> 可以有命名属性, 或者正则调用了另一个正则:</p>
 
-<pre><code class="language-perl6">'I.... see?' ~~ / \w+ $&lt;punctuation&gt;=[ &lt;-[\w\s]&gt;+ ] \s* $&lt;final-word&gt; = [ \w+ . ] /;
+<pre><code class="language-raku">'I.... see?' ~~ / \w+ $&lt;punctuation&gt;=[ &lt;-[\w\s]&gt;+ ] \s* $&lt;final-word&gt; = [ \w+ . ] /;
 say $/&lt;punctuation&gt;; # ｢....｣
 say $/&lt;final-word&gt;;  # ｢see?｣
 </code></pre>
 
 <p>这些命名捕获分组也能使用便捷形式的 <code>$&lt;named&gt;</code> 获取:</p>
 
-<pre><code class="language-perl6">say $&lt;punctuation&gt;; # ｢....｣
+<pre><code class="language-raku">say $&lt;punctuation&gt;; # ｢....｣
 say $&lt;final-word&gt;;  # ｢see?｣
 </code></pre>
 
 <p>要获取所有的命名属性, 使用 <code>$/.hash</code>,  <code>%$/</code>, <code>%()</code>中的任何一个:</p>
 
-<pre><code class="language-perl6">say %().join;  # &quot;punctuation     ....final-word  see?&quot;
+<pre><code class="language-raku">say %().join;  # &quot;punctuation     ....final-word  see?&quot;
 </code></pre>
 
 <h3 id="变量-3">$! 变量</h3>
@@ -1189,7 +1189,7 @@ say $&lt;final-word&gt;;  # ｢see?｣
 </tbody>
 </table>
 
-<pre><code class="language-perl6">for '.' {
+<pre><code class="language-raku">for '.' {
     .Str.say when !.IO.d;
     .IO.dir()&gt;&gt;.&amp;?BLOCK when .IO.d # lets recurse a little!
 }
@@ -1346,7 +1346,7 @@ say $&lt;final-word&gt;;  # ｢see?｣
 
 <tr>
 <td align="center">$*EXECUTABLE-NAME</td>
-<td align="left">当前运行的可执行 perl 程序的名字。(e.g. perl6-p, perl6-m, Niecza.exe)</td>
+<td align="left">当前运行的可执行 perl 程序的名字。(e.g. raku-p, raku-m, Niecza.exe)</td>
 </tr>
 
 <tr>
@@ -1395,7 +1395,7 @@ say $&lt;final-word&gt;;  # ｢see?｣
 
 <p>对于当前的 Rakudo, 这个默认在方法 <code>.hyper</code> 和 <code>.race</code> 上采用最大 16 个线程。要更改线程的最大数量, 要么在运行 perl 之前设置环境变量  RAKUDO_MAX_THREADS 的值, 要么在使用 .hyper 或 .race 之前创建一个默认改变了的作用域的拷贝:</p>
 
-<pre><code class="language-perl6">my $*SCHEDULER = ThreadPoolScheduler.new( max_threads =&gt; 64 );
+<pre><code class="language-raku">my $*SCHEDULER = ThreadPoolScheduler.new( max_threads =&gt; 64 );
 </code></pre>
 
 <p>这种行为在 spec 测试中没有被测试并且还会变化。</p>

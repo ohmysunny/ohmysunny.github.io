@@ -11,7 +11,7 @@
 
     <base href="https://ohmysunny.github.io/">
     <title>
-  Perl 6 101 例 · Rakudo Star
+  Raku 101 例 · Rakudo Star
 </title>
 
     <link rel="canonical" href="https://ohmysunny.github.io/post/2.perl-6-by-example-p6-101/">
@@ -78,7 +78,7 @@
   <section class="container page">
   <article>
     <header>
-      <h1>Perl 6 101 例</h1>
+      <h1>Raku 101 例</h1>
     </header>
 
     
@@ -98,9 +98,9 @@ Beth Dave | 0:3
 
 <p>第一行是球员名单。每个后续行记录匹配的结果。</p>
 
-<p>这是在Perl 6中解决该问题的一种方法：</p>
+<p>这是在Raku中解决该问题的一种方法：</p>
 
-<pre><code class="language-perl6">use v6;
+<pre><code class="language-raku">use v6;
  
 my $file  = open 'scores.txt';
 my @names = $file.get.words;
@@ -142,13 +142,13 @@ Beth has won 1 matches and 4 sets
 
 <h2 id="v6">v6</h2>
 
-<p>每个Perl 6程序都应该以类似于的行开头use v6;。该行告诉编译器程序期望的Perl版本。如果您不小心使用Perl 5运行该文件，您将收到有用的错误消息。6.c是Perl 6版本的示例。</p>
+<p>每个Raku程序都应该以类似于的行开头use v6;。该行告诉编译器程序期望的Perl版本。如果您不小心使用Perl 5运行该文件，您将收到有用的错误消息。6.c是Raku版本的示例。</p>
 
 <h2 id="statement">statement</h2>
 
-<p>Perl 6程序由零个或多个语句组成。甲语句用分号或在线的端部的大括号结束：</p>
+<p>Raku程序由零个或多个语句组成。甲语句用分号或在线的端部的大括号结束：</p>
 
-<pre><code class="language-perl6">my $file = open 'scores.txt';
+<pre><code class="language-raku">my $file = open 'scores.txt';
 </code></pre>
 
 <h2 id="lexical和block">lexical和block</h2>
@@ -171,16 +171,16 @@ Beth has won 1 matches and 4 sets
 
 <p>&lsquo;scores.txt&rsquo;是一个字符串文字。字符串是一段文本，字符串文字是直接出现在程序中的字符串。在这一行中，它是提供给的参数open。</p>
 
-<pre><code class="language-perl6">my @names = $file.get.words;
+<pre><code class="language-raku">my @names = $file.get.words;
 </code></pre>
 
 <h2 id="array-method-和-invocant">array，method 和 invocant</h2>
 
 <p>右侧调用一个方法 - 一个命名的行为组 - 以get存储在其中的文件句柄命名$file。该get方法从文件中读取并返回一行，删除行结尾。如果您$file在打电话后打印内容get，您将看到第一行不再在那里。words也是一个方法，在返回的字符串上调用get。words将其调用者 - 它所操作的字符串 - 分解为一个单词列表，这里的意思是由空格分隔的字符串。它将单个字符串&rsquo;Beth Ana Charlie Dave&rsquo;转换为字符串列表&rsquo;Beth&rsquo;, &lsquo;Ana&rsquo;, &lsquo;Charlie&rsquo;, &lsquo;Dave&rsquo;。</p>
 
-<p>最后，此列表存储在<a href="https://docs.perl6.org/type/Array">Array</a>中 @names。该@印记标志着声明的变量作为Array。数组存储有序列表。</p>
+<p>最后，此列表存储在<a href="https://docs.raku.org/type/Array">Array</a>中 @names。该@印记标志着声明的变量作为Array。数组存储有序列表。</p>
 
-<pre><code class="language-perl6">my %matches;
+<pre><code class="language-raku">my %matches;
 my %sets;
 </code></pre>
 
@@ -190,7 +190,7 @@ my %sets;
 
 <p>在得分计数程序中，%matches存储每个玩家赢得的比赛数量。%sets存储每个玩家赢得的套数。这两个哈希都是由玩家的名字索引的。</p>
 
-<pre><code class="language-perl6">for $file.lines -&gt; $line {
+<pre><code class="language-raku">for $file.lines -&gt; $line {
     ...
 }
 </code></pre>
@@ -201,7 +201,7 @@ my %sets;
 
 <p>在第一次迭代期间，$line将包含字符串Ana Dave | 3:0; 在第二次，Charlie Beth | 3:1等等。</p>
 
-<pre><code class="language-perl6">my ($pairing, $result) = $line.split(' | ');
+<pre><code class="language-raku">my ($pairing, $result) = $line.split(' | ');
 </code></pre>
 
 <p>my可以同时声明多个变量。赋值的右侧是对名为的方法的调用split，将该字符串&rsquo; | &lsquo;作为参数传递。</p>
@@ -214,7 +214,7 @@ my %sets;
 
 <p>接下来的两行遵循相同的模式：</p>
 
-<pre><code class="language-perl6">my ($p1, $p2) = $pairing.words;
+<pre><code class="language-raku">my ($p1, $p2) = $pairing.words;
 my ($r1, $r2) = $result.split(':');
 </code></pre>
 
@@ -270,13 +270,13 @@ my ($r1, $r2) = $result.split(':');
 
 <p>然后程序计算每个玩家赢得的次数：</p>
 
-<pre><code class="language-perl6">%sets{$p1} += $r1;
+<pre><code class="language-raku">%sets{$p1} += $r1;
 %sets{$p2} += $r2;
 </code></pre>
 
 <p><code>+=</code> 赋值运算符是一个快捷方式：</p>
 
-<pre><code class="language-perl6">%sets{$p1} = %sets{$p1} + $r1;
+<pre><code class="language-raku">%sets{$p1} = %sets{$p1} + $r1;
 %sets{$p2} = %sets{$p2} + $r2;
 </code></pre>
 
@@ -287,7 +287,7 @@ my ($r1, $r2) = $result.split(':');
 <p>fat arrow，pair和autovivification
 在这两行执行之前，%sets为空。添加到不在散列中的条目将导致该条目即时生成，其值从零开始。（这是autovivification）。在这两行第一次运行后，%sets包含&rsquo;Ana&rsquo; =&gt; 3, &lsquo;Dave&rsquo; =&gt; 0 。（胖箭头=&gt; 分隔键中的键和值Pair。）</p>
 
-<pre><code class="language-perl6">if $r1 &gt; $r2 {
+<pre><code class="language-raku">if $r1 &gt; $r2 {
     %matches{$p1}++;
 } else {
     %matches{$p2}++;
@@ -300,7 +300,7 @@ my ($r1, $r2) = $result.split(':');
 
 <p>$thing++是$thing += 1或的缩写$thing = $thing + 1，除了表达式的返回值在增量$thing 之前的小异常，而不是递增的值。与许多其他编程语言一样，您可以将其++用作前缀。然后它返回递增的值; my $x = 1; say ++$x打印2。</p>
 
-<pre><code class="language-perl6">my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+<pre><code class="language-raku">my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
 </code></pre>
 
 <h2 id="variables">variables, $_</h2>
@@ -309,19 +309,19 @@ my ($r1, $r2) = $result.split(':');
 
 <h2 id="block">block</h2>
 
-<p>您之前已经看过块：for循环-&gt; $line { &hellip; } 和if语句都在块上运行。块是一个独立的Perl 6代码片段，带有可选的签名（-&gt; $line 部分）。</p>
+<p>您之前已经看过块：for循环-&gt; $line { &hellip; } 和if语句都在块上运行。块是一个独立的Raku代码片段，带有可选的签名（-&gt; $line 部分）。</p>
 
 <p>按分数对玩家进行排序的最简单方法是@names.sort({ %matches{$_} })，根据赢得的匹配数进行排序。然而Ana和Dave都赢了两场比赛。这种简单的排序并没有考虑赢得的套数，这是决定谁赢得锦标赛的次要标准。</p>
 
 <h2 id="stable-sort">stable sort</h2>
 
-<p>当两个数组项具有相同的值时，sort将它们保留为找到它们的顺序。计算机科学家称之为稳定的。该程序利用Perl 6的这个属性sort通过两次排序来实现目标：首先是赢得的集合数量（次要标准），然后是赢得的匹配数量。</p>
+<p>当两个数组项具有相同的值时，sort将它们保留为找到它们的顺序。计算机科学家称之为稳定的。该程序利用Raku的这个属性sort通过两次排序来实现目标：首先是赢得的集合数量（次要标准），然后是赢得的匹配数量。</p>
 
 <p>在第一个排序步骤之后，名称在顺序中Beth Charlie Dave Ana。在第二个排序步骤之后，它仍然是相同的，因为没有人比其他人赢得更少的比赛但是更多的比赛。这样的情况是完全可能的，特别是在较大的比赛中。</p>
 
 <p>sort从最小到最大按升序排序。这与所需顺序相反。因此，代码.reverse在第二次排序的结果上调用方法，并将最终列表存储在其中@sorted。</p>
 
-<pre><code class="language-perl6">for @sorted -&gt; $n {
+<pre><code class="language-raku">for @sorted -&gt; $n {
     say &quot;$n has won %matches{$n} matches and %sets{$n} sets&quot;;
 }
 </code></pre>
@@ -338,20 +338,20 @@ my ($r1, $r2) = $result.split(':');
 
 <h2 id="double-quoted-strings-和-single-quoted-strings">double-quoted strings 和 single-quoted strings</h2>
 
-<pre><code class="language-perl6">my $names = 'things';
+<pre><code class="language-raku">my $names = 'things';
 say 'Do not call me $names'; # OUTPUT: «Do not call me $names␤» 
 say &quot;Do not call me $names&quot;; # OUTPUT: «Do not call me things␤» 
 </code></pre>
 
-<p>Perl 6中的双引号字符串可以使用$sigil以及花括号中的代码块来插入变量。由于任何Perl代码都可以出现在花括号中，因此可以通过将它们放在花括号中来插入Arrays和Hashes。</p>
+<p>Raku中的双引号字符串可以使用$sigil以及花括号中的代码块来插入变量。由于任何Perl代码都可以出现在花括号中，因此可以通过将它们放在花括号中来插入Arrays和Hashes。</p>
 
 <p>花括号内的数组使用每个项目之间的单个空格字符进行插值。花括号内的哈希值被插值为一系列线条。每行包含一个键，后跟一个制表符，然后是与该键相关的值，最后是换行符。</p>
 
 <p>我们现在看一个例子吧。</p>
 
-<p>在此示例中，您将看到一些特殊语法，可以更轻松地创建字符串列表。这是&lt;&hellip;&gt; <a href="https://docs.perl6.org/language/operators#index-entry-qw-quote-words-quote-words">引用词</a>构造。当您在&lt;和&gt;之间放置单词时，它们都被假定为字符串，因此您不需要将它们分别用双引号括起来&rdquo;&hellip;&rdquo; 。</p>
+<p>在此示例中，您将看到一些特殊语法，可以更轻松地创建字符串列表。这是&lt;&hellip;&gt; <a href="https://docs.raku.org/language/operators#index-entry-qw-quote-words-quote-words">引用词</a>构造。当您在&lt;和&gt;之间放置单词时，它们都被假定为字符串，因此您不需要将它们分别用双引号括起来&rdquo;&hellip;&rdquo; 。</p>
 
-<pre><code class="language-perl6">say &quot;Math: { 1 + 2 }&quot;;                  # OUTPUT: «Math: 3␤» 
+<pre><code class="language-raku">say &quot;Math: { 1 + 2 }&quot;;                  # OUTPUT: «Math: 3␤» 
 my @people = &lt;Luke Matthew Mark&gt;;
 say &quot;The synoptics are: {@people}&quot;;     # OUTPUT: «The synoptics are: Luke Matthew Mark␤» 
  
@@ -367,7 +367,7 @@ say &quot;{%sets}␤&quot;;                         # From the table tennis tour
 
 <h2 id="zen-slice">Zen slice</h2>
 
-<pre><code class="language-perl6">my @flavors = &lt;vanilla peach&gt;;
+<pre><code class="language-raku">my @flavors = &lt;vanilla peach&gt;;
  
 say &quot;we have @flavors&quot;;           # OUTPUT: «we have @flavors␤» 
 say &quot;we have @flavors[0]&quot;;        # OUTPUT: «we have vanilla␤» 
@@ -390,21 +390,21 @@ say &quot;we have @flavors.sort.join(', ')&quot;;
 
 <p>答：删除该行my @names = $file.get.words;，然后更改：</p>
 
-<pre><code class="language-perl6">my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+<pre><code class="language-raku">my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
 </code></pre>
 
 <p>为:</p>
 
-<pre><code class="language-perl6">my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+<pre><code class="language-raku">my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
 </code></pre>
 
 <p>除了删除冗余@names变量之外，您还可以使用它来警告播放器是否出现在第一行中未提及的情况，例如由于拼写错误。你会如何修改你的程序来实现这一目标？</p>
 
 <p>提示：尝试使用成员资格运算符。</p>
 
-<p>答：更改@names到@valid-players。当通过文件的行循环，请检查$p1和$p2在@valid-players。请注意，对于<a href="https://docs.perl6.org/routine/(elem)">成员运算符</a>，您也可以使用(elem)和!(elem)。</p>
+<p>答：更改@names到@valid-players。当通过文件的行循环，请检查$p1和$p2在@valid-players。请注意，对于<a href="https://docs.raku.org/routine/(elem)">成员运算符</a>，您也可以使用(elem)和!(elem)。</p>
 
-<pre><code class="language-perl6">...;
+<pre><code class="language-raku">...;
 my @valid-players = $file.get.words;
 ...;
  

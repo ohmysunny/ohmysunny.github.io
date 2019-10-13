@@ -87,16 +87,16 @@
 
 <h2 id="代码布局">代码布局</h2>
 
-<p>如果没有 <code>:sigspace</code> 副词，在 Perl 6 正则表达式中空格并不重要。 使用它自己的优势，并插入空格，增加可读性。 此外，必要时插入注释。</p>
+<p>如果没有 <code>:sigspace</code> 副词，在 Raku 正则表达式中空格并不重要。 使用它自己的优势，并插入空格，增加可读性。 此外，必要时插入注释。</p>
 
 <p>比较非常紧凑的写法</p>
 
-<pre><code class="language-perl6">my regex float { &lt;[+-]&gt;?\d*'.'\d+[e&lt;[+-]&gt;?\d+]? }
+<pre><code class="language-raku">my regex float { &lt;[+-]&gt;?\d*'.'\d+[e&lt;[+-]&gt;?\d+]? }
 </code></pre>
 
 <p>和这种可读性更好的写法：</p>
 
-<pre><code class="language-perl6">my regex float {
+<pre><code class="language-raku">my regex float {
      &lt;[+-]&gt;?        # optional sign 
      \d*            # leading digits, optional 
      '.'
@@ -111,7 +111,7 @@
 
 <p>在括号或方括号内使用替换列表时，请对齐竖线：</p>
 
-<pre><code class="language-perl6">my regex example {
+<pre><code class="language-raku">my regex example {
     &lt;preamble&gt;
     [
     || &lt;choice_1&gt;
@@ -130,7 +130,7 @@
 
 <p>例如，您可以以前面获取浮点正则表达式为例：</p>
 
-<pre><code class="language-perl6">my regex float {
+<pre><code class="language-raku">my regex float {
      &lt;[+-]&gt;?        # optional sign 
      \d*            # leading digits, optional 
      '.'
@@ -143,7 +143,7 @@
 
 <p>并将其分解为部件：</p>
 
-<pre><code class="language-perl6">my token sign { &lt;[+-]&gt; }
+<pre><code class="language-raku">my token sign { &lt;[+-]&gt; }
 my token decimal { \d+ }
 my token exponent { 'e' &lt;sign&gt;? &lt;decimal&gt; }
 my regex float {
@@ -157,7 +157,7 @@ my regex float {
 
 <p>这有助于，特别是当正则表达式变得更加复杂时。 例如，您可能希望在存在指数的情况下使小数点可选。</p>
 
-<pre><code class="language-perl6">my regex float {
+<pre><code class="language-raku">my regex float {
     &lt;sign&gt;?
     [
     || &lt;decimal&gt;?  '.' &lt;decimal&gt; &lt;exponent&gt;?
@@ -180,7 +180,7 @@ key=value
 
 <p>显然，不允许闭合方括号，因为 <code>[a]b]</code> 是不明确的。 根据同一论点，应禁止开口方括号。 这让我们失望了</p>
 
-<pre><code class="language-perl6">token header { '[' &lt;-[ \[\] ]&gt;+ ']' }
+<pre><code class="language-raku">token header { '[' &lt;-[ \[\] ]&gt;+ ']' }
 </code></pre>
 
 <p>如果你只处理一行就没问题。 但是，如果您正在处理整个文件，那么正则表达式会解析</p>
@@ -191,7 +191,7 @@ newline in between]
 
 <p>这可能不是一个好主意。妥协是</p>
 
-<pre><code class="language-perl6">token header { '[' &lt;-[ \[\] \n ]&gt;+ ']' }
+<pre><code class="language-raku">token header { '[' &lt;-[ \[\] \n ]&gt;+ ']' }
 </code></pre>
 
 <p>然后，在后处理中，从 section 标题中删除前导和尾随空格和制表符。</p>
@@ -202,26 +202,26 @@ newline in between]
 
 <p>回到解析 <code>ini</code> 文件的例子，我们有</p>
 
-<pre><code class="language-perl6">my regex kvpair { \s* &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
+<pre><code class="language-raku">my regex kvpair { \s* &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
 </code></pre>
 
 <p>这可能不像我们想要的那样的文字，因为用户可能在等号周围放置空格。 那么，我们可以试试这个：</p>
 
-<pre><code class="language-perl6">my regex kvpair { \s* &lt;key=identifier&gt; \s* '=' \s* &lt;value=identifier&gt; \n+ }
+<pre><code class="language-raku">my regex kvpair { \s* &lt;key=identifier&gt; \s* '=' \s* &lt;value=identifier&gt; \n+ }
 </code></pre>
 
 <p>但那看起来很笨重，所以我们尝试别的东西：</p>
 
-<pre><code class="language-perl6">my rule kvpair { &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
+<pre><code class="language-raku">my rule kvpair { &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
 </code></pre>
 
 <p>可是等等！ 值之后的隐式空格匹配会占用所有空格，包括换行符，因此 <code>\n+</code> 没有任何东西可以匹配（并且 <code>rule</code> 也禁用了回溯，因此没有运气）。</p>
 
 <p>因此，将隐式空格的定义重新定义为输入格式中不重要的空白非常重要。</p>
 
-<p>这通过重新定义 token <code>ws</code> 来工作; 但是，它只适用于 <a href="https://docs.perl6.org/language/grammars">grammars</a>：</p>
+<p>这通过重新定义 token <code>ws</code> 来工作; 但是，它只适用于 <a href="https://docs.raku.org/language/grammars">grammars</a>：</p>
 
-<pre><code class="language-perl6">grammar IniFormat {
+<pre><code class="language-raku">grammar IniFormat {
     token ws { &lt;!ww&gt; \h* }
     rule header { \s* '[' (\w+) ']' \n+ }
     token identifier  { \w+ }
@@ -249,7 +249,7 @@ say so IniFormat.parse($contents);
 
 <p>除了将所有正则表达式都放入 grammar 并将其转换为 tokens（因为它们无论如何都不需要回溯），有趣的一点是</p>
 
-<pre><code class="language-perl6">token ws { &lt;!ww&gt; \h* }
+<pre><code class="language-raku">token ws { &lt;!ww&gt; \h* }
 </code></pre>
 
 <p>在进行隐式空格分析的时候会调用该 token。 当它不在两个单词字符之间（ <code>&lt;!ww&gt;</code>，&rdquo;在单词中&rdquo;的否定断言）和零个或多个水平空格字符之间匹配。 对水平空格的限制很重要，因为换行符（垂直空格）会分隔记录，不应被隐式匹配。</p>

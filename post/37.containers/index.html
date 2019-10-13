@@ -83,11 +83,11 @@
 
     
 
-<p>本节介绍了处理变量和容器元素时所涉及的间接级别。解释了 Perl 6 中使用的容器的不同类型，以及适用于它们的操作，如赋值，绑定和展平。最后讨论了更多高级主题，如自引用数据，类型约束和自定义容器。</p>
+<p>本节介绍了处理变量和容器元素时所涉及的间接级别。解释了 Raku 中使用的容器的不同类型，以及适用于它们的操作，如赋值，绑定和展平。最后讨论了更多高级主题，如自引用数据，类型约束和自定义容器。</p>
 
-<h1 id="变量是什么-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">变量是什么?</a></h1>
+<h1 id="变量是什么-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">变量是什么?</a></h1>
 
-<p>有些人喜欢说“一切都是对象”，但实际上在 Perl 6 中变量不是对用户暴露的对象。</p>
+<p>有些人喜欢说“一切都是对象”，但实际上在 Raku 中变量不是对用户暴露的对象。</p>
 
 <p>当编译器遇到类似 <code>my $x</code> 的变量声明时，它会将其注册到某个内部符号表中。此内部符号表用于检测未声明的变量，并将变量的代码生成与正确的作用域联系起来。</p>
 
@@ -95,13 +95,13 @@
 
 <p>在 <code>my $x</code> 这种情况下，变量的 <code>$x</code> 的 lexpad 条目是指向 <code>Scalar</code> 类型对象的指针，通常称为*容器*。</p>
 
-<h1 id="标量容器-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">标量容器</a></h1>
+<h1 id="标量容器-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">标量容器</a></h1>
 
-<p>虽然 <a href="https://docs.perl6.org/type/Scalar"><code>Scalar</code></a> 类型的对象在 Perl 6 中无处不在，但您很少直接将它们视为对象，因为大多数操作*都是去容器化的*，这意味着它们会对 <code>Scalar</code> 容器的内容而不是容器本身起作用。</p>
+<p>虽然 <a href="https://docs.raku.org/type/Scalar"><code>Scalar</code></a> 类型的对象在 Raku 中无处不在，但您很少直接将它们视为对象，因为大多数操作*都是去容器化的*，这意味着它们会对 <code>Scalar</code> 容器的内容而不是容器本身起作用。</p>
 
 <p>在这样的代码中：</p>
 
-<pre><code class="language-perl6">my $x = 42;
+<pre><code class="language-raku">my $x = 42;
 say $x;
 </code></pre>
 
@@ -111,7 +111,7 @@ say $x;
 
 <p>请注意，子例程签名允许传递容器：</p>
 
-<pre><code class="language-perl6">sub f($a is rw) {
+<pre><code class="language-raku">sub f($a is rw) {
     $a = 23;
 }
 my $x = 42;
@@ -123,7 +123,7 @@ say $x;         # OUTPUT: «23»
 
 <p>同样，例程可以返回容器，如果它被标记为 <code>is rw</code>：</p>
 
-<pre><code class="language-perl6">my $x = 23;
+<pre><code class="language-raku">my $x = 23;
 sub f() is rw { $x };
 f() = 42;
 say $x;         # OUTPUT: «42» 
@@ -133,14 +133,14 @@ say $x;         # OUTPUT: «42»
 
 <p>返回容器是 <code>is rw</code> 属性访问器的工作方式。所以：</p>
 
-<pre><code class="language-perl6">class A {
+<pre><code class="language-raku">class A {
     has $.attr is rw;
 }
 </code></pre>
 
 <p>相当于</p>
 
-<pre><code class="language-perl6">class A {
+<pre><code class="language-raku">class A {
     has $!attr;
     method attr() is rw { $!attr }
 }
@@ -148,46 +148,46 @@ say $x;         # OUTPUT: «42»
 
 <p>标量容器对类型检查和大多数只读访问都是透明的。<code>.VAR</code> 使它们可见：</p>
 
-<pre><code class="language-perl6">my $x = 42;
+<pre><code class="language-raku">my $x = 42;
 say $x.^name;       # OUTPUT: «Int» 
 say $x.VAR.^name;   # OUTPUT: «Scalar» 
 </code></pre>
 
 <p>并且参数上的 <code>is rw</code> 需要存在可写的 Scalar 容器：</p>
 
-<pre><code class="language-perl6">sub f($x is rw) { say $x };
+<pre><code class="language-raku">sub f($x is rw) { say $x };
 f 42;
 CATCH { default { say .^name, ': ', .Str } };
 # OUTPUT: «X::Parameter::RW: Parameter '$x' expected a writable container, but got Int value» 
 </code></pre>
 
-<h1 id="callable-容器-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">Callable 容器</a></h1>
+<h1 id="callable-容器-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">Callable 容器</a></h1>
 
-<p>可调用容器在 <a href="https://docs.perl6.org/type/Routine">Routine</a> 调用语法和存储在容器中的对象的 <a href="https://docs.perl6.org/type/Callable#method_CALL-ME">CALL-ME</a> 方法的实际调用之间提供了桥梁。声明容器时需要使用符号 <code>&amp;</code>  ，执行时必须省略 <code>Callable</code>。默认类型约束是 <a href="https://docs.perl6.org/type/Callable">Callable</a>。</p>
+<p>可调用容器在 <a href="https://docs.raku.org/type/Routine">Routine</a> 调用语法和存储在容器中的对象的 <a href="https://docs.raku.org/type/Callable#method_CALL-ME">CALL-ME</a> 方法的实际调用之间提供了桥梁。声明容器时需要使用符号 <code>&amp;</code>  ，执行时必须省略 <code>Callable</code>。默认类型约束是 <a href="https://docs.raku.org/type/Callable">Callable</a>。</p>
 
-<pre><code class="language-perl6">my &amp;callable = -&gt; $ν { say &quot;$ν is&quot;, $ν ~~ Int??&quot; whole&quot;!!&quot; not whole&quot; }
+<pre><code class="language-raku">my &amp;callable = -&gt; $ν { say &quot;$ν is&quot;, $ν ~~ Int??&quot; whole&quot;!!&quot; not whole&quot; }
 callable( ⅓ );
 callable( 3 );
 </code></pre>
 
-<p>当提到存储在容器中的值时，必须提供 signal 符号。这反过来允许 <code>Routine</code> 被用作调用的<a href="https://docs.perl6.org/type/Signature#Constraining_signatures_of_Callables">参数</a>。</p>
+<p>当提到存储在容器中的值时，必须提供 signal 符号。这反过来允许 <code>Routine</code> 被用作调用的<a href="https://docs.raku.org/type/Signature#Constraining_signatures_of_Callables">参数</a>。</p>
 
-<pre><code class="language-perl6">sub f() {}
+<pre><code class="language-raku">sub f() {}
 my &amp;g = sub {}
 sub caller(&amp;c1, &amp;c2){ c1, c2 }
 caller(&amp;f, &amp;g);
 </code></pre>
 
-<h1 id="binding-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">Binding</a></h1>
+<h1 id="binding-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">Binding</a></h1>
 
-<p>在赋值之后，Perl 6 还支持 <code>:=</code> *绑定*运算符。将值或容器绑定到变量时，会修改变量的 lexpad 条目（而不仅仅是它指向的容器）。如果你这样写：</p>
+<p>在赋值之后，Raku 还支持 <code>:=</code> *绑定*运算符。将值或容器绑定到变量时，会修改变量的 lexpad 条目（而不仅仅是它指向的容器）。如果你这样写：</p>
 
-<pre><code class="language-perl6">my $x := 42;
+<pre><code class="language-raku">my $x := 42;
 </code></pre>
 
 <p>然后 <code>$x</code> 的 lexpad 条目直接指向 <code>Int</code> 42. 这意味着你不能再给它赋值了：</p>
 
-<pre><code class="language-perl6">my $x := 42;
+<pre><code class="language-raku">my $x := 42;
 $x = 23;
 CATCH { default { say .^name, ': ', .Str } };
 # OUTPUT: «X::AdHoc: Cannot assign to an immutable value» 
@@ -195,7 +195,7 @@ CATCH { default { say .^name, ': ', .Str } };
 
 <p>您还可以将变量绑定到其他变量：</p>
 
-<pre><code class="language-perl6">my $a = 0;
+<pre><code class="language-raku">my $a = 0;
 my $b = 0;
 $a := $b;
 $b = 42;
@@ -208,7 +208,7 @@ say $a;         # OUTPUT: «42»
 
 <p>无符号变量和带有 <code>is raw</code> trait 的参数总是绑定的（无论使用 <code>=</code> 或 <code>:=</code> ）：</p>
 
-<pre><code class="language-perl6">my $a = 42;
+<pre><code class="language-raku">my $a = 42;
 my \b = $a;
 b++;
 say $a;         # OUTPUT: «43» 
@@ -218,16 +218,16 @@ f($a);
 say $a;         # OUTPUT: «44» 
 </code></pre>
 
-<h1 id="scalar-容器和-listy-things-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">Scalar 容器和 listy things</a></h1>
+<h1 id="scalar-容器和-listy-things-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">Scalar 容器和 listy things</a></h1>
 
-<p>在 Perl 6 中有许多位置容器类型，其语义略有不同。最基本的是 <a href="https://docs.perl6.org/type/List">List</a>; 它由逗号运算符创建。</p>
+<p>在 Raku 中有许多位置容器类型，其语义略有不同。最基本的是 <a href="https://docs.raku.org/type/List">List</a>; 它由逗号运算符创建。</p>
 
-<pre><code class="language-perl6">say (1, 2, 3).^name;    # OUTPUT: «List» 
+<pre><code class="language-raku">say (1, 2, 3).^name;    # OUTPUT: «List» 
 </code></pre>
 
 <p>列表是不可变的，这意味着您无法更改列表中的元素数。但是，如果其中一个元素恰好是标量容器，您仍然可以给它赋值：</p>
 
-<pre><code class="language-perl6">my $x = 42;
+<pre><code class="language-raku">my $x = 42;
 ($x, 1, 2)[0] = 23;
 say $x;                 # OUTPUT: «23» 
 ($x, 1, 2)[1] = 23;     # Cannot modify an immutable value 
@@ -241,20 +241,20 @@ CATCH { default { say .^name, ': ', .Str } };
 
 <p><code>Array</code> 就像一个列表，除了它强制所有元素都是容器，这意味着你总是可以给元素赋值：</p>
 
-<pre><code class="language-perl6">my @a = 1, 2, 3;
+<pre><code class="language-raku">my @a = 1, 2, 3;
 @a[0] = 42;
 say @a;         # OUTPUT: «[42 2 3]» 
 </code></pre>
 
 <p><code>@a</code> 实际上存储了三个标量容器。<code>@a[0]</code> 返回其中一个，赋值运算符用新的整数替换该容器中存储的整数值 <code>42</code>。</p>
 
-<h1 id="赋值和绑定给数组变量-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">赋值和绑定给数组变量</a></h1>
+<h1 id="赋值和绑定给数组变量-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">赋值和绑定给数组变量</a></h1>
 
 <p>对标量变量和数组变量的赋值都执行相同的操作：丢弃旧值，并输入一些新值。</p>
 
 <p>然而，很容易观察到它们有多么不同：</p>
 
-<pre><code class="language-perl6">my $x = 42; say $x.^name;   # OUTPUT: «Int» 
+<pre><code class="language-raku">my $x = 42; say $x.^name;   # OUTPUT: «Int» 
 my @a = 42; say @a.^name;   # OUTPUT: «Array» 
 </code></pre>
 
@@ -262,15 +262,15 @@ my @a = 42; say @a.^name;   # OUTPUT: «Array»
 
 <p>要将非 <code>Array</code> 放入数组变量，绑定起作用：</p>
 
-<pre><code class="language-perl6">my @a := (1, 2, 3);
+<pre><code class="language-raku">my @a := (1, 2, 3);
 say @a.^name;               # OUTPUT: «List» 
 </code></pre>
 
-<h1 id="绑定到数组元素-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">绑定到数组元素</a></h1>
+<h1 id="绑定到数组元素-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">绑定到数组元素</a></h1>
 
-<p>作为一个奇怪的旁注，Perl 6 支持绑定到数组元素：</p>
+<p>作为一个奇怪的旁注，Raku 支持绑定到数组元素：</p>
 
-<pre><code class="language-perl6">my @a = (1, 2, 3);
+<pre><code class="language-raku">my @a = (1, 2, 3);
 @a[0] := my $x;
 $x = 42;
 say @a;                     # OUTPUT: «[42 2 3]» 
@@ -282,7 +282,7 @@ say @a;                     # OUTPUT: «[42 2 3]»
 
 <p>请注意，虽然支持，但通常应避免直接将非容器化事物绑定到数组元素中。这样做可能会在以后使用数组时产生反直觉的结果。</p>
 
-<pre><code class="language-perl6">my @a = (1, 2, 3);
+<pre><code class="language-raku">my @a = (1, 2, 3);
 @a[0] := 42;         # This is not recommended, use assignment instead. 
 my $b := 42;
 @a[1] := $b;         # Nor is this. 
@@ -294,11 +294,11 @@ CATCH { default { say .^name, ': ', .Str } };
 
 <p>混合列表和数组的操作通常可以防止发生这种意外情况。</p>
 
-<h1 id="展平-项和容器-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">展平, 项和容器</a></h1>
+<h1 id="展平-项和容器-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">展平, 项和容器</a></h1>
 
-<p>Perl 6 中的 <code>%</code> 和 <code>@</code> Sigils 通常指示迭代构造的多个值，而 <code>$</code> sigil 仅指示一个值。</p>
+<p>Raku 中的 <code>%</code> 和 <code>@</code> Sigils 通常指示迭代构造的多个值，而 <code>$</code> sigil 仅指示一个值。</p>
 
-<pre><code class="language-perl6">my @a = 1, 2, 3;
+<pre><code class="language-raku">my @a = 1, 2, 3;
 for @a { };         # 3 iterations 
 my $a = (1, 2, 3);
 for $a { };         # 1 iteration 
@@ -306,23 +306,23 @@ for $a { };         # 1 iteration
 
 <p><code>@</code>-sigiled 变量不会在列表上下文中展平：</p>
 
-<pre><code class="language-perl6">my @a = 1, 2, 3;
+<pre><code class="language-raku">my @a = 1, 2, 3;
 my @b = @a, 4, 5;
 say @b.elems;               # OUTPUT: «3» 
 </code></pre>
 
 <p>有些操作会使不在标量容器内的子列表被展平：slurpy parameters（<code>*@a</code>）和显式调用 <code>flat</code>：</p>
 
-<pre><code class="language-perl6">my @a = 1, 2, 3;
+<pre><code class="language-raku">my @a = 1, 2, 3;
 say (flat @a, 4, 5).elems;  # OUTPUT: «5» 
  
 sub f(*@x) { @x.elems };
 say f @a, 4, 5;             # OUTPUT: «5» 
 </code></pre>
 
-<p>您还可以使用 <code>|</code> 创建 <a href="https://docs.perl6.org/type/Slip">Slip</a>，将列表引入另一个列表中。</p>
+<p>您还可以使用 <code>|</code> 创建 <a href="https://docs.raku.org/type/Slip">Slip</a>，将列表引入另一个列表中。</p>
 
-<pre><code class="language-perl6">my @l := 1, 2, (3, 4, (5, 6)), [7, 8, (9, 10)];
+<pre><code class="language-raku">my @l := 1, 2, (3, 4, (5, 6)), [7, 8, (9, 10)];
 say (|@l, 11, 12);    # OUTPUT: «(1 2 (3 4 (5 6)) [7 8 (9 10)] 11 12)» 
 say (flat @l, 11, 12) # OUTPUT: «(1 2 3 4 5 6 7 8 (9 10) 11 12)» 
 </code></pre>
@@ -331,20 +331,20 @@ say (flat @l, 11, 12) # OUTPUT: «(1 2 3 4 5 6 7 8 (9 10) 11 12)»
 
 <p>如上所述，标量容器可防止扁平化：</p>
 
-<pre><code class="language-perl6">sub f(*@x) { @x.elems };
+<pre><code class="language-raku">sub f(*@x) { @x.elems };
 my @a = 1, 2, 3;
 say f $@a, 4, 5;            # OUTPUT: «3» 
 </code></pre>
 
 <p><code>@</code> 字符也可以用作将参数强制为列表的前缀，从而删除标量容器：</p>
 
-<pre><code class="language-perl6">my $x = (1, 2, 3);
+<pre><code class="language-raku">my $x = (1, 2, 3);
 .say for @$x;               # 3 iterations 
 </code></pre>
 
 <p>但是，*解容器*运算符 <code>&lt;&gt;</code> 更适合去除非列表项：</p>
 
-<pre><code class="language-perl6">my $x = ^Inf .grep: *.is-prime;
+<pre><code class="language-raku">my $x = ^Inf .grep: *.is-prime;
 say &quot;$_ is prime&quot; for @$x;  # WRONG! List keeps values, thus leaking memory 
 say &quot;$_ is prime&quot; for $x&lt;&gt;; # RIGHT. Simply decontainerize the Seq 
  
@@ -353,46 +353,46 @@ my $y := ^Inf .grep: *.is-prime; # Even better; no Scalars involved at all
 
 <p>方法通常不关心他们的调用者是否在标量中，所以：</p>
 
-<pre><code class="language-perl6">my $x = (1, 2, 3);
+<pre><code class="language-raku">my $x = (1, 2, 3);
 $x.map(*.say);              # 3 iterations 
 </code></pre>
 
 <p>在三个元素的列表上 map，而不是在一个元素上 map。</p>
 
-<h1 id="自引用数据-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">自引用数据</a></h1>
+<h1 id="自引用数据-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">自引用数据</a></h1>
 
 <p>容器类型（包括 <code>Array</code> 和 <code>Hash</code>）允许您创建自引用结构。</p>
 
-<pre><code class="language-perl6">my @a;
+<pre><code class="language-raku">my @a;
 @a[0] = @a;
 put @a.perl;
 # OUTPUT: «((my @Array_75093712) = [@Array_75093712,])» 
 </code></pre>
 
-<p>虽然 Perl 6 不会阻止您创建和使用自引用数据，但这样做可能会导致您尝试转储数据。作为最后的手段，您可以使用 Promises 来<a href="https://docs.perl6.org/type/Promise#method_in">处理</a>超时。</p>
+<p>虽然 Raku 不会阻止您创建和使用自引用数据，但这样做可能会导致您尝试转储数据。作为最后的手段，您可以使用 Promises 来<a href="https://docs.raku.org/type/Promise#method_in">处理</a>超时。</p>
 
-<h1 id="类型约束-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">类型约束</a></h1>
+<h1 id="类型约束-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">类型约束</a></h1>
 
-<p>任何容器都可以具有<a href="https://docs.perl6.org/language/typesystem#Type_objects">类型对象</a>或<a href="https://docs.perl6.org/language/typesystem#subset">subset</a>形式的类型约束。两者都可以放在声明符和变量名之间，也可以放在 trait <a href="https://docs.perl6.org/type/Variable#trait_is_dynamic">of</a>。之后。约束是变量的属性，而不是容器的属性。</p>
+<p>任何容器都可以具有<a href="https://docs.raku.org/language/typesystem#Type_objects">类型对象</a>或<a href="https://docs.raku.org/language/typesystem#subset">subset</a>形式的类型约束。两者都可以放在声明符和变量名之间，也可以放在 trait <a href="https://docs.raku.org/type/Variable#trait_is_dynamic">of</a>。之后。约束是变量的属性，而不是容器的属性。</p>
 
-<pre><code class="language-perl6">subset Three-letter of Str where .chars == 3;
+<pre><code class="language-raku">subset Three-letter of Str where .chars == 3;
 my Three-letter $acronym = &quot;ÞFL&quot;;
 </code></pre>
 
 <p>在这种情况下，类型约束是（编译类型定义的）subset <code>Three-letter</code>。</p>
 
-<p>变量可能没有容器，但仍然提供重新绑定和类型检查重新绑定的能力。原因是在这种情况下绑定运算符<a href="https://docs.perl6.org/language/operators#infix_%3A%3D"><code>:=</code></a> 执行类型检查：</p>
+<p>变量可能没有容器，但仍然提供重新绑定和类型检查重新绑定的能力。原因是在这种情况下绑定运算符<a href="https://docs.raku.org/language/operators#infix_%3A%3D"><code>:=</code></a> 执行类型检查：</p>
 
-<pre><code class="language-perl6">my Int \z = 42;
+<pre><code class="language-raku">my Int \z = 42;
 z := 100; # OK 
 z := &quot;x&quot;; # Typecheck failure 
 </code></pre>
 
-<p>例如，当绑定到 <a href="https://docs.perl6.org/type/Hash">Hash</a> 键时，情况并非如此，因为绑定随后由方法调用处理（即使语法保持不变，使用 <code>:=</code> 运算符）。</p>
+<p>例如，当绑定到 <a href="https://docs.raku.org/type/Hash">Hash</a> 键时，情况并非如此，因为绑定随后由方法调用处理（即使语法保持不变，使用 <code>:=</code> 运算符）。</p>
 
-<p><code>Scalar</code> 容器的默认类型约束是 <a href="https://docs.perl6.org/type/Mu">Mu</a>。<code>.VAR.of</code> 方法提供了对容器类型约束的内省，对于 <code>@</code> 和 <code>%</code> sigiled 变量，它给出了值的约束：</p>
+<p><code>Scalar</code> 容器的默认类型约束是 <a href="https://docs.raku.org/type/Mu">Mu</a>。<code>.VAR.of</code> 方法提供了对容器类型约束的内省，对于 <code>@</code> 和 <code>%</code> sigiled 变量，它给出了值的约束：</p>
 
-<pre><code class="language-perl6">my Str $x;
+<pre><code class="language-raku">my Str $x;
 say $x.VAR.of;  # OUTPUT: «(Str)» 
 my Num @a;
 say @a.VAR.of;  # OUTPUT: «(Num)» 
@@ -400,24 +400,24 @@ my Int %h;
 say %h.VAR.of;  # OUTPUT: «(Int)» 
 </code></pre>
 
-<h2 id="definedness-约束-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">Definedness 约束</a></h2>
+<h2 id="definedness-约束-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">Definedness 约束</a></h2>
 
 <p>容器还可以强制执行变量是定义的。在声明中放一个笑脸：</p>
 
-<pre><code class="language-perl6">my Int:D $def = 3;
+<pre><code class="language-raku">my Int:D $def = 3;
 say $def;   # OUTPUT: «3» 
 $def = Int; # Typecheck failure 
 </code></pre>
 
 <p>您还需要在声明中初始化变量，毕竟变量不能是未定义的。</p>
 
-<p>也可以在使用<a href="https://docs.perl6.org/language/variables#Default_defined_variables_pragma">默认定义变量 pragma</a> 的作用域中声明的所有变量中强制执行此约束。来自其他语言的人们总是会定义变量，他们希望看看。</p>
+<p>也可以在使用<a href="https://docs.raku.org/language/variables#Default_defined_variables_pragma">默认定义变量 pragma</a> 的作用域中声明的所有变量中强制执行此约束。来自其他语言的人们总是会定义变量，他们希望看看。</p>
 
-<h1 id="自定义容器-https-docs-perl6-org-language-containers-top"><a href="https://docs.perl6.org/language/containers#___top">自定义容器</a></h1>
+<h1 id="自定义容器-https-docs-raku-org-language-containers-top"><a href="https://docs.raku.org/language/containers#___top">自定义容器</a></h1>
 
-<p>为了提供自定义容器，Perl 6 提供了 <code>Proxy</code> 这个类 。当从容器中存储或提取值时，需要调用两个方法。类型检查不是由容器本身完成的，并且 readonlyness 等其他限制可以被破坏。因此，返回的值必须与它绑定的变量的类型相同。我们可以使用类型捕获来处理 Perl 6 中的类型。</p>
+<p>为了提供自定义容器，Raku 提供了 <code>Proxy</code> 这个类 。当从容器中存储或提取值时，需要调用两个方法。类型检查不是由容器本身完成的，并且 readonlyness 等其他限制可以被破坏。因此，返回的值必须与它绑定的变量的类型相同。我们可以使用类型捕获来处理 Raku 中的类型。</p>
 
-<pre><code class="language-perl6">sub lucky(::T $type) {
+<pre><code class="language-raku">sub lucky(::T $type) {
     my T $c-value; # closure variable 
     return Proxy.new(
         FETCH =&gt; method () { $c-value },

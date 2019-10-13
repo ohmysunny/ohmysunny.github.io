@@ -83,33 +83,33 @@
 
     
 
-<p>Perl 6 对 Unicode 有很高的支持。本文档旨在概述和描述不属于例程和方法文档的 Unicode 功能。</p>
+<p>Raku 对 Unicode 有很高的支持。本文档旨在概述和描述不属于例程和方法文档的 Unicode 功能。</p>
 
 <p>有关 MoarVM 内部字符串表示的概述，请参阅 <a href="https://github.com/MoarVM/MoarVM/blob/master/docs/strings.asciidoc">MoarVM 字符串文档</a>。</p>
 
-<h1 id="文件句柄和输入输出-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">文件句柄和输入输出</a></h1>
+<h1 id="文件句柄和输入输出-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">文件句柄和输入输出</a></h1>
 
-<h2 id="标准化-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">标准化</a></h2>
+<h2 id="标准化-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">标准化</a></h2>
 
-<p>默认情况下，Perl 6 对所有输入和输出应用标准化，但存储为 <a href="(https://docs.perl6.org/language/unicode#UTF8-C8)">UTF8-C8</a> 的文件名除外;字形是用户可见的字符形式，将使用标准化表示。这是什么意思？例如，字形数字 <code>á</code> 可以用两种方式表示，或者使用一个代码点：</p>
+<p>默认情况下，Raku 对所有输入和输出应用标准化，但存储为 <a href="(https://docs.raku.org/language/unicode#UTF8-C8)">UTF8-C8</a> 的文件名除外;字形是用户可见的字符形式，将使用标准化表示。这是什么意思？例如，字形数字 <code>á</code> 可以用两种方式表示，或者使用一个代码点：</p>
 
-<pre><code class="language-perl6">á (U+E1 &quot;LATIN SMALL LETTER A WITH ACUTE&quot;)
+<pre><code class="language-raku">á (U+E1 &quot;LATIN SMALL LETTER A WITH ACUTE&quot;)
 </code></pre>
 
 <p>或两个代码点:</p>
 
-<pre><code class="language-perl6">a +  ́ (U+61 &quot;LATIN SMALL LETTER A&quot; + U+301 &quot;COMBINING ACUTE ACCENT&quot;)
+<pre><code class="language-raku">a +  ́ (U+61 &quot;LATIN SMALL LETTER A&quot; + U+301 &quot;COMBINING ACUTE ACCENT&quot;)
 </code></pre>
 
-<p>Perl 6 将这两个输入转换为一个代码点，如规范化形式 C（NFC）所指定的那样。在大多数情况下，这很有用，意味着两个相同的输入都被视为相同。 Unicode 具有规范等价的概念，它允许我们确定字符串的规范形式，允许我们正确地比较字符串并操纵它们，而不必担心文本丢失这些属性。默认情况下，您处理或从 Perl 6 输出的任何文本都将采用此“规范”形式，即使在对字符串进行修改或连接时也是如此（请参阅下文，了解如何避免这种情况）。有关规范化表单C和规范等效性的更多详细信息，请参阅Unicode Foundation 的<a href="https://unicode.org/reports/tr15/#Canon_Compat_Equivalence">规范化和规范等效性</a>页面。</p>
+<p>Raku 将这两个输入转换为一个代码点，如规范化形式 C（NFC）所指定的那样。在大多数情况下，这很有用，意味着两个相同的输入都被视为相同。 Unicode 具有规范等价的概念，它允许我们确定字符串的规范形式，允许我们正确地比较字符串并操纵它们，而不必担心文本丢失这些属性。默认情况下，您处理或从 Raku 输出的任何文本都将采用此“规范”形式，即使在对字符串进行修改或连接时也是如此（请参阅下文，了解如何避免这种情况）。有关规范化表单C和规范等效性的更多详细信息，请参阅Unicode Foundation 的<a href="https://unicode.org/reports/tr15/#Canon_Compat_Equivalence">规范化和规范等效性</a>页面。</p>
 
 <p>我们不默认的一种情况是文件名。这是因为必须完全访问文件的名称，就像在磁盘上写入字节一样。</p>
 
-<p>为避免规范化，您可以使用名为 <a href="https://docs.perl6.org/language/unicode#UTF8-C8">UTF8-C8</a> 的特殊编码格式。将此编码与任何文件句柄一起使用将允许您读取磁盘上的确切字节，而不进行规范化。如果使用 UTF8 句柄打印出来，打印出来时看起来会很滑稽。如果将其打印到输出编码为 <a href="https://docs.perl6.org/language/unicode#UTF8-C8">UTF8-C8</a> 的句柄，则它将按照您通常的预期进行渲染，并且是字节精确复制的字节。有关 MoarVM 上 UTF8-C8 的更多技术细节, 请参见下文。</p>
+<p>为避免规范化，您可以使用名为 <a href="https://docs.raku.org/language/unicode#UTF8-C8">UTF8-C8</a> 的特殊编码格式。将此编码与任何文件句柄一起使用将允许您读取磁盘上的确切字节，而不进行规范化。如果使用 UTF8 句柄打印出来，打印出来时看起来会很滑稽。如果将其打印到输出编码为 <a href="https://docs.raku.org/language/unicode#UTF8-C8">UTF8-C8</a> 的句柄，则它将按照您通常的预期进行渲染，并且是字节精确复制的字节。有关 MoarVM 上 UTF8-C8 的更多技术细节, 请参见下文。</p>
 
-<h2 id="utf8-c8-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">UTF8-C8</a></h2>
+<h2 id="utf8-c8-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">UTF8-C8</a></h2>
 
-<p>UTF-8 Clean-8 是一种编码器/解码器，主要用作 UTF-8。但是，遇到一个不能解码为有效 UTF-8 的字节序列，或者由于规范化而不会往返的字节序列时，它将使用 <a href="(https://docs.perl6.org/language/glossary#NFG)">NFG</a> 合成来跟踪所涉及的原始字节。这意味着编码回 UTF-8 Clean-8 将能够重新创建它们最初存在的字节。合成物包含4个代码点：</p>
+<p>UTF-8 Clean-8 是一种编码器/解码器，主要用作 UTF-8。但是，遇到一个不能解码为有效 UTF-8 的字节序列，或者由于规范化而不会往返的字节序列时，它将使用 <a href="(https://docs.raku.org/language/glossary#NFG)">NFG</a> 合成来跟踪所涉及的原始字节。这意味着编码回 UTF-8 Clean-8 将能够重新创建它们最初存在的字节。合成物包含4个代码点：</p>
 
 <ul>
 <li>代码点 0x10FFFD (这是一个私用的代码点)</li>
@@ -122,13 +122,13 @@
 
 <p>UTF-8 Clean-8 用于 MoarVM 从环境，命令行参数和文件系统查询接收字符串的地方，例如解码缓冲区时：</p>
 
-<pre><code class="language-perl6">say Buf.new(ord('A'), 0xFE, ord('Z')).decode('utf8-c8');
+<pre><code class="language-raku">say Buf.new(ord('A'), 0xFE, ord('Z')).decode('utf8-c8');
 #  OUTPUT: «A􏿽xFEZ␤» 
 </code></pre>
 
 <p>您可以看到 UTF8-C8 使用的两个初始代码点如何显示在此处，就在“FE”之前。您可以使用此类编码来读取具有未知编码的文件：</p>
 
-<pre><code class="language-perl6">my $test-file = &quot;/tmp/test&quot;;
+<pre><code class="language-raku">my $test-file = &quot;/tmp/test&quot;;
 given open($test-file, :w, :bin) {
   .write: Buf.new(ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD);
   .close;
@@ -141,50 +141,50 @@ say slurp($test-file, enc =&gt; 'utf8-c8'); # OUTPUT: «(65 250 66 251 252 67 25
 
 <p>请注意，到目前为止，这种编码在 Rakudo 的 JVM 实现中不受支持。</p>
 
-<h1 id="输入-unicode-代码点和代码点序列-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">输入 unicode 代码点和代码点序列</a></h1>
+<h1 id="输入-unicode-代码点和代码点序列-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">输入 unicode 代码点和代码点序列</a></h1>
 
 <p>您可以按编号（十进制和十六进制）输入 Unicode 代码点。例如，名为“带有macron的拉丁大写字母ae”的字符具有十进制代码点482和十六进制代码点0x1E2：</p>
 
-<pre><code class="language-perl6">say &quot;\c[482]&quot;; # OUTPUT: «Ǣ␤» 
+<pre><code class="language-raku">say &quot;\c[482]&quot;; # OUTPUT: «Ǣ␤» 
 say &quot;\x1E2&quot;;   # OUTPUT: «Ǣ␤» 
 </code></pre>
 
 <p>您还可以按名称访问 Unicode 代码点：Rakudo 支持所有 Unicode 9.0 名称。</p>
 
-<pre><code class="language-perl6">say &quot;\c[PENGUIN]&quot;; # OUTPUT: «🐧␤» 
+<pre><code class="language-raku">say &quot;\c[PENGUIN]&quot;; # OUTPUT: «🐧␤» 
 say &quot;\c[BELL]&quot;;    # OUTPUT: «🔔␤» (U+1F514 BELL) 
 </code></pre>
 
 <p>所有 Unicode 代码点名称/命名seq /emoji 序列现在都不区分大小写：[从2017.02开始]</p>
 
-<pre><code class="language-perl6">say &quot;\c[latin capital letter ae with macron]&quot;; # OUTPUT: «Ǣ␤» 
+<pre><code class="language-raku">say &quot;\c[latin capital letter ae with macron]&quot;; # OUTPUT: «Ǣ␤» 
 say &quot;\c[latin capital letter E]&quot;;              # OUTPUT: «E␤» (U+0045) 
 </code></pre>
 
 <p>您可以使用带有 <code>\c[]</code> 的逗号分隔列表来指定多个字符。 您也可以组合数字和命名样式：</p>
 
-<pre><code class="language-perl6">say &quot;\c[482,PENGUIN]&quot;; # OUTPUT: «Ǣ🐧␤» 
+<pre><code class="language-raku">say &quot;\c[482,PENGUIN]&quot;; # OUTPUT: «Ǣ🐧␤» 
 </code></pre>
 
-<p>除了在内插字符串中使用 <code>\c[]</code> 之外，您还可以使用 <a href="https://docs.perl6.org/routine/uniparse">uniparse</a>:：</p>
+<p>除了在内插字符串中使用 <code>\c[]</code> 之外，您还可以使用 <a href="https://docs.raku.org/routine/uniparse">uniparse</a>:：</p>
 
-<pre><code class="language-perl6">say &quot;DIGIT ONE&quot;.uniparse;  # OUTPUT: «1␤» 
+<pre><code class="language-raku">say &quot;DIGIT ONE&quot;.uniparse;  # OUTPUT: «1␤» 
 say uniparse(&quot;DIGIT ONE&quot;); # OUTPUT: «1␤» 
 </code></pre>
 
-<h2 id="名称别名-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">名称别名</a></h2>
+<h2 id="名称别名-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">名称别名</a></h2>
 
 <p>按名称别名。名称别名主要用于没有正式名称的代码点，缩写或更正（Unicode 名称永远不会更改）。有关它们的完整列表，请参见<a href="https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt">此处</a>。</p>
 
 <p>没有任何官方名称的控制代码：</p>
 
-<pre><code class="language-perl6">say &quot;\c[ALERT]&quot;;     # Not visible (U+0007 control code (also accessible as \a)) 
+<pre><code class="language-raku">say &quot;\c[ALERT]&quot;;     # Not visible (U+0007 control code (also accessible as \a)) 
 say &quot;\c[LINE FEED]&quot;; # Not visible (U+000A same as &quot;\n&quot;) 
 </code></pre>
 
 <p>更正:</p>
 
-<pre><code class="language-perl6">say &quot;\c[LATIN CAPITAL LETTER GHA]&quot;; # OUTPUT: «Ƣ␤» 
+<pre><code class="language-raku">say &quot;\c[LATIN CAPITAL LETTER GHA]&quot;; # OUTPUT: «Ƣ␤» 
 say &quot;Ƣ&quot;.uniname; # OUTPUT: «LATIN CAPITAL LETTER OI␤» 
 # This one is a spelling mistake that was corrected in a Name Alias: 
 say &quot;\c[PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRACKET]&quot;.uniname;
@@ -193,23 +193,23 @@ say &quot;\c[PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRACKET]&quot
 
 <p>缩写:</p>
 
-<pre><code class="language-perl6">say &quot;\c[ZWJ]&quot;.uniname;  # OUTPUT: «ZERO WIDTH JOINER␤» 
+<pre><code class="language-raku">say &quot;\c[ZWJ]&quot;.uniname;  # OUTPUT: «ZERO WIDTH JOINER␤» 
 say &quot;\c[NBSP]&quot;.uniname; # OUTPUT: «NO-BREAK SPACE␤» 
 </code></pre>
 
-<h2 id="命名序列-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">命名序列</a></h2>
+<h2 id="命名序列-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">命名序列</a></h2>
 
 <p>您也可以使用任何<a href="https://www.unicode.org/Public/UCD/latest/ucd/NamedSequences.txt">命名序列</a>，这些不是单个代码点，而是它们的序列。 [从2017.02开始]</p>
 
-<pre><code class="language-perl6">say &quot;\c[LATIN CAPITAL LETTER E WITH VERTICAL LINE BELOW AND ACUTE]&quot;;      # OUTPUT: «É̩␤» 
+<pre><code class="language-raku">say &quot;\c[LATIN CAPITAL LETTER E WITH VERTICAL LINE BELOW AND ACUTE]&quot;;      # OUTPUT: «É̩␤» 
 say &quot;\c[LATIN CAPITAL LETTER E WITH VERTICAL LINE BELOW AND ACUTE]&quot;.ords; # OUTPUT: «(201 809)␤» 
 </code></pre>
 
-<h3 id="emoji-序列-https-docs-perl6-org-language-unicode-top"><a href="https://docs.perl6.org/language/unicode#___top">Emoji 序列</a></h3>
+<h3 id="emoji-序列-https-docs-raku-org-language-unicode-top"><a href="https://docs.raku.org/language/unicode#___top">Emoji 序列</a></h3>
 
-<p>Rakudo 支持表情符号 4.0（最新的非草稿版本）序列。 对于他们所有人看到：<a href="(https://www.unicode.org/Public/emoji/4.0/emoji-zwj-sequences.txt)">表情符号 ZWJ 序列</a>和<a href="https://www.unicode.org/Public/emoji/4.0/emoji-sequences.txt">表情符号序列</a>。 请注意，任何带逗号的名称都应删除逗号，因为 Perl 6 使用逗号分隔同一 <code>\c</code> 序列中的不同代码点/序列。</p>
+<p>Rakudo 支持表情符号 4.0（最新的非草稿版本）序列。 对于他们所有人看到：<a href="(https://www.unicode.org/Public/emoji/4.0/emoji-zwj-sequences.txt)">表情符号 ZWJ 序列</a>和<a href="https://www.unicode.org/Public/emoji/4.0/emoji-sequences.txt">表情符号序列</a>。 请注意，任何带逗号的名称都应删除逗号，因为 Raku 使用逗号分隔同一 <code>\c</code> 序列中的不同代码点/序列。</p>
 
-<pre><code class="language-perl6">say &quot;\c[woman gesturing OK]&quot;;         # OUTPUT: «🙆‍♀️␤» 
+<pre><code class="language-raku">say &quot;\c[woman gesturing OK]&quot;;         # OUTPUT: «🙆‍♀️␤» 
 say &quot;\c[family: man woman girl boy]&quot;; # OUTPUT: «👨‍👩‍👧‍👦␤» 
 </code></pre>
 

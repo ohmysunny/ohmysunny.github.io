@@ -83,22 +83,22 @@
 
     
 
-<h1 id="grammars-http-doc-perl6-org-language-grammars"><a href="http://doc.perl6.org/language/grammars">Grammars</a></h1>
+<h1 id="grammars-http-doc-raku-org-language-grammars"><a href="http://doc.raku.org/language/grammars">Grammars</a></h1>
 
 <p>Grammars - 一组具名 regexes 组成正式的 grammar</p>
 
 <p>Grammars 是一个很强大的工具用于析构文本并通常返回数据结构。</p>
 
-<p>例如, Perl 6 是使用 Perl 6 风格 grammar 解析并执行的。</p>
+<p>例如, Raku 是使用 Raku 风格 grammar 解析并执行的。</p>
 
-<p>对普通 Perl 6 使用者更实用的一个例子是 <a href="https://github.com/moritz/json">JSON::Tiny</a>模块, 它能反序列化任何合法的 JSON 文件, 而反序列代码只有不到 100 行, 还能扩展。</p>
+<p>对普通 Raku 使用者更实用的一个例子是 <a href="https://github.com/moritz/json">JSON::Tiny</a>模块, 它能反序列化任何合法的 JSON 文件, 而反序列代码只有不到 100 行, 还能扩展。</p>
 
 <p>Grammars 允许你把 regexes 组织到一块儿, 就像类(class) 中组织方法那样。</p>
 
 <h2 id="具名正则-named-regexes">具名正则 (Named Regexes)</h2>
 
 <p>　
-grammars 的主要组成部分是 <a href="http://doc.perl6.org/language/regexes">regexes</a>。 而 Perl 6 的 <a href="http://doc.perl6.org/language/regexes">regexes</a>语法不在该文档的讨论范围, 具名正则(named regexes) 有它自己的特殊语法, 这跟子例程(subroutine) 的定义很像:</p>
+grammars 的主要组成部分是 <a href="http://doc.raku.org/language/regexes">regexes</a>。 而 Raku 的 <a href="http://doc.raku.org/language/regexes">regexes</a>语法不在该文档的讨论范围, 具名正则(named regexes) 有它自己的特殊语法, 这跟子例程(subroutine) 的定义很像:</p>
 
 <pre><code class="language-perl">my regex number { \d+ [ \. \d+ ]?   }   # 普通 regex 中空格被忽略, [] 是非捕获组
 </code></pre>
@@ -171,15 +171,15 @@ say 'once upon a time' ~~ &amp;space-y;
 <h2 id="创建-grammar">创建 Grammar</h2>
 
 <p>　
-当使用 grammar 关键字而非 class 关键字声明来声明一个类时, 会自动得到以 <a href="https://docs.perl6.org/type/Grammar">Grammar</a> 的父类。Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 推荐 <a href="http://doc.perl6.org/language/grammars#Action_Objects">action object</a>和 grammar 一块使用。</p>
+当使用 grammar 关键字而非 class 关键字声明来声明一个类时, 会自动得到以 <a href="https://docs.raku.org/type/Grammar">Grammar</a> 的父类。Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 推荐 <a href="http://doc.raku.org/language/grammars#Action_Objects">action object</a>和 grammar 一块使用。</p>
 
 <h3 id="proto-regexes">Proto regexes</h3>
 
-<p><a href="https://docs.perl6.org/type/Grammar">Grammars</a> 由 rules，token 和 regexes 组成; 他们实际上是方法，因为 grammars 是类。这些方法可以共享一个共同的名称和功能，因此可以使用 <a href="https://docs.perl6.org/syntax/proto">proto</a>。</p>
+<p><a href="https://docs.raku.org/type/Grammar">Grammars</a> 由 rules，token 和 regexes 组成; 他们实际上是方法，因为 grammars 是类。这些方法可以共享一个共同的名称和功能，因此可以使用 <a href="https://docs.raku.org/syntax/proto">proto</a>。</p>
 
 <p>如果你有很多备选分支(alternations), 那么生成可读性好的代码或子类化(subclass)你的 grammar 可能会变得很困难。在下面的 <code>Actions</code> 类中, <code>TOP</code> 方法中的三元操作符并不理想, 并且当我们添加的操作越多, 它就变得越糟糕:</p>
 
-<pre><code class="language-perl6">grammar Calculator {
+<pre><code class="language-raku">grammar Calculator {
     token TOP { [ &lt;add&gt; | &lt;sub&gt; ] }
     rule  add { &lt;num&gt; '+' &lt;num&gt; }
     rule  sub { &lt;num&gt; '-' &lt;num&gt; }
@@ -200,7 +200,7 @@ say Calculator.parse('2 + 3', actions =&gt; Calculations).made;
 
 <p>为了让事情变得更好, 我们可以在 tokens 身上使用看起来像 <code>:sym&lt;...&gt;</code> 那样的副词来使用正则表达式原型(protoregexes):</p>
 
-<pre><code class="language-perl6">grammar Calculator {
+<pre><code class="language-raku">grammar Calculator {
     token TOP { &lt;calc-op&gt; }
 
     proto rule calc-op          {*}
@@ -228,7 +228,7 @@ say Calculator.parse('2 + 3', actions =&gt; Calculations).made;
 
 <p>当你子类化(subclass)那个 grammar 和 actions 类的时候才能看到这个方法的真正魅力。假设我们想为 calculator 增加一个乘法功能:</p>
 
-<pre><code class="language-perl6">grammar BetterCalculator is Calculator {
+<pre><code class="language-raku">grammar BetterCalculator is Calculator {
     rule calc-op:sym&lt;mult&gt; { &lt;num&gt; '*' &lt;num&gt; }
 }
 
@@ -248,7 +248,7 @@ say BetterCalculator.parse('2 * 3', actions =&gt; BetterCalculations).made;
 
 <h3 id="top">TOP</h3>
 
-<pre><code class="language-perl6">grammar Foo {
+<pre><code class="language-raku">grammar Foo {
     token TOP { \d+ }
 }
 </code></pre>
@@ -265,19 +265,19 @@ say BetterCalculator.parse('2 * 3', actions =&gt; BetterCalculations).made;
 
 <p>当使用 <code>rule</code> 而非 <code>token</code> 时, 原子(atom)后面的任何空白(whitespace)被转换为一个对 <code>ws</code> 的非捕获调用。即:</p>
 
-<pre><code class="language-perl6">rule entry { &lt;key&gt; ’=’ &lt;value&gt; }
+<pre><code class="language-raku">rule entry { &lt;key&gt; ’=’ &lt;value&gt; }
 </code></pre>
 
 <p>等价于:</p>
 
-<pre><code class="language-perl6">token entry { &lt;key&gt; &lt;.ws&gt; ’=’ &lt;.ws&gt; &lt;value&gt; &lt;.ws&gt; } # . = non-capturing
+<pre><code class="language-raku">token entry { &lt;key&gt; &lt;.ws&gt; ’=’ &lt;.ws&gt; &lt;value&gt; &lt;.ws&gt; } # . = non-capturing
 </code></pre>
 
 <p>默认的 <code>ws</code> 匹配&rdquo;空白&rdquo;(whitespace), 例如空格序列(不管什么类型)、换行符、unspaces、或 heredocs。</p>
 
 <p>提供你自己的 <code>ws</code> token 是极好的:</p>
 
-<pre><code class="language-perl6">grammar Foo {
+<pre><code class="language-raku">grammar Foo {
     rule TOP { \d \d }
 }.parse: &quot;4   \n\n 5&quot;; # Succeeds
 
@@ -293,7 +293,7 @@ grammar Bar {
 
 <p><code>&lt;sym&gt;</code> token 可以在原型正则表达式(proto regex) 中使用，以匹配那个特定正则表达式的 <code>:sym</code> 副词的字符串值：</p>
 
-<pre><code class="language-perl6">grammar Foo {
+<pre><code class="language-raku">grammar Foo {
     token TOP { &lt;letter&gt;+ }
     proto token letter {*}
     token letter:sym&lt;P&gt; { &lt;sym&gt; }
@@ -314,7 +314,7 @@ grammar Bar {
 
 <p>在 action 类中, 我们使用对 succ 方法的调用来设置(在这个例子中, 我们在 @!numbers 中准备了一个新元素)。在 <code>digit</code> 方法中, 我们把阿拉伯数字转换为梵文数字并且把它添加到 @!numbers 数组的最后一个元素中。多亏了 <code>succ</code>, 最后一个元素总是当前正被解析的 <code>digit</code> 数字的数。</p>
 
-<pre><code class="language-perl6">grammar Digifier {
+<pre><code class="language-raku">grammar Digifier {
     rule TOP {
         [ &lt;.succ&gt; &lt;digit&gt;+ ]+
     }
@@ -336,9 +336,9 @@ say Digifier.parse('255 435 777', actions =&gt; Devanagari.new).made;
 
 <h2 id="grammar-中的方法">Grammar 中的方法</h2>
 
-<p>在 grammar 中使用 <code>method</code> 代替 <code>rule</code> 或 <code>token</code> 也是可以的, 只要它们返回一个 <a href="https://docs.perl6.org/type/Cursor">Cursor</a> 类型:</p>
+<p>在 grammar 中使用 <code>method</code> 代替 <code>rule</code> 或 <code>token</code> 也是可以的, 只要它们返回一个 <a href="https://docs.raku.org/type/Cursor">Cursor</a> 类型:</p>
 
-<pre><code class="language-perl6">grammar DigitMatcher {
+<pre><code class="language-raku">grammar DigitMatcher {
     method TOP (:$full-unicode) {
         $full-unicode ?? self.num-full !! self.num-basic;
     }
@@ -349,7 +349,7 @@ say Digifier.parse('255 435 777', actions =&gt; Devanagari.new).made;
 
 <p>上面的 grammar 会根据 parse 方法提供的参数尝试不同的匹配:</p>
 
-<pre><code class="language-perl6">say +DigitMatcher.subparse: '12७१७९०९', args =&gt; \(:full-unicode);
+<pre><code class="language-raku">say +DigitMatcher.subparse: '12७१७९०९', args =&gt; \(:full-unicode);
 # OUTPUT:
 # 12717909
 

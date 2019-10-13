@@ -85,25 +85,25 @@
 
 <h1 id="运行程序">运行程序</h1>
 
-<p>许多程序需要能够运行其他程序，我们需要将信息传递给它们并接收它们的输出和退出状态。在 Perl 6 中运行程序非常简单：</p>
+<p>许多程序需要能够运行其他程序，我们需要将信息传递给它们并接收它们的输出和退出状态。在 Raku 中运行程序非常简单：</p>
 
-<pre><code class="language-perl6">run 'git', 'status';
+<pre><code class="language-raku">run 'git', 'status';
 </code></pre>
 
 <p>这一行运行名为 “git” 的程序，并将 “git” 和 “status” 传递给它的命令行。它将使用 <code>%*ENV&lt;PATH&gt;</code> 设置找到该 git 程序。</p>
 
 <p>如果您想通过向 shell 发送命令行来运行程序，那么也有一个工具。所有 shell 元字符都由 shell 解释，包括管道，重定向，环境变量替换等。</p>
 
-<pre><code class="language-perl6">shell 'ls -lR | gzip -9 &gt; ls-lR.gz';
+<pre><code class="language-raku">shell 'ls -lR | gzip -9 &gt; ls-lR.gz';
 </code></pre>
 
 <p>使用 <code>shell</code> 用户输入时应小心。</p>
 
-<h1 id="proc-对象-https-docs-perl6-org-language-ipc-top"><a href="https://docs.perl6.org/language/ipc#___top"><code>Proc</code>对象</a></h1>
+<h1 id="proc-对象-https-docs-raku-org-language-ipc-top"><a href="https://docs.raku.org/language/ipc#___top"><code>Proc</code>对象</a></h1>
 
-<p><code>run</code> 和 <code>shell</code> 都返回一个<a href="https://docs.perl6.org/type/Proc">PROC</a>对象，它可以使用具有更详细的进程进行通信。请注意，除非您关闭所有输出管道，否则程序通常不会终止。</p>
+<p><code>run</code> 和 <code>shell</code> 都返回一个<a href="https://docs.raku.org/type/Proc">PROC</a>对象，它可以使用具有更详细的进程进行通信。请注意，除非您关闭所有输出管道，否则程序通常不会终止。</p>
 
-<pre><code class="language-perl6">my $git = run 'git', 'log', '--oneline', :out;
+<pre><code class="language-raku">my $git = run 'git', 'log', '--oneline', :out;
 for $git.out.lines -&gt; $line {
     my ($sha, $subject) = $line.split: ' ', 2;
     say &quot;$subject [$sha]&quot;;
@@ -111,14 +111,14 @@ for $git.out.lines -&gt; $line {
 $git.out.close();
 </code></pre>
 
-<p>如果程序失败（以非零退出码退出），它将在返回的<a href="https://docs.perl6.org/type/Proc">Proc</a>对象沉没时抛出异常。您可以将其保存为变量，甚至是匿名变量，以防止下沉：</p>
+<p>如果程序失败（以非零退出码退出），它将在返回的<a href="https://docs.raku.org/type/Proc">Proc</a>对象沉没时抛出异常。您可以将其保存为变量，甚至是匿名变量，以防止下沉：</p>
 
-<pre><code class="language-perl6">$ = run '/bin/false'; # does not sink the Proc and so does not throw 
+<pre><code class="language-raku">$ = run '/bin/false'; # does not sink the Proc and so does not throw 
 </code></pre>
 
 <p>您可以通过传递 <code>:out</code> 和 <code>:err</code> 标志来告诉 <code>Proc</code> 对象将输出捕获为文件句柄。您也可以通过 <code>:in</code> 标记传递输入。</p>
 
-<pre><code class="language-perl6">my $echo = run 'echo', 'Hello, world', :out;
+<pre><code class="language-raku">my $echo = run 'echo', 'Hello, world', :out;
 my $cat  = run 'cat', '-n', :in($echo.out), :out;
 say $cat.out.get;
 $cat.out.close();
@@ -126,7 +126,7 @@ $cat.out.close();
 
 <p>您还可以使用 <code>Proc</code> 捕获PID，将信号发送到应用程序，并检查 exitcode。</p>
 
-<pre><code class="language-perl6">my $crontab = run 'crontab', '-l';
+<pre><code class="language-raku">my $crontab = run 'crontab', '-l';
 if $crontab.exitcode == 0 {
     say 'crontab -l ran ok';
 }
@@ -135,11 +135,11 @@ else {
 }
 </code></pre>
 
-<h1 id="proc-async-对象-https-docs-perl6-org-language-ipc-top"><a href="https://docs.perl6.org/language/ipc#___top"><code>Proc::Async</code>对象</a></h1>
+<h1 id="proc-async-对象-https-docs-raku-org-language-ipc-top"><a href="https://docs.raku.org/language/ipc#___top"><code>Proc::Async</code>对象</a></h1>
 
-<p>当您需要更多地控制与另一个进程的通信时，您将需要使用<a href="https://docs.perl6.org/type/Proc::Async">Proc::Async</a>。该类提供对与程序进行异步通信的支持，以及向该程序发送信号的能力。</p>
+<p>当您需要更多地控制与另一个进程的通信时，您将需要使用<a href="https://docs.raku.org/type/Proc::Async">Proc::Async</a>。该类提供对与程序进行异步通信的支持，以及向该程序发送信号的能力。</p>
 
-<pre><code class="language-perl6"># Get ready to run the program 
+<pre><code class="language-raku"># Get ready to run the program 
 my $log = Proc::Async.new('tail', '-f',  '/var/log/system.log');
 $log.stdout.tap(-&gt; $buf { print $buf });
 $log.stderr.tap(-&gt; $buf { $*ERR.print($buf) });
@@ -157,9 +157,9 @@ await $done;
 
 <p>上面的小程序使用“tail”程序每 10 秒打印出名 <code>system.log</code> 的日志内容，然后通过 QUIT 信号告诉程序停止。</p>
 
-<p>虽然 <code>Proc</code> 使用 <code>IO::Handle</code> 提供对输出的访问，但 <code>Proc::Async</code> 使用异步 supplies 提供访问（请参阅<a href="https://docs.perl6.org/type/Supply">Supply</a>）。</p>
+<p>虽然 <code>Proc</code> 使用 <code>IO::Handle</code> 提供对输出的访问，但 <code>Proc::Async</code> 使用异步 supplies 提供访问（请参阅<a href="https://docs.raku.org/type/Supply">Supply</a>）。</p>
 
-<p>如果要在等待原始程序完成时运行程序并执行某些工作，则 <code>start</code> 例程将返回<a href="https://docs.perl6.org/type/Promise">Promise</a>，该程序在程序退出时保留(kept)。</p>
+<p>如果要在等待原始程序完成时运行程序并执行某些工作，则 <code>start</code> 例程将返回<a href="https://docs.raku.org/type/Promise">Promise</a>，该程序在程序退出时保留(kept)。</p>
 
 <p>使用 <code>write</code> 方法将数据传递到程序中。</p>
 

@@ -83,11 +83,11 @@
 
     
 
-<p>Perl 6 POD 表的官方规范位于文档规范中：<a href="https://raw.githubusercontent.com/perl6/specs/master/S26-documentation.pod">表</a>。虽然 Pod 6 的规格尚未完全妥善处理，但仍有几个项目正在进行纠正。一个这样的项目是确保正确处理 Pod 6 表。</p>
+<p>Raku POD 表的官方规范位于文档规范中：<a href="https://raw.githubusercontent.com/raku/specs/master/S26-documentation.pod">表</a>。虽然 Pod 6 的规格尚未完全妥善处理，但仍有几个项目正在进行纠正。一个这样的项目是确保正确处理 Pod 6 表。</p>
 
 <p>作为该工作的一部分，本文档通过示例解释了 Pod 6 表的当前状态：有效表，无效表和丑陋表（即，由于草率构造，可能导致与用户期望的不同的有效表） 。</p>
 
-<h1 id="restrictions-https-docs-perl6-org-language-tables-top"><a href="https://docs.perl6.org/language/tables#___top">Restrictions</a></h1>
+<h1 id="restrictions-https-docs-raku-org-language-tables-top"><a href="https://docs.raku.org/language/tables#___top">Restrictions</a></h1>
 
 <p>1.唯一有效的列分隔符要么是可见的（<code>|</code> 或 <code>+</code>）（注意在可见列分隔符之前和之后至少需要一个空格）或不可见[两个或多个连续的空格（WS）字符（例如， &lsquo;  &lsquo;）]。在表格的左侧或右侧通常不会识别列分隔符，但是右侧的列分隔符可能会导致一个或多个空单元格，具体取决于其他行中单元格的数量。（请注意，作为单元格数据一部分的管道或加号字符将导致意外的额外列，除非使用反斜杠转义字符，例如 <code>\|</code> 或 <code>\+</code>。）</p>
 
@@ -103,7 +103,7 @@
 
 <p>提示：在开发过程中，使用环境变量 <code>RAKUDO_POD6_TABLE_DEBUG</code> 将向您展示 Rakudo 如何在将 pod 表传递给渲染器之前解释它们，例如 <strong>Pod::To::HTML</strong>，<strong>Pod::To::Text</strong> 和 <strong>Pod::To::Markdown</strong>。</p>
 
-<h1 id="最佳实践-https-docs-perl6-org-language-tables-top"><a href="https://docs.perl6.org/language/tables#___top">最佳实践</a></h1>
+<h1 id="最佳实践-https-docs-raku-org-language-tables-top"><a href="https://docs.raku.org/language/tables#___top">最佳实践</a></h1>
 
 <p>提示：由于在表行上进行额外的循环，不遵循以下最佳实践可能需要更多的表处理。</p>
 
@@ -175,9 +175,9 @@ take out trash
 
 <p>请注意，把标题放在 <code>config</code> 哈希中的替代方法必须在实现 <code>:caption</code> 方法之前，但现在认为该方法已被弃用。该练习将在已经发布的 <code>6.d</code> 版本中生成警告，并将在 <code>6.e</code> 版本中引发异常。</p>
 
-<h1 id="good-tables-https-docs-perl6-org-language-tables-top"><a href="https://docs.perl6.org/language/tables#___top">Good tables</a></h1>
+<h1 id="good-tables-https-docs-raku-org-language-tables-top"><a href="https://docs.raku.org/language/tables#___top">Good tables</a></h1>
 
-<p>以下是有效（好）表的示例（取自当前的<a href="https://github.com/perl6/roast">规范测试</a>）。</p>
+<p>以下是有效（好）表的示例（取自当前的<a href="https://github.com/raku/roast">规范测试</a>）。</p>
 
 <pre><code class="language-pod">=begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -247,7 +247,7 @@ bar
 =end table
 </code></pre>
 
-<h1 id="bad-tables-https-docs-perl6-org-language-tables-top"><a href="https://docs.perl6.org/language/tables#___top">Bad tables</a></h1>
+<h1 id="bad-tables-https-docs-raku-org-language-tables-top"><a href="https://docs.raku.org/language/tables#___top">Bad tables</a></h1>
 
 <p>以下是无效（坏）表的示例，它们应在解析期间触发未处理异常。</p>
 
@@ -282,7 +282,7 @@ r1c0 |  r1c1
 =end table
 </code></pre>
 
-<h1 id="ugly-tables-https-docs-perl6-org-language-tables-top"><a href="https://docs.perl6.org/language/tables#___top">Ugly tables</a></h1>
+<h1 id="ugly-tables-https-docs-raku-org-language-tables-top"><a href="https://docs.raku.org/language/tables#___top">Ugly tables</a></h1>
 
 <p>以下是有效表可能是两列的示例，但列未对齐，因此每个列都将解析为单列表。</p>
 

@@ -83,13 +83,13 @@
 
     
 
-<p>Perl 6 中的大部分句法结构能归类为项和操作符. 这儿你能找到各种不同类型的项的概览.</p>
+<p>Raku 中的大部分句法结构能归类为项和操作符. 这儿你能找到各种不同类型的项的概览.</p>
 
 <h2 id="literals">Literals</h2>
 
 <h3 id="int">Int</h3>
 
-<pre><code class="language-perl6">42
+<pre><code class="language-raku">42
 12_300_00
 :16&lt;DEAD_BEEF&gt;    #十六进制
 </code></pre>
@@ -98,7 +98,7 @@
 
 <h3 id="rat-有理数">Rat   有理数</h3>
 
-<pre><code class="language-perl6">12.34
+<pre><code class="language-raku">12.34
 1_200.345_678
 </code></pre>
 
@@ -106,7 +106,7 @@
 
 <h3 id="num-浮点数">Num  浮点数</h3>
 
-<pre><code class="language-perl6">12.3e-32
+<pre><code class="language-raku">12.3e-32
 3e8
 </code></pre>
 
@@ -114,17 +114,17 @@
 
 <h3 id="str">Str</h3>
 
-<pre><code class="language-perl6">'a string''I\'m escaped!'
+<pre><code class="language-raku">'a string''I\'m escaped!'
 &quot;I don't need to be&quot;
 &quot;\&quot;But I still can be,\&quot; he said.&quot;
 q|Other delimiters can be used too!|
 </code></pre>
 
-<p>字符串字面量常常使用 <code>'</code> 或 <code>&quot;</code> 创建, 然儿, 字符串在 Perl 6 中其实是一种强大的子语言.</p>
+<p>字符串字面量常常使用 <code>'</code> 或 <code>&quot;</code> 创建, 然儿, 字符串在 Raku 中其实是一种强大的子语言.</p>
 
 <h3 id="regex">Regex</h3>
 
-<pre><code class="language-perl6">/ match some text /
+<pre><code class="language-raku">/ match some text /
 rx/slurp \s rest (.*) $/
 </code></pre>
 
@@ -132,7 +132,7 @@ rx/slurp \s rest (.*) $/
 
 <h3 id="pair">Pair</h3>
 
-<pre><code class="language-perl6"> a =&gt; 1
+<pre><code class="language-raku"> a =&gt; 1
 'a' =&gt; 'b'
 :identifier
 :!identifier
@@ -157,12 +157,12 @@ rx/slurp \s rest (.*) $/
 
 <p>什么是 Parcel? -&gt; Immutable sequence of values - 不可变值的序列.</p>
 
-<pre><code class="language-perl6">calss Parcel is Cool does Positional { }
+<pre><code class="language-raku">calss Parcel is Cool does Positional { }
 </code></pre>
 
 <p>Parcel 代表 <code>Parenthesis cell</code>, 例如, 被圆括号环绕的表达式. 除了空的 parcel 之外, 实际上是使用逗号来创建一个 Parcel.</p>
 
-<pre><code class="language-perl6">(1 + 2)  # not a Parcel
+<pre><code class="language-raku">(1 + 2)  # not a Parcel
 ()       # empty Parcel
 (1,)     # Parcel with one element
 (1,3)    # Parcel with two element
@@ -174,7 +174,7 @@ qw/a b c/
 
 <p>Parcel 字面量有: 空的圆括号 (),  逗号分割的列表, 还有几种引号结构.</p>
 
-<pre><code class="language-perl6">&gt; say (1,2,3).WHAT
+<pre><code class="language-raku">&gt; say (1,2,3).WHAT
 (Parcel)
 &gt; say &lt;a b c&gt;.WHAT
 (Parcel)
@@ -186,37 +186,37 @@ qw/a b c/
 
 <p>Parcels 是不可变的, 但是能包含可变容器:</p>
 
-<pre><code class="language-perl6">my $x;
+<pre><code class="language-raku">my $x;
 my $p = (0, $x, 2); # can assign to $p[1], but not
                     # to any other element of $p
 </code></pre>
 
 <p>像 <code>&lt;...&gt;</code> 这种 <code>Word-quoting</code> 结构也会创建 parcels:</p>
 
-<pre><code class="language-perl6">&lt;a b c&gt; # 3-element Parcel
+<pre><code class="language-raku">&lt;a b c&gt; # 3-element Parcel
 </code></pre>
 
 <p>在 flattening 列表上下文中, parcels 被展平并且会消失:</p>
 
-<pre><code class="language-perl6">my @flat = &lt;a b&gt;, &lt;c, d&gt;;
+<pre><code class="language-raku">my @flat = &lt;a b&gt;, &lt;c, d&gt;;
 say @flat.elems;
 </code></pre>
 
 <h3 id="term">term *</h3>
 
-<p><code>*</code> 会创建一个类型为 Whatever 的对象. 详情查看 <a href="http://doc.perl6.org/type/Whatever">Whatever</a>.</p>
+<p><code>*</code> 会创建一个类型为 Whatever 的对象. 详情查看 <a href="http://doc.raku.org/type/Whatever">Whatever</a>.</p>
 
 <h2 id="identifier-terms">Identifier terms</h2>
 
-<p>Perl 6中有内建的标识符项, 列出如下. 此外, 使用该语法能添加新的标识符项.</p>
+<p>Raku中有内建的标识符项, 列出如下. 此外, 使用该语法能添加新的标识符项.</p>
 
-<pre><code class="language-perl6">sub term:&lt;fourty-two&gt; { 42 };
+<pre><code class="language-raku">sub term:&lt;fourty-two&gt; { 42 };
 say fourty-two
 </code></pre>
 
 <p>或者作为常量:</p>
 
-<pre><code class="language-perl6">constant forty-two = 42;
+<pre><code class="language-raku">constant forty-two = 42;
 say fourty-two
 </code></pre>
 

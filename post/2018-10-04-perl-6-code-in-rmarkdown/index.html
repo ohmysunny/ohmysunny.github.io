@@ -11,7 +11,7 @@
 
     <base href="https://ohmysunny.github.io/">
     <title>
-  Rmarkdown 中的 Perl 6 代码 · Rakudo Star
+  Rmarkdown 中的 Raku 代码 · Rakudo Star
 </title>
 
     <link rel="canonical" href="https://ohmysunny.github.io/post/2018-10-04-perl-6-code-in-rmarkdown/">
@@ -78,7 +78,7 @@
   <section class="container page">
   <article>
     <header>
-      <h1>Rmarkdown 中的 Perl 6 代码</h1>
+      <h1>Rmarkdown 中的 Raku 代码</h1>
     </header>
 
     
@@ -168,29 +168,29 @@ print &quot;Hello, $name!\n&quot;;
 
 <p>在这里可以找到关于<a href="https://yihui.name/knitr/options/">不同选项</a>的更多信息。</p>
 
-<h1 id="rmarkdown-中的-perl-6">Rmarkdown 中的 Perl 6</h1>
+<h1 id="rmarkdown-中的-raku">Rmarkdown 中的 Raku</h1>
 
-<p>到目前为止，knitr 不支持 Perl 6 的语言引擎。但是，您可以使用 knitr 的引擎语言可扩展性来执行 rmarkdown 中的 Perl 6 代码块，方法是在您的文件中添加以下 R 代码块:</p>
+<p>到目前为止，knitr 不支持 Raku 的语言引擎。但是，您可以使用 knitr 的引擎语言可扩展性来执行 rmarkdown 中的 Raku 代码块，方法是在您的文件中添加以下 R 代码块:</p>
 
 <pre><code>```{r setup}
 library(knitr)
-eng_perl6 &lt;- function(options) {
+eng_raku &lt;- function(options) {
   # create a temporary file
-  f &lt;- basename(tempfile(&quot;perl6&quot;, '.', paste('.', &quot;perl6&quot;, sep = '')))
+  f &lt;- basename(tempfile(&quot;raku&quot;, '.', paste('.', &quot;raku&quot;, sep = '')))
   on.exit(unlink(f)) # cleanup temp file on function exit
   writeLines(options$code, f)
   out &lt;- ''
 
   # if eval != FALSE compile/run the code, preserving output
   if (options$eval) {
-    out &lt;- system(sprintf('perl6 %s', paste(f, options$engine.opts)), intern=TRUE)
+    out &lt;- system(sprintf('raku %s', paste(f, options$engine.opts)), intern=TRUE)
   }
 
   # spit back stuff to the user
   engine_output(options, options$code, out)
 }
 
-knitr::knit_engines$set(perl6=eng_perl6)
+knitr::knit_engines$set(raku=eng_raku)
 ```
 </code></pre>
 
@@ -198,21 +198,21 @@ knitr::knit_engines$set(perl6=eng_perl6)
 
 <p>这将允许你这样做:</p>
 
-<pre><code>```{r, engine='perl6'}
+<pre><code>```{r, engine='raku'}
 say [*] 1..5;
 ```
 </code></pre>
 
-<p>但是，您可以使用 Perl 5 的引擎语言并通过将 <code>engine.path</code> 设置为 <code>perl6</code> 使其路径更改为 Perl 6 可执行文件的路径，而不是在每个正在处理 Perl 6 代码的文件中添加这段 R 代码。然后，您可以通过如下方式处理 Perl 6 代码:</p>
+<p>但是，您可以使用 Perl 5 的引擎语言并通过将 <code>engine.path</code> 设置为 <code>raku</code> 使其路径更改为 Raku 可执行文件的路径，而不是在每个正在处理 Raku 代码的文件中添加这段 R 代码。然后，您可以通过如下方式处理 Raku 代码:</p>
 
-<pre><code>```{perl, engine.path='perl6'}
+<pre><code>```{perl, engine.path='raku'}
 say [*] 1..5;
 ```
 </code></pre>
 
-<p>现在您应该能够计算 Perl 6 代码块:</p>
+<p>现在您应该能够计算 Raku 代码块:</p>
 
-<pre><code>```{perl, engine.path='perl6', comment='#=&gt;', collapse=TRUE}
+<pre><code>```{perl, engine.path='raku', comment='#=&gt;', collapse=TRUE}
 class Point {
     has $.x = 0;
     has $.y = 0;
@@ -259,7 +259,7 @@ say $p.distance-to-center();
 <p>以下是所有注释的 YAML 前言(元数据)的示例:</p>
 
 <pre><code>---
-title: &quot;Perl 6 in rmarkdown&quot;
+title: &quot;Raku in rmarkdown&quot;
 author: &quot;Luis F. Uceta&quot;
 date: Aug 13, 2018
 

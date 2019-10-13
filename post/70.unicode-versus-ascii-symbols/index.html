@@ -83,37 +83,37 @@
 
     
 
-<p>可以在 Perl 6 中使用以下 Unicode 符号，而无需加载任何其他模块。其中一些具有可以使用 ASCII 独有字符键入的等效物。这些变体通常由比 Unicode 版本更多的字符组成，因此它们看起来更大。</p>
+<p>可以在 Raku 中使用以下 Unicode 符号，而无需加载任何其他模块。其中一些具有可以使用 ASCII 独有字符键入的等效物。这些变体通常由比 Unicode 版本更多的字符组成，因此它们看起来更大。</p>
 
 <p>下面参考 unicode 码点的各种属性。最终列表可以在这里找到：<a href="https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt">https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt</a>.</p>
 
-<h1 id="字母字符-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">字母字符</a></h1>
+<h1 id="字母字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">字母字符</a></h1>
 
 <p>任何具有 <code>Ll</code>（字母，小写），<code>Lu</code>（字母，大写），<code>Lt</code>（字母，标题），<code>Lm</code>（字母，修饰符）或 <code>Lo</code>（字母，其他）属性的代码点都可以像任何其他字母一样使用 ASCII 范围内的字符。</p>
 
-<h1 id="数字字符-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">数字字符</a></h1>
+<h1 id="数字字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字字符</a></h1>
 
 <p>任何具有 <code>Nd</code>（数字，十进制数字）属性的代码点都可以用作任何数字的数字。例如：</p>
 
-<pre><code class="language-perl6">my $var = １９; # U+FF11 U+FF19 
+<pre><code class="language-raku">my $var = １９; # U+FF11 U+FF19 
 say $var + 2;  # OUTPUT: «21␤» 
 </code></pre>
 
-<h1 id="数字值-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">数字值</a></h1>
+<h1 id="数字值-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字值</a></h1>
 
 <p>任何具有 <code>No</code>（Number，other）或 <code>Nl</code>（Number，letter）属性的代码点都可以单独用作数值，例如 ½ 和 ⅓。 （这些不是十进制数字，因此不能组合。）例如：</p>
 
-<pre><code class="language-perl6">my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int 
+<pre><code class="language-raku">my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int 
 say $var;            # OUTPUT: «14.1␤» 
 </code></pre>
 
-<h1 id="空白字符-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">空白字符</a></h1>
+<h1 id="空白字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">空白字符</a></h1>
 
 <p>除了空格和制表符，您还可以使用具有 <code>Zs</code>（分隔符，空格），<code>Zl</code>（分隔符，行）或 <code>Zp</code>（分隔符，段落）属性的任何其他 unicode 空白字符。</p>
 
-<h1 id="其它可接受的单代码点-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">其它可接受的单代码点</a></h1>
+<h1 id="其它可接受的单代码点-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">其它可接受的单代码点</a></h1>
 
-<p>此列表包含 Perl 6 中具有特殊含义的单个代码点及其 ASCII 等价物。</p>
+<p>此列表包含 Raku 中具有特殊含义的单个代码点及其 ASCII 等价物。</p>
 
 <table>
 <thead>
@@ -513,11 +513,11 @@ say $var;            # OUTPUT: «14.1␤»
 </tbody>
 </table>
 
-<h2 id="原子运算符-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">原子运算符</a></h2>
+<h2 id="原子运算符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">原子运算符</a></h2>
 
 <p>原子运算符将 <code>U+269B</code> ⚛ ATOM SYMBOL 合并到其中。它们的 ASCII 等价物是普通的子程序，而不是运算符：</p>
 
-<pre><code class="language-perl6">my atomicint $x = 42;
+<pre><code class="language-raku">my atomicint $x = 42;
 $x⚛++;                # Unicode version 
 atomic-fetch-inc($x); # ASCII version 
 </code></pre>
@@ -590,7 +590,7 @@ atomic-fetch-inc($x); # ASCII version
 </tbody>
 </table>
 
-<h1 id="多代码点-https-docs-perl6-org-language-unicode-ascii-top"><a href="https://docs.perl6.org/language/unicode_ascii#___top">多代码点</a></h1>
+<h1 id="多代码点-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">多代码点</a></h1>
 
 <p>此列表包含多个代码点运算符，这些运算符需要对其 ASCII 等价物项进行特殊组合。请注意，代码点以空格分隔显示，但在使用时应作为相邻代码点输入。</p>
 

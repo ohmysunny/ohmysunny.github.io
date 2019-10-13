@@ -11,7 +11,7 @@
 
     <base href="https://ohmysunny.github.io/">
     <title>
-  Perl 6 pod · Rakudo Star
+  Raku pod · Rakudo Star
 </title>
 
     <link rel="canonical" href="https://ohmysunny.github.io/post/32.perl-6-pod/">
@@ -78,18 +78,18 @@
   <section class="container page">
   <article>
     <header>
-      <h1>Perl 6 pod</h1>
+      <h1>Raku pod</h1>
     </header>
 
     
 
-<p>Perl 6 Pod 是一种易于使用的标记语言。 Pod 可用于编写语言文档，用于文档化程序和模块，以及其他类型的文档组合。</p>
+<p>Raku Pod 是一种易于使用的标记语言。 Pod 可用于编写语言文档，用于文档化程序和模块，以及其他类型的文档组合。</p>
 
 <p>每个 Pod 文档必须以 <code>=begin pod</code> 开头，以 <code>=end pod</code> 结束。这两个分隔符之间的所有内容都将被处理并用于生成文档。</p>
 
 <pre><code>=begin pod
  
-A very simple Perl 6 Pod document
+A very simple Raku Pod document
  
 =end pod
 </code></pre>
@@ -100,7 +100,7 @@ A very simple Perl 6 Pod document
 
 <h3 id="分割符块">分割符块</h3>
 
-<p>分隔块由 <code>=begin</code> 和 <code>=end</code> 标记限定，两者都后跟有效的 Perl 6 标识符，后者是块的 <code>typename</code>。完全小写的类型名称（例如 <code>=begin head1</code>）或完全大写（例如：<code>=begin SYNOPSIS</code>）保留。</p>
+<p>分隔块由 <code>=begin</code> 和 <code>=end</code> 标记限定，两者都后跟有效的 Raku 标识符，后者是块的 <code>typename</code>。完全小写的类型名称（例如 <code>=begin head1</code>）或完全大写（例如：<code>=begin SYNOPSIS</code>）保留。</p>
 
 <pre><code>=begin head1
 Top Level Heading
@@ -109,7 +109,7 @@ Top Level Heading
 
 <h2 id="配置信息">配置信息</h2>
 
-<p>在 typename 之后， <code>=begin</code> 标记行的其余部分被视为块的配置信息。此信息由不同类型的块以不同方式使用，但始终使用 Perl6-ish 选项对指定。也就是说，任何：</p>
+<p>在 typename 之后， <code>=begin</code> 标记行的其余部分被视为块的配置信息。此信息由不同类型的块以不同方式使用，但始终使用 Raku-ish 选项对指定。也就是说，任何：</p>
 
 <table>
 <thead>
@@ -179,7 +179,7 @@ Top Level Heading
 
 <p>字符串由单引号或双引号分隔。空格在字符串之外是微不足道的。散列键不需要引用分隔，除非它们包含重要的空格。</p>
 
-<p>当然，所有选项键和值必须是常量，因为Pod是一种规范语言，而不是编程语言。具体来说，选项值不能是闭包。有关各种Perl 6对符号的详细信息，请参见概要2。</p>
+<p>当然，所有选项键和值必须是常量，因为Pod是一种规范语言，而不是编程语言。具体来说，选项值不能是闭包。有关各种Raku对符号的详细信息，请参见概要2。</p>
 
 <p>配置部分可以通过在第一（虚拟）列中带有=后跟空白字符的那些行开始在后续行上扩展。 （注意：此功能尚未实现。当前所有配置信息必须与= begin标记行在同一行提供，或=为段落块的名称提供。）</p>
 
@@ -210,7 +210,7 @@ Top Level Heading
 
 <p>WHY方法可用于这些类，角色，子例程等，以返回附加的 Pod 值。</p>
 
-<pre><code class="language-perl6">#| Base class for magicians 
+<pre><code class="language-raku">#| Base class for magicians 
 class Magician {
   has Int $.level;
   has Str @.spells;
@@ -228,7 +228,7 @@ say &amp;duel.WHY.trailing; # OUTPUT: «Magicians only, no mortals.␤»
 
 <p>这些声明可以扩展多个块：</p>
 
-<pre><code class="language-perl6">#|( This is an example of stringification: 
+<pre><code class="language-raku">#|( This is an example of stringification: 
     * Numbers turn into strings
     * Regexes operate on said strings
     * C&lt;with&gt; topicalizes and places result into $_
@@ -244,7 +244,7 @@ sub search-in-seq( Int $end, Int $number ) {
 »
 </code></pre>
 
-<p>通过使用匹配的括号构造对，例如 <code>()</code> 或 <code>«»</code>，注释可以扩展多行。但是，这种格式不会转换为 <code>perl6 -doc</code> 的多行显示。</p>
+<p>通过使用匹配的括号构造对，例如 <code>()</code> 或 <code>«»</code>，注释可以扩展多行。但是，这种格式不会转换为 <code>raku -doc</code> 的多行显示。</p>
 
 <h2 id="块类型">块类型</h2>
 
@@ -465,7 +465,7 @@ As you can see, folk wisdom is often of dubious value.
 
 <h2 id="表">表</h2>
 
-<p>查看此页面以获取与<a href="https://docs.perl6.org/language/tables">表</a>相关的文档</p>
+<p>查看此页面以获取与<a href="https://docs.raku.org/language/tables">表</a>相关的文档</p>
 
 <h2 id="pod-注释">Pod 注释</h2>
 
@@ -505,25 +505,25 @@ multi-line.
 
 <p>要以粗体格式化文本，请将其括在 <code>B&lt; &gt;</code> 中</p>
 
-<pre><code>Perl 6 is B&lt;awesome&gt;
+<pre><code>Raku is B&lt;awesome&gt;
 </code></pre>
 
-<p>Perl 6 is <strong>awesome</strong></p>
+<p>Raku is <strong>awesome</strong></p>
 
 <h3 id="斜体">斜体</h3>
 
 <p>要用斜体格式化文本，请将其括在 <code>I&lt; &gt;</code>中</p>
 
-<pre><code>Perl 6 is I&lt;awesome&gt;
+<pre><code>Raku is I&lt;awesome&gt;
 </code></pre>
 
-<p>Perl 6 is <em>awesome</em></p>
+<p>Raku is <em>awesome</em></p>
 
 <h3 id="下划线">下划线</h3>
 
 <p>要在文本下划线将其括在 <code>U&lt;&gt;</code> 中</p>
 
-<pre><code>Perl 6 is U&lt;awesome&gt;
+<pre><code>Raku is U&lt;awesome&gt;
 </code></pre>
 
 <h3 id="代码">代码</h3>
@@ -539,20 +539,20 @@ multi-line.
 
 <p>要创建链接，请将其括在 <code>L&lt; &gt;</code> 中</p>
 
-<pre><code>Perl 6 homepage L&lt;https://perl6.org&gt;
-L&lt;Perl 6 homepage|https://perl6.org&gt;
+<pre><code>Raku homepage L&lt;https://raku.org&gt;
+L&lt;Raku homepage|https://raku.org&gt;
 </code></pre>
 
-<p>Perl 6 homepage <a href="https://perl6.org/">https://perl6.org</a></p>
+<p>Raku homepage <a href="https://raku.org/">https://raku.org</a></p>
 
-<p><a href="https://perl6.org/">Perl 6 homepage</a></p>
+<p><a href="https://raku.org/">Raku homepage</a></p>
 
 <p>要创建指向同一文档中某个部分的链接：</p>
 
 <pre><code>Comments L&lt;#Comments&gt;
 </code></pre>
 
-<p>Comments <a href="https://docs.perl6.org/language/pod#Comments">Comments</a></p>
+<p>Comments <a href="https://docs.raku.org/language/pod#Comments">Comments</a></p>
 
 <h3 id="注释">注释</h3>
 
@@ -560,10 +560,10 @@ L&lt;Perl 6 homepage|https://perl6.org&gt;
 
 <p>要创建注释，请将其括在 <code>Z&lt; &gt;</code> 中</p>
 
-<pre><code>Perl 6 is awesome Z&lt;Of course it is!&gt;
+<pre><code>Raku is awesome Z&lt;Of course it is!&gt;
 </code></pre>
 
-<p>Perl 6 is awesome</p>
+<p>Raku is awesome</p>
 
 <h3 id="笔记">笔记</h3>
 
@@ -571,7 +571,7 @@ L&lt;Perl 6 homepage|https://perl6.org&gt;
 
 <p>要创建一个注释，请将其括在 <code>N&lt; &gt;</code> 中</p>
 
-<pre><code>Perl 6 is multi-paradigmatic N&lt;Supporting Procedural, Object Oriented, and Functional programming&gt;
+<pre><code>Raku is multi-paradigmatic N&lt;Supporting Procedural, Object Oriented, and Functional programming&gt;
 </code></pre>
 
 <h3 id="键盘输入">键盘输入</h3>
@@ -592,22 +592,22 @@ L&lt;Perl 6 homepage|https://perl6.org&gt;
 
 <p>要在 Pod 文档中包含 Unicode 代码点或 HTML5 字符引用，请将它们包含在 <code>E&lt; &gt;</code>中</p>
 
-<p><code>E&lt; &gt;</code>可以包含一个数字，该数字被视为所需代码点的十进制 Unicode 值。它还可以使用 Perl 6 表示法为显式数字括起显式二进制，八进制，十进制或十六进制数字。</p>
+<p><code>E&lt; &gt;</code>可以包含一个数字，该数字被视为所需代码点的十进制 Unicode 值。它还可以使用 Raku 表示法为显式数字括起显式二进制，八进制，十进制或十六进制数字。</p>
 
-<pre><code>Perl 6 makes considerable use of the E&lt;171&gt; and E&lt;187&gt; characters.
+<pre><code>Raku makes considerable use of the E&lt;171&gt; and E&lt;187&gt; characters.
  
-Perl 6 makes considerable use of the E&lt;laquo&gt; and E&lt;raquo&gt; characters.
+Raku makes considerable use of the E&lt;laquo&gt; and E&lt;raquo&gt; characters.
  
-Perl 6 makes considerable use of the E&lt;0b10101011&gt; and E&lt;0b10111011&gt; characters.
+Raku makes considerable use of the E&lt;0b10101011&gt; and E&lt;0b10111011&gt; characters.
  
-Perl 6 makes considerable use of the E&lt;0o253&gt; and E&lt;0o273&gt; characters.
+Raku makes considerable use of the E&lt;0o253&gt; and E&lt;0o273&gt; characters.
  
-Perl 6 makes considerable use of the E&lt;0d171&gt; and E&lt;0d187&gt; characters.
+Raku makes considerable use of the E&lt;0d171&gt; and E&lt;0d187&gt; characters.
  
-Perl 6 makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
+Raku makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
 </code></pre>
 
-<p>Perl 6 makes considerable use of the « and » characters.</p>
+<p>Raku makes considerable use of the « and » characters.</p>
 
 <h2 id="渲染-pod">渲染 Pod</h2>
 
@@ -619,7 +619,7 @@ Perl 6 makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
 
 <p>使用终端运行以下命令：</p>
 
-<pre><code>perl6 --doc=HTML input.pod6 &gt; output.html
+<pre><code>raku --doc=HTML input.pod6 &gt; output.html
 </code></pre>
 
 <h3 id="markdown">Markdown</h3>
@@ -630,7 +630,7 @@ Perl 6 makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
 
 <p>使用终端运行以下命令：</p>
 
-<pre><code>perl6 --doc=Markdown input.pod6 &gt; output.md
+<pre><code>raku --doc=Markdown input.pod6 &gt; output.md
 </code></pre>
 
 <h3 id="text">Text</h3>
@@ -639,17 +639,17 @@ Perl 6 makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
 
 <p>使用终端，运行以下命令：</p>
 
-<pre><code>perl6 --doc=Text input.pod6 &gt; output.txt
+<pre><code>raku --doc=Text input.pod6 &gt; output.txt
 </code></pre>
 
 <p>你可以省略 <code>=Text</code> 部分：</p>
 
-<pre><code>perl6 --doc input.pod6 &gt; output.txt
+<pre><code>raku --doc input.pod6 &gt; output.txt
 </code></pre>
 
 <p>你甚至可以将 Pod 直接嵌入到你的程序中，并使用 multi MAIN 子例程将传统的 Unix 命令行 &ldquo;&ndash;man&rdquo; 选项添加到你的程序中，如下所示：</p>
 
-<pre><code class="language-perl6">multi MAIN(Bool :$man)
+<pre><code class="language-raku">multi MAIN(Bool :$man)
 {
     run $*EXECUTABLE, '--doc', $*PROGRAM;
 }
@@ -659,9 +659,9 @@ Perl 6 makes considerable use of the E&lt;0xAB&gt; and E&lt;0xBB&gt; characters.
 
 <h2 id="访问-pod">访问 Pod</h2>
 
-<p>为了从 Perl 6 程序中访问 Pod 文档，需要使用特殊的 <code>=</code> twigil，如<a href="https://docs.perl6.org/language/variables#The_%3D_Twigil">变量部分</a>所述。</p>
+<p>为了从 Raku 程序中访问 Pod 文档，需要使用特殊的 <code>=</code> twigil，如<a href="https://docs.raku.org/language/variables#The_%3D_Twigil">变量部分</a>所述。</p>
 
-<p>= twigil 提供了对 Pod 结构的内省，提供了一个 <a href="https://docs.perl6.org/type/Pod::Block">Pod::Block</a> 树根，从中可以访问 Pod 文档的整个结构。</p>
+<p>= twigil 提供了对 Pod 结构的内省，提供了一个 <a href="https://docs.raku.org/type/Pod::Block">Pod::Block</a> 树根，从中可以访问 Pod 文档的整个结构。</p>
 
 <p>例如，以下代码内省了自己的Pod文档：</p>
 

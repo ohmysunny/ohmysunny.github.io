@@ -11,7 +11,7 @@
 
     <base href="https://ohmysunny.github.io/">
     <title>
-  Javascript(Node.js) 到 Perl 6 - 简而言之 · Rakudo Star
+  Javascript(Node.js) 到 Raku - 简而言之 · Rakudo Star
 </title>
 
     <link rel="canonical" href="https://ohmysunny.github.io/post/10.javascript-node.js-to-perl-6-nutshell/">
@@ -78,24 +78,24 @@
   <section class="container page">
   <article>
     <header>
-      <h1>Javascript(Node.js) 到 Perl 6 - 简而言之</h1>
+      <h1>Javascript(Node.js) 到 Raku - 简而言之</h1>
     </header>
 
     
 
 <p>大西瓜啊，忘记翻译了！</p>
 
-<p>This page attempts to provide a way for users experienced in Node.js to learn Perl 6. Features shared between the two languages will be explained here, as well as major differences in syntax and features.</p>
+<p>This page attempts to provide a way for users experienced in Node.js to learn Raku. Features shared between the two languages will be explained here, as well as major differences in syntax and features.</p>
 
-<p>This is not a tutorial for learning Perl 6; this is a reference for users who are already at an intermediate to advanced skill level with Node.js.</p>
+<p>This is not a tutorial for learning Raku; this is a reference for users who are already at an intermediate to advanced skill level with Node.js.</p>
 
-<p>此页面试图为在Node.js中有经验的用户提供学习Perl 6的方法。这里将解释两种语言之间共享的功能，以及语法和功能的主要差异。</p>
+<p>此页面试图为在Node.js中有经验的用户提供学习Raku的方法。这里将解释两种语言之间共享的功能，以及语法和功能的主要差异。</p>
 
-<p>这不是学习Perl 6的教程; 对于已经使用Node.js处于中级到高级技能级别的用户，这是一个参考。</p>
+<p>这不是学习Raku的教程; 对于已经使用Node.js处于中级到高级技能级别的用户，这是一个参考。</p>
 
-<h1 id="基础语法-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">基础语法</a></h1>
+<h1 id="基础语法-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">基础语法</a></h1>
 
-<h2 id="hello-world-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">&ldquo;Hello, world!&rdquo;</a></h2>
+<h2 id="hello-world-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">&ldquo;Hello, world!&rdquo;</a></h2>
 
 <p>Let&rsquo;s start with the typical first program when learning new languages. In Node.js, a hello world program would be written like this:</p>
 
@@ -104,19 +104,19 @@
 <pre><code>console.log('Hello, world!');
 </code></pre>
 
-<p>Here are a couple ways to write this in the same way in Perl 6:</p>
+<p>Here are a couple ways to write this in the same way in Raku:</p>
 
-<p>以下是在Perl 6中以相同方式编写此内容的几种方法：</p>
+<p>以下是在Raku中以相同方式编写此内容的几种方法：</p>
 
 <pre><code>say('Hello, world!');
 say 'Hello, world!';
 </code></pre>
 
-<p>Parentheses are optional for function calls in Perl 6. While semicolons are, for the most part, optional in Node.js, they are mandatory for expressions in Perl 6.</p>
+<p>Parentheses are optional for function calls in Raku. While semicolons are, for the most part, optional in Node.js, they are mandatory for expressions in Raku.</p>
 
 <p>Now that we&rsquo;ve greeted the world, let&rsquo;s greet our good friend, Joe. We&rsquo;ll start with Node.js again:</p>
 
-<p>对于Perl 6中的函数调用，括号是可选的。虽然分号在Node.js中大多数是可选的，但它们对于Perl 6中的表达式是必需的。</p>
+<p>对于Raku中的函数调用，括号是可选的。虽然分号在Node.js中大多数是可选的，但它们对于Raku中的表达式是必需的。</p>
 
 <p>现在我们迎接了世界，让我们迎接我们的好朋友乔。我们将再次从Node.js开始：</p>
 
@@ -126,9 +126,9 @@ console.log(`What's up, {name}?`);
 console.log(&quot;What's up, &quot;, name, &quot;?&quot;);
 </code></pre>
 
-<p>Since he didn&rsquo;t hear us, let&rsquo;s greet him again, this time in Perl 6:</p>
+<p>Since he didn&rsquo;t hear us, let&rsquo;s greet him again, this time in Raku:</p>
 
-<p>因为他没有听到我们，所以让我再次问候他，这次是在Perl 6中：</p>
+<p>因为他没有听到我们，所以让我再次问候他，这次是在Raku中：</p>
 
 <pre><code>my $name = 'Joe';
 say 'What\'s up, ' ~ $name ~ '?';
@@ -136,15 +136,15 @@ say &quot;What's up, $name?&quot;;
 say &quot;What's up, &quot;, $name, &quot;?&quot;;
 </code></pre>
 
-<p>Here, there are only a couple differences: most variables in Perl 6 have what are called sigils, which are what the <code>$</code> in front of its name is, and string concatenation uses the <code>~</code> operator instead of <code>+</code>. What the two languages share in common here is support for string interpolation.</p>
+<p>Here, there are only a couple differences: most variables in Raku have what are called sigils, which are what the <code>$</code> in front of its name is, and string concatenation uses the <code>~</code> operator instead of <code>+</code>. What the two languages share in common here is support for string interpolation.</p>
 
 <p>Now that the basic examples are out of the way, let&rsquo;s explain the similarities between the two languages in greater detail.</p>
 
-<p>这里只有几个不同之处：Perl 6中的大多数变量都有所谓的sigils，这就是<code>$</code>它名称前面的变量，字符串连接使用<code>~</code>运算符代替<code>+</code>。这两种语言的共同点是支持字符串插值。</p>
+<p>这里只有几个不同之处：Raku中的大多数变量都有所谓的sigils，这就是<code>$</code>它名称前面的变量，字符串连接使用<code>~</code>运算符代替<code>+</code>。这两种语言的共同点是支持字符串插值。</p>
 
 <p>现在基本的例子已经不在了，让我们更详细地解释两种语言之间的相似之处。</p>
 
-<h2 id="变量-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">变量</a></h2>
+<h2 id="变量-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">变量</a></h2>
 
 <p>Variables in Node.js can be defined like this;</p>
 
@@ -158,13 +158,13 @@ global.foo = 1; // Dynamically scoped; global
 foo = 1;        // Ditto, but implicit; forbidden in strict mode
 </code></pre>
 
-<p>In Perl 6 there is no equivalent to <code>var</code>. An important note to make is that there is no variable hoisting in Perl 6; variables are defined and assigned at the line they&rsquo;re on, not defined at the top of its scope and later assigned at that line.</p>
+<p>In Raku there is no equivalent to <code>var</code>. An important note to make is that there is no variable hoisting in Raku; variables are defined and assigned at the line they&rsquo;re on, not defined at the top of its scope and later assigned at that line.</p>
 
-<p>This is how the equivalent types of variables are defined in Perl 6:</p>
+<p>This is how the equivalent types of variables are defined in Raku:</p>
 
-<p>在Perl 6中没有相当于<code>var</code>。需要注意的一点是，Perl 6中没有可变的吊装; 变量在它们所在的行上定义和分配，未在其范围的顶部定义，稍后在该行分配。</p>
+<p>在Raku中没有相当于<code>var</code>。需要注意的一点是，Raku中没有可变的吊装; 变量在它们所在的行上定义和分配，未在其范围的顶部定义，稍后在该行分配。</p>
 
-<p>这是在Perl 6中定义等效类型的变量的方式：</p>
+<p>这是在Raku中定义等效类型的变量的方式：</p>
 
 <pre><code>my $foo = 1;      # Lexically scoped with blocks 
 our $foo = 1;     # Lexically scoped with blocks and modules 
@@ -177,13 +177,13 @@ GLOBAL::&lt;$foo&gt; = 1; # Dynamically scoped; global
 
 <p>Use <code>my</code> where you&rsquo;d use <code>let</code>, <code>our</code> for variables you&rsquo;d define in the outermost scope needed, and <code>constant</code> where you&rsquo;d uses <code>const</code>.</p>
 
-<p>Dynamically scoped variables are not referred to in the same way as lexically scoped ones like they are in Node.js. User-defined ones use either a <code>$*</code>, <code>@*</code>, <code>%*</code>, or <code>&amp;*</code> twigil. Refer to the documentation on <a href="https://docs.perl6.org/language/variables">variables</a> for more information on sigils, twigils, and variable containers.</p>
+<p>Dynamically scoped variables are not referred to in the same way as lexically scoped ones like they are in Node.js. User-defined ones use either a <code>$*</code>, <code>@*</code>, <code>%*</code>, or <code>&amp;*</code> twigil. Refer to the documentation on <a href="https://docs.raku.org/language/variables">variables</a> for more information on sigils, twigils, and variable containers.</p>
 
 <p>Variables in Node.js can override others from outer scopes with the same name (though linters will usually complain about it depending on how they&rsquo;re configured):</p>
 
 <p>使用<code>my</code>您使用的位置<code>let</code>，<code>our</code>您需要在最外层范围内定义的变量以及<code>constant</code>您使用的位置<code>const</code>。</p>
 
-<p>动态范围变量的引用方式与它们在Node.js中的词汇范围变量相同。用户定义的那些使用一个<code>$*</code>，<code>@*</code>，<code>%*</code>，或<code>&amp;*</code>twigil。有关sigils，twigils和变量容器的更多信息，请参阅有关<a href="https://docs.perl6.org/language/variables">变量</a>的文档。</p>
+<p>动态范围变量的引用方式与它们在Node.js中的词汇范围变量相同。用户定义的那些使用一个<code>$*</code>，<code>@*</code>，<code>%*</code>，或<code>&amp;*</code>twigil。有关sigils，twigils和变量容器的更多信息，请参阅有关<a href="https://docs.raku.org/language/variables">变量</a>的文档。</p>
 
 <p>Node.js中的变量可以覆盖具有相同名称的外部作用域中的其他变量（尽管linters通常会根据它们的配置方式来抱怨它）：</p>
 
@@ -197,9 +197,9 @@ logDupe(2);       // 2
 console.log(foo); // 1
 </code></pre>
 
-<p>Perl 6 also allows this:</p>
+<p>Raku also allows this:</p>
 
-<p>Perl 6 也允许这样：</p>
+<p>Raku 也允许这样：</p>
 
 <pre><code>my $foo = 1;
 sub log-dupe {
@@ -211,17 +211,17 @@ log-dupe; # 2
 say $foo; # 1 
 </code></pre>
 
-<h2 id="运算符-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">运算符</a></h2>
+<h2 id="运算符-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">运算符</a></h2>
 
-<h3 id="赋值-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">赋值</a></h3>
+<h3 id="赋值-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">赋值</a></h3>
 
 <p>The <code>=</code> operator works the same across both languages.</p>
 
-<p>The <code>:=</code> operator in Perl 6 binds a value to a variable. Binding a variable to another variable gives them the same value and container, meaning mutating attributes of one will mutate the other&rsquo;s as well. Bound variables cannot be reassigned with <code>=</code> or mutated with <code>++</code>, <code>--</code>, etc. but they can be bound to another value again:</p>
+<p>The <code>:=</code> operator in Raku binds a value to a variable. Binding a variable to another variable gives them the same value and container, meaning mutating attributes of one will mutate the other&rsquo;s as well. Bound variables cannot be reassigned with <code>=</code> or mutated with <code>++</code>, <code>--</code>, etc. but they can be bound to another value again:</p>
 
 <p><code>=</code> 运算符可以跨两种语言相同。</p>
 
-<p>Perl 6 中的 <code>:=</code> 运算符将值绑定到变量。将变量绑定到另一个变量会为它们提供相同的值和容器，这意味着一个变量属性也会改变另一个变量。绑定变量不能被重新分配<code>=</code>或突变<code>++</code>，<code>--</code>等，但它们可以被重新绑定到另一个值：</p>
+<p>Raku 中的 <code>:=</code> 运算符将值绑定到变量。将变量绑定到另一个变量会为它们提供相同的值和容器，这意味着一个变量属性也会改变另一个变量。绑定变量不能被重新分配<code>=</code>或突变<code>++</code>，<code>--</code>等，但它们可以被重新绑定到另一个值：</p>
 
 <pre><code>my %map;            # This is a hash, roughly equivalent to a JS object or map 
 my %unbound = %map;
@@ -234,7 +234,7 @@ say %bound;         # {foo =&gt; bar}
 say %bound;         # {} 
 </code></pre>
 
-<h3 id="相等-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">相等</a></h3>
+<h3 id="相等-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">相等</a></h3>
 
 <p>Node.js has two equality operators: <code>==</code> and <code>===</code>.</p>
 
@@ -244,14 +244,14 @@ say %bound;         # {}
 
 <p><code>==</code>是松散的平等算子。比较具有相同类型的操作数时，如果两个操作数相等，则返回true。但是，如果操作数是不同的类型，它们在被比较之前都被转换为它们的基元，这意味着它们将返回true：</p>
 
-<pre><code class="language-perl6">console.log(1 == 1);   // true
+<pre><code class="language-raku">console.log(1 == 1);   // true
 console.log('1' == 1); // true
 console.log([] == 0);  // true
 </code></pre>
 
-<p>Similarly, in Perl 6, both operands are cast to Numeric before comparison if they don&rsquo;t share the same type:</p>
+<p>Similarly, in Raku, both operands are cast to Numeric before comparison if they don&rsquo;t share the same type:</p>
 
-<p>类似地，在Perl 6中，如果它们不共享相同的类型，则在比较之前将两个操作数强制转换为Numeric：</p>
+<p>类似地，在Raku中，如果它们不共享相同的类型，则在比较之前将两个操作数强制转换为Numeric：</p>
 
 <pre><code>say 1 == 1;       # True 
 say '1' == 1;     # True 
@@ -260,11 +260,11 @@ say [1,2,3] == 3; # True, since the array has three elements
 
 <p>The inverse of <code>==</code> is <code>!=</code>.</p>
 
-<p>Perl 6 has another operator similar to <code>==</code>: <code>eq</code>. Instead of casting operands to Numeric if they&rsquo;re different types, <code>eq</code> will cast them to strings:</p>
+<p>Raku has another operator similar to <code>==</code>: <code>eq</code>. Instead of casting operands to Numeric if they&rsquo;re different types, <code>eq</code> will cast them to strings:</p>
 
 <p>倒数<code>==</code>是<code>!=</code>。</p>
 
-<p>Perl 6有另一个类似于的运算符<code>==</code>：<code>eq</code>。如果它们是不同的类型，而不是将操作数转换为Numeric，而不是<code>eq</code>将它们转换为字符串：</p>
+<p>Raku有另一个类似于的运算符<code>==</code>：<code>eq</code>。如果它们是不同的类型，而不是将操作数转换为Numeric，而不是<code>eq</code>将它们转换为字符串：</p>
 
 <pre><code>say '1' eq '1'; # True 
 say 1 eq '1';   # True 
@@ -287,9 +287,9 @@ let obj2 = obj;
 console.log(obj === obj2); // true;
 </code></pre>
 
-<p>In Perl 6, the operator behaves the same, with one exception: two objects that have the same value, but different containers, will return false:</p>
+<p>In Raku, the operator behaves the same, with one exception: two objects that have the same value, but different containers, will return false:</p>
 
-<p>在Perl 6中，运算符的行为相同，但有一个例外：两个具有相同值但容器不同的对象将返回false：</p>
+<p>在Raku中，运算符的行为相同，但有一个例外：两个具有相同值但容器不同的对象将返回false：</p>
 
 <pre><code>say 1 === 1; # True 
 say '1' === 1; # True 
@@ -304,13 +304,13 @@ say hash === %hash; # False
 
 <p>The inverse of <code>===</code> is <code>!==</code>.</p>
 
-<p>This is where Perl 6&rsquo;s other equality operators are useful. If the values have different containers, the <code>eqv</code> operator can be used. This operator can be also be used to check for deep equality, which you would normally need to use a library for in Node.js:</p>
+<p>This is where Raku&rsquo;s other equality operators are useful. If the values have different containers, the <code>eqv</code> operator can be used. This operator can be also be used to check for deep equality, which you would normally need to use a library for in Node.js:</p>
 
 <p>在最后一种情况下，它是相同的对象，但容器是不同的，这就是它返回False的原因。</p>
 
 <p>倒数<code>===</code>是<code>!==</code>。</p>
 
-<p>这是Perl 6的其他相等运算符很有用的地方。如果值具有不同的容器，则<code>eqv</code>可以使用操作员。此运算符也可用于检查深度相等性，通常需要在Node.js中使用库：</p>
+<p>这是Raku的其他相等运算符很有用的地方。如果值具有不同的容器，则<code>eqv</code>可以使用操作员。此运算符也可用于检查深度相等性，通常需要在Node.js中使用库：</p>
 
 <pre><code>say {a =&gt; 1} eqv {a =&gt; 1}; # True; 
  
@@ -328,11 +328,11 @@ my @arr2 := @arr;   # Bound variables keep the container of the other variable
 say @arr =:= @arr2; # True 
 </code></pre>
 
-<h3 id="smartmatching-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Smartmatching</a></h3>
+<h3 id="smartmatching-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Smartmatching</a></h3>
 
-<p>Perl 6 has one last operator for comparing values, but it is not exactly an equality operator. This is <code>~~</code>, the smartmatch operator. This has several uses: it can be used like <code>instanceof</code> in Node.js, to match a regex, and to check if a value is a key in a hash, bag, set, or map:</p>
+<p>Raku has one last operator for comparing values, but it is not exactly an equality operator. This is <code>~~</code>, the smartmatch operator. This has several uses: it can be used like <code>instanceof</code> in Node.js, to match a regex, and to check if a value is a key in a hash, bag, set, or map:</p>
 
-<p>Perl 6有一个用于比较值的最后一个运算符，但它不完全是一个相等运算符。这就是<code>~~</code>smartmatch运营商。这有几个用途：它可以像<code>instanceof</code>在Node.js中一样使用，以匹配正则表达式，并检查值是否是散列，包，集或映射中的键：</p>
+<p>Raku有一个用于比较值的最后一个运算符，但它不完全是一个相等运算符。这就是<code>~~</code>smartmatch运营商。这有几个用途：它可以像<code>instanceof</code>在Node.js中一样使用，以匹配正则表达式，并检查值是否是散列，包，集或映射中的键：</p>
 
 <pre><code>say 'foo' ~~ Str; # True 
  
@@ -344,15 +344,15 @@ $str ~~ s/abc/def/; # Mutates $str, like foo.replace('abc', 'def')
 say $str;           # def 
 </code></pre>
 
-<p>While we are talking about <code>instanceof</code>, the equivalent to the <code>constructor</code> property on Node.js objects in Perl 6 is the <code>WHAT</code>attribute:</p>
+<p>While we are talking about <code>instanceof</code>, the equivalent to the <code>constructor</code> property on Node.js objects in Raku is the <code>WHAT</code>attribute:</p>
 
-<p>在我们讨论的时候<code>instanceof</code>，<code>constructor</code>Perl 6中Node.js对象的属性相当于<code>WHAT</code>属性：</p>
+<p>在我们讨论的时候<code>instanceof</code>，<code>constructor</code>Raku中Node.js对象的属性相当于<code>WHAT</code>属性：</p>
 
 <pre><code>console.log('foo'.constructor); // OUTPUT: String
 say 'foo'.WHAT; # OUTPUT: Str 
 </code></pre>
 
-<h3 id="numeric-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Numeric</a></h3>
+<h3 id="numeric-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Numeric</a></h3>
 
 <p>Node.js has <code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>%</code>, and (in ES6) <code>**</code> as numeric operators. When the operands are different types, similarly to the equality operators, are cast to their primitives before following through with the operation, making this possible:</p>
 
@@ -363,25 +363,25 @@ console.log([] + {}); // [object Object]
 console.log({} + []); // 0
 </code></pre>
 
-<p>In Perl 6, again, they are converted to a Numeric type, as before:</p>
+<p>In Raku, again, they are converted to a Numeric type, as before:</p>
 
-<p>在Perl 6中，它们再次转换为数字类型，如前所述：</p>
+<p>在Raku中，它们再次转换为数字类型，如前所述：</p>
 
 <pre><code>say 1 + 2;        # 3 
 say [] + {};      # 0 
 say {} + [1,2,3]; # 3 
 </code></pre>
 
-<p>In addition, Perl 6 has <code>div</code> and <code>%%</code>. <code>div</code> behaves like <code>int</code> division in C, while <code>%%</code> checks if one number is cleanly divisible by another or not:</p>
+<p>In addition, Raku has <code>div</code> and <code>%%</code>. <code>div</code> behaves like <code>int</code> division in C, while <code>%%</code> checks if one number is cleanly divisible by another or not:</p>
 
-<p>另外，Perl 6有<code>div</code>和<code>%%</code>。<code>div</code>表现得像<code>int</code>C中的分裂，同时<code>%%</code>检查一个数字是否可以被另一个数字完全整除：</p>
+<p>另外，Raku有<code>div</code>和<code>%%</code>。<code>div</code>表现得像<code>int</code>C中的分裂，同时<code>%%</code>检查一个数字是否可以被另一个数字完全整除：</p>
 
 <pre><code>say 4 div 3; # 1 
 say 4 %% 3;  # False 
 say 6 %% 3;  # True 
 </code></pre>
 
-<h3 id="bitwise-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Bitwise</a></h3>
+<h3 id="bitwise-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Bitwise</a></h3>
 
 <p>Node.js has <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>&gt;&gt;&gt;</code>, and <code>~</code> for bitwise operators:</p>
 
@@ -396,9 +396,9 @@ console.log(1 ^ 1);   // 0
 console.log(~1);      // -2
 </code></pre>
 
-<p>In Perl 6, there is no equivalent to <code>&gt;&gt;&gt;</code>. All bitwise operators are prefixed with <code>+</code>, however two&rsquo;s complement uses <code>+^</code> instead of <code>~</code>:</p>
+<p>In Raku, there is no equivalent to <code>&gt;&gt;&gt;</code>. All bitwise operators are prefixed with <code>+</code>, however two&rsquo;s complement uses <code>+^</code> instead of <code>~</code>:</p>
 
-<p>在Perl 6中，没有相当于<code>&gt;&gt;&gt;</code>。所有按位运算符都以前缀为前缀<code>+</code>，但是使用两个补码<code>+^</code>而不是<code>~</code>：</p>
+<p>在Raku中，没有相当于<code>&gt;&gt;&gt;</code>。所有按位运算符都以前缀为前缀<code>+</code>，但是使用两个补码<code>+^</code>而不是<code>~</code>：</p>
 
 <pre><code>say 1 +&lt; 1; # 2 
 say 1 +&gt; 1; # 0 
@@ -409,11 +409,11 @@ say 1 +^ 1; # 0
 say +^1;    # -2 
 </code></pre>
 
-<h3 id="custom-operators-and-operator-overloading-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Custom operators and operator overloading</a></h3>
+<h3 id="custom-operators-and-operator-overloading-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Custom operators and operator overloading</a></h3>
 
-<p>Node.js does not allow operator overloading without having to use a Makefile or build Node.js with a custom version of V8. Perl 6 allows custom operators and operator overloading natively! Since all operators are subroutines, you can define your own like so:</p>
+<p>Node.js does not allow operator overloading without having to use a Makefile or build Node.js with a custom version of V8. Raku allows custom operators and operator overloading natively! Since all operators are subroutines, you can define your own like so:</p>
 
-<p>Node.js不允许运算符重载而不必使用Makefile或使用自定义版本的V8构建Node.js. Perl 6允许自定义操作符和操作符本机重载！由于所有运算符都是子程序，因此您可以像这样定义自己的运算符：</p>
+<p>Node.js不允许运算符重载而不必使用Makefile或使用自定义版本的V8构建Node.js. Raku允许自定义操作符和操作符本机重载！由于所有运算符都是子程序，因此您可以像这样定义自己的运算符：</p>
 
 <pre><code>multi sub infix:&lt;||=&gt;($a, $b) is equiv(&amp;infix:&lt;+=&gt;) { $a || $b }
  
@@ -424,11 +424,11 @@ say $foo; # OUTPUT: 1
 
 <p>Operators can be defined as <code>prefix</code>, <code>infix</code>, or <code>postfix</code>. The <code>is tighter</code>, <code>is equiv</code>, and <code>is looser</code> traits optionally define the operator&rsquo;s precedence. In this case, <code>||=</code> has the same precedence as <code>+=</code>.</p>
 
-<p>Note how <code>multi</code> is used when declaring the operator subroutines. This allows multiple subroutines with the same name to be declared while also having different signatures. This will be explained in greater detail in the <a href="https://docs.perl6.org/language/js-nutshell#Functions">Functions</a> section. For now, all we need to know is that it allows us to override any native operator we want:</p>
+<p>Note how <code>multi</code> is used when declaring the operator subroutines. This allows multiple subroutines with the same name to be declared while also having different signatures. This will be explained in greater detail in the <a href="https://docs.raku.org/language/js-nutshell#Functions">Functions</a> section. For now, all we need to know is that it allows us to override any native operator we want:</p>
 
 <p>运算符可以定义为<code>prefix</code>，<code>infix</code>，或<code>postfix</code>。的<code>is tighter</code>，<code>is equiv</code>和<code>is looser</code>性状选择定义操作的优先级。在这种情况下，<code>||=</code>具有相同的优先级<code>+=</code>。</p>
 
-<p>注意<code>multi</code>在声明操作符子例程时如何使用。这允许声明具有相同名称的多个子例程，同时具有不同的签名。这将在“ <a href="https://docs.perl6.org/language/js-nutshell#Functions">功能”</a>部分中详细说明。目前，我们需要知道的是它允许我们覆盖我们想要的任何本机运算符：</p>
+<p>注意<code>multi</code>在声明操作符子例程时如何使用。这允许声明具有相同名称的多个子例程，同时具有不同的签名。这将在“ <a href="https://docs.raku.org/language/js-nutshell#Functions">功能”</a>部分中详细说明。目前，我们需要知道的是它允许我们覆盖我们想要的任何本机运算符：</p>
 
 <pre><code># Using the `is default` trait here forces this subroutine to be chosen first, 
 # so long as the signature of the subroutine matches. 
@@ -438,9 +438,9 @@ my $foo = 1;
 say ++$foo; # OUTPUT: 0 
 </code></pre>
 
-<h2 id="control-flow-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Control flow</a></h2>
+<h2 id="control-flow-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Control flow</a></h2>
 
-<h3 id="if-else-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">if/else</a></h3>
+<h3 id="if-else-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">if/else</a></h3>
 
 <p>You should be familiar with how <code>if</code>/<code>else</code> looks in JavaScript:</p>
 
@@ -456,9 +456,9 @@ if (diceRoll === 2) {
 }
 </code></pre>
 
-<p>In Perl 6, <code>if</code>/<code>else</code> works largely the same, with a few key differences. One, parentheses are not required. Two, <code>else if</code> is written as <code>elsif</code>. Three, the if clause may be written <em>after</em> a statement:</p>
+<p>In Raku, <code>if</code>/<code>else</code> works largely the same, with a few key differences. One, parentheses are not required. Two, <code>else if</code> is written as <code>elsif</code>. Three, the if clause may be written <em>after</em> a statement:</p>
 
-<p>在Perl 6中，<code>if</code>/的<code>else</code>工作方式基本相同，只有一些关键的区别。一，括号不是必需的。二，<code>else if</code>写成<code>elsif</code>。三，if语句可以*在*声明*后*写出：</p>
+<p>在Raku中，<code>if</code>/的<code>else</code>工作方式基本相同，只有一些关键的区别。一，括号不是必需的。二，<code>else if</code>写成<code>elsif</code>。三，if语句可以*在*声明*后*写出：</p>
 
 <pre><code>my Int $dice-roll = ceiling rand * 12 + ceiling rand * 12;
 if $dice-roll == 2 {
@@ -480,9 +480,9 @@ say 'Boxcars!'           if $dice-roll == 16;
 say &quot;Rolled $dice-roll.&quot; if $dice-roll !~~ 2 | 16;
 </code></pre>
 
-<p>Perl 6 also has <code>when</code>, which is like <code>if</code>, but if the condition given is true, no code past the <code>when</code> block within the block it&rsquo;s in is executed:</p>
+<p>Raku also has <code>when</code>, which is like <code>if</code>, but if the condition given is true, no code past the <code>when</code> block within the block it&rsquo;s in is executed:</p>
 
-<p>Perl 6也有<code>when</code>，就像是<code>if</code>，但是如果给出的条件为真，<code>when</code>那么执行它所执行的块中没有代码超过块：</p>
+<p>Raku也有<code>when</code>，就像是<code>if</code>，但是如果给出的条件为真，<code>when</code>那么执行它所执行的块中没有代码超过块：</p>
 
 <pre><code>{
     when True {
@@ -492,11 +492,11 @@ say &quot;Rolled $dice-roll.&quot; if $dice-roll !~~ 2 | 16;
 }
 </code></pre>
 
-<p>Additionally, Perl 6 has <code>with</code>, <code>orwith</code>, and <code>without</code>, which are like <code>if</code>, <code>else if</code>, and <code>else</code> respectively, but instead of checking whether their condition is true, they check if it&rsquo;s defined.</p>
+<p>Additionally, Raku has <code>with</code>, <code>orwith</code>, and <code>without</code>, which are like <code>if</code>, <code>else if</code>, and <code>else</code> respectively, but instead of checking whether their condition is true, they check if it&rsquo;s defined.</p>
 
-<p>此外，Perl 6的有<code>with</code>，<code>orwith</code>和<code>without</code>，这是一样<code>if</code>，<code>else if</code>和，<code>else</code>分别但是，不是检查自己的条件是否为真，他们检查，如果它被定义。</p>
+<p>此外，Raku的有<code>with</code>，<code>orwith</code>和<code>without</code>，这是一样<code>if</code>，<code>else if</code>和，<code>else</code>分别但是，不是检查自己的条件是否为真，他们检查，如果它被定义。</p>
 
-<h3 id="switch-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">switch</a></h3>
+<h3 id="switch-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">switch</a></h3>
 
 <p>Switch statements are a way of checking for equality between a given value and a list of values and run some code if one matches. <code>case</code> statements define each value to compare to. <code>default</code>, if included, acts as a fallback for when the given value matches no cases. After matching a case, <code>break</code> is typically used to prevent the code from the cases that follow the one matched from being executed, though rarely this is intentionally omitted.</p>
 
@@ -523,9 +523,9 @@ for (let rank of ranks) {
 }
 </code></pre>
 
-<p>In Perl 6, <code>given</code> can be used like switch statements. There is no equivalent to <code>break</code> since <code>when</code> blocks are most commonly used like <code>case</code> statements. One major difference between <code>switch</code> and <code>given</code> is that a value passed to a <code>switch</code> statement will only match cases that are exactly equal to the value; <code>given</code> values are smartmatched (<code>~~</code>) against the <code>when</code> values.</p>
+<p>In Raku, <code>given</code> can be used like switch statements. There is no equivalent to <code>break</code> since <code>when</code> blocks are most commonly used like <code>case</code> statements. One major difference between <code>switch</code> and <code>given</code> is that a value passed to a <code>switch</code> statement will only match cases that are exactly equal to the value; <code>given</code> values are smartmatched (<code>~~</code>) against the <code>when</code> values.</p>
 
-<p>在Perl 6中，<code>given</code>可以像switch语句一样使用。没有相应的，<code>break</code>因为<code>when</code>块最常用于<code>case</code>语句。<code>switch</code>和之间的一个主要区别<code>given</code>是传递给<code>switch</code>语句的值只匹配与值完全相等的情况; <code>given</code>值是<code>~~</code>针对值的smartmatched（）<code>when</code>。</p>
+<p>在Raku中，<code>given</code>可以像switch语句一样使用。没有相应的，<code>break</code>因为<code>when</code>块最常用于<code>case</code>语句。<code>switch</code>和之间的一个主要区别<code>given</code>是传递给<code>switch</code>语句的值只匹配与值完全相等的情况; <code>given</code>值是<code>~~</code>针对值的smartmatched（）<code>when</code>。</p>
 
 <pre><code>my     @ranklist = [2, 3, 4, 5, 6, 7, 8, 9, 'Jack', 'Queen', 'King', 'Ace'];
 my     @ranks    = @ranklist.pick: 3;
@@ -558,7 +558,7 @@ for @ranks -&gt; $rank {
 # Int is Any 
 </code></pre>
 
-<h3 id="for-while-and-do-while-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">for, while, and do/while</a></h3>
+<h3 id="for-while-and-do-while-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">for, while, and do/while</a></h3>
 
 <p>There are three different types of for loops in JavaScript:</p>
 
@@ -592,9 +592,9 @@ for (let letter of Object.values(letters)) {
 }
 </code></pre>
 
-<p>Perl 6 <code>for</code> loops most closely resemble <code>for..of</code> loops, since they work on anything as long as it&rsquo;s iterable. C-style loops are possible to write using <code>loop</code>, but this is discouraged since they&rsquo;re better written as <code>for</code> loops using ranges. Like <code>if</code> statements, <code>for</code> may follow a statement, with the current iteration being accessible using the <code>$_</code> variable (known as &ldquo;it&rdquo;). Methods on <code>$_</code> may be called without specifying the variable:</p>
+<p>Raku <code>for</code> loops most closely resemble <code>for..of</code> loops, since they work on anything as long as it&rsquo;s iterable. C-style loops are possible to write using <code>loop</code>, but this is discouraged since they&rsquo;re better written as <code>for</code> loops using ranges. Like <code>if</code> statements, <code>for</code> may follow a statement, with the current iteration being accessible using the <code>$_</code> variable (known as &ldquo;it&rdquo;). Methods on <code>$_</code> may be called without specifying the variable:</p>
 
-<p>Perl 6 <code>for</code>循环最接近<code>for..of</code>循环，因为只要它是可迭代的，它们就可以处理任何东西。C风格的循环可以使用<code>loop</code>，但不鼓励这样做，因为它们更好地编写为<code>for</code>使用范围的循环。类似<code>if</code>语句，<code>for</code>可以遵循一个语句，当前迭代可以使用<code>$_</code>变量（称为“它”）访问。<code>$_</code>可以在不指定变量的情况下调用方法：</p>
+<p>Raku <code>for</code>循环最接近<code>for..of</code>循环，因为只要它是可迭代的，它们就可以处理任何东西。C风格的循环可以使用<code>loop</code>，但不鼓励这样做，因为它们更好地编写为<code>for</code>使用范围的循环。类似<code>if</code>语句，<code>for</code>可以遵循一个语句，当前迭代可以使用<code>$_</code>变量（称为“它”）访问。<code>$_</code>可以在不指定变量的情况下调用方法：</p>
 
 <pre><code>my Str %letters{Str};
 %letters{$_} = .uc for 'a'..'z';
@@ -606,19 +606,19 @@ for (let letter of Object.values(letters)) {
 # etc. 
 </code></pre>
 
-<p><code>while</code> loops work identically between JavaScript and Perl 6. Perl 6 also has <code>until</code> loops, where instead of iterating until the given condition is false, they iterate until the condition is true.</p>
+<p><code>while</code> loops work identically between JavaScript and Raku. Raku also has <code>until</code> loops, where instead of iterating until the given condition is false, they iterate until the condition is true.</p>
 
-<p><code>do/while</code> loops are known as <code>repeat/while</code> loops in Perl 6. Likewise with <code>while</code>, <code>repeat/until</code> loops also exist and loop until the given condition is false.</p>
+<p><code>do/while</code> loops are known as <code>repeat/while</code> loops in Raku. Likewise with <code>while</code>, <code>repeat/until</code> loops also exist and loop until the given condition is false.</p>
 
-<p>To write infinite loops in Perl 6, use <code>loop</code> rather than <code>for</code> or <code>while</code>.</p>
+<p>To write infinite loops in Raku, use <code>loop</code> rather than <code>for</code> or <code>while</code>.</p>
 
 <p>In JavaScript, <code>continue</code> is used to skip to the next iteration in a loop, and <code>break</code> is used to exit a loop early:</p>
 
-<p><code>while</code>循环在JavaScript和Perl 6之间的工作相同.Perl 6也有<code>until</code>循环，而不是迭代直到给定条件为假，它们迭代直到条件为真。</p>
+<p><code>while</code>循环在JavaScript和Raku之间的工作相同.Raku也有<code>until</code>循环，而不是迭代直到给定条件为假，它们迭代直到条件为真。</p>
 
-<p><code>do/while</code>循环<code>repeat/while</code>在Perl 6 中称为循环。同样<code>while</code>，<code>repeat/until</code>循环也存在并循环，直到给定条件为假。</p>
+<p><code>do/while</code>循环<code>repeat/while</code>在Raku 中称为循环。同样<code>while</code>，<code>repeat/until</code>循环也存在并循环，直到给定条件为假。</p>
 
-<p>要在Perl 6中编写无限循环，请使用<code>loop</code>而不是<code>for</code>或<code>while</code>。</p>
+<p>要在Raku中编写无限循环，请使用<code>loop</code>而不是<code>for</code>或<code>while</code>。</p>
 
 <p>在JavaScript中，<code>continue</code>用于跳转到循环中的下一个迭代，并<code>break</code>用于提前退出循环：</p>
 
@@ -640,11 +640,11 @@ do {
 console.log(primes); # OUTPUT: Set { 2, 3, 5, 7, 11, 13, 17, 19 } 
 </code></pre>
 
-<p>In Perl 6, these are known as <code>next</code> and <code>last</code> respectively. There is also <code>redo</code>, which repeats the current iteration without evaluating the loop&rsquo;s condition again.</p>
+<p>In Raku, these are known as <code>next</code> and <code>last</code> respectively. There is also <code>redo</code>, which repeats the current iteration without evaluating the loop&rsquo;s condition again.</p>
 
 <p><code>next</code>/<code>redo</code>/<code>last</code> statements may be followed by a label defined before an outer loop to make the statement work on the loop the label refers to, rather than the loop the statement is in:</p>
 
-<p>在Perl 6中，这些分别称为<code>next</code>和<code>last</code>。还有<code>redo</code>，它重复当前迭代而不再评估循环的条件。</p>
+<p>在Raku中，这些分别称为<code>next</code>和<code>last</code>。还有<code>redo</code>，它重复当前迭代而不再评估循环的条件。</p>
 
 <p><code>next</code>/ <code>redo</code>/ <code>last</code>语句后跟一个在外部循环之前定义的标签，以使该语句在标签所引用的循环上起作用，而不是该语句所在的循环：</p>
 
@@ -660,7 +660,7 @@ repeat {
 say %primes; # OUTPUT: SetHash(11 13 17 19 2 3 5 7) 
 </code></pre>
 
-<h3 id="do-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">do</a></h3>
+<h3 id="do-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">do</a></h3>
 
 <p><code>do</code> is not currently a feature in JavaScript, however a proposal has been made to <a href="https://github.com/tc39/proposal-do-expressions">add it to ECMAScript</a>. <code>do</code> expressions evaluate a block and return the result:</p>
 
@@ -674,9 +674,9 @@ constant VERSION_NUMBER = do {
 say VERSION_NUMBER; # OUTPUT: 33554432 
 </code></pre>
 
-<h2 id="types-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Types</a></h2>
+<h2 id="types-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Types</a></h2>
 
-<h3 id="creating-types-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Creating types</a></h3>
+<h3 id="creating-types-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Creating types</a></h3>
 
 <p>In JavaScript, types are created by making a class (or a constructor in ES5 and earlier). If you&rsquo;ve used TypeScript, you can define a type as a subset of other types like so:</p>
 
@@ -685,18 +685,18 @@ say VERSION_NUMBER; # OUTPUT: 33554432
 <pre><code>type ID = string | number;
 </code></pre>
 
-<p>In Perl 6, classes, roles, subsets, and enums are considered types. Creating classes and roles will be discussed in <a href="https://docs.perl6.org/language/js-nutshell#Object-oriented_programming">the OOP section of this article</a>. Creating an ID subset can be done like so:</p>
+<p>In Raku, classes, roles, subsets, and enums are considered types. Creating classes and roles will be discussed in <a href="https://docs.raku.org/language/js-nutshell#Object-oriented_programming">the OOP section of this article</a>. Creating an ID subset can be done like so:</p>
 
-<p>在Perl 6中，类，角色，子集和枚举被视为类型。创建类和角色将在本文<a href="https://docs.perl6.org/language/js-nutshell#Object-oriented_programming">的OOP部分中讨论</a>。创建ID子集可以这样完成：</p>
+<p>在Raku中，类，角色，子集和枚举被视为类型。创建类和角色将在本文<a href="https://docs.raku.org/language/js-nutshell#Object-oriented_programming">的OOP部分中讨论</a>。创建ID子集可以这样完成：</p>
 
 <pre><code>subset ID where Str | Int;
 </code></pre>
 
-<p>See the documentation on <a href="https://docs.perl6.org/language/typesystem#subset">subset</a> and <a href="https://docs.perl6.org/type/Junction">Junction</a> for more information.</p>
+<p>See the documentation on <a href="https://docs.raku.org/language/typesystem#subset">subset</a> and <a href="https://docs.raku.org/type/Junction">Junction</a> for more information.</p>
 
 <p>TypeScript enums may have numbers or strings as their values. Defining the values is optional; by default, the value of the first key is 0, the next key, 1, the next, 2, etc. For example, here is an enum that defines directions for extended ASCII arrow symbols (perhaps for a TUI game):</p>
 
-<p>有关更多信息，请参阅<a href="https://docs.perl6.org/language/typesystem#subset">子集</a>和<a href="https://docs.perl6.org/type/Junction">连接</a>的文档。</p>
+<p>有关更多信息，请参阅<a href="https://docs.raku.org/language/typesystem#subset">子集</a>和<a href="https://docs.raku.org/type/Junction">连接</a>的文档。</p>
 
 <p>TypeScript枚举可以包含数字或字符串作为其值。定义值是可选的; 默认情况下，第一个键的值为0，下一个键为1，下一个键为2，等等。例如，这是一个枚举，用于定义扩展ASCII箭头符号的方向（可能用于TUI游戏）：</p>
 
@@ -708,9 +708,9 @@ say VERSION_NUMBER; # OUTPUT: 33554432
 );
 </code></pre>
 
-<p>Enums in Perl 6 may have any type as their keys&rsquo; values. Enum keys (and optionally, values) can be defined by writing <code>enum</code>, followed by the name of the enum, then the list of keys (and optionally, values), which can be done using <a href="https://docs.perl6.org/language/quoting#Word_quoting%3A_%3C_%3E">&lt; &gt;</a>, <a href="https://docs.perl6.org/language/quoting#Word_quoting_with_interpolation_and_quote_protection%3A_%C2%AB_%C2%BB">« »</a>, or <a href="https://docs.perl6.org/language/operators#term_%28_%29">( )</a>. <code>( )</code> must be used if you want to define values for the enum&rsquo;s keys. Here is the Direction enum as written in Perl 6:</p>
+<p>Enums in Raku may have any type as their keys&rsquo; values. Enum keys (and optionally, values) can be defined by writing <code>enum</code>, followed by the name of the enum, then the list of keys (and optionally, values), which can be done using <a href="https://docs.raku.org/language/quoting#Word_quoting%3A_%3C_%3E">&lt; &gt;</a>, <a href="https://docs.raku.org/language/quoting#Word_quoting_with_interpolation_and_quote_protection%3A_%C2%AB_%C2%BB">« »</a>, or <a href="https://docs.raku.org/language/operators#term_%28_%29">( )</a>. <code>( )</code> must be used if you want to define values for the enum&rsquo;s keys. Here is the Direction enum as written in Raku:</p>
 
-<p>Perl 6中的枚举可以使用任何类型作为其键值。枚举键（以及可选的值）可以通过写入来定义<code>enum</code>，然后是枚举的名称，然后是键列表（以及可选的值），可以使用<a href="https://docs.perl6.org/language/quoting#Word_quoting%3A_%3C_%3E">&lt;&gt;</a>，<a href="https://docs.perl6.org/language/quoting#Word_quoting_with_interpolation_and_quote_protection%3A_%C2%AB_%C2%BB">«»</a>或<a href="https://docs.perl6.org/language/operators#term_%28_%29">（）来完成</a>。<code>( )</code>如果要为枚举键定义值，则必须使用。这是Perl 6中编写的Direction枚举：</p>
+<p>Raku中的枚举可以使用任何类型作为其键值。枚举键（以及可选的值）可以通过写入来定义<code>enum</code>，然后是枚举的名称，然后是键列表（以及可选的值），可以使用<a href="https://docs.raku.org/language/quoting#Word_quoting%3A_%3C_%3E">&lt;&gt;</a>，<a href="https://docs.raku.org/language/quoting#Word_quoting_with_interpolation_and_quote_protection%3A_%C2%AB_%C2%BB">«»</a>或<a href="https://docs.raku.org/language/operators#term_%28_%29">（）来完成</a>。<code>( )</code>如果要为枚举键定义值，则必须使用。这是Raku中编写的Direction枚举：</p>
 
 <pre><code>enum Direction (
     UP    =&gt; '↑',
@@ -720,11 +720,11 @@ say VERSION_NUMBER; # OUTPUT: 33554432
 );
 </code></pre>
 
-<p>See the documentation on <a href="https://docs.perl6.org/language/typesystem#enum">enum</a> for more information.</p>
+<p>See the documentation on <a href="https://docs.raku.org/language/typesystem#enum">enum</a> for more information.</p>
 
-<p>有关更多信息，请参阅<a href="https://docs.perl6.org/language/typesystem#enum">枚举</a>文档。</p>
+<p>有关更多信息，请参阅<a href="https://docs.raku.org/language/typesystem#enum">枚举</a>文档。</p>
 
-<h3 id="using-types-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Using types</a></h3>
+<h3 id="using-types-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Using types</a></h3>
 
 <p>In TypeScript, you can define the type of variables. Attempting to assign a value that doesn&rsquo;t match the type of the variable will make the transpiler error out. This is done like so:</p>
 
@@ -748,9 +748,9 @@ let doJob: (job: string) =&gt; boolean = function (job: string): boolean {
 };
 </code></pre>
 
-<p>In Perl 6, variables can be typed by placing the type between the declarator (<code>my</code>, <code>our</code>, etc.) and the variable name. Assigning a value that doesn&rsquo;t match the variable&rsquo;s type will throw either a compile-time or runtime error, depending on how the value is evaluated:</p>
+<p>In Raku, variables can be typed by placing the type between the declarator (<code>my</code>, <code>our</code>, etc.) and the variable name. Assigning a value that doesn&rsquo;t match the variable&rsquo;s type will throw either a compile-time or runtime error, depending on how the value is evaluated:</p>
 
-<p>在Perl 6中，变量可以通过将说明符（之间的类型被键入<code>my</code>，<code>our</code>等）和变量名。分配与变量类型不匹配的值将引发编译时或运行时错误，具体取决于值的计算方式：</p>
+<p>在Raku中，变量可以通过将说明符（之间的类型被键入<code>my</code>，<code>our</code>等）和变量名。分配与变量类型不匹配的值将引发编译时或运行时错误，具体取决于值的计算方式：</p>
 
 <pre><code>enum Name &lt;Phoebe Daniel Joe&gt;;
 my Str $name = 'Phoebe';
@@ -774,17 +774,17 @@ my Bool &amp;do-job = sub (Str $job --&gt; Bool) {
 };
 </code></pre>
 
-<h3 id="比较-javascript-和-perl-6-的类型-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">比较 JavaScript 和 Perl 6 的类型</a></h3>
+<h3 id="比较-javascript-和-raku-的类型-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">比较 JavaScript 和 Raku 的类型</a></h3>
 
-<p>Here is a table of some JavaScript types and their equivalents in Perl 6:</p>
+<p>Here is a table of some JavaScript types and their equivalents in Raku:</p>
 
-<p>以下是Perl 6中一些JavaScript类型及其等价物的表格：</p>
+<p>以下是Raku中一些JavaScript类型及其等价物的表格：</p>
 
 <table>
 <thead>
 <tr>
 <th align="left">JavaScript</th>
-<th align="left">Perl 6</th>
+<th align="left">Raku</th>
 </tr>
 </thead>
 
@@ -826,55 +826,55 @@ my Bool &amp;do-job = sub (Str $job --&gt; Bool) {
 </tbody>
 </table>
 
-<p><code>Object</code> is both a superclass of all types in JavaScript and a way to create a hash. In Perl 6, <a href="https://docs.perl6.org/type/Mu">Mu</a> is a superclass of all types, though usually you want to use <a href="https://docs.perl6.org/type/Any">Any</a> instead, which is a subclass of <code>Mu</code> but also a superclass of nearly every type, with <a href="https://docs.perl6.org/type/Junction">Junction</a> being an exception. When using <code>Object</code> as a hash, <a href="https://docs.perl6.org/type/Hash">Hash</a> is what you want to use.</p>
+<p><code>Object</code> is both a superclass of all types in JavaScript and a way to create a hash. In Raku, <a href="https://docs.raku.org/type/Mu">Mu</a> is a superclass of all types, though usually you want to use <a href="https://docs.raku.org/type/Any">Any</a> instead, which is a subclass of <code>Mu</code> but also a superclass of nearly every type, with <a href="https://docs.raku.org/type/Junction">Junction</a> being an exception. When using <code>Object</code> as a hash, <a href="https://docs.raku.org/type/Hash">Hash</a> is what you want to use.</p>
 
-<p>There are three types equivalent to <code>Array</code>. <a href="https://docs.perl6.org/type/Array">Array</a> is most similar to <code>Array</code>, since it acts as a mutable array. <a href="https://docs.perl6.org/type/List">List</a> is similar to <code>Array</code>, but is immutable. <a href="https://docs.perl6.org/type/Seq">Seq</a> is used to create lazy arrays.</p>
+<p>There are three types equivalent to <code>Array</code>. <a href="https://docs.raku.org/type/Array">Array</a> is most similar to <code>Array</code>, since it acts as a mutable array. <a href="https://docs.raku.org/type/List">List</a> is similar to <code>Array</code>, but is immutable. <a href="https://docs.raku.org/type/Seq">Seq</a> is used to create lazy arrays.</p>
 
-<p><code>String</code> and <a href="https://docs.perl6.org/type/Str">Str</a> are for the most part used identically.</p>
+<p><code>String</code> and <a href="https://docs.raku.org/type/Str">Str</a> are for the most part used identically.</p>
 
-<p>There are several different types in Perl 6 equivalent to <code>Number</code>, but the three you&rsquo;ll most commonly see are <a href="https://docs.perl6.org/type/Int">Int</a>, <a href="https://docs.perl6.org/type/Num">Num</a>, and <a href="https://docs.perl6.org/type/Rat">Rat</a>. <code>Int</code>represents an integer. <code>Num</code> represents a floating-point number, making it the most similar to <code>Number</code>. <code>Rat</code> represents a fraction of two numbers, and is used when <code>Num</code> cannot provide precise enough values.</p>
+<p>There are several different types in Raku equivalent to <code>Number</code>, but the three you&rsquo;ll most commonly see are <a href="https://docs.raku.org/type/Int">Int</a>, <a href="https://docs.raku.org/type/Num">Num</a>, and <a href="https://docs.raku.org/type/Rat">Rat</a>. <code>Int</code>represents an integer. <code>Num</code> represents a floating-point number, making it the most similar to <code>Number</code>. <code>Rat</code> represents a fraction of two numbers, and is used when <code>Num</code> cannot provide precise enough values.</p>
 
-<p><code>Boolean</code> and <a href="https://docs.perl6.org/type/Bool">Bool</a> are for the most part used identically.</p>
+<p><code>Boolean</code> and <a href="https://docs.raku.org/type/Bool">Bool</a> are for the most part used identically.</p>
 
-<p><code>Map</code> has both a mutable and an immutable equivalent in Perl 6. <a href="https://docs.perl6.org/type/Map">Map</a> is the immutable one, and <a href="https://docs.perl6.org/type/Hash">Hash</a> is the mutable one. Don&rsquo;t get them mixed up! Like <code>Map</code> in JavaScript, <code>Map</code> and <code>Hash</code> can have any type of key or value, not just strings for keys.</p>
+<p><code>Map</code> has both a mutable and an immutable equivalent in Raku. <a href="https://docs.raku.org/type/Map">Map</a> is the immutable one, and <a href="https://docs.raku.org/type/Hash">Hash</a> is the mutable one. Don&rsquo;t get them mixed up! Like <code>Map</code> in JavaScript, <code>Map</code> and <code>Hash</code> can have any type of key or value, not just strings for keys.</p>
 
-<p>Like <code>Map</code>, <code>Set</code> also has both a mutable and an immutable equivalent in Perl 6. <a href="https://docs.perl6.org/type/Set">Set</a> is the immutable one, and <a href="https://docs.perl6.org/type/SetHash">SetHash</a> is the mutable one.</p>
+<p>Like <code>Map</code>, <code>Set</code> also has both a mutable and an immutable equivalent in Raku. <a href="https://docs.raku.org/type/Set">Set</a> is the immutable one, and <a href="https://docs.raku.org/type/SetHash">SetHash</a> is the mutable one.</p>
 
-<p><code>Object</code>既是JavaScript中所有类型的超类，也是创建哈希的方法。在Perl 6中，<a href="https://docs.perl6.org/type/Mu">穆</a>是所有类型的超类，尽管通常要使用<a href="https://docs.perl6.org/type/Any">任何</a>代替，这是的一个子类<code>Mu</code>，而且几乎所有类型的超类，与<a href="https://docs.perl6.org/type/Junction">接线</a>是一个例外。当<code>Object</code>用作哈希时，<a href="https://docs.perl6.org/type/Hash">哈希</a>就是你想要使用的。</p>
+<p><code>Object</code>既是JavaScript中所有类型的超类，也是创建哈希的方法。在Raku中，<a href="https://docs.raku.org/type/Mu">穆</a>是所有类型的超类，尽管通常要使用<a href="https://docs.raku.org/type/Any">任何</a>代替，这是的一个子类<code>Mu</code>，而且几乎所有类型的超类，与<a href="https://docs.raku.org/type/Junction">接线</a>是一个例外。当<code>Object</code>用作哈希时，<a href="https://docs.raku.org/type/Hash">哈希</a>就是你想要使用的。</p>
 
-<p>有三种类型相当于<code>Array</code>。<a href="https://docs.perl6.org/type/Array">数组</a>最相似<code>Array</code>，因为它充当可变数组。<a href="https://docs.perl6.org/type/List">列表</a>类似于<code>Array</code>，但是是不可变的。<a href="https://docs.perl6.org/type/Seq">Seq</a>用于创建惰性数组。</p>
+<p>有三种类型相当于<code>Array</code>。<a href="https://docs.raku.org/type/Array">数组</a>最相似<code>Array</code>，因为它充当可变数组。<a href="https://docs.raku.org/type/List">列表</a>类似于<code>Array</code>，但是是不可变的。<a href="https://docs.raku.org/type/Seq">Seq</a>用于创建惰性数组。</p>
 
-<p><code>String</code>和<a href="https://docs.perl6.org/type/Str">Str</a>在大多数情况下使用相同。</p>
+<p><code>String</code>和<a href="https://docs.raku.org/type/Str">Str</a>在大多数情况下使用相同。</p>
 
-<p>Perl 6中有几种不同的类型相当于<code>Number</code>，但你最常见的三种是<a href="https://docs.perl6.org/type/Int">Int</a>，<a href="https://docs.perl6.org/type/Num">Num</a>和<a href="https://docs.perl6.org/type/Rat">Rat</a>。<code>Int</code>表示整数。<code>Num</code>表示一个浮点数，使其最相似<code>Number</code>。<code>Rat</code>表示两个数字的一小部分，并且在<code>Num</code>无法提供足够精确的值时使用。</p>
+<p>Raku中有几种不同的类型相当于<code>Number</code>，但你最常见的三种是<a href="https://docs.raku.org/type/Int">Int</a>，<a href="https://docs.raku.org/type/Num">Num</a>和<a href="https://docs.raku.org/type/Rat">Rat</a>。<code>Int</code>表示整数。<code>Num</code>表示一个浮点数，使其最相似<code>Number</code>。<code>Rat</code>表示两个数字的一小部分，并且在<code>Num</code>无法提供足够精确的值时使用。</p>
 
-<p><code>Boolean</code>和<a href="https://docs.perl6.org/type/Bool">Bool</a>在大多数情况下使用相同。</p>
+<p><code>Boolean</code>和<a href="https://docs.raku.org/type/Bool">Bool</a>在大多数情况下使用相同。</p>
 
-<p><code>Map</code>既具有可变的，并且在Perl 6的不可变等效<a href="https://docs.perl6.org/type/Map">地图</a>是不可变的一个，并且<a href="https://docs.perl6.org/type/Hash">哈希</a>是可变的一个。不要混淆他们！就像<code>Map</code>在JavaScript中，<code>Map</code>并且<code>Hash</code>可以有任何类型的键或值，而不仅仅是钥匙串。</p>
+<p><code>Map</code>既具有可变的，并且在Raku的不可变等效<a href="https://docs.raku.org/type/Map">地图</a>是不可变的一个，并且<a href="https://docs.raku.org/type/Hash">哈希</a>是可变的一个。不要混淆他们！就像<code>Map</code>在JavaScript中，<code>Map</code>并且<code>Hash</code>可以有任何类型的键或值，而不仅仅是钥匙串。</p>
 
-<p>像<code>Map</code>，<code>Set</code>也都一个可变的和Perl 6中一个不变的等效<a href="https://docs.perl6.org/type/Set">设置</a>是不可变的一个，并且<a href="https://docs.perl6.org/type/SetHash">SetHash</a>是可变的。</p>
+<p>像<code>Map</code>，<code>Set</code>也都一个可变的和Raku中一个不变的等效<a href="https://docs.raku.org/type/Set">设置</a>是不可变的一个，并且<a href="https://docs.raku.org/type/SetHash">SetHash</a>是可变的。</p>
 
-<h2 id="函数-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">函数</a></h2>
-
-<p># TBD</p>
-
-<h1 id="面向对象编程-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">面向对象编程</a></h1>
+<h2 id="函数-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">函数</a></h2>
 
 <p># TBD</p>
 
-<h1 id="异步编程-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">异步编程</a></h1>
+<h1 id="面向对象编程-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">面向对象编程</a></h1>
 
 <p># TBD</p>
 
-<h1 id="网络-api-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">网络 API</a></h1>
+<h1 id="异步编程-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">异步编程</a></h1>
 
-<h2 id="网络-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">网络</a></h2>
+<p># TBD</p>
 
-<p>In Perl 6, there are two APIs for dealing with networking: <code>IO::Socket::INET</code> (for synchronous networking), and <code>IO::Socket::Async</code> (for asynchronous networking).</p>
+<h1 id="网络-api-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">网络 API</a></h1>
+
+<h2 id="网络-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">网络</a></h2>
+
+<p>In Raku, there are two APIs for dealing with networking: <code>IO::Socket::INET</code> (for synchronous networking), and <code>IO::Socket::Async</code> (for asynchronous networking).</p>
 
 <p><code>IO::Socket::INET</code> currently only supports TCP connections. Its API resembles that of C&rsquo;s socket API. If you&rsquo;re familiar with that, then it won&rsquo;t take long to understand how to use it. For example, here&rsquo;s an echo server that closes the connection after receiving its first message:</p>
 
-<p>在Perl 6中，有两个用于处理网络的API :( <code>IO::Socket::INET</code>用于同步网络）和<code>IO::Socket::Async</code>（用于异步网络）。</p>
+<p>在Raku中，有两个用于处理网络的API :( <code>IO::Socket::INET</code>用于同步网络）和<code>IO::Socket::Async</code>（用于异步网络）。</p>
 
 <p><code>IO::Socket::INET</code>目前只支持TCP连接。它的API类似于C的套接字API。如果您熟悉它，那么理解如何使用它不会花费很长时间。例如，这是一个echo服务器，它在收到第一条消息后关闭连接：</p>
 
@@ -950,29 +950,29 @@ const client = net.createConnection(8000, 'localhost', () =&gt; {
 });
 </code></pre>
 
-<h2 id="http-https-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">HTTP/HTTPS</a></h2>
+<h2 id="http-https-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">HTTP/HTTPS</a></h2>
 
-<p>Perl 6 doesn&rsquo;t natively support HTTP/HTTPS. However, CPAN packages such as <a href="https://cro.services/">Cro</a> help fill the gap.</p>
+<p>Raku doesn&rsquo;t natively support HTTP/HTTPS. However, CPAN packages such as <a href="https://cro.services/">Cro</a> help fill the gap.</p>
 
-<p>Perl 6本身不支持HTTP / HTTPS。然而，像<a href="https://cro.services/">Cro</a>这样的CPAN包填补了这个空白。</p>
+<p>Raku本身不支持HTTP / HTTPS。然而，像<a href="https://cro.services/">Cro</a>这样的CPAN包填补了这个空白。</p>
 
-<h2 id="dns-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">DNS</a></h2>
+<h2 id="dns-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">DNS</a></h2>
 
-<p>Perl 6 does not currently support the majority of the features that Node.js&rsquo;s DNS module implements. <code>IO::Socket::INET</code> and <code>IO::Socket::Async</code> can resolve hostnames, but features like resolving DNS records and reverse IP lookups are not implemented yet. There are some modules that are a work in progress, such as <a href="https://github.com/tbrowder/Net-DNS-BIND-Manage-Perl6/">Net::DNS::BIND::Manage</a>, that aim to improve DNS support.</p>
+<p>Raku does not currently support the majority of the features that Node.js&rsquo;s DNS module implements. <code>IO::Socket::INET</code> and <code>IO::Socket::Async</code> can resolve hostnames, but features like resolving DNS records and reverse IP lookups are not implemented yet. There are some modules that are a work in progress, such as <a href="https://github.com/tbrowder/Net-DNS-BIND-Manage-Raku/">Net::DNS::BIND::Manage</a>, that aim to improve DNS support.</p>
 
-<p>Perl 6目前不支持Node.js的DNS模块实现的大多数功能。<code>IO::Socket::INET</code>并且<code>IO::Socket::Async</code>可以解析主机名，但尚未实现解析DNS记录和反向IP查找等功能。有些模块正在进行中，例如<a href="https://github.com/tbrowder/Net-DNS-BIND-Manage-Perl6/">Net :: DNS :: BIND :: Manage</a>，旨在改善DNS支持。</p>
+<p>Raku目前不支持Node.js的DNS模块实现的大多数功能。<code>IO::Socket::INET</code>并且<code>IO::Socket::Async</code>可以解析主机名，但尚未实现解析DNS记录和反向IP查找等功能。有些模块正在进行中，例如<a href="https://github.com/tbrowder/Net-DNS-BIND-Manage-Raku/">Net :: DNS :: BIND :: Manage</a>，旨在改善DNS支持。</p>
 
-<h2 id="punycode-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">Punycode</a></h2>
+<h2 id="punycode-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">Punycode</a></h2>
 
 <p>Punycode support is available through the <a href="https://github.com/Kaiepi/p6-Net-LibIDN">Net::LibIDN</a>, <a href="https://github.com/Kaiepi/p6-Net-LibIDN2">Net::LibIDN2</a>, and <a href="https://github.com/FROGGS/p6-IDNA-Punycode">IDNA::Punycode</a> modules on CPAN.</p>
 
 <p>通过CPAN上的<a href="https://github.com/Kaiepi/p6-Net-LibIDN">Net :: LibIDN</a>，<a href="https://github.com/Kaiepi/p6-Net-LibIDN2">Net :: LibIDN2</a>和<a href="https://github.com/FROGGS/p6-IDNA-Punycode">IDNA :: Punycode</a>模块可以获得Punycode支持。</p>
 
-<h1 id="文件系统-api-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">文件系统 API</a></h1>
+<h1 id="文件系统-api-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">文件系统 API</a></h1>
 
 <p># TBD</p>
 
-<h1 id="模块和包-https-docs-perl6-org-language-js-nutshell-top"><a href="https://docs.perl6.org/language/js-nutshell#___top">模块和包</a></h1>
+<h1 id="模块和包-https-docs-raku-org-language-js-nutshell-top"><a href="https://docs.raku.org/language/js-nutshell#___top">模块和包</a></h1>
 
 <p># TBD</p>
 

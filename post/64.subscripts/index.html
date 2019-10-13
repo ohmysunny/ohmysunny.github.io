@@ -83,15 +83,15 @@
 
     
 
-<h1 id="subscripts-https-docs-perl6-org-language-subscripts"><a href="https://docs.perl6.org/language/subscripts">Subscripts</a></h1>
+<h1 id="subscripts-https-docs-raku-org-language-subscripts"><a href="https://docs.raku.org/language/subscripts">Subscripts</a></h1>
 
 <p>通过索引或键访问数据结构中的元素。</p>
 
-<p>通常，人们需要引用集合或数据结构中的一个特定的元素（或特定的元素切片）。从数学标记法中偷学到的，向量 <code>v</code> 的组成部分用 <em>v₁, v₂, v₃</em> 来引用，在 Perl 6 中这个概念叫做 “下标” （或“索引”）。</p>
+<p>通常，人们需要引用集合或数据结构中的一个特定的元素（或特定的元素切片）。从数学标记法中偷学到的，向量 <code>v</code> 的组成部分用 <em>v₁, v₂, v₃</em> 来引用，在 Raku 中这个概念叫做 “下标” （或“索引”）。</p>
 
 <h1 id="basics">Basics</h1>
 
-<p>Perl 6 提供了两个通用的下标接口：</p>
+<p>Raku 提供了两个通用的下标接口：</p>
 
 <pre><code>       elements are identified by     interface name    supported by
 [ ]  zero-based indices               Positional        Array, List, Buf, Match, ...
@@ -99,20 +99,20 @@
 </code></pre>
 
 <ul>
-<li><strong>Positional</strong> 下标 (通过 <a href="http://doc.perl6.org/language/operators#postcircumfix_[_]">postcircumfix [ ]</a> 通过元素在有序集合中的位置来寻址元素。)索引 0 引用第一个元素， 索引 1 引用第二个元素， 以此类推：</li>
+<li><strong>Positional</strong> 下标 (通过 <a href="http://doc.raku.org/language/operators#postcircumfix_[_]">postcircumfix [ ]</a> 通过元素在有序集合中的位置来寻址元素。)索引 0 引用第一个元素， 索引 1 引用第二个元素， 以此类推：</li>
 </ul>
 
-<pre><code class="language-perl6">  my @chores = &quot;buy groceries&quot;, &quot;feed dog&quot;, &quot;wash car&quot;;
+<pre><code class="language-raku">  my @chores = &quot;buy groceries&quot;, &quot;feed dog&quot;, &quot;wash car&quot;;
   say @chores[0];  #-&gt; buy groceries
   say @chores[1];  #-&gt; feed dog
   say @chores[2];  #-&gt; wash car
 </code></pre>
 
 <ul>
-<li><strong>Associative</strong> 下标 (通过 <a href="http://doc.perl6.org/language/operators#postcircumfix_{_}">postcircumfix { }</a>), 不要求集合以任何特定的顺序保存元素 - 相反，它使用一个唯一的键来寻址每个值。键的种类取决于使用的集合： 举个例子， 一个标准的<a href="http://doc.perl6.org/type/Hash">散列</a> 使用字符串作为键， 而一个 <a href="http://doc.perl6.org/type/Mix">Mix</a> 能使用任意的对象作为键， 等等:</li>
+<li><strong>Associative</strong> 下标 (通过 <a href="http://doc.raku.org/language/operators#postcircumfix_{_}">postcircumfix { }</a>), 不要求集合以任何特定的顺序保存元素 - 相反，它使用一个唯一的键来寻址每个值。键的种类取决于使用的集合： 举个例子， 一个标准的<a href="http://doc.raku.org/type/Hash">散列</a> 使用字符串作为键， 而一个 <a href="http://doc.raku.org/type/Mix">Mix</a> 能使用任意的对象作为键， 等等:</li>
 </ul>
 
-<pre><code class="language-perl6">  my %grade = Zoe =&gt; &quot;C&quot;, Ben =&gt; &quot;B+&quot;;
+<pre><code class="language-raku">  my %grade = Zoe =&gt; &quot;C&quot;, Ben =&gt; &quot;B+&quot;;
   say %grade{&quot;Zoe&quot;};  #-&gt; C
   say %grade{&quot;Ben&quot;};  #-&gt; B+
 
@@ -120,36 +120,36 @@
   say $stats{ Date.new(2015, 4, 5) };  #-&gt; 17.253
 </code></pre>
 
-<p>相对于传递单个-单词字符串键给 <code>{ }</code> , 你也可以使用<a href="http://doc.perl6.org/language/quoting#Word_quoting:_qw">以尖括号引起单词的结构</a> ，就像它们是后缀操作符一样：</p>
+<p>相对于传递单个-单词字符串键给 <code>{ }</code> , 你也可以使用<a href="http://doc.raku.org/language/quoting#Word_quoting:_qw">以尖括号引起单词的结构</a> ，就像它们是后缀操作符一样：</p>
 
-<pre><code class="language-perl6">  say %grade&lt;Zoe&gt;;    #-&gt; C
+<pre><code class="language-raku">  say %grade&lt;Zoe&gt;;    #-&gt; C
   say %grade&lt;Ben&gt;;    #-&gt; B+
 </code></pre>
 
 <p>这实际上仅仅是在编译时被转换为对应 <code>{ }</code> 形式的语法糖：</p>
 
-<pre><code class="language-perl6">  %hash&lt;foo bar&gt;;     # same as %hash{ &lt;foo bar&gt; }
+<pre><code class="language-raku">  %hash&lt;foo bar&gt;;     # same as %hash{ &lt;foo bar&gt; }
   %hash«foo $var»;    # same as %hash{ «foo $var» }
   %hash&lt;&lt;foo $var&gt;&gt;;  # same as %hash{ &lt;&lt;foo $var&gt;&gt; }
 </code></pre>
 
 <p>下标能应用到能返回可下标化对象的任何表达式上， 而不仅仅应用到变量上：</p>
 
-<pre><code class="language-perl6">say &quot;__Hello__&quot;.match(/__(.*)__/)[0];   #-&gt; ｢Hello｣
+<pre><code class="language-raku">say &quot;__Hello__&quot;.match(/__(.*)__/)[0];   #-&gt; ｢Hello｣
 say &quot;__Hello__&quot;.match(/__(.*)__/).[0];  # same, in method notation
 </code></pre>
 
 <p>Positional 和 associative  下标并不互相排斥 - 举个例子， <code>Match</code> 对象两个都支持（每个访问不同的数据集）。还有， 为了让列表处理更方便， 类 <code>Any</code> 为<code>位置下标</code>提供了备用的实现，这会把调用者看作含有<code>一个</code>元素的列表。(但是对于关系下标，没有这样的备用实现， 所以会抛出一个异常，当下标被应用到没有实现支持的对象上时。)</p>
 
-<pre><code class="language-perl6">say 42[0];    #-&gt; 42
+<pre><code class="language-raku">say 42[0];    #-&gt; 42
 say 42&lt;foo&gt;;  # ERROR: postcircumfix { } not defined for type Int
 </code></pre>
 
 <h1 id="nonexistent-elements">Nonexistent elements</h1>
 
-<p>当通过下标寻址一个不存在的元素所发生的事情取决于正在使用的集合类型。标准的 Array 和 Hash 集合返回它们的<a href="http://doc.perl6.org/routine/of">value type constraint</a>  的类型对象（这默认是 <code>Any</code>）。</p>
+<p>当通过下标寻址一个不存在的元素所发生的事情取决于正在使用的集合类型。标准的 Array 和 Hash 集合返回它们的<a href="http://doc.raku.org/routine/of">value type constraint</a>  的类型对象（这默认是 <code>Any</code>）。</p>
 
-<pre><code class="language-perl6">my @array1;     say @array1[10];  #-&gt; (Any)
+<pre><code class="language-raku">my @array1;     say @array1[10];  #-&gt; (Any)
 my Int @array2; say @array2[10];  #-&gt; (Int)
 
 my %hash1;      say %hash1&lt;foo&gt;;  #-&gt; (Any)
@@ -158,29 +158,29 @@ my Int %hash2;  say %hash2&lt;foo&gt;;  #-&gt; (Int)
 
 <p>然而， 其它类型的集合可能在寻址不存在的元素的下标时反应也不用：</p>
 
-<pre><code class="language-perl6">say (0, 10, 20)[3];       #-&gt; Nil
+<pre><code class="language-raku">say (0, 10, 20)[3];       #-&gt; Nil
 say bag(&lt;a a b b b&gt;)&lt;c&gt;;  #-&gt; 0
 </code></pre>
 
-<p>为了在下标操作中默默地跳过不存在的元素， 查看 <a href="http://doc.perl6.org/language/subscripts#Truncating_slices">#Truncating slices</a>  和 <a href="http://doc.perl6.org/language/subscripts#%3Av"><code>#:v</code></a> 副词。</p>
+<p>为了在下标操作中默默地跳过不存在的元素， 查看 <a href="http://doc.raku.org/language/subscripts#Truncating_slices">#Truncating slices</a>  和 <a href="http://doc.raku.org/language/subscripts#%3Av"><code>#:v</code></a> 副词。</p>
 
 <h1 id="from-the-end">From the end</h1>
 
 <p>Positional  索引是从集合的开头计数的， 但是也有一种标记法用于，通过相对于末尾的位置来寻址元素：<code>*-1</code> 引用最后一个元素， <code>*-2</code> 引用倒数第二个元素， 以此类推。</p>
 
-<pre><code class="language-perl6">my @alphabet = 'A' .. 'Z';
+<pre><code class="language-raku">my @alphabet = 'A' .. 'Z';
 say @alphabet[*-1];  #-&gt; Z
 say @alphabet[*-2];  #-&gt; Y
 say @alphabet[*-3];  #-&gt; X
 </code></pre>
 
-<p>注意：星号很重要。在 Perl 6中，如果像在很多其它编程语言中那样传递一个裸的负整数（例如 <code>@alphabet[-1]</code>）， 会抛出错误。</p>
+<p>注意：星号很重要。在 Raku中，如果像在很多其它编程语言中那样传递一个裸的负整数（例如 <code>@alphabet[-1]</code>）， 会抛出错误。</p>
 
-<p>这里实际发生的是， <code>*-1</code> 那样的表达式通过 <a href="http://doc.perl6.org/type/Whatever">Whatever</a> 柯里化声明了一个代码对象 - <code>[ ]</code>会把代码对象作为索引， 通过集合的长度作为参数来调用它并使用结果值作为实际的索引。 换句话说，<code>@alphabet[*-1]</code> 变成了 <code>@alphabet[@alphabet.elems - 1]</code>。</p>
+<p>这里实际发生的是， <code>*-1</code> 那样的表达式通过 <a href="http://doc.raku.org/type/Whatever">Whatever</a> 柯里化声明了一个代码对象 - <code>[ ]</code>会把代码对象作为索引， 通过集合的长度作为参数来调用它并使用结果值作为实际的索引。 换句话说，<code>@alphabet[*-1]</code> 变成了 <code>@alphabet[@alphabet.elems - 1]</code>。</p>
 
 <p>这意味着你可以使用任何依赖于集合尺寸的表达式：</p>
 
-<pre><code class="language-perl6">say @array[* div 2];  # 选择最中间的那个元素
+<pre><code class="language-raku">say @array[* div 2];  # 选择最中间的那个元素
 say @array[$i % *];   # wrap around a given index (&quot;模运算&quot;)
 say @array[ -&gt; $size { $i % $size } ];  # same as previous
 </code></pre>
@@ -189,23 +189,23 @@ say @array[ -&gt; $size { $i % $size } ];  # same as previous
 
 <p>当需要访问集合中的多个元素时，有一个快捷方式用于处理多个单独的下标操作：仅仅在下标中指定一个<code>索引/键</code>的列表，来取回一个元素的列表 - 也被叫做”切片” - 以相同的顺序。</p>
 
-<p>对于 positional  切片， 你可以混合普通切片和  <a href="http://doc.perl6.org/language/subscripts#From_the_end">from-the-end</a> 切片：</p>
+<p>对于 positional  切片， 你可以混合普通切片和  <a href="http://doc.raku.org/language/subscripts#From_the_end">from-the-end</a> 切片：</p>
 
-<pre><code class="language-perl6">my @alphabet = 'a' .. 'z';
+<pre><code class="language-raku">my @alphabet = 'a' .. 'z';
 dd @alphabet[15, 4, *-9, 11];  #-&gt; (&quot;p&quot;, &quot;e&quot;, &quot;r&quot;, &quot;l&quot;)
 </code></pre>
 
 <p>对于 associative  切片，尖括号形式的切片通常会很方便：</p>
 
-<pre><code class="language-perl6">my %color = kiwi =&gt; &quot;green&quot;, banana =&gt; &quot;yellow&quot;, cherry =&gt; &quot;red&quot;;
+<pre><code class="language-raku">my %color = kiwi =&gt; &quot;green&quot;, banana =&gt; &quot;yellow&quot;, cherry =&gt; &quot;red&quot;;
 dd %color{&quot;cherry&quot;, &quot;kiwi&quot;};  #-&gt; (&quot;red&quot;, &quot;green&quot;)
 dd %color&lt;cherry kiwi&gt;;       #-&gt; (&quot;red&quot;, &quot;green&quot;)
 dd %color{*};                 #-&gt; (&quot;green&quot;, &quot;red&quot;, &quot;yellow&quot;)
 </code></pre>
 
-<p>要知道切片是由传入 (<a href="http://doc.perl6.org/language/subscripts#Multiple_dimensions">one dimension of</a>)下标的类型控制的，而非它的长度：</p>
+<p>要知道切片是由传入 (<a href="http://doc.raku.org/language/subscripts#Multiple_dimensions">one dimension of</a>)下标的类型控制的，而非它的长度：</p>
 
-<pre><code class="language-perl6">subscript                                  result
+<pre><code class="language-raku">subscript                                  result
 any Positional object not covered below    normal slice
 a Range or infinite sequence               truncating slice (only for positional subscripts)
 * (Whatever-star)                          full slice (as if all keys/indices were specified)
@@ -215,33 +215,33 @@ empty                                      Zen slice
 
 <p>所以，即使一个单个元素的列表也会返回一个切片， 而一个裸的标量值不会：</p>
 
-<pre><code class="language-perl6">dd @alphabet[2,];  #-&gt; (&quot;c&quot;,)
+<pre><code class="language-raku">dd @alphabet[2,];  #-&gt; (&quot;c&quot;,)
 dd @alphabet[2];   #-&gt; &quot;c&quot;
 </code></pre>
 
-<p>(尖括号形式的 associative 下标也没有问题，因为 <a href="http://doc.perl6.org/language/quoting#Word_quoting:_qw">word quoting</a>  在单个单词的情况下很方便的返回一个 Str, 但是在多个单词的情况下返回一个 <a href="http://doc.perl6.org/type/Parcel">Parcel</a>)。</p>
+<p>(尖括号形式的 associative 下标也没有问题，因为 <a href="http://doc.raku.org/language/quoting#Word_quoting:_qw">word quoting</a>  在单个单词的情况下很方便的返回一个 Str, 但是在多个单词的情况下返回一个 <a href="http://doc.raku.org/type/Parcel">Parcel</a>)。</p>
 
-<p>对于普通的切片，下标的内容 (<a href="http://doc.perl6.org/language/subscripts#Multiple_dimensions">the current dimension of</a>) 在它的元素被解释为 <code>索引/键</code> 之前会被展平(flattened)：</p>
+<p>对于普通的切片，下标的内容 (<a href="http://doc.raku.org/language/subscripts#Multiple_dimensions">the current dimension of</a>) 在它的元素被解释为 <code>索引/键</code> 之前会被展平(flattened)：</p>
 
-<pre><code class="language-perl6">dd @alphabet[0, (1..2, (3,)))];  #-&gt; (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;)
+<pre><code class="language-raku">dd @alphabet[0, (1..2, (3,)))];  #-&gt; (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;)
 </code></pre>
 
 <h2 id="truncating-slices">Truncating slices</h2>
 
 <p>通常, 在切片下标中引用不存在的元素会让输出列表包含未定义的值。然而， 如果传递给位置下标的对象是一个 Range 或使用序列操作符构建的无限序列， 它会被自动截断到集合的实际尺寸：</p>
 
-<pre><code class="language-perl6">my @letters = &lt;a b c d e f&gt;;
+<pre><code class="language-raku">my @letters = &lt;a b c d e f&gt;;
 dd @letters[3, 4, 5, 6, 7];  #-&gt; (&quot;d&quot;, &quot;e&quot;, &quot;f&quot;, Any, Any)
 dd @letters[3 .. 7];         #-&gt; (&quot;d&quot;, &quot;e&quot;, &quot;f&quot;)
 </code></pre>
 
-<p><a href="http://doc.perl6.org/language/subscripts#From_the_end">From-the-end</a>  索引被允许作为范围的端点，代表无限的范围和序列：</p>
+<p><a href="http://doc.raku.org/language/subscripts#From_the_end">From-the-end</a>  索引被允许作为范围的端点，代表无限的范围和序列：</p>
 
-<pre><code class="language-perl6">say @array[*-3 .. *];       # select the last three elements
+<pre><code class="language-raku">say @array[*-3 .. *];       # select the last three elements
 say @array[0, 2, 4 ... *];  # select all elements with even indices
 </code></pre>
 
-<p>如果你不想把你的切片指定为 <code>range/sequence</code> 但仍旧想默默地跳过不存在的元素， 你可以使用 <a href="http://doc.perl6.org/language/subscripts#%3Av">#:v</a> 副词。</p>
+<p>如果你不想把你的切片指定为 <code>range/sequence</code> 但仍旧想默默地跳过不存在的元素， 你可以使用 <a href="http://doc.raku.org/language/subscripts#%3Av">#:v</a> 副词。</p>
 
 <h2 id="zen-slices">Zen slices</h2>
 
@@ -249,7 +249,7 @@ say @array[0, 2, 4 ... *];  # select all elements with even indices
 
 <p>这和传递一个  Whatever-star （这，像普通的切片， 总是返回一个元素的 Parcel，不管原对象的类型）还有传递一个空的列表都不同（它返回一个空的切片）：</p>
 
-<pre><code class="language-perl6">my %bag := (&quot;orange&quot; =&gt; 1, &quot;apple&quot; =&gt; 3).Bag;
+<pre><code class="language-raku">my %bag := (&quot;orange&quot; =&gt; 1, &quot;apple&quot; =&gt; 3).Bag;
 dd %bag&lt;&gt;;    #-&gt; (&quot;orange&quot;=&gt;1,&quot;apple&quot;=&gt;3).Bag
 dd %bag{};    #-&gt; (&quot;orange&quot;=&gt;1,&quot;apple&quot;=&gt;3).Bag
 dd %bag{*};   #-&gt; (1, 3)
@@ -258,7 +258,7 @@ dd %bag{()};  #-&gt; ()
 
 <p>这通常被用于把整个 <code>数组/散列</code> 插值到字符串中：</p>
 
-<pre><code class="language-perl6">my @words = &quot;cruel&quot;, &quot;world&quot;;
+<pre><code class="language-raku">my @words = &quot;cruel&quot;, &quot;world&quot;;
 say &quot;Hello, @words[]!&quot;  #-&gt; Hello, cruel world!
 </code></pre>
 
@@ -272,7 +272,7 @@ say &quot;Hello, @words[]!&quot;  #-&gt; Hello, cruel world!
 
 <p>下标参与 &ldquo;autovivification”（自动复活），i.e. 这是一种数组和散列在需要时会自动存在的处理， 以至于你没有必要在每一层级预声明集合的类型来构建嵌套的数据结构：</p>
 
-<pre><code class="language-perl6">my $beatles;
+<pre><code class="language-raku">my $beatles;
 $beatles{&quot;White Album&quot;}[0] = &quot;Back in the U.S.S.R.&quot;;  # autovivification!
 say $beatles.perl;  #-&gt; {&quot;White Album&quot; =&gt; [&quot;Back in the U.S.S.R.&quot;]}
 </code></pre>
@@ -287,7 +287,7 @@ say $beatles.perl;  #-&gt; {&quot;White Album&quot; =&gt; [&quot;Back in the U.S
 
 <p>内置的 Array 和 Hash 类型支持这种绑定， 为了允许构建复杂的联动的数据结构：</p>
 
-<pre><code class="language-perl6">my @a = 10, 11, 12, 13;
+<pre><code class="language-raku">my @a = 10, 11, 12, 13;
 my $x = 1;
 
 @a[2] := $x;  # binding! (@a[2] and $x refer to the same container now.)
@@ -298,7 +298,7 @@ dd @a;  #-&gt; [10, 11, 3, 13]&lt;&gt;
 dd $x;  #-&gt; 3
 </code></pre>
 
-<p>查看 <a href="http://doc.perl6.org/language/subscripts#method_BIND-POS">#method BIND-POS</a> 和 <a href="http://doc.perl6.org/language/subscripts#method_BIND-KEY">#method BIND-KEY</a> 了解底层机制.</p>
+<p>查看 <a href="http://doc.raku.org/language/subscripts#method_BIND-POS">#method BIND-POS</a> 和 <a href="http://doc.raku.org/language/subscripts#method_BIND-KEY">#method BIND-KEY</a> 了解底层机制.</p>
 
 <h1 id="adverbs">Adverbs</h1>
 
@@ -306,7 +306,7 @@ dd $x;  #-&gt; 3
 
 <p>要知道副词操作符的优先级相对宽松，这可能需要你在合成表达式中添加括号：</p>
 
-<pre><code class="language-perl6">if $foo || %hash&lt;key&gt;:exists { ... }    # WRONG, tries to adverb the || op
+<pre><code class="language-raku">if $foo || %hash&lt;key&gt;:exists { ... }    # WRONG, tries to adverb the || op
 if $foo || (%hash&lt;key&gt;:exists) { ... }  # correct
 </code></pre>
 
@@ -316,7 +316,7 @@ if $foo || (%hash&lt;key&gt;:exists) { ... }  # correct
 
 <p>返回请求的元素是否存在，而不是返回元素实际的值。这能够用于区别未定义值的元素和一点儿也不属于集合部分的元素：</p>
 
-<pre><code class="language-perl6">my @foo = Any, 10;
+<pre><code class="language-raku">my @foo = Any, 10;
 dd @foo[0].defined;    #-&gt; False
 dd @foo[0]:exists;     #-&gt; True
 dd @foo[2]:exists;     #-&gt; False
@@ -331,23 +331,23 @@ dd %fruit&lt;apple banana&gt;:exists; #-&gt; (True, False)
 
 <p>也可以对副词取反来测试不存在：</p>
 
-<pre><code class="language-perl6">dd %fruit&lt;apple banana&gt;:!exists; #-&gt; (False, True)
+<pre><code class="language-raku">dd %fruit&lt;apple banana&gt;:!exists; #-&gt; (False, True)
 </code></pre>
 
-<p>要检查切片的所有元素是否存在， 使用 <a href="http://doc.perl6.org/routine/all">all</a> junction:</p>
+<p>要检查切片的所有元素是否存在， 使用 <a href="http://doc.raku.org/routine/all">all</a> junction:</p>
 
-<pre><code class="language-perl6">if all %fruit&lt;apple orange banana&gt;:exists { ... }
+<pre><code class="language-raku">if all %fruit&lt;apple orange banana&gt;:exists { ... }
 </code></pre>
 
-<p><code>:exists</code>  可以和  <a href="http://doc.perl6.org/language/subscripts#%3Adelete">:delete</a> 还有 <code>:p/:kv</code> 副词组合 - 这时表达式的行为就由那些副词决定，除了使用表明元素存在的对应 Bool 值替换返回的元素值之外。</p>
+<p><code>:exists</code>  可以和  <a href="http://doc.raku.org/language/subscripts#%3Adelete">:delete</a> 还有 <code>:p/:kv</code> 副词组合 - 这时表达式的行为就由那些副词决定，除了使用表明元素存在的对应 Bool 值替换返回的元素值之外。</p>
 
-<p>查看 <a href="http://doc.perl6.org/language/subscripts#method_EXISTS-POS">method EXISTS-POS</a>  和 <a href="http://doc.perl6.org/language/subscripts#method_EXISTS-KEY">method EXISTS-KEY</a> 了解底层机制.</p>
+<p>查看 <a href="http://doc.raku.org/language/subscripts#method_EXISTS-POS">method EXISTS-POS</a>  和 <a href="http://doc.raku.org/language/subscripts#method_EXISTS-KEY">method EXISTS-KEY</a> 了解底层机制.</p>
 
 <h2 id="delete">:delete</h2>
 
 <p>从集合中删除元素， 除了返回它们的值以外。</p>
 
-<pre><code class="language-perl6">my @tens = 0, 10, 20, 30;
+<pre><code class="language-raku">my @tens = 0, 10, 20, 30;
 dd @tens[3]:delete;     #-&gt; 30
 dd @tens;               #-&gt; [0, 10, 20]&lt;&gt;
 
@@ -359,19 +359,19 @@ dd %fruit;                       #-&gt; {banana =&gt; 4}&lt;&gt;
 
 <p>使用否定形式的副词，元素实际上不会被删除。这意味着你可以传递一个标记，让它变成有条件的删除：</p>
 
-<pre><code class="language-perl6">dd %fruit&lt;apple&gt; :delete($flag);  # deletes the element only if $flag is
+<pre><code class="language-raku">dd %fruit&lt;apple&gt; :delete($flag);  # deletes the element only if $flag is
                                   # true, but always returns the value.
 </code></pre>
 
 <p>能和 <code>:exists</code> 还有 <code>:p/:kv/:k/:v</code> 副词组合 - 这时返回值由那些副词决定， 但是同时元素也会被删除。</p>
 
-<p>查看 <a href="http://doc.perl6.org/language/subscripts#method_DELETE-POS">method DELETE-POS</a> and <a href="http://doc.perl6.org/language/subscripts#method_DELETE-KEY">method DELETE-KEY</a> 了解底层机制.</p>
+<p>查看 <a href="http://doc.raku.org/language/subscripts#method_DELETE-POS">method DELETE-POS</a> and <a href="http://doc.raku.org/language/subscripts#method_DELETE-KEY">method DELETE-KEY</a> 了解底层机制.</p>
 
 <h2 id="p">:p</h2>
 
 <p>以 Pair 的形式，返回元素的<code>索引/键</code> 和元素值， 并默默跳过不存在的元素：</p>
 
-<pre><code class="language-perl6">my @tens = 0, 10, 20, 30;
+<pre><code class="language-raku">my @tens = 0, 10, 20, 30;
 dd @tens[1]:p;        #-&gt; 1 =&gt; 10
 dd @tens[0, 4, 2]:p;  #-&gt; (0 =&gt; 0, 2 =&gt; 20)
 
@@ -382,18 +382,18 @@ dd %month&lt;Jan Foo Mar&gt;:p;  #-&gt; (&quot;Jan&quot; =&gt; 1, &quot;Mar&quot
 
 <p>如果你不想跳过不存在的元素， 使用否定形式:</p>
 
-<pre><code class="language-perl6">dd %month&lt;Jan Foo Mar&gt;:!p;  #-&gt; (&quot;Jan&quot; =&gt; 1, &quot;Foo&quot; =&gt; Any, &quot;Mar&quot; =&gt; 3)
+<pre><code class="language-raku">dd %month&lt;Jan Foo Mar&gt;:!p;  #-&gt; (&quot;Jan&quot; =&gt; 1, &quot;Foo&quot; =&gt; Any, &quot;Mar&quot; =&gt; 3)
 </code></pre>
 
 <p>能和 <code>:exists</code> 还有 <code>:delete</code> 组合。</p>
 
-<p>也可以查看  <a href="http://doc.perl6.org/routine/pairs">pairs</a> 子例程.</p>
+<p>也可以查看  <a href="http://doc.raku.org/routine/pairs">pairs</a> 子例程.</p>
 
 <h2 id="kv">:kv</h2>
 
 <p>以列表的形式返回元素的<code>索引/键</code>和<code>值</code> , 并默默地跳过不存在的元素。 当作用在切片上时，返回值是一个展平的键和值交叉着的单个列表：</p>
 
-<pre><code class="language-perl6">my @tens = 0, 10, 20, 30;
+<pre><code class="language-raku">my @tens = 0, 10, 20, 30;
 dd @tens[1]:kv;        #-&gt; (1, 10)
 dd @tens[0, 4, 2]:kv;  #-&gt; (0, 0, 2, 20)
 
@@ -404,25 +404,25 @@ dd %month&lt;Jan Foo Mar&gt;:kv;  #-&gt; (&quot;Jan&quot;, 1, &quot;Mar&quot;, 3
 
 <p>如果你不想跳过不存在的元素， 使用否定形式:</p>
 
-<pre><code class="language-perl6">dd %month&lt;Jan Foo Mar&gt;:!kv;  #-&gt; (&quot;Jan&quot;, 1, &quot;Foo&quot;, Any, &quot;Mar&quot;, 3)
+<pre><code class="language-raku">dd %month&lt;Jan Foo Mar&gt;:!kv;  #-&gt; (&quot;Jan&quot;, 1, &quot;Foo&quot;, Any, &quot;Mar&quot;, 3)
 </code></pre>
 
 <p>这个副词一般用于遍历切片：</p>
 
-<pre><code class="language-perl6">for %month&lt;Feb Mar&gt;:kv -&gt; $month, $i {
+<pre><code class="language-raku">for %month&lt;Feb Mar&gt;:kv -&gt; $month, $i {
     say &quot;$month had {Date.new(2015, $i, 1).days-in-month} days in 2015&quot;
 }
 </code></pre>
 
 <p>能和 <code>:exists</code> 还有 <code>:delete</code> 组合。</p>
 
-<p>也可以查看  <a href="http://doc.perl6.org/routine/kv">kv</a> 子例程.</p>
+<p>也可以查看  <a href="http://doc.raku.org/routine/kv">kv</a> 子例程.</p>
 
 <h2 id="k">:k</h2>
 
 <p>只返回元素的<code>索引/键</code> , 而不是它们的值, 并默默地跳过不存在的元素：</p>
 
-<pre><code class="language-perl6">my @tens = 0, 10, 20, 30;
+<pre><code class="language-raku">my @tens = 0, 10, 20, 30;
 dd @tens[1]:k;        #-&gt; 1
 dd @tens[0, 4, 2]:k;  #-&gt; (0, 2)
 
@@ -433,16 +433,16 @@ dd %month&lt;Jan Foo Mar&gt;:k;  #-&gt; (&quot;Jan&quot;, &quot;Mar&quot;)
 
 <p>如果你不想跳过不存在的元素， 使用否定形式:</p>
 
-<pre><code class="language-perl6">dd %month&lt;Jan Foo Mar&gt;:!k;  #-&gt; (&quot;Jan&quot;, &quot;Foo&quot;, &quot;Mar&quot;)
+<pre><code class="language-raku">dd %month&lt;Jan Foo Mar&gt;:!k;  #-&gt; (&quot;Jan&quot;, &quot;Foo&quot;, &quot;Mar&quot;)
 </code></pre>
 
-<p>还可以查看  <a href="http://doc.perl6.org/routine/keys">keys</a> 子例程.</p>
+<p>还可以查看  <a href="http://doc.raku.org/routine/keys">keys</a> 子例程.</p>
 
 <h2 id="v">:v</h2>
 
 <p>返回元素的裸值（不是有可能返回一个可变值容器），并默默跳过不存在的元素：</p>
 
-<pre><code class="language-perl6">my @tens = 0, 10, 20, 30;
+<pre><code class="language-raku">my @tens = 0, 10, 20, 30;
 dd @tens[1]:v;        #-&gt; 10
 dd @tens[0, 4, 2]:v;  #-&gt; (0, 20)
 @tens[3] = 31;        # OK
@@ -455,33 +455,33 @@ dd %month&lt;Jan Foo Mar&gt;:v;  #-&gt; (1, 3)
 
 <p>如果你不想跳过不存在的元素， 使用否定形式:</p>
 
-<pre><code class="language-perl6">dd %month&lt;Jan Foo Mar&gt;:!v;  #-&gt; (1, Any, 3)
+<pre><code class="language-raku">dd %month&lt;Jan Foo Mar&gt;:!v;  #-&gt; (1, Any, 3)
 </code></pre>
 
-<p>还可以查看  <a href="http://doc.perl6.org/routine/values">values</a> 子例程.</p>
+<p>还可以查看  <a href="http://doc.raku.org/routine/values">values</a> 子例程.</p>
 
 <h1 id="custom-types">Custom types</h1>
 
-<p>这页描述的下标接口并不意味着和 Perl 6 的内置集合类型相排斥 - 你可以（并且应该）为任何想通过索引或键提供数据访问的自定义类型重用它们。</p>
+<p>这页描述的下标接口并不意味着和 Raku 的内置集合类型相排斥 - 你可以（并且应该）为任何想通过索引或键提供数据访问的自定义类型重用它们。</p>
 
-<p>你不必手动重载  <a href="http://doc.perl6.org/routine/[%20]#postcircumfix_[_]">postcircumfix [ ]</a> 和  <a href="http://doc.perl6.org/">postcircumfix { }</a>  操作符并重新实现它们所有的戏法， 为了实现它， 相反，你可以依赖这个事实， 在幕后，它们的标准实现分派给了一个定义良好的底层方法集。例如：</p>
+<p>你不必手动重载  <a href="http://doc.raku.org/routine/[%20]#postcircumfix_[_]">postcircumfix [ ]</a> 和  <a href="http://doc.raku.org/">postcircumfix { }</a>  操作符并重新实现它们所有的戏法， 为了实现它， 相反，你可以依赖这个事实， 在幕后，它们的标准实现分派给了一个定义良好的底层方法集。例如：</p>
 
-<pre><code class="language-perl6">当你这样写:           这会在幕后调用如下底层方法:
+<pre><code class="language-raku">当你这样写:           这会在幕后调用如下底层方法:
 %foo&lt;aa&gt;            %foo.AT-KEY(&quot;aa&quot;)
 %foo&lt;aa&gt;:delete     %foo.DELETE-KEY(&quot;aa&quot;)
 @foo[3,4,5]         @foo.AT-POS(3), @foo.AT-POS(4), @foo.AT-POS(5)
 @foo[*-1]           @foo.AT-POS(@foo.elems - 1)
 </code></pre>
 
-<p>所以， 为了让你的下标工作， 你只需要为你的自定义类型实现或委托那些底层方法（<a href="http://doc.perl6.org/language/subscripts#Methods_to_implement_for_positional_subscripting">下面描述详情</a>）。</p>
+<p>所以， 为了让你的下标工作， 你只需要为你的自定义类型实现或委托那些底层方法（<a href="http://doc.raku.org/language/subscripts#Methods_to_implement_for_positional_subscripting">下面描述详情</a>）。</p>
 
-<p>如果你这样做了， 你还应该让你的类型各自遵守 <a href="http://doc.perl6.org/type/Positional">Positional</a> 或 <a href="http://doc.perl6.org/type/Associative">Associative</a> role</p>
+<p>如果你这样做了， 你还应该让你的类型各自遵守 <a href="http://doc.raku.org/type/Positional">Positional</a> 或 <a href="http://doc.raku.org/type/Associative">Associative</a> role</p>
 
 <h2 id="custom-type-example">Custom type example</h2>
 
 <p>设想一下 HTTP::Header 类型，尽管它作为一个有特定行为的自定义类，却能像散列那样索引：</p>
 
-<pre><code class="language-perl6">my $request = HTTP::Request.new(GET =&gt; &quot;perl6.org&quot;);
+<pre><code class="language-raku">my $request = HTTP::Request.new(GET =&gt; &quot;raku.org&quot;);
 say $request.header.WHAT;  #-&gt; (HTTP::Header)
 
 $request.header&lt;Accept&gt; = &quot;text/plain&quot;;
@@ -495,7 +495,7 @@ my $rawheader = $request.header.Str;  # stringify according to HTTP spec
 
 <p>实现这个类的最简单的方法是，给它一个 Hash 类型的属性，并把所有的下标和迭代相关功能性委托给那个属性。（使用一个自定义类型约束来确保使用者不会在里面插入任何不合法的值）：</p>
 
-<pre><code class="language-perl6">class HTTP::Header does Associative is Iterable {
+<pre><code class="language-raku">class HTTP::Header does Associative is Iterable {
     subset StrOrArrayOfStr where Str | ( Array &amp; {.all ~~ Str} );
 
     has %!fields of StrOrArrayOfStr
@@ -508,7 +508,7 @@ my $rawheader = $request.header.Str;  # stringify according to HTTP spec
 
 <p>然而， HTTP header 字段名被认为是大小写无关的（更偏好驼峰法）。我们可以通过把 <code>*-key</code> 和 <code>push</code> 方法拿到 <code>handles</code> 列表的外面来容纳它， 并像这样各自实现它们：</p>
 
-<pre><code class="language-perl6">method AT-KEY     ($key) is rw { %!fields{normalize-key $key}        }
+<pre><code class="language-raku">method AT-KEY     ($key) is rw { %!fields{normalize-key $key}        }
 method EXISTS-KEY ($key)       { %!fields{normalize-key $key}:exists }
 method DELETE-KEY ($key)       { %!fields{normalize-key $key}:delete }
 method push (*@_) { #`[not shown, for brevity] }
@@ -520,7 +520,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <p>然而， 我们可能倾向于少一点对用户输入的限制， 相反我们自己关心字段值的消毒。那种情况下，我们可以移除 <code>%!fields</code> 上的 <code>StrOrArrayOfStr</code>  类型约束， 并在赋值时使用返回自定义的关心消毒值的 Proxy 容器来替换我们的 <code>AT-KEY</code> 实现：</p>
 
-<pre><code class="language-perl6">multi method AT-KEY (::?CLASS:D: $key) is rw {
+<pre><code class="language-raku">multi method AT-KEY (::?CLASS:D: $key) is rw {
     my $element := %!fields{normalize-key $key};
 
     Proxy.new(
@@ -540,11 +540,11 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h2 id="methods-to-implement-for-positional-subscripting">Methods to implement for positional subscripting</h2>
 
-<p>为了通过  <a href="http://doc.perl6.org/routine/[%20]#postcircumfix_[_]">postcircumfix [ ]</a>  让基于索引的下标在你的自定义类型中工作，你应该至少实现下面的  <code>elems</code>, <code>AT-POS</code> 和 <code>EXISTS-POS-</code> 还有其它可选项。</p>
+<p>为了通过  <a href="http://doc.raku.org/routine/[%20]#postcircumfix_[_]">postcircumfix [ ]</a>  让基于索引的下标在你的自定义类型中工作，你应该至少实现下面的  <code>elems</code>, <code>AT-POS</code> 和 <code>EXISTS-POS-</code> 还有其它可选项。</p>
 
 <h3 id="elems-方法">elems 方法</h3>
 
-<pre><code class="language-perl6">multi method elems (::?CLASS:D:)
+<pre><code class="language-raku">multi method elems (::?CLASS:D:)
 </code></pre>
 
 <p>预期返回一个数字，用于表明对象中有多少个可标注的元素。 可能被用户直接调用， 并且当从末尾索引元素的时候， 还会被  <code>postcircumfix [ ]</code> 调用， 就像 <code>@foo[*-1]</code> 中那样。</p>
@@ -553,7 +553,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="at-pos-方法">AT-POS 方法</h3>
 
-<pre><code class="language-perl6">multi method AT-POS (::?CLASS:D: $index)
+<pre><code class="language-raku">multi method AT-POS (::?CLASS:D: $index)
 </code></pre>
 
 <p>期望返回 <code>$index</code> 位置处的元素。这就是 <code>postcircumfix [ ]</code> 通常调用的方法。
@@ -561,7 +561,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="exists-pos-方法">EXISTS-POS 方法</h3>
 
-<pre><code class="language-perl6">multi method EXISTS-POS (::?CLASS:D: $index)
+<pre><code class="language-raku">multi method EXISTS-POS (::?CLASS:D: $index)
 </code></pre>
 
 <p>返回一个布尔值以表明在 <code>$index</code> 位置处是否有元素。这就是引用 <code>@foo[42]:exists</code> 时, <code>postcircumfix [ ]</code> 所调用的方法。</p>
@@ -572,7 +572,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="delete-pos-方法">DELETE-POS 方法</h3>
 
-<pre><code class="language-perl6">multi method DELETE-POS (::?CLASS:D: $index)
+<pre><code class="language-raku">multi method DELETE-POS (::?CLASS:D: $index)
 </code></pre>
 
 <p>删除 <code>$index</code> 处的元素, 并返回它所删除的这个元素。这就是引用 <code>@foo[42]:delete</code> 时, <code>postcircumfix [ ]</code> 所调用的方法。</p>
@@ -583,7 +583,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="assign-pos-方法">ASSIGN-POS 方法</h3>
 
-<pre><code class="language-perl6">multi method ASSIGN-POS (::?CLASS:D: $index, $new)
+<pre><code class="language-raku">multi method ASSIGN-POS (::?CLASS:D: $index, $new)
 </code></pre>
 
 <p>把 <code>$index</code> 位置处的元素设置为 <code>$new</code> 值。实现这个方法完全是可选的; 如果你没有实现这个方法, 那么会使用 <code>self.AT-POS($index) = $new</code>  代替, 如果你确实实现了该方法, 那么确保它拥有相同的效果。</p>
@@ -594,12 +594,12 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="bind-pos-方法">BIND-POS 方法</h3>
 
-<pre><code class="language-perl6">multi method BIND-POS (::?CLASS:D: $index, \new)
+<pre><code class="language-raku">multi method BIND-POS (::?CLASS:D: $index, \new)
 </code></pre>
 
 <p>把值或容器 <code>new</code> 绑定给位置 <code>$index</code> 处的插槽上, 替换那儿能找到的任何容器。这是当你这样写的时候所调用的东西:</p>
 
-<pre><code class="language-perl6">my $x = 10;
+<pre><code class="language-raku">my $x = 10;
 @numbers[5] := $x;
 </code></pre>
 
@@ -611,7 +611,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="at-key-方法">AT-KEY 方法</h3>
 
-<pre><code class="language-perl6">multi method AT-KEY (::?CLASS:D: $key)
+<pre><code class="language-raku">multi method AT-KEY (::?CLASS:D: $key)
 </code></pre>
 
 <p>返回和 <code>$key</code> 相关联的元素。这正是 <code>postcircumfix { }</code> 通常所调用的方法。</p>
@@ -622,7 +622,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="exists-key-方法">EXISTS-KEY 方法</h3>
 
-<pre><code class="language-perl6">multi method EXISTS-KEY (::?CLASS:D: $key)
+<pre><code class="language-raku">multi method EXISTS-KEY (::?CLASS:D: $key)
 </code></pre>
 
 <p>返回一个布尔值以表明和 <code>$key</code> 相关联的元素是否存在。这就是引用 <code>%foo&lt;aa&gt;:exists</code> 时, <code>postcircumfix { }</code> 所调用的方法。</p>
@@ -633,7 +633,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="delete-key-方法">DELETE-KEY 方法</h3>
 
-<pre><code class="language-perl6">multi method DELETE-KEY (::?CLASS:D: $key)
+<pre><code class="language-raku">multi method DELETE-KEY (::?CLASS:D: $key)
 </code></pre>
 
 <p>删除和 <code>$key</code> 相关联的元素, 并返回它所删除的这个元素。这就是引用 <code>%foo&lt;aa&gt;:delete</code> 时, <code>postcircumfix { }</code> 所调用的方法。</p>
@@ -644,7 +644,7 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="assign-key-方法">ASSIGN-KEY 方法</h3>
 
-<pre><code class="language-perl6">multi method ASSIGN-KEY (::?CLASS:D: $key, $new)
+<pre><code class="language-raku">multi method ASSIGN-KEY (::?CLASS:D: $key, $new)
 </code></pre>
 
 <p>把和 <code>$key</code>  相关联的元素设置为 <code>$new</code> 值。实现这个方法完全是可选的; 如果你没有实现这个方法, 那么会使用 <code>self.AT-KEY($key) = $new</code> 代替, 如果你确实实现了该方法, 那么确保它拥有相同的效果。</p>
@@ -655,12 +655,12 @@ sub normalize-key ($key) { $key.subst(/\w+/, *.tc, :g) }
 
 <h3 id="bind-key-方法">BIND-KEY 方法</h3>
 
-<pre><code class="language-perl6">multi method BIND-KEY (::?CLASS:D: $key, \new)
+<pre><code class="language-raku">multi method BIND-KEY (::?CLASS:D: $key, \new)
 </code></pre>
 
 <p>把值或容器 <code>new</code> 绑定给跟 <code>$key</code> 相关联的插槽上, 替换那儿能找到的任何容器。这是当你这样写的时候所调用的东西:</p>
 
-<pre><code class="language-perl6">my $x = 10;
+<pre><code class="language-raku">my $x = 10;
 %age&lt;Claire&gt; := $x;
 </code></pre>
 

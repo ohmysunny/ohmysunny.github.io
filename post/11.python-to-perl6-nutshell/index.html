@@ -11,7 +11,7 @@
 
     <base href="https://ohmysunny.github.io/">
     <title>
-  Python 到 Perl 6 - 简而言之 · Rakudo Star
+  Python 到 Raku - 简而言之 · Rakudo Star
 </title>
 
     <link rel="canonical" href="https://ohmysunny.github.io/post/11.python-to-perl6-nutshell/">
@@ -78,18 +78,18 @@
   <section class="container page">
   <article>
     <header>
-      <h1>Python 到 Perl 6 - 简而言之</h1>
+      <h1>Python 到 Raku - 简而言之</h1>
     </header>
 
     
 
-<p>此页面试图为来自 Python 背景的人们提供学习 Perl 6 的方法。我们在 Perl 6 中讨论了许多 Python 构造和惯用法的等价语法。</p>
+<p>此页面试图为来自 Python 背景的人们提供学习 Raku 的方法。我们在 Raku 中讨论了许多 Python 构造和惯用法的等价语法。</p>
 
 <h2 id="基本语法">基本语法</h2>
 
 <h3 id="hello-world">Hello, world</h3>
 
-<p>让我们从打印 &ldquo;Hello, world!&rdquo; 开始吧。 Perl 6 中的 <a href="https://docs.perl6.org/routine/put">put</a> 关键字相当于 Python 中的 <a href="https://docs.perl6.org/routine/print">print</a>。与 Python 2 一样，括号是可选的。换行符添加到行尾。</p>
+<p>让我们从打印 &ldquo;Hello, world!&rdquo; 开始吧。 Raku 中的 <a href="https://docs.raku.org/routine/put">put</a> 关键字相当于 Python 中的 <a href="https://docs.raku.org/routine/print">print</a>。与 Python 2 一样，括号是可选的。换行符添加到行尾。</p>
 
 <ul>
 <li>Python 2</li>
@@ -106,30 +106,30 @@
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">put &quot;Hello, world!&quot;
+<pre><code class="language-raku">put &quot;Hello, world!&quot;
 </code></pre>
 
-<p>还有 <a href="https://docs.perl6.org/routine/say">say</a> 关键字，其行为类似，但会调用其参数的 <a href="https://docs.perl6.org/routine/gist">gist</a> 方法。</p>
+<p>还有 <a href="https://docs.raku.org/routine/say">say</a> 关键字，其行为类似，但会调用其参数的 <a href="https://docs.raku.org/routine/gist">gist</a> 方法。</p>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $hello = &quot;Hello, world!&quot;;
+<pre><code class="language-raku">my $hello = &quot;Hello, world!&quot;;
 say $hello;  # also prints &quot;Hello, world!&quot; 
              # same as: put $hello.gist 
 </code></pre>
 
-<p>在 Python 中 <code>'</code> 和 <code>&quot;</code> 是可互换的。在 Perl 6 中两者都可用于引用, 但双引号(<code>&quot;</code>)表示应该进行插值。例如, 以 <code>$</code> 开头的变量和包含在花括号中的表达式会被插值。</p>
+<p>在 Python 中 <code>'</code> 和 <code>&quot;</code> 是可互换的。在 Raku 中两者都可用于引用, 但双引号(<code>&quot;</code>)表示应该进行插值。例如, 以 <code>$</code> 开头的变量和包含在花括号中的表达式会被插值。</p>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $planet = 'earth';
+<pre><code class="language-raku">my $planet = 'earth';
 say &quot;Hello, $planet&quot;;   # Hello, earth 
 say 'Hello, $planet';   # Hello, $planet 
 say &quot;Hello, planet number { 1 + 2 }&quot;; # Hello, planet number 3 
@@ -139,7 +139,7 @@ say &quot;Hello, planet number { 1 + 2 }&quot;; # Hello, planet number 3
 
 <p>在 Python 中，换行符表示语句的结束。有一些例外：换行符之前的反斜杠继续跨行语句。此外，如果有一个不匹配的开括号，方括号或花括号，则该语句将继续跨行，直到匹配的花括号被关闭。</p>
 
-<p>在 Perl 6 中，分号表示语句的结束。如果分号是块的最后一个语句，则可以省略分号。如果有一个结束花括号后跟换行符，也可以省略分号。</p>
+<p>在 Raku 中，分号表示语句的结束。如果分号是块的最后一个语句，则可以省略分号。如果有一个结束花括号后跟换行符，也可以省略分号。</p>
 
 <ul>
 <li>Python</li>
@@ -152,10 +152,10 @@ print ( 1 +
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">say 1 + 2 +
+<pre><code class="language-raku">say 1 + 2 +
     3 + 4;
 say 1 +
     2;
@@ -163,7 +163,7 @@ say 1 +
 
 <h3 id="块儿">块儿</h3>
 
-<p>在 Python 中，缩进用于表示块。 Perl 6 使用花括号表示块儿。</p>
+<p>在 Python 中，缩进用于表示块。 Raku 使用花括号表示块儿。</p>
 
 <ul>
 <li>Python</li>
@@ -176,10 +176,10 @@ else:
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">if 1 == 2 {
+<pre><code class="language-raku">if 1 == 2 {
     say &quot;Wait, what?&quot;
 } else {
     say &quot;1 is not 2.&quot;
@@ -196,14 +196,14 @@ else:
 bar = 19
 </code></pre>
 
-<p>在 Perl 6 中，<code>my</code> 声明符声明了一个词法变量。变量可以用 <code>=</code> 初始化。此变量可以先声明，然后再初始化或声明并立即初始化。</p>
+<p>在 Raku 中，<code>my</code> 声明符声明了一个词法变量。变量可以用 <code>=</code> 初始化。此变量可以先声明，然后再初始化或声明并立即初始化。</p>
 
-<pre><code class="language-perl6">my $foo;       # declare 
+<pre><code class="language-raku">my $foo;       # declare 
 $foo = 12;     # initialize 
 my $bar = 19;  # both at once 
 </code></pre>
 
-<p>此外，你可能已经注意到，Perl 6 中的变量通常以符号开头 - 符号表示其容器的类型。 以 <code>$</code> 开头的变量持有标量。 以 <code>@</code> 开头的变量持有数组和以 <code>%</code> 开头的变量持有一个 hash(dict)。 如果用 <code>\</code> 声明它们，则不可变变量可以是无符号的。</p>
+<p>此外，你可能已经注意到，Raku 中的变量通常以符号开头 - 符号表示其容器的类型。 以 <code>$</code> 开头的变量持有标量。 以 <code>@</code> 开头的变量持有数组和以 <code>%</code> 开头的变量持有一个 hash(dict)。 如果用 <code>\</code> 声明它们，则不可变变量可以是无符号的。</p>
 
 <ul>
 <li>Python</li>
@@ -220,10 +220,10 @@ print d['a']
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $s = 10;
+<pre><code class="language-raku">my $s = 10;
 my @l = 1, 2, 3;
 my %d = a =&gt; 12, b =&gt; 99;
 my \x = 99;
@@ -239,7 +239,7 @@ say x;
 
 <p>在 Python 中，函数和类创建一个新的作用域，但没有其他的块构造函数（例如循环，条件）创建一个作用域。在 Python 2 中，列表推导不会创建新的作用域，但在 Python 3 中，它们创建新的作用域。</p>
 
-<p>在 Perl 6 中，每个块都创建了一个词法作用域</p>
+<p>在 Raku 中，每个块都创建了一个词法作用域</p>
 
 <ul>
 <li>Python</li>
@@ -252,17 +252,17 @@ print x
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">if True {
+<pre><code class="language-raku">if True {
     my $x = 10
 }
 say $x
 # error, $x is not declared in this scope 
 </code></pre>
 
-<pre><code class="language-perl6">my $x;
+<pre><code class="language-raku">my $x;
 if True {
     $x = 10
 }
@@ -282,10 +282,10 @@ print x
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my \x = 10;
+<pre><code class="language-raku">my \x = 10;
 for 1, 2, 3 -&gt; \x {
     # do nothing 
     }
@@ -293,7 +293,7 @@ say x;
 # x is 10 
 </code></pre>
 
-<p>Python 中的 Lambdas 可以在 Perl 6 中写为块或尖号块。</p>
+<p>Python 中的 Lambdas 可以在 Raku 中写为块或尖号块。</p>
 
 <ul>
 <li>Python</li>
@@ -303,19 +303,19 @@ say x;
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $l = -&gt; $i { $i + 12 }
+<pre><code class="language-raku">my $l = -&gt; $i { $i + 12 }
 </code></pre>
 
-<p>构建 lambdas 的另一个Perl 6 惯用法是使用 Whatever star, <code>*</code>。</p>
+<p>构建 lambdas 的另一个Raku 惯用法是使用 Whatever star, <code>*</code>。</p>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $l = * + 12    # same as above 
+<pre><code class="language-raku">my $l = * + 12    # same as above 
 </code></pre>
 
 <p>表达式中的 <code>*</code> 将成为参数的占位符，并在编译时将表达式转换为 lambda。 表达式中的每个 <code>*</code> 都是一个单独的位置参数。</p>
@@ -337,10 +337,10 @@ print squares[4]()
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my \squares = [];
+<pre><code class="language-raku">my \squares = [];
 for ^5 -&gt; \x {
     squares.append({ x² });
 }
@@ -351,7 +351,7 @@ say squares[4]();
 
 <p>注意，<code>^N</code> 类似于 <code>range(N)</code>。 类似地，<code>N..^M</code> 的作用类似于 <code>range(N,M)</code>（从 N 到 M-1 的列表）。 范围 <code>N..M</code> 是从 N 到 M 的列表。<code>..</code> 之前或之后的 <code>^</code> 表示应排除列表的开始或结束端点（或两者都）。</p>
 
-<p>另外，<code>x²</code> 是一种编写 <code>x ** 2</code> 的可爱方式（也可以正常工作）; unicode 上标 2 是一个数字。 许多其他 unicode 运算符正如你所期望的那样工作(指数, 分数, π)，但是可以在 Perl 6 中使用的每个 unicode 运算符或符号都具有 ASCII 等价物。</p>
+<p>另外，<code>x²</code> 是一种编写 <code>x ** 2</code> 的可爱方式（也可以正常工作）; unicode 上标 2 是一个数字。 许多其他 unicode 运算符正如你所期望的那样工作(指数, 分数, π)，但是可以在 Raku 中使用的每个 unicode 运算符或符号都具有 ASCII 等价物。</p>
 
 <h3 id="控制流">控制流</h3>
 
@@ -367,9 +367,9 @@ while j &lt; 3:
 # 1,2,1,2    
 </code></pre>
 
-<p>Perl 6 也有 <code>for</code> 循环和 <code>while</code> 循环:</p>
+<p>Raku 也有 <code>for</code> 循环和 <code>while</code> 循环:</p>
 
-<pre><code class="language-perl6">for 1, 2 -&gt; $i {
+<pre><code class="language-raku">for 1, 2 -&gt; $i {
     say $i
 }
 my $j = 1;
@@ -379,9 +379,9 @@ while $j &lt; 3 {
 }
 </code></pre>
 
-<p>(Perl 6 还有一些循环结构：<code>repeat ... until</code>，<code>repeat ... while</code>，<code>until</code> 和 <code>loop</code>。)</p>
+<p>(Raku 还有一些循环结构：<code>repeat ... until</code>，<code>repeat ... while</code>，<code>until</code> 和 <code>loop</code>。)</p>
 
-<p><code>last</code> 在 Perl 6 中退出一个循环，类似于 Python 中的 <code>break</code>。 Python 中的 <code>continue</code> 在 Perl 6 中是 <code>next</code>。</p>
+<p><code>last</code> 在 Raku 中退出一个循环，类似于 Python 中的 <code>break</code>。 Python 中的 <code>continue</code> 在 Raku 中是 <code>next</code>。</p>
 
 <ul>
 <li>Python</li>
@@ -396,19 +396,19 @@ while $j &lt; 3 {
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">for ^10 -&gt; $i {
+<pre><code class="language-raku">for ^10 -&gt; $i {
     next if $i == 3;
     last if $i == 5;
     say $i;
 }
 </code></pre>
 
-<p>使用 <code>if</code> 作为语句修饰符(如上所述)在 Perl 6 中是可接受的，甚至在列表解析之外也可以。</p>
+<p>使用 <code>if</code> 作为语句修饰符(如上所述)在 Raku 中是可接受的，甚至在列表解析之外也可以。</p>
 
-<p>Python <code>for</code> 循环中的 <code>yield</code> 语句生成一个 <code>generator</code>，就像 Perl 6 中的 <code>gather/take</code> 构造一样。这两个都打印 1,2,3。</p>
+<p>Python <code>for</code> 循环中的 <code>yield</code> 语句生成一个 <code>generator</code>，就像 Raku 中的 <code>gather/take</code> 构造一样。这两个都打印 1,2,3。</p>
 
 <ul>
 <li>Python</li>
@@ -423,10 +423,10 @@ for c in count():
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">sub count {
+<pre><code class="language-raku">sub count {
     gather {
         for 1, 2, 3 -&gt; $i {
             take $i
@@ -441,9 +441,9 @@ for count() -&gt; $c {
 
 <h3 id="lambdas-函数和子例程">Lambdas， 函数和子例程</h3>
 
-<p>在 Python 中用 <code>def</code> 声明的函数（子例程）在 Perl 6 中是用 <code>sub</code> 来完成的。</p>
+<p>在 Python 中用 <code>def</code> 声明的函数（子例程）在 Raku 中是用 <code>sub</code> 来完成的。</p>
 
-<pre><code class="language-perl6">def add(a, b):
+<pre><code class="language-raku">def add(a, b):
     return a + b
  
 sub add(\a, \b) {
@@ -453,18 +453,18 @@ sub add(\a, \b) {
 
 <p><code>return</code> 是可选的; 最后一个表达式的值被用作返回值:</p>
 
-<pre><code class="language-perl6">sub add(\a, \b) {
+<pre><code class="language-raku">sub add(\a, \b) {
     a + b
 }
 </code></pre>
 
-<pre><code class="language-perl6"># using variables with sigils 
+<pre><code class="language-raku"># using variables with sigils 
 sub add($a, $b) {
     $a + $b
 }
 </code></pre>
 
-<p>可以使用位置参数或关键字参数调用 Python 2 函数。这些是由调用者决定的。在 Python 3 中，一些参数可能是&rdquo;keyword only&rdquo;的。在 Perl 6 中，位置参数和命名参数由例程的签名确定。</p>
+<p>可以使用位置参数或关键字参数调用 Python 2 函数。这些是由调用者决定的。在 Python 3 中，一些参数可能是&rdquo;keyword only&rdquo;的。在 Raku 中，位置参数和命名参数由例程的签名确定。</p>
 
 <ul>
 <li>Python</li>
@@ -478,12 +478,12 @@ speak(word='hi', times=2)
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
 <p>位置参数</p>
 
-<pre><code class="language-perl6">sub speak($word, $times) {
+<pre><code class="language-raku">sub speak($word, $times) {
   say $word for ^$times
 }
 speak('hi', 2);
@@ -491,16 +491,16 @@ speak('hi', 2);
 
 <p>以冒号开头的命名参数:</p>
 
-<pre><code class="language-perl6">sub speak(:$word, :$times) {
+<pre><code class="language-raku">sub speak(:$word, :$times) {
   say $word for ^$times
 }
 speak(word =&gt; 'hi', times =&gt; 2);
 speak(:word&lt;hi&gt;, :times&lt;2&gt;);      # Alternative, more idiomatic 
 </code></pre>
 
-<p>Perl 6 支持多重分派，因此可以通过将例程声明为 <code>multi</code> 来提供多个签名。</p>
+<p>Raku 支持多重分派，因此可以通过将例程声明为 <code>multi</code> 来提供多个签名。</p>
 
-<pre><code class="language-perl6">multi sub speak($word, $times) {
+<pre><code class="language-raku">multi sub speak($word, $times) {
   say $word for ^$times
 }
 multi sub speak(:$word, :$times) {
@@ -512,7 +512,7 @@ speak(:word&lt;hi&gt;, :times&lt;2&gt;);
 
 <p>可以使用多种格式发送命名参数：</p>
 
-<pre><code class="language-perl6">sub hello {...};
+<pre><code class="language-raku">sub hello {...};
 # all the same 
 hello(name =&gt; 'world'); # fat arrow syntax 
 hello(:name('world'));  # pair constructor 
@@ -531,10 +531,10 @@ hello(:$name);          # lexical var with the same name
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $square = sub ($x) { $x ** 2 };  # anonymous sub 
+<pre><code class="language-raku">my $square = sub ($x) { $x ** 2 };  # anonymous sub 
 my $square = -&gt; $x { $x ** 2 };     # pointy block 
 my $square = { $^x ** 2 };          # placeholder variable 
 my $square = { $_ ** 2 };           # topic variable 
@@ -542,26 +542,26 @@ my $square = { $_ ** 2 };           # topic variable
 
 <p>占位符变量按字典顺序排列以形成位置参数。 因此这些是相同的：</p>
 
-<pre><code class="language-perl6">my $power = { $^x ** $^y };
+<pre><code class="language-raku">my $power = { $^x ** $^y };
 my $power = -&gt; $x, $y { $x ** $y };
 </code></pre>
 
 <h3 id="列表解析">列表解析</h3>
 
-<p>可以组合 Postfix 语句修饰符和块以在 Perl 6 中轻松创建列表解析。</p>
+<p>可以组合 Postfix 语句修饰符和块以在 Raku 中轻松创建列表解析。</p>
 
 <ul>
 <li>Python</li>
 </ul>
 
-<pre><code class="language-perl6">print [ i * 2 for i in 3, 9 ]                      # OUTPUT: «[6, 18]␤» 
+<pre><code class="language-raku">print [ i * 2 for i in 3, 9 ]                      # OUTPUT: «[6, 18]␤» 
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">say ( $_ * 2 for 3, 9 );                           # OUTPUT: «(6 18)␤» 
+<pre><code class="language-raku">say ( $_ * 2 for 3, 9 );                           # OUTPUT: «(6 18)␤» 
 say ( { $^i * 2 } for 3, 9 );                      # OUTPUT: «(6 18)␤» 
 say ( -&gt; \i { i * 2 } for 3, 9 );                  # OUTPUT: «(6 18)␤» 
 </code></pre>
@@ -577,7 +577,7 @@ say ( -&gt; \i { i * 2 } for 3, 9 );                  # OUTPUT: «(6 18)␤»
 
 <p>vs</p>
 
-<pre><code class="language-perl6">say ( $_ * 2 if $_ &gt; 1 for 1, 2, 3 );              # OUTPUT: «(4 6)␤» 
+<pre><code class="language-raku">say ( $_ * 2 if $_ &gt; 1 for 1, 2, 3 );              # OUTPUT: «(4 6)␤» 
 </code></pre>
 
 <p>对于嵌套循环，交叉乘积运算符 <code>X</code> 将会有帮助：</p>
@@ -587,7 +587,7 @@ say ( -&gt; \i { i * 2 } for 3, 9 );                  # OUTPUT: «(6 18)␤»
 
 <p>变成以下任何一个：</p>
 
-<pre><code class="language-perl6">say ( { $_[0] + $_[1] } for (3,9) X (2,10) );      # OUTPUT: «(5 13 11 19)␤» 
+<pre><code class="language-raku">say ( { $_[0] + $_[1] } for (3,9) X (2,10) );      # OUTPUT: «(5 13 11 19)␤» 
 say ( -&gt; (\i, \j) { i + j } for (3,9) X (2,10) );  # OUTPUT: «(5 13 11 19)␤» 
 </code></pre>
 
@@ -595,7 +595,7 @@ say ( -&gt; (\i, \j) { i + j } for (3,9) X (2,10) );  # OUTPUT: «(5 13 11 19)�
 
 <h3 id="类和对象">类和对象</h3>
 
-<p>这是 Python <a href="https://docs.python.org/3/tutorial/classes.html#class-and-instance-variables">文档</a>中的一个示例。首先让我们回顾一下&rdquo;实例变量&rdquo;，这些变量在 Perl 6 中称为属性:</p>
+<p>这是 Python <a href="https://docs.python.org/3/tutorial/classes.html#class-and-instance-variables">文档</a>中的一个示例。首先让我们回顾一下&rdquo;实例变量&rdquo;，这些变量在 Raku 中称为属性:</p>
 
 <ul>
 <li>Python</li>
@@ -607,15 +607,15 @@ say ( -&gt; (\i, \j) { i + j } for (3,9) X (2,10) );  # OUTPUT: «(5 13 11 19)�
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">class Dog {
+<pre><code class="language-raku">class Dog {
     has $.name;
 }
 </code></pre>
 
-<p>对于每个创建的类，Perl 6 默认提供构造函数方法 <code>new</code>，它接受命名参数。</p>
+<p>对于每个创建的类，Raku 默认提供构造函数方法 <code>new</code>，它接受命名参数。</p>
 
 <ul>
 <li>Python</li>
@@ -628,16 +628,16 @@ print e.name
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">my $d = Dog.new(:name&lt;Fido&gt;); # or: Dog.new(name =&gt; 'Fido') 
+<pre><code class="language-raku">my $d = Dog.new(:name&lt;Fido&gt;); # or: Dog.new(name =&gt; 'Fido') 
 my $e = Dog.new(:name&lt;Buddy&gt;);
 say $d.name;
 say $e.name;
 </code></pre>
 
-<p>Perl 6 中的类属性可以通过几种方式声明。一种方法是仅声明一个词法变量和一个访问它的方法。</p>
+<p>Raku 中的类属性可以通过几种方式声明。一种方法是仅声明一个词法变量和一个访问它的方法。</p>
 
 <ul>
 <li>Python</li>
@@ -656,10 +656,10 @@ print e.name
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">class Dog {
+<pre><code class="language-raku">class Dog {
     my $kind = 'canine';           # class attribute 
     method kind { $kind }
     has $.name;                    # instance attribute 
@@ -673,7 +673,7 @@ say $d.name;
 say $e.name;
 </code></pre>
 
-<p>为了在 Perl 6 中改变属性，必须在属性上使用 <code>is rw</code> trait：</p>
+<p>为了在 Raku 中改变属性，必须在属性上使用 <code>is rw</code> trait：</p>
 
 <ul>
 <li>Python</li>
@@ -687,10 +687,10 @@ d.name = 'rover'
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">class Dog {
+<pre><code class="language-raku">class Dog {
     has $.name is rw;
 }
 my $d = Dog.new;
@@ -715,10 +715,10 @@ d.jump()
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">class Animal {
+<pre><code class="language-raku">class Animal {
     method jump {
         say &quot;I am jumping&quot;
     }
@@ -742,17 +742,17 @@ $d.jump;
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">class Animal {}; class Friend {}; class Pet {};
+<pre><code class="language-raku">class Animal {}; class Friend {}; class Pet {};
 ...;
 class Dog is Animal is Friend is Pet {};
 </code></pre>
 
 <p>或</p>
 
-<pre><code class="language-perl6">class Animal {}; class Friend {}; class Pet {};
+<pre><code class="language-raku">class Animal {}; class Friend {}; class Pet {};
 ...;
 class Dog is Animal {
     also is Friend;
@@ -763,7 +763,7 @@ class Dog is Animal {
 
 <h3 id="装饰器">装饰器</h3>
 
-<p>Python 中的装饰器是一种将函数包装在另一个函数中的方法。在 Perl 6 中，这是通过 <code>wrap</code> 完成的。</p>
+<p>Python 中的装饰器是一种将函数包装在另一个函数中的方法。在 Raku 中，这是通过 <code>wrap</code> 完成的。</p>
 
 <ul>
 <li>Python</li>
@@ -783,10 +783,10 @@ world();
 </code></pre>
 
 <ul>
-<li>Perl 6</li>
+<li>Raku</li>
 </ul>
 
-<pre><code class="language-perl6">sub world {
+<pre><code class="language-raku">sub world {
     say 'world'
 }
  
@@ -800,7 +800,7 @@ world;
 
 <p>另一种方法是使用 trait：</p>
 
-<pre><code class="language-perl6"># declare the trait 'greeter' 
+<pre><code class="language-raku"># declare the trait 'greeter' 
 multi sub trait_mod:&lt;is&gt;(Routine $r, :$greeter) {
     $r.wrap(sub {
         say 'hello';
@@ -833,7 +833,7 @@ with hello():
 
 <p>对于 &ldquo;enter&rdquo; 和 &ldquo;exit&rdquo; 事件，将块作为参数传递将是一种方法：</p>
 
-<pre><code class="language-perl6">sub hello(Block $b) {
+<pre><code class="language-raku">sub hello(Block $b) {
     say 'hello';
     $b();
     say 'bye';
@@ -844,9 +844,9 @@ hello {
 }
 </code></pre>
 
-<p>一个相关的想法是&rsquo;<a href="https://docs.perl6.org/language/phasers">Phasers</a>&lsquo;，它可以设置为在进入或离开一个区块时运行。</p>
+<p>一个相关的想法是&rsquo;<a href="https://docs.raku.org/language/phasers">Phasers</a>&lsquo;，它可以设置为在进入或离开一个区块时运行。</p>
 
-<pre><code class="language-perl6">{
+<pre><code class="language-raku">{
     LEAVE say 'bye';
     ENTER say 'hello';
     say 'world';
@@ -861,13 +861,13 @@ hello {
 print(user_input)
 </code></pre>
 
-<p>出现提示时，您可以输入 <code>Hi</code> 或任何其他字符串，这些字符串将存储在 <code>user_input</code> 变量中。这类似于 Perl 6 中的 <a href="https://docs.perl6.org/routine/prompt">prompt</a>：</p>
+<p>出现提示时，您可以输入 <code>Hi</code> 或任何其他字符串，这些字符串将存储在 <code>user_input</code> 变量中。这类似于 Raku 中的 <a href="https://docs.raku.org/routine/prompt">prompt</a>：</p>
 
-<pre><code class="language-perl6">my $user_input = prompt(&quot;Say hi → &quot;);
+<pre><code class="language-raku">my $user_input = prompt(&quot;Say hi → &quot;);
 say $user_input; # OUTPUT: whatever you entered. 
 </code></pre>
 
-<p>原文： <a href="https://docs.perl6.org/language/py-nutshell">https://docs.perl6.org/language/py-nutshell</a></p>
+<p>原文： <a href="https://docs.raku.org/language/py-nutshell">https://docs.raku.org/language/py-nutshell</a></p>
 
   </article>
 </section>
