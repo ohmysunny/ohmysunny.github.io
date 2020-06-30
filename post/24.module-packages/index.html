@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,132 +81,76 @@
       <h1>模块包</h1>
     </header>
 
-    
-
-<p><em>N.B.</em> &ldquo;Module&rdquo; is an overloaded term in Raku; this document focuses on use of the <code>module</code> declarator.</p>
-
+    <p><em>N.B.</em> &ldquo;Module&rdquo; is an overloaded term in Raku; this document focuses on use of the <code>module</code> declarator.</p>
 <p><em>注意</em> “模块”是 Raku 中的重载术语; 本文档重点介绍 <code>module</code> 声明符的使用。</p>
-
-<h1 id="什么是模块-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">什么是模块?</a></h1>
-
+<h1 id="什么是模块httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">什么是模块?</a></h1>
 <p>模块，如类和 grammars，是一种<a href="https://docs.raku.org/language/packages">包</a>。模块对象是 <code>ModuleHOW</code> 元类的实例; 这提供了某些功能，可用于创建命名空间，版本控制，代理和数据封装（另请参见<a href="https://docs.raku.org/syntax/class">类</a>和<a href="https://docs.raku.org/syntax/role">角色</a>）。</p>
-
 <p>要创建模块，请使用 <code>module</code> 声明符：</p>
-
-<pre><code class="language-raku">module M {}
+<pre><code class="language-raku" data-lang="raku">module M {}
 say M.HOW;   # OUTPUT: «Raku::Metamodel::ModuleHOW.new» 
-</code></pre>
-
-<p>这里我们定义一个名为 <code>M</code> 的新模块; 内省 <code>HOW</code> 确认了底层的元类 <code>M</code> 是 <code>Raku::Metamodel::ModuleHOW</code>。</p>
-
-<h2 id="何时使用模块-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">何时使用模块</a></h2>
-
+</code></pre><p>这里我们定义一个名为 <code>M</code> 的新模块; 内省 <code>HOW</code> 确认了底层的元类 <code>M</code> 是 <code>Raku::Metamodel::ModuleHOW</code>。</p>
+<h2 id="何时使用模块httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">何时使用模块</a></h2>
 <p>模块主要用于封装不属于类或角色定义的代码和数据。模块内容（类，子程序，变量等）可以从具有 <code>is export</code> trait 的模块中导出; 一旦<code>import</code> 或 <code>use</code> 了模块，这些内容在调用者的命名空间中就可用了。模块还可以选择性地在其命名空间中通过 <code>our</code> 暴露符号以进行限定引用。</p>
-
-<h2 id="使用模块-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">使用模块</a></h2>
-
+<h2 id="使用模块httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">使用模块</a></h2>
 <p>为了说明模块作用域和导出规则，我们首先定义一个简单的模块 <code>M</code>：</p>
-
-<pre><code class="language-raku">module M {
+<pre><code class="language-raku" data-lang="raku">module M {
   sub greeting ($name = 'Camelia') { &quot;Greetings, $name!&quot; }
   our sub loud-greeting (--&gt; Str)  { greeting().uc       }
   sub friendly-greeting is export  { greeting('friend')  }
 }
-</code></pre>
-
-<p>回想一下，子例程是词法作用域的，除非另有说明（声明符 <a href="https://docs.raku.org/syntax/sub"><code>sub</code></a> 等效于 <code>my sub</code>），因此<code>greeting</code> 在上面的示例中，词法作用域为模块并且在其外部不可访问。我们还使用 <code>our</code> 声明符定义了 <code>loud-greeting</code>，这意味着除了在词法作用域内，它还在模块的符号表中起了别名。最后，<code>friendly-greeting</code> 标记为导出; 导入模块时，它将在*调用者的*符号表中注册：</p>
-
-<pre><code class="language-raku">import M;               # import the module 
+</code></pre><p>回想一下，子例程是词法作用域的，除非另有说明（声明符 <a href="https://docs.raku.org/syntax/sub"><code>sub</code></a> 等效于 <code>my sub</code>），因此<code>greeting</code> 在上面的示例中，词法作用域为模块并且在其外部不可访问。我们还使用 <code>our</code> 声明符定义了 <code>loud-greeting</code>，这意味着除了在词法作用域内，它还在模块的符号表中起了别名。最后，<code>friendly-greeting</code> 标记为导出; 导入模块时，它将在<em>调用者的</em>符号表中注册：</p>
+<pre><code class="language-raku" data-lang="raku">import M;               # import the module 
 say M::loud-greeting;   # OUTPUT: «GREETINGS, CAMELIA!» 
 say friendly-greeting;  # OUTPUT: «Greetings, friend!» 
-</code></pre>
-
-<h1 id="磁盘上的模块-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">磁盘上的模块</a></h1>
-
+</code></pre><h1 id="磁盘上的模块httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">磁盘上的模块</a></h1>
 <p>虽然 <code>.pm</code> 和 <code>.pm6</code> 文件（以下简称: <code>.pm6</code>) 有时被称为“模块”，但它们实际上只是在您写了 <code>need</code>，<code>use</code> 或者 <code>require</code> 时加载和编译的普通文件。</p>
-
 <p>对于我们一直使用的意义上提供模块的 <code>.pm6</code>  文件，它需要如上所述用的用 <code>module</code> 声明一个模块。例如，通过将模块 <code>M</code> 放入 <code>Foo.pm6</code> 内部，我们可以按如下方式加载和使用模块：</p>
-
-<pre><code class="language-raku">use Foo;                # find Foo.pm6, run need followed by import 
+<pre><code class="language-raku" data-lang="raku">use Foo;                # find Foo.pm6, run need followed by import 
 say M::loud-greeting;   # OUTPUT: «GREETINGS, CAMELIA!» 
 say friendly-greeting;  # OUTPUT: «Greetings, friend!» 
-</code></pre>
-
-<p>注意文件名和模块名之间的解耦 - <code>.pm6</code> 文件可以声明零个或多个具有任意标识符的模块。</p>
-
-<h2 id="文件和模块命名-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">文件和模块命名</a></h2>
-
-<p>我们通常希望 <code>.pm6</code> 文件提供*单个*模块，仅此而已。这里的常见约定是文件 basename 与模块名称匹配。回到 <code>Foo.pm6</code>，显而易见的是，它仅提供单个模块，<code>M</code>; 在这种情况下，我们可能想要重命名 <code>M</code> 为 <code>Foo</code>。修改后的文件将为：</p>
-
-<pre><code class="language-raku">module Foo {
+</code></pre><p>注意文件名和模块名之间的解耦 - <code>.pm6</code> 文件可以声明零个或多个具有任意标识符的模块。</p>
+<h2 id="文件和模块命名httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">文件和模块命名</a></h2>
+<p>我们通常希望 <code>.pm6</code> 文件提供<em>单个</em>模块，仅此而已。这里的常见约定是文件 basename 与模块名称匹配。回到 <code>Foo.pm6</code>，显而易见的是，它仅提供单个模块，<code>M</code>; 在这种情况下，我们可能想要重命名 <code>M</code> 为 <code>Foo</code>。修改后的文件将为：</p>
+<pre><code class="language-raku" data-lang="raku">module Foo {
   sub greeting ($name = 'Camelia') { &quot;Greetings, $name!&quot; }
   our sub loud-greeting (--&gt; Str)  { greeting().uc       }
   sub friendly-greeting is export  { greeting('friend')  }
 }
-</code></pre>
-
-<p>可被调用者更一致地使用（注意 <code>use Foo</code> 和 <code>Foo::</code> 之间的关系）：</p>
-
-<pre><code class="language-raku">use Foo;
+</code></pre><p>可被调用者更一致地使用（注意 <code>use Foo</code> 和 <code>Foo::</code> 之间的关系）：</p>
+<pre><code class="language-raku" data-lang="raku">use Foo;
 say Foo::loud-greeting;  # OUTPUT: «GREETINGS, CAMELIA!» 
 say friendly-greeting;   # OUTPUT: «Greetings, friend!» 
-</code></pre>
-
-<p>如果 <code>Foo.pm6</code> 在源树中放置得更深，例如在 <code>lib/Utils/Foo.pm6</code> 中，我们可以选择命名模块 <code>Utils::Foo</code> 以保持一致性。</p>
-
-<h3 id="unit-关键字-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top"><code>unit</code> 关键字</a></h3>
-
+</code></pre><p>如果 <code>Foo.pm6</code> 在源树中放置得更深，例如在 <code>lib/Utils/Foo.pm6</code> 中，我们可以选择命名模块 <code>Utils::Foo</code> 以保持一致性。</p>
+<h3 id="unit-关键字httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top"><code>unit</code> 关键字</a></h3>
 <p>只提供单个模块的文件可以用 <code>unit</code> 关键字更简洁地编写; <code>unit module</code> 指定编译单元的其余部分是声明的模块的一部分。这里 <code>Foo.pm6</code> 使用 <code>unit</code> 重写：</p>
-
-<pre><code class="language-raku">unit module Foo;
+<pre><code class="language-raku" data-lang="raku">unit module Foo;
  
 sub greeting ($name = 'Camelia') { &quot;Greetings, $name!&quot; }
 our sub loud-greeting (--&gt; Str)  { greeting().uc       }
 sub friendly-greeting is export  { greeting('friend')  }
-</code></pre>
-
-<p>单元声明后的所有内容都是 <code>Foo</code> 模块规范的一部分。</p>
-
+</code></pre><p>单元声明后的所有内容都是 <code>Foo</code> 模块规范的一部分。</p>
 <p>（请注意，<code>unit</code> 也可以用于 <code>class</code>，<code>grammar</code> 和 <code>role</code>）。</p>
-
-<h2 id="如果我省略了-module-会发生什么-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">如果我省略了<code>module</code>会发生什么?</a></h2>
-
+<h2 id="如果我省略了module会发生什么httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">如果我省略了<code>module</code>会发生什么?</a></h2>
 <p>为了更好地理解在 <code>Foo.pm6</code> 中 <code>module</code> 声明符在做什么，让我们将它与变体文件 <code>Bar.pm6</code> 进行对比，它省略了声明。下面的子程序定义几乎相同（唯一的区别在于 <code>greeting</code> 的正文，为了清晰起见而修改）：</p>
-
-<pre><code class="language-raku">sub greeting ($name = 'Camelia') { &quot;Greetings from Bar, $name!&quot; }
+<pre><code class="language-raku" data-lang="raku">sub greeting ($name = 'Camelia') { &quot;Greetings from Bar, $name!&quot; }
 our sub loud-greeting (--&gt; Str)  { greeting().uc                }
 sub friendly-greeting is export  { greeting('friend')           }
-</code></pre>
-
-<p>提醒一下，这是我们以前使用 <code>Foo.pm6</code> 的方式，</p>
-
-<pre><code class="language-raku">use Foo;
+</code></pre><p>提醒一下，这是我们以前使用 <code>Foo.pm6</code> 的方式，</p>
+<pre><code class="language-raku" data-lang="raku">use Foo;
 say Foo::loud-greeting;  # OUTPUT: «GREETINGS, CAMELIA!» 
 say friendly-greeting;   # OUTPUT: «Greetings, friend!» 
-</code></pre>
-
-<p>这是我们使用 <code>Bar.pm6</code> 的方式，</p>
-
-<pre><code class="language-raku">use Bar;
+</code></pre><p>这是我们使用 <code>Bar.pm6</code> 的方式，</p>
+<pre><code class="language-raku" data-lang="raku">use Bar;
 say loud-greeting;       # OUTPUT: «GREETINGS FROM BAR, CAMELIA!» 
 say friendly-greeting;   # OUTPUT: «Greetings from Bar, friend!» 
-</code></pre>
-
-<p>注意 <code>loud-greeting</code> 的使用，而不是 <code>Bar::loud-greeting</code> 因为 <code>Bar</code> 不是已知符号（我们没有在 <code>Bar.pm6</code> 中创建一个以那个名字命名的 <code>module</code>）。但是为什么 <code>loud-greeting</code>是可调用的, 即使我们没有将其标记为导出。答案很简单，<code>Bar.pm6</code> 不创建一个新的包命名空间 - <code>$?PACKAGE</code> 仍设置为 <code>GLOBAL</code> 当我们将 <code>loud-greeting</code>声明为 <code>our</code> 时，它被注册到 <code>GLOBAL</code> 符号表中。</p>
-
-<h3 id="词法别名和安全-https-docs-raku-org-language-module-packages-top"><a href="https://docs.raku.org/language/module-packages#___top">词法别名和安全</a></h3>
-
+</code></pre><p>注意 <code>loud-greeting</code> 的使用，而不是 <code>Bar::loud-greeting</code> 因为 <code>Bar</code> 不是已知符号（我们没有在 <code>Bar.pm6</code> 中创建一个以那个名字命名的 <code>module</code>）。但是为什么 <code>loud-greeting</code>是可调用的, 即使我们没有将其标记为导出。答案很简单，<code>Bar.pm6</code> 不创建一个新的包命名空间 - <code>$?PACKAGE</code> 仍设置为 <code>GLOBAL</code> 当我们将 <code>loud-greeting</code>声明为 <code>our</code> 时，它被注册到 <code>GLOBAL</code> 符号表中。</p>
+<h3 id="词法别名和安全httpsdocsrakuorglanguagemodule-packages___top"><a href="https://docs.raku.org/language/module-packages#___top">词法别名和安全</a></h3>
 <p>值得庆幸的是，Raku 保护我们免受意外调用地点定义的痛击（例如内置函数）。除了 <code>Bar.pm6</code> 考虑以下内容：</p>
-
-<pre><code class="language-raku">our sub say ($ignored) { print &quot;oh dear\n&quot; }
-</code></pre>
-
-<p>这会创建一个词法别名，将内置 <code>say</code> 隐藏在 <code>Bar.pm6</code> <em>内部</em> 但保持调用者 <code>say</code> 不变。因此，以下 <code>say</code> 调用仍然按预期工作：</p>
-
-<pre><code class="language-raku">use Bar;
+<pre><code class="language-raku" data-lang="raku">our sub say ($ignored) { print &quot;oh dear\n&quot; }
+</code></pre><p>这会创建一个词法别名，将内置 <code>say</code> 隐藏在 <code>Bar.pm6</code> <em>内部</em> 但保持调用者 <code>say</code> 不变。因此，以下 <code>say</code> 调用仍然按预期工作：</p>
+<pre><code class="language-raku" data-lang="raku">use Bar;
 say 'Carry on, carry on...';  # OUTPUT: «Carry on, carry on...» 
 </code></pre>
-
   </article>
 </section>
 

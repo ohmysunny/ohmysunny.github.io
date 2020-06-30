@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,26 +81,15 @@
       <h1>数值</h1>
     </header>
 
-    
-
-<h1 id="int">Int</h1>
-
+    <h1 id="int">Int</h1>
 <p><code>Int</code> 类型提供任意大小的整数。它们可以像计算机内存允许的那样大，虽然有些实现在被要求生成真正惊人大小的整数时会选择抛出数字溢出错误：</p>
-
-<pre><code class="language-raku">say 10**600**600
+<pre><code class="language-raku" data-lang="raku">say 10**600**600
 # OUTPUT: «Numeric overflow» 
-</code></pre>
-
-<p>与某些语言不同，当两个操作数都是 <a href="https://docs.raku.org/type/Int">Int</a> 类型时，使用<a href="https://docs.raku.org/routine/$SOLIDUS"><code>/</code>运算符</a>执行除法将生成小数，而不执行任何舍入。</p>
-
-<pre><code class="language-raku">say 4/5; # OUTPUT: «0.8» 
-</code></pre>
-
-<p>这种除法产生的类型是 <a href="https://docs.raku.org/type/Rat">Rat</a> 或 <a href="https://docs.raku.org/type/Num">Num</a> 类型。换算后，如果分数的分母是小于64位，则产生 <a href="https://docs.raku.org/type/Rat">Rat</a>, 否则产生 <a href="https://docs.raku.org/type/Num">Num</a> 类型。</p>
-
+</code></pre><p>与某些语言不同，当两个操作数都是 <a href="https://docs.raku.org/type/Int">Int</a> 类型时，使用<a href="https://docs.raku.org/routine/$SOLIDUS"><code>/</code>运算符</a>执行除法将生成小数，而不执行任何舍入。</p>
+<pre><code class="language-raku" data-lang="raku">say 4/5; # OUTPUT: «0.8» 
+</code></pre><p>这种除法产生的类型是 <a href="https://docs.raku.org/type/Rat">Rat</a> 或 <a href="https://docs.raku.org/type/Num">Num</a> 类型。换算后，如果分数的分母是小于64位，则产生 <a href="https://docs.raku.org/type/Rat">Rat</a>, 否则产生 <a href="https://docs.raku.org/type/Num">Num</a> 类型。</p>
 <p>如果你想落得 <a href="https://docs.raku.org/type/Int">Int</a> 的结果，那么 <a href="https://docs.raku.org/routine/div">div</a> 和 <a href="https://docs.raku.org/routine/narrow">narrow</a> 例程可能会有帮助，只要有可能。<a href="https://docs.raku.org/routine/div">div</a>运算符执行整除，丢弃余数，而<a href="https://docs.raku.org/routine/narrow">narrow</a> 会把数拟合到它适合的最窄类型：</p>
-
-<pre><code class="language-raku">say 5 div 2; # OUTPUT: «2» 
+<pre><code class="language-raku" data-lang="raku">say 5 div 2; # OUTPUT: «2» 
  
 # Result `2` is narrow enough to be an Int: 
 say (4/2).narrow; # OUTPUT: «2» 
@@ -112,116 +101,65 @@ say (5/2).narrow;       # OUTPUT: «2.5»
  
 # Denominator is too big for a Rat, so a Num is produced: 
 say 1 / 10⁹⁹; # OUTPUT: «1e-99» 
-</code></pre>
-
-<p>Raku 具有 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型，可提供任意精度的分数。为什么在上一个例子中生成了有限精度的 <a href="https://docs.raku.org/type/Num">Num</a> 而不是 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型？原因是：性能。大多数操作都很好，精度损失很少，因此不需要使用更昂贵的 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型。如果您希望获得额外的精度，则需要自己实例化一个。</p>
-
-<h1 id="num-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top"><code>Num</code></a></h1>
-
+</code></pre><p>Raku 具有 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型，可提供任意精度的分数。为什么在上一个例子中生成了有限精度的 <a href="https://docs.raku.org/type/Num">Num</a> 而不是 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型？原因是：性能。大多数操作都很好，精度损失很少，因此不需要使用更昂贵的 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 类型。如果您希望获得额外的精度，则需要自己实例化一个。</p>
+<h1 id="numhttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top"><code>Num</code></a></h1>
 <p><a href="https://docs.raku.org/type/Num">Num</a> 类型提供 <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">双精度浮点</a>十进制数，在其他语言中有时被称为“doubles”。</p>
-
 <p><a href="https://docs.raku.org/type/Num">Num</a> 字面量的写法是使用字母 <code>e</code> 与指数分割开。请记住，即使指数为零，字母<code>e</code> <strong>也是必需的</strong>，否则您将得到一个<a href="https://docs.raku.org/type/Rat">Rat</a> 有理数字面量：</p>
-
-<pre><code class="language-raku">say 42e0.^name; # OUTPUT: «Num» 
+<pre><code class="language-raku" data-lang="raku">say 42e0.^name; # OUTPUT: «Num» 
 say 42.0.^name; # OUTPUT: «Rat» 
-</code></pre>
-
-<p>区分大小写的单词 <a href="https://docs.raku.org/type/Num#Inf">Inf</a> 和 <a href="https://docs.raku.org/type/Num#NaN">NaN</a> 分别表示特殊值 infinity 和 not-a-number。可以使用 U+221E INFINITY（<code>∞</code>）字符代替 <a href="https://docs.raku.org/type/Num#Inf">Inf</a>：</p>
-
+</code></pre><p>区分大小写的单词 <a href="https://docs.raku.org/type/Num#Inf">Inf</a> 和 <a href="https://docs.raku.org/type/Num#NaN">NaN</a> 分别表示特殊值 infinity 和 not-a-number。可以使用 U+221E INFINITY（<code>∞</code>）字符代替 <a href="https://docs.raku.org/type/Num#Inf">Inf</a>：</p>
 <p>Raku  尽可能遵循<a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754-2008浮点运算标准，</a>计划在以后的语言版本中实现更多的一致性。该语言保证为任何给定的 <a href="https://docs.raku.org/type/Num">Num</a> 字面量选择最接近的可表示数字，并且确实支持负零和<a href="https://en.wikipedia.org/wiki/Denormal_number">非正规</a>（也称为“次正规”）。</p>
-
 <p>请记住，像 <a href="https://docs.raku.org/routine/say">say</a> 或 <a href="https://docs.raku.org/routine/put">put</a> 这样的输出例程不会非常难以区分输出<a href="https://docs.raku.org/type/Numeric">数字</a>类型的方式，并且可能选择将<a href="https://docs.raku.org/type/Num">Num</a>显示为<a href="https://docs.raku.org/type/Int">Int</a>或<a href="https://docs.raku.org/type/Rat">Rat</a>数字。要获得更明确的输出字符串，请使用<a href="https://docs.raku.org/routine/perl">perl</a>方法：</p>
-
-<pre><code class="language-raku">say  1e0;      # OUTPUT: «1» 
+<pre><code class="language-raku" data-lang="raku">say  1e0;      # OUTPUT: «1» 
 say .5e0;      # OUTPUT: «0.5» 
 say  1e0.perl; # OUTPUT: «1e0» 
 say .5e0.perl; # OUTPUT: «0.5e0» 
-</code></pre>
-
-<h1 id="complex-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top"><code>Complex</code></a></h1>
-
+</code></pre><h1 id="complexhttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top"><code>Complex</code></a></h1>
 <p><a href="https://en.wikipedia.org/wiki/Complex_plane">复平面</a>的<a href="https://docs.raku.org/type/Complex">复数</a>型数值。<a href="https://docs.raku.org/type/Complex">复数</a>对象包括两个 <a href="https://docs.raku.org/type/Num">Num</a> 对象以表示复数的<a href="https://docs.raku.org/routine/re">实部</a>和<a href="https://docs.raku.org/routine/im">虚部</a>。</p>
-
 <p>要创建<a href="https://docs.raku.org/type/Complex">复数</a>，可以在任何其他非复数上使用<a href="https://docs.raku.org/routine/i">后缀<code>i</code>运算符</a>，可选择使用加法设置实部。要使用<code>i</code>运算符作用在 <code>NaN</code> 或 <code>Inf</code> 字面量上，请使用反斜杠将其与它们分开。</p>
-
-<pre><code class="language-raku">say 42i;      # OUTPUT: «0+42i» 
+<pre><code class="language-raku" data-lang="raku">say 42i;      # OUTPUT: «0+42i» 
 say 73+42i;   # OUTPUT: «73+42i» 
 say 73+Inf\i; # OUTPUT: «73+Inf\i» 
-</code></pre>
-
-<p>请记住，上面的语法只是一个附加表达式和优先级规则适用。它也不能用于禁止表达式的地方，例如常规参数中的字面量。</p>
-
-<pre><code class="language-raku"># Precedence of `*` is higher than that of `+` 
+</code></pre><p>请记住，上面的语法只是一个附加表达式和优先级规则适用。它也不能用于禁止表达式的地方，例如常规参数中的字面量。</p>
+<pre><code class="language-raku" data-lang="raku"># Precedence of `*` is higher than that of `+` 
 say 2 * 73+10i; # OUTPUT: «146+10i» 
-</code></pre>
-
-<p>为了避免这些问题，您可以选择使用<a href="https://docs.raku.org/type/Complex">复数</a>字面量语法，其中包括使用尖括号包围实部和虚部，*而不包含任何空格*：</p>
-
-<pre><code class="language-raku">say 2 * &lt;73+10i&gt;; # OUTPUT: «146+20i» 
+</code></pre><p>为了避免这些问题，您可以选择使用<a href="https://docs.raku.org/type/Complex">复数</a>字面量语法，其中包括使用尖括号包围实部和虚部，<em>而不包含任何空格</em>：</p>
+<pre><code class="language-raku" data-lang="raku">say 2 * &lt;73+10i&gt;; # OUTPUT: «146+20i» 
  
 multi how-is-it (&lt;2+4i&gt;) { say &quot;that's my favorite number!&quot; }
 multi how-is-it (|)      { say &quot;meh&quot;                        }
 how-is-it 2+4i;  # OUTPUT: «that's my favorite number!» 
 how-is-it 3+2i;  # OUTPUT: «meh» 
-</code></pre>
-
-<h1 id="rational-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top"><code>Rational</code></a></h1>
-
+</code></pre><h1 id="rationalhttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top"><code>Rational</code></a></h1>
 <p>执行 <a href="https://docs.raku.org/type/Rational">Rational</a> 角色的类型提供高精度和任意精度的十进制数。由于精度越高，性能损失越大，<a href="https://docs.raku.org/type/Rational">Rational</a> 类型有两种形式：<a href="https://docs.raku.org/type/Rat">Rat</a> 和 <a href="https://docs.raku.org/type/FatRat">FatRat</a>。<a href="https://docs.raku.org/type/Rat">Rat</a> 是最常用的变体, 其在大多数情况下降级成 <a href="https://docs.raku.org/type/Num">Num</a>，当它不再能容纳所有的要求精度时。<a href="https://docs.raku.org/type/FatRat">FatRat</a> 是保持增长提供所有所需的精度任意精度的变体。</p>
-
-<h2 id="rat-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top"><code>Rat</code></a></h2>
-
+<h2 id="rathttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top"><code>Rat</code></a></h2>
 <p>最常见的 <a href="https://docs.raku.org/type/Rational">Rational</a> 类型。它支持有 64 位分母的有理数（在将分数换算到最小分母之后）。<code>Rat</code> 可以直接创建具有较大分母的对象，但是，当具有这样的分母的 <code>Rat</code> 是数学运算的结果时，它们会降级为 <a href="https://docs.raku.org/type/Num">Num</a> 对象。</p>
-
 <p>在许多其他语言中 <a href="https://docs.raku.org/type/Rat">Rat</a> 字面量使用和 <a href="https://docs.raku.org/type/Num">Num</a> 字面量类似的语法，使用点来表示数字是十进制：</p>
-
-<pre><code class="language-raku">say .1 + .2 == .3; # OUTPUT: «True» 
-</code></pre>
-
-<p>如果你在许多常用语言中执行与上述类似的语句, 由于浮点数学的精度，您将得到 <code>False</code> 作为答案。要在 Raku 中获得相同的结果，你必须使用 <a href="https://docs.raku.org/type/Num">Num</a> 字面量：</p>
-
-<pre><code class="language-raku">say .1e0 + .2e0 == .3e0; # OUTPUT: «False» 
-</code></pre>
-
-<p>You can also use <a href="https://docs.raku.org/routine/$SOLIDUS"><code>/</code> division operator</a> with <a href="https://docs.raku.org/type/Int">Int</a> or <a href="https://docs.raku.org/type/Rat">Rat</a> objects to produce a <a href="https://docs.raku.org/type/Rat">Rat</a>:</p>
-
+<pre><code class="language-raku" data-lang="raku">say .1 + .2 == .3; # OUTPUT: «True» 
+</code></pre><p>如果你在许多常用语言中执行与上述类似的语句, 由于浮点数学的精度，您将得到 <code>False</code> 作为答案。要在 Raku 中获得相同的结果，你必须使用 <a href="https://docs.raku.org/type/Num">Num</a> 字面量：</p>
+<pre><code class="language-raku" data-lang="raku">say .1e0 + .2e0 == .3e0; # OUTPUT: «False» 
+</code></pre><p>You can also use <a href="https://docs.raku.org/routine/$SOLIDUS"><code>/</code> division operator</a> with <a href="https://docs.raku.org/type/Int">Int</a> or <a href="https://docs.raku.org/type/Rat">Rat</a> objects to produce a <a href="https://docs.raku.org/type/Rat">Rat</a>:</p>
 <p>您还可以使用具有 <a href="https://docs.raku.org/type/Int">Int</a> 或 <a href="https://docs.raku.org/type/Rat">Rat</a> 对象的<a href="https://docs.raku.org/routine/$SOLIDUS"><code>/</code>除法运算符</a>来生成 <a href="https://docs.raku.org/type/Rat">Rat</a>：</p>
-
-<pre><code class="language-raku">say 3/4;     # OUTPUT: «0.75» 
+<pre><code class="language-raku" data-lang="raku">say 3/4;     # OUTPUT: «0.75» 
 say 3/4.2;   # OUTPUT: «0.714286» 
 say 1.1/4.2; # OUTPUT: «0.261905» 
-</code></pre>
-
-<p>Keep in mind the above syntax is just a division expression and precedence rules apply. It also cannot be used in places that forbid expressions, such as literals in routine parameters.</p>
-
+</code></pre><p>Keep in mind the above syntax is just a division expression and precedence rules apply. It also cannot be used in places that forbid expressions, such as literals in routine parameters.</p>
 <p>请记住，上面的语法只是一个应用了优先级规则的除法表达式。它也不能用于禁止表达式的地方，例如例程参数中的字面量。</p>
-
-<pre><code class="language-raku"># Precedence of power operators is higher than division 
+<pre><code class="language-raku" data-lang="raku"># Precedence of power operators is higher than division 
 say 3/2²; # OUTPUT: «0.75» 
-</code></pre>
-
-<p>为了避免这些问题，您可以选择使用 <a href="https://docs.raku.org/type/Rational">Rational</a> 字面量语法，它用尖括号括起分子和分母，*不带任何空格*：</p>
-
-<pre><code class="language-raku">say &lt;3/2&gt;²; # OUTPUT: «2.25» 
+</code></pre><p>为了避免这些问题，您可以选择使用 <a href="https://docs.raku.org/type/Rational">Rational</a> 字面量语法，它用尖括号括起分子和分母，<em>不带任何空格</em>：</p>
+<pre><code class="language-raku" data-lang="raku">say &lt;3/2&gt;²; # OUTPUT: «2.25» 
  
 multi how-is-it (&lt;3/2&gt;) { say &quot;that's my favorite number!&quot; }
 multi how-is-it (|)     { say &quot;meh&quot;                        }
 how-is-it 3/2;  # OUTPUT: «that's my favorite number!» 
 how-is-it 1/3;  # OUTPUT: «meh» 
-</code></pre>
-
-<p>最后，任何具有 <code>No</code> 属性的表示小数的 Unicode 字符都可以用作<a href="https://docs.raku.org/type/Rat">Rat</a> 字面量：</p>
-
-<pre><code class="language-raku">say ½ + ⅓ + ⅝ + ⅙; # OUTPUT: «1.625» 
-</code></pre>
-
-<h3 id="分解为-num-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">分解为 <code>Num</code></a></h3>
-
+</code></pre><p>最后，任何具有 <code>No</code> 属性的表示小数的 Unicode 字符都可以用作<a href="https://docs.raku.org/type/Rat">Rat</a> 字面量：</p>
+<pre><code class="language-raku" data-lang="raku">say ½ + ⅓ + ⅝ + ⅙; # OUTPUT: «1.625» 
+</code></pre><h3 id="分解为-numhttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">分解为 <code>Num</code></a></h3>
 <p>If a <em>mathematical operation</em> that produces a <a href="https://docs.raku.org/type/Rat">Rat</a> answer would produce a <a href="https://docs.raku.org/type/Rat">Rat</a> with denominator larger than 64 bits, that operation would instead return a <a href="https://docs.raku.org/type/Num">Num</a> object. When <em>constructing</em> a <a href="https://docs.raku.org/type/Rat">Rat</a> (i.e. when it is not a result of some mathematical expression), however, a larger denominator can be used:</p>
-
-<p>如果产生 <a href="https://docs.raku.org/type/Rat">Rat</a> 答案的*数学运算*会产生分母大于64位的 <a href="https://docs.raku.org/type/Rat">Rat</a>，则该操作将返回 <a href="https://docs.raku.org/type/Num">Num</a> 对象。当*构建*一个<a href="https://docs.raku.org/type/Rat">Rat</a>（即，当它不是一些数学表达式的结果）时，但是，更大的分母可以使用：</p>
-
-<pre><code class="language-raku">my $a = 1 / (2⁶⁴ - 1);
+<p>如果产生 <a href="https://docs.raku.org/type/Rat">Rat</a> 答案的<em>数学运算</em>会产生分母大于64位的 <a href="https://docs.raku.org/type/Rat">Rat</a>，则该操作将返回 <a href="https://docs.raku.org/type/Num">Num</a> 对象。当<em>构建</em>一个<a href="https://docs.raku.org/type/Rat">Rat</a>（即，当它不是一些数学表达式的结果）时，但是，更大的分母可以使用：</p>
+<pre><code class="language-raku" data-lang="raku">my $a = 1 / (2⁶⁴ - 1);
 say $a;                   # OUTPUT: «0.000000000000000000054» 
 say $a.^name;             # OUTPUT: «Rat» 
 say $a.nude;              # OUTPUT: «(1 18446744073709551615)» 
@@ -235,83 +173,49 @@ say $c;                   # OUTPUT: «0.000000000000000000054»
 say $c.^name;             # OUTPUT: «Rat» 
 say $c.nude;              # OUTPUT: «(1 18446744073709551616)» 
 say $c.Num;               # OUTPUT: «5.421010862427522e-20» 
-</code></pre>
-
-<h2 id="fatrat-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top"><code>FatRat</code></a></h2>
-
+</code></pre><h2 id="fatrathttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top"><code>FatRat</code></a></h2>
 <p>最后一个 <a href="https://docs.raku.org/type/Rational">Rational</a> 类型 - <a href="https://docs.raku.org/type/FatRat">FatRat</a> - 保留你所要求的所有精度，将分子和分母存储为两个 <a href="https://docs.raku.org/type/Int">Int</a> 对象。<a href="https://docs.raku.org/type/FatRat">FatRat</a> 比 <a href="https://docs.raku.org/type/Rat">Rat</a> 更具传染性，有这么多的 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 数学运算会产生另一个 <a href="https://docs.raku.org/type/FatRat">FatRat</a>，保留所有可用的精度。当 <a href="https://docs.raku.org/type/Rat">Rat</a> 退化为 <a href="https://docs.raku.org/type/Num">Num</a> 时，使用 <a href="https://docs.raku.org/type/FatRat">FatRat </a> 的数学运算会持续不断：</p>
-
-<pre><code class="language-raku">say ((42 + Rat.new(1,2))/999999999999999999).^name;         # OUTPUT: «Rat» 
+<pre><code class="language-raku" data-lang="raku">say ((42 + Rat.new(1,2))/999999999999999999).^name;         # OUTPUT: «Rat» 
 say ((42 + Rat.new(1,2))/9999999999999999999).^name;        # OUTPUT: «Num» 
 say ((42 + FatRat.new(1,2))/999999999999999999).^name;      # OUTPUT: «FatRat» 
 say ((42 + FatRat.new(1,2))/99999999999999999999999).^name; # OUTPUT: «FatRat» 
-</code></pre>
-
-<p>没有特殊的运算符或语法可用于构造 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 对象。只需使用 <a href="https://docs.raku.org/type/FatRat#%28Rational%29_method_new"><code>FatRat.new</code></a> 方法，将分子作为第一个位置参数，将分母作为第二个位置参数。</p>
-
+</code></pre><p>没有特殊的运算符或语法可用于构造 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 对象。只需使用 <a href="https://docs.raku.org/type/FatRat#%28Rational%29_method_new"><code>FatRat.new</code></a> 方法，将分子作为第一个位置参数，将分母作为第二个位置参数。</p>
 <p>如果您的程序需要大量的 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 创建，您可以创建自己的自定义运算符：</p>
-
-<pre><code class="language-raku">sub infix:&lt;🙼&gt; { FatRat.new: $^a, $^b }
+<pre><code class="language-raku" data-lang="raku">sub infix:&lt;🙼&gt; { FatRat.new: $^a, $^b }
 say (1🙼3).perl; # OUTPUT: «FatRat.new(1, 3)» 
-</code></pre>
-
-<h2 id="打印-rationals-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">打印 rationals</a></h2>
-
+</code></pre><h2 id="打印-rationalshttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">打印 rationals</a></h2>
 <p>请记住，像 <a href="https://docs.raku.org/routine/say">say</a> 或 <a href="https://docs.raku.org/routine/put">put</a> 这样的输出例程不会力图区分<a href="https://docs.raku.org/type/Numeric">数字</a>类型如何输出，并且可能选择将 <a href="https://docs.raku.org/type/Num">Num</a> 显示为 <a href="https://docs.raku.org/type/Int">Int</a> 或 <a href="https://docs.raku.org/type/Rat">Rat</a> 数字。要获得更明确的输出字符串，请使用 <a href="https://docs.raku.org/routine/perl">perl</a> 方法：</p>
-
-<pre><code class="language-raku">say 1.0;        # OUTPUT: «1» 
+<pre><code class="language-raku" data-lang="raku">say 1.0;        # OUTPUT: «1» 
 say ⅓;          # OUTPUT: «0.333333» 
 say 1.0.perl;   # OUTPUT: «1.0» 
 say ⅓.perl;     # OUTPUT: «&lt;1/3&gt;» 
-</code></pre>
-
-<p>有关更多信息，您可以选择在 <a href="https://docs.raku.org/routine/nude">nude</a> 中查看 <a href="https://docs.raku.org/type/Rational">Rational</a> 对象，显示其分子和分母：</p>
-
-<pre><code class="language-raku">say ⅓;          # OUTPUT: «0.333333» 
+</code></pre><p>有关更多信息，您可以选择在 <a href="https://docs.raku.org/routine/nude">nude</a> 中查看 <a href="https://docs.raku.org/type/Rational">Rational</a> 对象，显示其分子和分母：</p>
+<pre><code class="language-raku" data-lang="raku">say ⅓;          # OUTPUT: «0.333333» 
 say 4/2;        # OUTPUT: «2» 
 say ⅓.perl;     # OUTPUT: «&lt;1/3&gt;» 
 say &lt;4/2&gt;.nude; # OUTPUT: «(2 1)» 
-</code></pre>
-
-<h1 id="division-by-zero-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Division by zero</a></h1>
-
+</code></pre><h1 id="division-by-zerohttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Division by zero</a></h1>
 <p>在许多语言中，除以零立马会抛出一个异常。在 Raku 中，会发生什么取决于你要除的东西以及你如何使用结果。</p>
-
 <p>Raku 遵循 <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754-2008浮点运算标准</a>，但由于历史原因，6.c 和 6.d 语言版本不完全符合。<a href="https://docs.raku.org/type/Num">Num</a>被零除产生 <a href="https://docs.raku.org/type/Failure">Failure</a>，而<a href="https://docs.raku.org/type/Complex">复数</a>被零除产生 <code>NaN</code> 部件, 无论分子是什么。</p>
-
 <p>从 6.e 语言开始，<a href="https://docs.raku.org/type/Num">Num</a> 和 <a href="https://docs.raku.org/type/Complex">Complex</a> 除以零将产生<a href="https://docs.raku.org/type/Num#Inf">-Inf</a>，<code>+Inf</code> 或 <a href="https://docs.raku.org/type/Num#NaN">NaN</a>, 这取决于分子分别是负数，正数还是零（对于<a href="https://docs.raku.org/type/Complex">复数</a>，实部和虚部是 <a href="https://docs.raku.org/type/Num">Num</a> 并且被分别考虑）。</p>
-
 <p><a href="https://docs.raku.org/type/Int">Int</a> 数字的除法产生一个 <a href="https://docs.raku.org/type/Rat">Rat</a> 对象（或 <a href="https://docs.raku.org/type/Num">Num</a>，如果在换算之后分母大于64位，当你除以零时就不是这种情况）。这意味着这种除法永远不会产生<a href="https://docs.raku.org/type/Exception">异常</a>或<a href="https://docs.raku.org/type/Failure">失败</a>。结果是零分母有理数，这可能是爆炸性的。</p>
-
-<h2 id="zero-denominator-rationals-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Zero-denominator rationals</a></h2>
-
+<h2 id="zero-denominator-rationalshttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Zero-denominator rationals</a></h2>
 <p><a href="https://docs.raku.org/type/FatRat">零分母</a> 有理数是一个扮演 <a href="https://docs.raku.org/type/Rational">Rational</a> 角色的数字，它在核心数字中将是 <a href="https://docs.raku.org/type/Rat">Rat</a> 和 <a href="https://docs.raku.org/type/FatRat">FatRat</a> 对象，其分母为零。这样根据原始分子是否为负，分别为零或正数, 有理数的分子被归一化到<code>-1</code>，<code>0</code>或<code>1</code>。</p>
-
 <p>可以在不需要实际除法的情况下执行的操作是非爆炸性的。例如，您可以单独检查 <a href="https://docs.raku.org/routine/nude">nude</a> 中的<a href="https://docs.raku.org/routine/numerator">分子</a>和<a href="https://docs.raku.org/routine/denominator">分母</a>，或执行数学运算，而不会出现任何异常或失败。</p>
-
 <p>转换零分母有理数到 <a href="https://docs.raku.org/type/Num">Num</a> 遵循 <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE</a> 公约，结果是<code>-Inf</code>，<code>Inf</code>，或 <code>NaN</code>，这取决于分子是否分别是负，正，或零。从另一个方面来看也是如此：转换<code>±Inf</code>/ <code>NaN</code>到其中一个 <a href="https://docs.raku.org/type/Rational">Rational</a> 类型将产生具有适当分子的零分母有理数：</p>
-
-<pre><code class="language-raku">say  &lt;1/0&gt;.Num;   # OUTPUT: «Inf» 
+<pre><code class="language-raku" data-lang="raku">say  &lt;1/0&gt;.Num;   # OUTPUT: «Inf» 
 say &lt;-1/0&gt;.Num;   # OUTPUT: «-Inf» 
 say  &lt;0/0&gt;.Num;   # OUTPUT: «NaN» 
 say Inf.Rat.nude; # OUTPUT: «(1 0)» 
-</code></pre>
-
-<p>要求非 <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE</a> 除法的分子和分母的所有其他操作将导致抛出异常 <code>X::Numeric::DivideByZero</code>。最常见的此类操作可能是尝试打印或字符串化零分母有理数：</p>
-
-<pre><code class="language-raku">say 0/0;
+</code></pre><p>要求非 <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE</a> 除法的分子和分母的所有其他操作将导致抛出异常 <code>X::Numeric::DivideByZero</code>。最常见的此类操作可能是尝试打印或字符串化零分母有理数：</p>
+<pre><code class="language-raku" data-lang="raku">say 0/0;
 # OUTPUT: 
 # Attempt to divide by zero using div 
 #  in block &lt;unit&gt; at -e line 1 
-</code></pre>
-
-<h1 id="同质异形-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">同质异形</a></h1>
-
+</code></pre><h1 id="同质异形httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">同质异形</a></h1>
 <p><a href="https://docs.raku.org/language/glossary#index-entry-Allomorph">Allomorphs</a> 是两种类型的子类，可以表现为它们中的任何一种。例如，同质异形 <a href="https://docs.raku.org/type/IntStr">IntStr</a> 是 <a href="https://docs.raku.org/type/Int">Int</a> 和 <a href="https://docs.raku.org/type/Str">Str</a> 类型的子类，并且将被需要 <a href="https://docs.raku.org/type/Int">Int</a> 或 <a href="https://docs.raku.org/type/Str">Str</a> 对象的任何类型约束所接受。</p>
-
 <p>同质异形可以使用<a href="https://docs.raku.org/language/quoting#Word_quoting%3A_%3C_%3E">尖括号</a>创建，可以单独使用或作为散列键查找的一部分使用; 直接使用方法<code>.new</code>，也由一些结构提供，如 <a href="https://docs.raku.org/language/functions#sub_MAIN"><code>sub MAIN</code></a> 的参数。</p>
-
-<pre><code class="language-raku">say &lt;42&gt;.^name;                 # OUTPUT: «IntStr» 
+<pre><code class="language-raku" data-lang="raku">say &lt;42&gt;.^name;                 # OUTPUT: «IntStr» 
 say &lt;42e0&gt;.^name;               # OUTPUT: «NumStr» 
 say &lt; 42+42i&gt;.^name;            # OUTPUT: «ComplexStr» 
 say &lt; 1/2&gt;.^name;               # OUTPUT: «RatStr» 
@@ -321,16 +225,10 @@ say &lt;0.5&gt;.^name;                # OUTPUT: «RatStr»
 sub MAIN($x) { say $x.^name }   # OUTPUT: «IntStr» 
  
 say IntStr.new(42, &quot;42&quot;).^name; # OUTPUT: «IntStr» 
-</code></pre>
-
-<p>上面的几个结构在打开角括号之后有一个空格。那个空格不是故意的。通常使用运算符编写的数字，例如<code>1/2</code>（<a href="https://docs.raku.org/type/Rat">Rat</a>，除法运算符）和<code>1+2i</code>（<a href="https://docs.raku.org/type/Complex">复数</a>，加法）可以写成不涉及使用运算符的字面值：在尖括号和尖括号里面的字符之间*没有*任何空格。通过在尖括号中添加空格，我们告诉编译器我们不仅需要 <a href="https://docs.raku.org/type/Rat">Rat</a> 或 <a href="https://docs.raku.org/type/Complex">Complex</a> 字面量，而且我们还希望它是一个allomorph：在这种情况下是 <a href="https://docs.raku.org/type/RatStr">RatStr</a> 或 <a href="https://docs.raku.org/type/ComplexStr">ComplexStr</a>。</p>
-
+</code></pre><p>上面的几个结构在打开角括号之后有一个空格。那个空格不是故意的。通常使用运算符编写的数字，例如<code>1/2</code>（<a href="https://docs.raku.org/type/Rat">Rat</a>，除法运算符）和<code>1+2i</code>（<a href="https://docs.raku.org/type/Complex">复数</a>，加法）可以写成不涉及使用运算符的字面值：在尖括号和尖括号里面的字符之间<em>没有</em>任何空格。通过在尖括号中添加空格，我们告诉编译器我们不仅需要 <a href="https://docs.raku.org/type/Rat">Rat</a> 或 <a href="https://docs.raku.org/type/Complex">Complex</a> 字面量，而且我们还希望它是一个allomorph：在这种情况下是 <a href="https://docs.raku.org/type/RatStr">RatStr</a> 或 <a href="https://docs.raku.org/type/ComplexStr">ComplexStr</a>。</p>
 <p>如果数字字面量不使用任何运算符，则将其写入尖括号内，即使不包含任何空格，也会产生同形异形体。（逻辑：如果你不想要同质异形，你就不会使用尖括号。对于使用运算符的数字也是如此，因为某些结构，例如签名字面量，不允许你使用运算符，所以你不能只为这些数字字面量省略尖括号）。</p>
-
-<h2 id="可用的同质异形-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">可用的同质异形</a></h2>
-
+<h2 id="可用的同质异形httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">可用的同质异形</a></h2>
 <p>核心语言提供以下同质异形：</p>
-
 <table>
 <thead>
 <tr>
@@ -339,76 +237,54 @@ say IntStr.new(42, &quot;42&quot;).^name; # OUTPUT: «IntStr»
 <th align="left">Example</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">IntStr</td>
 <td align="left">Int and Str</td>
-<td align="left"><42></td>
+<td align="left">&lt;42&gt;</td>
 </tr>
-
 <tr>
 <td align="left">NumStr</td>
 <td align="left">Num and Str</td>
-<td align="left"><42e0></td>
+<td align="left">&lt;42e0&gt;</td>
 </tr>
-
 <tr>
 <td align="left">ComplexStr</td>
 <td align="left">Complex and Str</td>
 <td align="left">&lt; 1+2i&gt;</td>
 </tr>
-
 <tr>
 <td align="left">RatStr</td>
 <td align="left">Rat and Str</td>
-<td align="left"><1.5></td>
+<td align="left">&lt;1.5&gt;</td>
 </tr>
 </tbody>
 </table>
-
 <p>注意：没有<code>FatRatStr</code>类型。</p>
-
-<h2 id="coercion-of-allomorphs-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Coercion of allomorphs</a></h2>
-
+<h2 id="coercion-of-allomorphshttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Coercion of allomorphs</a></h2>
 <p>请记住，同质异形只是它们所代表的两种（或三种）类型的子类。正如变量或参数类型约束为<code>Foo</code>可以接受任何 <code>Foo</code> 子类一样，所以变量或参数类型约束为 <a href="https://docs.raku.org/type/Int">Int</a> 的将接受 <a href="https://docs.raku.org/type/IntStr">IntStr</a> 同质异形：</p>
-
-<pre><code class="language-raku">sub foo(Int $x) { say $x.^name }
+<pre><code class="language-raku" data-lang="raku">sub foo(Int $x) { say $x.^name }
 foo &lt;42&gt;;                          # OUTPUT: «IntStr» 
 my Num $y = &lt;42e0&gt;;
 say $y.^name;                      # OUTPUT: «NumStr» 
-</code></pre>
-
-<p>当然，这也适用于参数<a href="https://docs.raku.org/type/Signature#Coercion_type">coercers</a>：</p>
-
-<pre><code class="language-raku">sub foo(Int(Cool) $x) { say $x.^name }
+</code></pre><p>当然，这也适用于参数<a href="https://docs.raku.org/type/Signature#Coercion_type">coercers</a>：</p>
+<pre><code class="language-raku" data-lang="raku">sub foo(Int(Cool) $x) { say $x.^name }
 foo &lt;42&gt;;  # OUTPUT: «IntStr» 
-</code></pre>
-
-<p>给定的同质异形*已经*是 <a href="https://docs.raku.org/type/Int">Int</a> 类型的对象，因此在这种情况下它不会转换为“普通的”  <a href="https://docs.raku.org/type/Int">Int</a>。</p>
-
-<p>当然，如果没有办法将它们“折叠”到其中一个组件，那么同质异形体的力量将会严重减弱。因此，如果你使用所要强制到的类型的名字显式调用方法，那么您将获得该组件。这同样适用于任何代理方法，例如调用方法<a href="https://docs.raku.org/routine/Numeric"><code>.Numeric</code></a>而不是<a href="https://docs.raku.org/routine/Int"><code>.Int</code></a>或使用<a href="https://docs.raku.org/routine/~"><code>prefix:&lt;~&gt;</code></a>运算符而不是<a href="https://docs.raku.org/routine/Str"><code>.Str</code></a>方法调用。</p>
-
-<pre><code class="language-raku">my $al := IntStr.new: 42, &quot;forty two&quot;;
+</code></pre><p>给定的同质异形<em>已经</em>是 <a href="https://docs.raku.org/type/Int">Int</a> 类型的对象，因此在这种情况下它不会转换为“普通的”  <a href="https://docs.raku.org/type/Int">Int</a>。</p>
+<p>当然，如果没有办法将它们“折叠”到其中一个组件，那么同质异形体的力量将会严重减弱。因此，如果你使用所要强制到的类型的名字显式调用方法，那么您将获得该组件。这同样适用于任何代理方法，例如调用方法<a href="https://docs.raku.org/routine/Numeric"><code>.Numeric</code></a>而不是<a href="https://docs.raku.org/routine/Int"><code>.Int</code></a>或使用<a href="https://docs.raku.org/routine/~"><code>prefix:&lt;~&gt; </code></a>运算符而不是<a href="https://docs.raku.org/routine/Str"><code>.Str</code></a>方法调用。</p>
+<pre><code class="language-raku" data-lang="raku">my $al := IntStr.new: 42, &quot;forty two&quot;;
 say $al.Str;  # OUTPUT: «forty two» 
 say +$al;     # OUTPUT: «42» 
  
 say &lt;1/99999999999999999999&gt;.Rat.^name;    # OUTPUT: «Rat» 
 say &lt;1/99999999999999999999&gt;.FatRat.^name; # OUTPUT: «FatRat» 
-</code></pre>
-
-<p>强制整个同质异形体列表的一种方便方法是将 <a href="https://docs.raku.org/language/operators#Hyper_operators">hyper</a> 运算符应用于适当的前缀：</p>
-
-<pre><code class="language-raku">say map *.^name,   &lt;42 50e0 100&gt;;  # OUTPUT: «(IntStr NumStr IntStr)» 
+</code></pre><p>强制整个同质异形体列表的一种方便方法是将 <a href="https://docs.raku.org/language/operators#Hyper_operators">hyper</a> 运算符应用于适当的前缀：</p>
+<pre><code class="language-raku" data-lang="raku">say map *.^name,   &lt;42 50e0 100&gt;;  # OUTPUT: «(IntStr NumStr IntStr)» 
 say map *.^name, +«&lt;42 50e0 100&gt;;  # OUTPUT: «(Int Num Int)» 
 say map *.^name, ~«&lt;42 50e0 100&gt;;  # OUTPUT: «(Str Str Str)» 
-</code></pre>
-
-<h2 id="object-identity-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Object identity</a></h2>
-
+</code></pre><h2 id="object-identityhttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Object identity</a></h2>
 <p>当我们考虑对象一致性时，上面关于强制同形异形的讨论变得更加重要。一些构造利用它来确定两个对象是否“相同”。而对于人类而言，同质异形<code>42</code>和常规的<code>42</code>可能看起来“相同”，对于那些构造，它们是完全不同的对象：</p>
-
-<pre><code class="language-raku"># &quot;42&quot; shows up twice in the result: 42 and &lt;42&gt; are different objects: 
+<pre><code class="language-raku" data-lang="raku"># &quot;42&quot; shows up twice in the result: 42 and &lt;42&gt; are different objects: 
 say unique 1, 1, 1, 42, &lt;42&gt;; # OUTPUT: «(1 42 42)» 
 # Use a different operator to `unique` with: 
 say unique :with(&amp;[==]), 1, 1, 1, 42, &lt;42&gt;; # OUTPUT: «(1 42)» 
@@ -429,18 +305,11 @@ say 42 ∈ &lt;42 100 200&gt;; # OUTPUT: «False»
 say &lt;42&gt; ∈ &lt;42 100 200&gt;; # OUTPUT: «True» 
 # Or convert the items in the list to plain `Int` objects: 
 say 42 ∈ +«&lt;42 100 200&gt;; # OUTPUT: «True» 
-</code></pre>
-
-<p>注意这些对象一致性的差异，并根据需要强制你的同形异形体。</p>
-
-<h1 id="原生数字-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">原生数字</a></h1>
-
+</code></pre><p>注意这些对象一致性的差异，并根据需要强制你的同形异形体。</p>
+<h1 id="原生数字httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">原生数字</a></h1>
 <p>顾名思义，原生数字可以访问原生数字 - 即由硬件直接提供的数字。这反过来又提供两个功能：溢出/下溢和更好的性能。</p>
-
-<p><strong>注意：</strong>在撰写本文时（2018.05），某些实现（例如 Rakudo）提供了有关原生类型的一些细节，例如  <code>int64</code> 是否可用且在32位计算机上具有64位大小，以及如何检测何时你的程序正在这样的硬件上运行。</p>
-
-<h2 id="可用的原生数字-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">可用的原生数字</a></h2>
-
+<p>**注意：**在撰写本文时（2018.05），某些实现（例如 Rakudo）提供了有关原生类型的一些细节，例如  <code>int64</code> 是否可用且在32位计算机上具有64位大小，以及如何检测何时你的程序正在这样的硬件上运行。</p>
+<h2 id="可用的原生数字httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">可用的原生数字</a></h2>
 <table>
 <thead>
 <tr>
@@ -449,86 +318,72 @@ say 42 ∈ +«&lt;42 100 200&gt;; # OUTPUT: «True»
 <th align="left">Size</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">atomicint</td>
 <td align="left">integer</td>
 <td align="left">sized to offer CPU-provided atomic operations. (typically 64 bits on 64-bit platforms and 32 bits on 32-bit ones)</td>
 </tr>
-
 <tr>
 <td align="left">int</td>
 <td align="left">integer</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">int16</td>
 <td align="left">integer</td>
 <td align="left">16-bits</td>
 </tr>
-
 <tr>
 <td align="left">int32</td>
 <td align="left">integer</td>
 <td align="left">32-bits</td>
 </tr>
-
 <tr>
 <td align="left">int64</td>
 <td align="left">integer</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">int8</td>
 <td align="left">integer</td>
 <td align="left">8-bits</td>
 </tr>
-
 <tr>
 <td align="left">num</td>
 <td align="left">floating point</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">num32</td>
 <td align="left">floating point</td>
 <td align="left">32-bits</td>
 </tr>
-
 <tr>
 <td align="left">num64</td>
 <td align="left">floating point</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">uint</td>
 <td align="left">unsigned integer</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">uint16</td>
 <td align="left">unsigned integer</td>
 <td align="left">16-bits</td>
 </tr>
-
 <tr>
 <td align="left">uint32</td>
 <td align="left">unsigned integer</td>
 <td align="left">32-bits</td>
 </tr>
-
 <tr>
 <td align="left">uint64</td>
 <td align="left">unsigned integer</td>
 <td align="left">64-bits</td>
 </tr>
-
 <tr>
 <td align="left">uint8</td>
 <td align="left">unsigned integer</td>
@@ -536,26 +391,16 @@ say 42 ∈ +«&lt;42 100 200&gt;; # OUTPUT: «True»
 </tr>
 </tbody>
 </table>
-
-<h2 id="创建原生数字-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">创建原生数字</a></h2>
-
+<h2 id="创建原生数字httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">创建原生数字</a></h2>
 <p>要创建原生类型的变量或参数，只需使用其中一个可用数字的名称作为类型约束：</p>
-
-<pre><code class="language-raku">my int32 $x = 42;
+<pre><code class="language-raku" data-lang="raku">my int32 $x = 42;
 sub foo(num $y) {}
 class { has int8 $.z }
-</code></pre>
-
-<p>有时，您可能希望在不创建任何可用变量的情况下将某些值强制转换为原生类型。没有<code>.int</code>或类似的强制方法（方法调用是后期的，所以它们不适合这个目的）。相反，只需使用匿名变量：</p>
-
-<pre><code class="language-raku">some-native-taking-sub (my int $ = $y), (my int32 $ = $z)
-</code></pre>
-
-<h2 id="溢出-下溢-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">溢出/下溢</a></h2>
-
+</code></pre><p>有时，您可能希望在不创建任何可用变量的情况下将某些值强制转换为原生类型。没有<code>.int</code>或类似的强制方法（方法调用是后期的，所以它们不适合这个目的）。相反，只需使用匿名变量：</p>
+<pre><code class="language-raku" data-lang="raku">some-native-taking-sub (my int $ = $y), (my int32 $ = $z)
+</code></pre><h2 id="溢出下溢httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">溢出/下溢</a></h2>
 <p>尝试<strong>分配</strong>不适合特定原生类型的值会产生异常。这包括尝试为原生参数提供过大的参数：</p>
-
-<pre><code class="language-raku">my int $x = 2¹⁰⁰;
+<pre><code class="language-raku" data-lang="raku">my int $x = 2¹⁰⁰;
 # OUTPUT: 
 # Cannot unbox 101 bit wide bigint into native integer 
 #  in block &lt;unit&gt; at -e line 1 
@@ -565,114 +410,70 @@ sub f(int $x) { $x }; say f 2⁶⁴
 # Cannot unbox 65 bit wide bigint into native integer 
 #   in sub f at -e line 1 
 #   in block &lt;unit&gt; at -e line 1 
-</code></pre>
-
-<p>但是，以这样一种太大/太小的方式修改已存在的值会产生溢出/下溢行为：</p>
-
-<pre><code class="language-raku">my int $x = 2⁶³-1;
+</code></pre><p>但是，以这样一种太大/太小的方式修改已存在的值会产生溢出/下溢行为：</p>
+<pre><code class="language-raku" data-lang="raku">my int $x = 2⁶³-1;
 say $x;             # OUTPUT: «9223372036854775807» 
 say ++$x;           # OUTPUT: «-9223372036854775808» 
  
 my uint8 $x;
 say $x;             # OUTPUT: «0» 
 say $x -= 100;      # OUTPUT: «156» 
-</code></pre>
-
-<p>创建使用原生类型的对象不涉及程序员的直接分配; 这就是为什么这些构造提供溢出/下溢行为而不是抛出异常。</p>
-
-<pre><code class="language-raku">say Buf.new(1000, 2000, 3000).List; # OUTPUT: «(232 208 184)» 
+</code></pre><p>创建使用原生类型的对象不涉及程序员的直接分配; 这就是为什么这些构造提供溢出/下溢行为而不是抛出异常。</p>
+<pre><code class="language-raku" data-lang="raku">say Buf.new(1000, 2000, 3000).List; # OUTPUT: «(232 208 184)» 
 say my uint8 @a = 1000, 2000, 3000; # OUTPUT: «232 208 184» 
-</code></pre>
-
-<h2 id="auto-boxing-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Auto-boxing</a></h2>
-
-<p>虽然它们可以被称为“<em>原生类型</em> ”，但原生数字实际上并不是具有任何可用方法的类。但是，您*可以*调用这些数字的非原生版本上可用的任何方法。这是怎么回事？</p>
-
-<pre><code class="language-raku">my int8 $x = -42;
+</code></pre><h2 id="auto-boxinghttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Auto-boxing</a></h2>
+<p>虽然它们可以被称为“<em>原生类型</em> ”，但原生数字实际上并不是具有任何可用方法的类。但是，您<em>可以</em>调用这些数字的非原生版本上可用的任何方法。这是怎么回事？</p>
+<pre><code class="language-raku" data-lang="raku">my int8 $x = -42;
 say $x.abs; # OUTPUT: «42» 
-</code></pre>
-
-<p>此行为称为“自动装箱”。编译器使用所有方法自动将原生类型“装箱”为功能齐全的高级类型。换句话说，<code>int8</code>上面的内容自动转换为<a href="https://docs.raku.org/type/Int">Int，</a>然后它是<a href="https://docs.raku.org/type/Int">Int</a>类，然后提供被调用的<a href="https://docs.raku.org/routine/abs">abs</a>方法。</p>
-
-<p>当您使用原生类型获得性能提升时，此详细信息非常重要。如果您正在使用的代码导致执行大量自动装箱，那么使用原生类型的性能可能会比使用非原生类型时*更差*：</p>
-
-<pre><code class="language-raku">my $a = -42;
+</code></pre><p>此行为称为“自动装箱”。编译器使用所有方法自动将原生类型“装箱”为功能齐全的高级类型。换句话说，<code>int8</code>上面的内容自动转换为<a href="https://docs.raku.org/type/Int">Int，</a>然后它是<a href="https://docs.raku.org/type/Int">Int</a>类，然后提供被调用的<a href="https://docs.raku.org/routine/abs">abs</a>方法。</p>
+<p>当您使用原生类型获得性能提升时，此详细信息非常重要。如果您正在使用的代码导致执行大量自动装箱，那么使用原生类型的性能可能会比使用非原生类型时<em>更差</em>：</p>
+<pre><code class="language-raku" data-lang="raku">my $a = -42;
 my int $a-native = -42;
 { for ^1000_000 { $a.abs        }; say now - ENTER now } # OUTPUT: «0.38180862» 
 { for ^1000_000 { $a-native.abs }; say now - ENTER now } # OUTPUT: «0.938720» 
-</code></pre>
-
-<p>如您所见，原生变体的速度慢了两倍多。原因是方法调用需要将原生类型装箱，而非原生变体不需要这样的东西，因此性能损失。</p>
-
+</code></pre><p>如您所见，原生变体的速度慢了两倍多。原因是方法调用需要将原生类型装箱，而非原生变体不需要这样的东西，因此性能损失。</p>
 <p>在这种特殊情况下，我们可以简单地切换到<a href="https://docs.raku.org/routine/abs">abs</a>的子程序形式，它可以使用原生类型而无需装箱。在其他情况下，您可能需要寻找其他解决方案以避免过多的自动装箱，包括切换到部分代码的非原生类型。</p>
-
-<pre><code class="language-raku">my $a = -42;
+<pre><code class="language-raku" data-lang="raku">my $a = -42;
 my int $a-native = -42;
 { for ^1000_000 { abs $a        }; say now - ENTER now } # OUTPUT: «0.38229177» 
 { for ^1000_000 { abs $a-native }; say now - ENTER now } # OUTPUT: «0.3088305» 
-</code></pre>
-
-<h2 id="默认值-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">默认值</a></h2>
-
+</code></pre><h2 id="默认值httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">默认值</a></h2>
 <p>由于原生类型后面没有类，因此通常没有使用尚未初始化的变量获得的类型对象。因此，原生类型自动初始化为零。在6.c语言，原生的浮点类型（<code>num</code>，<code>num32</code>，和<code>num64</code>）被初始化为值 <code>NaN</code>; 在 6.d 语言中默认为 <code>0e0</code>。</p>
-
-<h2 id="原生分派-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">原生分派</a></h2>
-
+<h2 id="原生分派httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">原生分派</a></h2>
 <p>例如，当大小可预测时，可以使原生候选者与非原生候选者一起提供具有原生候选者的更快算法，但是否则回退到较慢的非原生候选者。以下是涉及原生候选人的多重分派的规则。</p>
-
 <p>首先，原生类型的大小在分派中不起作用，并且<code>int8</code>被认为与<code>int16</code>或<code>int</code> 例如，当大小可预测时，可以使本地候选者与非本地候选者一起提供具有本地候选者的更快算法，但是否则回退到较慢的非本地候选者。以下是涉及本地候选人的多次派遣的规则。</p>
-
 <p>首先，原生类型的大小在调度中不起作用，并且<code>int8</code>被认为与<code>int16</code>或<code>int</code> 相同：</p>
-
-<pre><code class="language-raku">multi foo(int   $x) { say &quot;int&quot; }
+<pre><code class="language-raku" data-lang="raku">multi foo(int   $x) { say &quot;int&quot; }
 multi foo(int32 $x) { say &quot;int32&quot; }
 foo my int $x = 42;
 # OUTPUT: 
 # Ambiguous call to 'foo(Int)'; these signatures all match: 
 # :(int $x) 
 # :(int32 $x) 
-</code></pre>
-
-<p>其次，如果例程是一个 <code>only</code>-ie，它不是一个<a href="https://docs.raku.org/language/functions#Multi-dispatch"><code>multi</code></a>非原生类型，而是在调用期间给出一个原生类型，反之亦然，那么参数将被自动装箱或自动取消装箱以使可以被调用。如果给定的参数太大而无法放入native参数，则会抛出异常：</p>
-
-<pre><code class="language-raku">-&gt; int {}( 42 );            # OK; auto-unboxing 
+</code></pre><p>其次，如果例程是一个 <code>only</code>-ie，它不是一个<a href="https://docs.raku.org/language/functions#Multi-dispatch"><code>multi</code></a>非原生类型，而是在调用期间给出一个原生类型，反之亦然，那么参数将被自动装箱或自动取消装箱以使可以被调用。如果给定的参数太大而无法放入native参数，则会抛出异常：</p>
+<pre><code class="language-raku" data-lang="raku">-&gt; int {}( 42 );            # OK; auto-unboxing 
 -&gt; int {}( 2¹⁰⁰ );          # Too large; exception 
 -&gt; Int {}( 2¹⁰⁰ );          # OK; non-native parameter 
 -&gt; Int {}( my int $ = 42 ); # OK; auto-boxing 
-</code></pre>
-
-<p>当涉及到<a href="https://docs.raku.org/language/functions#Multi-dispatch"><code>multi</code></a>例程时，如果没有可用的原生候选者，则原生参数将始终自动装箱：</p>
-
-<pre><code class="language-raku">multi foo (Int $x) { $x }
+</code></pre><p>当涉及到<a href="https://docs.raku.org/language/functions#Multi-dispatch"><code>multi</code></a>例程时，如果没有可用的原生候选者，则原生参数将始终自动装箱：</p>
+<pre><code class="language-raku" data-lang="raku">multi foo (Int $x) { $x }
 say foo my int $ = 42; # OUTPUT: «42» 
-</code></pre>
-
-<p>另一种方式是不能提供相同的 luxury。如果只有原生候选者可用，则非原生参数将*不会*被自动取消装箱，而是指示不会抛出匹配的候选者的异常（这种不对称的原因是原生类型总是可以装箱，但是非原生的可能太大而无法融入原生）：</p>
-
-<pre><code class="language-raku">multi f(int $x) { $x }
+</code></pre><p>另一种方式是不能提供相同的 luxury。如果只有原生候选者可用，则非原生参数将<em>不会</em>被自动取消装箱，而是指示不会抛出匹配的候选者的异常（这种不对称的原因是原生类型总是可以装箱，但是非原生的可能太大而无法融入原生）：</p>
+<pre><code class="language-raku" data-lang="raku">multi f(int $x) { $x }
 my $x = 2;
 say f $x;
 # OUTPUT: 
 # Cannot resolve caller f(Int); none of these signatures match: 
 #     (int $x) 
 #   in block &lt;unit&gt; at -e line 1 
-</code></pre>
-
-<p>但是，如果正在进行调用，其中一个参数是原生类型而另一个是<a href="https://docs.raku.org/language/syntax#Number_literals">数字字面量</a>，则放弃此规则：</p>
-
-<pre><code class="language-raku">multi f(int, int) {}
+</code></pre><p>但是，如果正在进行调用，其中一个参数是原生类型而另一个是<a href="https://docs.raku.org/language/syntax#Number_literals">数字字面量</a>，则放弃此规则：</p>
+<pre><code class="language-raku" data-lang="raku">multi f(int, int) {}
 f 42, my int $x; # Successful call 
-</code></pre>
-
-<p>这样，您就不必不断将诸如 <code>$n +&gt; 2</code> 写为 <code>$n +&gt; (my int $ = 2)</code> 了。编译器知道字面量小到足以适合原生类型并将其转换为原生类型。</p>
-
-<h2 id="原子操作-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">原子操作</a></h2>
-
+</code></pre><p>这样，您就不必不断将诸如 <code>$n +&gt; 2</code> 写为 <code>$n +&gt; (my int $ = 2)</code> 了。编译器知道字面量小到足以适合原生类型并将其转换为原生类型。</p>
+<h2 id="原子操作httpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">原子操作</a></h2>
 <p>该语言提供了一些保证以原子方式执行的<a href="https://docs.raku.org/type/atomicint">操作</a>，即安全地由多个线程执行而无需锁定而没有数据争用的风险。</p>
-
 <p>对于此类操作，需要<a href="https://docs.raku.org/type/atomicint">atomicint</a>原生类型。此类型与普通原生<a href="https://docs.raku.org/type/int">int</a>类似，不同之处在于它的大小使得可以对其执行CPU提供的原子操作。在32位CPU上，它通常是32位大小，而在64位CPU上，它通常是64位大小。</p>
-
-<pre><code class="language-raku"># !!WRONG!! Might be non-atomic on some systems 
+<pre><code class="language-raku" data-lang="raku"># !!WRONG!! Might be non-atomic on some systems 
 my int $x;
 await ^100 .map: { start $x⚛++ };
 say $x; # OUTPUT: «98» 
@@ -681,16 +482,10 @@ say $x; # OUTPUT: «98»
 my atomicint $x;
 await ^100 .map: { start $x⚛++ };
 say $x; # OUTPUT: «100» 
-</code></pre>
-
-<p>相似性<code>int</code>也存在于多重分派中： <code>atomicint</code>，普通的 <code>int</code>和固定大小的<code>int</code>变量都是相同的，并且不能通过多重分派来区分。</p>
-
-<h1 id="numeric-infectiousness-https-docs-raku-org-language-numerics-top"><a href="https://docs.raku.org/language/numerics#___top">Numeric infectiousness</a></h1>
-
+</code></pre><p>相似性<code>int</code>也存在于多重分派中： <code>atomicint</code>，普通的 <code>int</code>和固定大小的<code>int</code>变量都是相同的，并且不能通过多重分派来区分。</p>
+<h1 id="numeric-infectiousnesshttpsdocsrakuorglanguagenumerics___top"><a href="https://docs.raku.org/language/numerics#___top">Numeric infectiousness</a></h1>
 <p>当一些数学运算中涉及两个不同类型的数字时，数字“传递性”决定了结果类型。如果结果是该类型而不是其他操作数的类型，则认为类型比其他类型更具传递性。例如，<a href="https://docs.raku.org/type/Num">Num</a>类型比<a href="https://docs.raku.org/type/Int">Int</a>更具传递性，因此我们可以期望<code>42e0 + 42</code>产生<a href="https://docs.raku.org/type/Num">Num</a>作为结果。</p>
-
 <p>传递性如下，首先列出最具传递性的类型</p>
-
 <ul>
 <li>Complex</li>
 <li>Num</li>
@@ -698,13 +493,10 @@ say $x; # OUTPUT: «100»
 <li>Rat</li>
 <li>Int</li>
 </ul>
-
-<pre><code class="language-raku">say (2 + 2e0).^name; # Int + Num =&gt; OUTPUT: «Num» 
+<pre><code class="language-raku" data-lang="raku">say (2 + 2e0).^name; # Int + Num =&gt; OUTPUT: «Num» 
 say (½ + ½).^name; # Rat + Rat =&gt; OUTPUT: «Rat» 
 say (FatRat.new(1,2) + ½).^name; # FatRat + Rat =&gt; OUTPUT: «FatRat» 
-</code></pre>
-
-<p>同质异形体具有与其数字成分相同的传递性。原生类型获得自动装箱，并具有与其盒装变体相同的传递性。</p>
+</code></pre><p>同质异形体具有与其数字成分相同的传递性。原生类型获得自动装箱，并具有与其盒装变体相同的传递性。</p>
 
   </article>
 </section>

@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,57 +81,35 @@
       <h1>Haskell 到 Raku - 简而言之</h1>
     </header>
 
-    
-
-<p>Haskell 和 Raku 是非常不同的语言。这很明显。 但是，这并不意味着没有相似之处或共同的想法！ 此页面尝试让一个 Haskell 用户启动并运行 Raku。Haskell 用户可能会发现，在用 Raku 编写脚本时，他们不需要放弃所有 Haskelly 的想法。</p>
-
+    <p>Haskell 和 Raku 是非常不同的语言。这很明显。 但是，这并不意味着没有相似之处或共同的想法！ 此页面尝试让一个 Haskell 用户启动并运行 Raku。Haskell 用户可能会发现，在用 Raku 编写脚本时，他们不需要放弃所有 Haskelly 的想法。</p>
 <p>请注意，这不应该被误认为是初学者教程或 Raku 概述; 它旨在作为具有强大 Haskell 背景的 Raku 学习者的技术参考。</p>
-
 <h2 id="类型">类型</h2>
-
 <h3 id="类型-vs-值">类型 vs 值</h3>
-
 <p>在 Haskell 中, 您有类型级编程, 然后进行值级编程。</p>
-
-<pre><code class="language-haskell">plusTwo :: Integer -&gt; Integer   -- Types
-plusTwo x = x + 2               -- Values
-</code></pre>
-
-<p>您不要像下面那样在 Haskell 中混合类型和值。</p>
-
-<pre><code class="language-raku">plusTwo 2          -- This is valid
+<div class="highlight"><pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">plusTwo</span> <span class="ow">::</span> <span class="kt">Integer</span> <span class="ow">-&gt;</span> <span class="kt">Integer</span>   <span class="c1">-- Types</span>
+<span class="nf">plusTwo</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>               <span class="c1">-- Values</span>
+</code></pre></div><p>您不要像下面那样在 Haskell 中混合类型和值。</p>
+<pre><code class="language-raku" data-lang="raku">plusTwo 2          -- This is valid
 plusTwo Integer    -- This is not valid
-</code></pre>
-
-<p>在 Raku 中, 类型(亦称为类型对象)和值处于同样的级别</p>
-
-<pre><code class="language-raku">sub plus-two(Int $x --&gt; Int) { $x + 2 }
+</code></pre><p>在 Raku 中, 类型(亦称为类型对象)和值处于同样的级别</p>
+<pre><code class="language-raku" data-lang="raku">sub plus-two(Int $x --&gt; Int) { $x + 2 }
 
 plus-two(2);   # This is valid
 plus-two(Int); # This is valid
-</code></pre>
-
-<p>我将再用一个例子来说明 Raku 这个独特之处:</p>
-
-<pre><code class="language-raku">multi sub is-string(Str $ --&gt; True)  {}
+</code></pre><p>我将再用一个例子来说明 Raku 这个独特之处:</p>
+<pre><code class="language-raku" data-lang="raku">multi sub is-string(Str $ --&gt; True)  {}
 multi sub is-string(Any $ --&gt; False) {}
  
 is-string('hello');    #True 
 is-string(4);          #False 
-</code></pre>
-
-<h3 id="maybe">Maybe</h3>
-
+</code></pre><h3 id="maybe">Maybe</h3>
 <p>在 Haskell 中，您有一个 Maybe 类型, 可以让您放弃空类型的烦恼。 假设您有一个将 String 解析为 Integer 的假设函数：</p>
-
-<pre><code class="language-raku">parseInt :: String -&gt; Maybe Integer
+<pre><code class="language-raku" data-lang="raku">parseInt :: String -&gt; Maybe Integer
  
 case parseInt myString of
   Just x  -&gt; x
   Nothing -&gt; 0
-</code></pre>
-
-<p>在 Raku 中, 由于类型对象与常规对象共存，因此我们拥有 <code>Defined</code> 和 <code>Undefined</code> 对象的概念。 平常的类型对象是 undefined 的, 而实例化后的对象是 defined 的。</p>
+</code></pre><p>在 Raku 中, 由于类型对象与常规对象共存，因此我们拥有 <code>Defined</code> 和 <code>Undefined</code> 对象的概念。 平常的类型对象是 undefined 的, 而实例化后的对象是 defined 的。</p>
 
   </article>
 </section>

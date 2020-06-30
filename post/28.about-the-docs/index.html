@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,56 +81,32 @@
       <h1>关于文档</h1>
     </header>
 
-    
-
-<p>本文档集代表了正在努力记录 Raku 编程语言的目标是：全面; 使用方便; 易于导航; 对新手和经验丰富的 Raku 程序员都很有用。</p>
-
+    <p>本文档集代表了正在努力记录 Raku 编程语言的目标是：全面; 使用方便; 易于导航; 对新手和经验丰富的 Raku 程序员都很有用。</p>
 <p>该文档的 HTML 版本位于线上的 <a href="https://docs.raku.org/">https://docs.raku.org</a>。</p>
-
 <p>该文档的官方来源位于 <a href="https://github.com/raku/doc">GitHub上的raku/doc</a>。</p>
-
 <p>本特定文档快速概述了<a href="https://github.com/raku/doc/blob/master/CONTRIBUTING.md">在GitHub上的贡献</a>中更详细描述的过程。本文档还简要介绍了编写 Raku Pod 文件，这些文件可以渲染为 HTML 和其他格式。</p>
-
-<h1 id="结构-https-docs-raku-org-language-about-top"><a href="https://docs.raku.org/language/about#___top">结构</a></h1>
-
+<h1 id="结构httpsdocsrakuorglanguageabout___top"><a href="https://docs.raku.org/language/about#___top">结构</a></h1>
 <p>所有文档都是用 Raku Pod 编写的，并保存在 <code>doc/</code> 目录 <code>doc/Language/</code> 和 <code>doc/Type/</code> 子目录中。这些文件作为定义集合或“文档”处理，然后进行后处理并链接在一起。</p>
-
-<h1 id="从-pod-生成-html-https-docs-raku-org-language-about-top"><a href="https://docs.raku.org/language/about#___top">从 Pod 生成 HTML</a></h1>
-
+<h1 id="从-pod-生成-htmlhttpsdocsrakuorglanguageabout___top"><a href="https://docs.raku.org/language/about#___top">从 Pod 生成 HTML</a></h1>
 <p>要从 Pod 文件生成 HTML，你需要：</p>
-
 <ul>
 <li>最新版本的 Rakudo Raku 编译器</li>
 <li>Raku 模块Pod::To::HTML，Pod::To::BigPage 和 URI::Escape（可以通过<a href="https://github.com/ugexe/zef">zef</a>安装）。</li>
 <li><strong>可选</strong>：<a href="https://www.graphviz.org/">GraphViz</a>，用于创建 Raku 类型之间关系的图形</li>
 <li><strong>可选</strong>：<a href="https://github.com/atom/highlights">Atom Highlights</a> 和 <a href="https://atom.io/packages/language-raku">language-raku</a>，用于语法高亮显示</li>
 </ul>
-
 <p>要在文件<code>html/</code>文件夹中生成文档，请运行：</p>
-
 <pre><code>raku htmlify.p6
-</code></pre>
-
-<p>要从 Web 服务器托管文档，请安装 Perl 5 和 Mojolicious::Lite，然后运行：</p>
-
+</code></pre><p>要从 Web 服务器托管文档，请安装 Perl 5 和 Mojolicious::Lite，然后运行：</p>
 <pre><code>perl app.pl daemon
-</code></pre>
-
-<h1 id="贡献-https-docs-raku-org-language-about-top"><a href="https://docs.raku.org/language/about#___top">贡献</a></h1>
-
+</code></pre><h1 id="贡献httpsdocsrakuorglanguageabout___top"><a href="https://docs.raku.org/language/about#___top">贡献</a></h1>
 <p>文档是用 Raku Pod 编写的。</p>
-
 <p>有关 Raku Pod 的快速介绍，请参阅<a href="https://docs.raku.org/language/pod">Raku Pod</a>。</p>
-
 <p>有关 Raku Pod 规范的完整详细信息，请参见<a href="https://design.raku.org/S26.html">概要26,文档</a>。</p>
-
-<h2 id="添加定义-https-docs-raku-org-language-about-top"><a href="https://docs.raku.org/language/about#___top">添加定义</a></h2>
-
+<h2 id="添加定义httpsdocsrakuorglanguageabout___top"><a href="https://docs.raku.org/language/about#___top">添加定义</a></h2>
 <p>Documentables 可以使用 <code>=headN</code> Pod 指令来定义，其中 <code>N</code> 大于零（例如，<code>=head1</code>，<code>=head2</code>，&hellip;）。</p>
-
 <p>该指令之后的所有段落和块，直到同一级别的下一个指令，将被视为可记录的一部分。所以，在：</p>
-
-<pre><code class="language-pod6">=head2 My Definition
+<pre><code class="language-pod6" data-lang="pod6">=head2 My Definition
 
 Some paragraphs, followed by some code:
 
@@ -145,15 +121,10 @@ It's fantastic.
 =head2 And now, for something completely different
 
 …
-</code></pre>
-
-<p>可记录的 <code>My Definition</code> 延伸到了 <code>=head2 And now…</code>。</p>
-
+</code></pre><p>可记录的 <code> My Definition</code> 延伸到了 <code>=head2 And now…</code>。</p>
 <p>可记录文件可能包含其他文件。例如，类可记录文件通常包含类实现的方法。</p>
-
 <p>定义必须采用下列形式之一才能被识别为名为 document 文件的起点。首先是文档源代码：</p>
-
-<pre><code class="language-pod6">=item X&lt;C&lt;How to use the þ infix&gt; | infix,þ&gt; (This a special case, which 
+<pre><code class="language-pod6" data-lang="pod6">=item X&lt;C&lt;How to use the þ infix&gt; | infix,þ&gt; (This a special case, which 
 is always considered a definition)
  
 =item C&lt;The þ Infix&gt; 
@@ -166,10 +137,7 @@ is always considered a definition)
  
 =item C&lt;trait is cached&gt; (A special case for the L&lt;trait|/language/functions#Traits&gt; documentables) 
  
-</code></pre>
-
-<p>然后是渲染页面上的结果：</p>
-
+</code></pre><p>然后是渲染页面上的结果：</p>
 <ul>
 <li><code>How to use the þ infix</code> （这是一种特殊情况，始终被视为定义）</li>
 <li><code>The þ Infix</code></li>
@@ -178,20 +146,13 @@ is always considered a definition)
 <li><strong>Infix þ</strong></li>
 <li><code>trait is cached</code>（<a href="https://docs.raku.org/language/functions#Traits">trait</a>文档的特例）</li>
 </ul>
-
 <p>现在可以使用 HTML 文档中的搜索字段搜索这些项。</p>
-
 <p>您可以使用粗体（<strong>B&lt;&gt;</strong>）或斜体（<strong>I&lt;&gt;</strong>）添加强调，可以使用或不使用代码格式（<strong>C&lt;&gt;</strong>）。由于当前的解析器限制，必须采取特殊步骤将<strong>X&lt;&gt;</strong>与其他格式代码一起使用; 例如：</p>
-
-<pre><code class="language-pod6">=item X&lt;B&lt;foo&gt;|foo&gt; a fancy subroutine 
-</code></pre>
-
-<p>像这样渲染</p>
-
+<pre><code class="language-pod6" data-lang="pod6">=item X&lt;B&lt;foo&gt;|foo&gt; a fancy subroutine 
+</code></pre><p>像这样渲染</p>
 <ul>
 <li><strong>foo</strong> a fancy subroutine</li>
 </ul>
-
 <p>请注意，管道（“|”）之后的文本没有格式。另请注意，<strong>C&lt;&gt;</strong>保留空格并将文本视为逐字处理。</p>
 
   </article>

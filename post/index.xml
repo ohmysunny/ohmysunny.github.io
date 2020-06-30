@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Rakudo Star</title>
@@ -27,14 +27,15 @@
       
       <guid>https://ohmysunny.github.io/post/72.experimental-features/</guid>
       <description>在 Raku 开发期间，通常可以在设计完成之前为用户提供新功能。最终，这些功能可能成为 Raku 规范的一部分。要使用这些功能，可以在程序源代码中使用 experimental 指令，例如，如下所示：
-use experimental :macros;  这些功能暂时是实验性的。
+use experimental :macros; 这些功能暂时是实验性的。
 pack Pack 是一种允许二进制序列化一般数据结构的功能，并且继承自 Perl 的pack。pack 命令通过以包装字符串给出的特定方式打包数据结构来创建Buf，其中包含 unpack 描述中显示的选项。你可以通过在程序开头插入这个指令来打开它：
-use experimental :pack;  例如，我们可以打包数字，将它们解释为十六进制（H），重复模式，直到没有更多的元素（*）：
-use experimental :pack; say pack(&amp;quot;H*&amp;quot;, &amp;quot;414243&amp;quot;).contents;# OUTPUT: «(65 66 67)␤»  有一个相应的 unpack 例程正好相反。
-use experimental :pack; my $buf=Buf.new(65,66,67); say $buf.unpack(&amp;quot;H*&amp;quot;); # OUTPUT: «414243␤»  并非所有上述符号都可以保证实现，并且路线图不包含退出该阶段的固定日期。
+use experimental :pack; 例如，我们可以打包数字，将它们解释为十六进制（H），重复模式，直到没有更多的元素（*）：
+use experimental :pack; say pack(&amp;quot;H*&amp;quot;, &amp;quot;414243&amp;quot;).contents;# OUTPUT: «(65 66 67)␤» 有一个相应的 unpack 例程正好相反。
+use experimental :pack; my $buf=Buf.new(65,66,67); say $buf.unpack(&amp;quot;H*&amp;quot;); # OUTPUT: «414243␤» 并非所有上述符号都可以保证实现，并且路线图不包含退出该阶段的固定日期。
 请参阅 Blob 页面中的 pack 和 unpack 文档。
 宏 宏 是代码生成例程，它们在程序执行之前在编译时生成代码。在 Raku 中，它的使用仍然是实验性的，它需要通过编译指示打开
-use experimental :macros;  宏处理在解析时发生。宏生成抽象语法树，将其移植到程序语法树中。 quasi 是执行此任务的例程。</description>
+use experimental :macros; 宏处理在解析时发生。宏生成抽象语法树，将其移植到程序语法树中。 quasi 是执行此任务的例程。
+macro does-nothing() { quasi {} }; does-nothing; # OUTPUT: «» 宏是一种例程，因此它们可以以完全相同的方式接受参数，并且也以几乎相同的方式起作用。</description>
     </item>
     
     <item>
@@ -45,7 +46,7 @@ use experimental :macros;  宏处理在解析时发生。宏生成抽象语法�
       <guid>https://ohmysunny.github.io/post/71.variables/</guid>
       <description>变量名以一个叫做魔符 sigil 的特殊字符开头, 后面跟着一个可选的第二个叫做 twigil 的特殊字符, 然后是一个标识符.
 Sigils    符号 类型约束 默认类型 Flattens Assignment     $ Mu (no type constraint) Any No item   &amp;amp; Callable Callable No item   @ Positional Array Yes list   % Associative Hash Yes list    例子:
-my $square = 9 ** 2; my @array = 1, 2, 3; # Array variable with three elements my %hash = London =&amp;gt; &#39;UK&#39;, Berlin =&amp;gt; &#39;Germany&#39;;  默认类型可以使用 is 关键字设置。</description>
+my $square = 9 ** 2;my @array = 1, 2, 3; # Array variable with three elementsmy %hash = London =&amp;gt; &#39;UK&#39;, Berlin =&amp;gt; &#39;Germany&#39;;默认类型可以使用 is 关键字设置。</description>
     </item>
     
     <item>
@@ -58,8 +59,8 @@ my $square = 9 ** 2; my @array = 1, 2, 3; # Array variable with three elements m
 下面参考 unicode 码点的各种属性。最终列表可以在这里找到：https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt.
 字母字符 任何具有 Ll（字母，小写），Lu（字母，大写），Lt（字母，标题），Lm（字母，修饰符）或 Lo（字母，其他）属性的代码点都可以像任何其他字母一样使用 ASCII 范围内的字符。
 数字字符 任何具有 Nd（数字，十进制数字）属性的代码点都可以用作任何数字的数字。例如：
-my $var = １９; # U+FF11 U+FF19 say $var + 2; # OUTPUT: «21␤»  数字值 任何具有 No（Number，other）或 Nl（Number，letter）属性的代码点都可以单独用作数值，例如 ½ 和 ⅓。 （这些不是十进制数字，因此不能组合。）例如：
-my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int say $var; # OUTPUT: «14.</description>
+my $var = １９; # U+FF11 U+FF19 say $var + 2; # OUTPUT: «21␤» 数字值 任何具有 No（Number，other）或 Nl（Number，letter）属性的代码点都可以单独用作数值，例如 ½ 和 ⅓。 （这些不是十进制数字，因此不能组合。）例如：
+my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int say $var; # OUTPUT: «14.1␤» 空白字符 除了空格和制表符，您还可以使用具有 Zs（分隔符，空格），Zl（分隔符，行）或 Zp（分隔符，段落）属性的任何其他 unicode 空白字符。</description>
     </item>
     
     <item>
@@ -71,8 +72,8 @@ my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int say $var
       <description>Raku 对 Unicode 有很高的支持。本文档旨在概述和描述不属于例程和方法文档的 Unicode 功能。
 有关 MoarVM 内部字符串表示的概述，请参阅 MoarVM 字符串文档。
 文件句柄和输入输出 标准化 默认情况下，Raku 对所有输入和输出应用标准化，但存储为 UTF8-C8 的文件名除外;字形是用户可见的字符形式，将使用标准化表示。这是什么意思？例如，字形数字 á 可以用两种方式表示，或者使用一个代码点：
-á (U+E1 &amp;quot;LATIN SMALL LETTER A WITH ACUTE&amp;quot;)  或两个代码点:
-a + ́ (U+61 &amp;quot;LATIN SMALL LETTER A&amp;quot; + U+301 &amp;quot;COMBINING ACUTE ACCENT&amp;quot;)  Raku 将这两个输入转换为一个代码点，如规范化形式 C（NFC）所指定的那样。在大多数情况下，这很有用，意味着两个相同的输入都被视为相同。 Unicode 具有规范等价的概念，它允许我们确定字符串的规范形式，允许我们正确地比较字符串并操纵它们，而不必担心文本丢失这些属性。默认情况下，您处理或从 Raku 输出的任何文本都将采用此“规范”形式，即使在对字符串进行修改或连接时也是如此（请参阅下文，了解如何避免这种情况）。有关规范化表单C和规范等效性的更多详细信息，请参阅Unicode Foundation 的规范化和规范等效性页面。
+á (U+E1 &amp;quot;LATIN SMALL LETTER A WITH ACUTE&amp;quot;) 或两个代码点:
+a + ́ (U+61 &amp;quot;LATIN SMALL LETTER A&amp;quot; + U+301 &amp;quot;COMBINING ACUTE ACCENT&amp;quot;) Raku 将这两个输入转换为一个代码点，如规范化形式 C（NFC）所指定的那样。在大多数情况下，这很有用，意味着两个相同的输入都被视为相同。 Unicode 具有规范等价的概念，它允许我们确定字符串的规范形式，允许我们正确地比较字符串并操纵它们，而不必担心文本丢失这些属性。默认情况下，您处理或从 Raku 输出的任何文本都将采用此“规范”形式，即使在对字符串进行修改或连接时也是如此（请参阅下文，了解如何避免这种情况）。有关规范化表单C和规范等效性的更多详细信息，请参阅Unicode Foundation 的规范化和规范等效性页面。
 我们不默认的一种情况是文件名。这是因为必须完全访问文件的名称，就像在磁盘上写入字节一样。
 为避免规范化，您可以使用名为 UTF8-C8 的特殊编码格式。将此编码与任何文件句柄一起使用将允许您读取磁盘上的确切字节，而不进行规范化。如果使用 UTF8 句柄打印出来，打印出来时看起来会很滑稽。如果将其打印到输出编码为 UTF8-C8 的句柄，则它将按照您通常的预期进行渲染，并且是字节精确复制的字节。有关 MoarVM 上 UTF8-C8 的更多技术细节, 请参见下文。
 UTF8-C8 UTF-8 Clean-8 是一种编码器/解码器，主要用作 UTF-8。但是，遇到一个不能解码为有效 UTF-8 的字节序列，或者由于规范化而不会往返的字节序列时，它将使用 NFG 合成来跟踪所涉及的原始字节。这意味着编码回 UTF-8 Clean-8 将能够重新创建它们最初存在的字节。合成物包含4个代码点：</description>
@@ -86,9 +87,9 @@ UTF8-C8 UTF-8 Clean-8 是一种编码器/解码器，主要用作 UTF-8。但是
       <guid>https://ohmysunny.github.io/post/68.type-system/</guid>
       <description>Raku类型的定义 类型通过创建类型对象来定义新对象，该类型对象提供用于创建对象实例或检查值的接口。任何类型对象都是 Any 或 Mu 的子类。通过从这些基类和内省后缀 .^ 继承来提供内省方法。在编译时由以下类型声明符之一或在运行时使用元对象协议将新类型引入当前作用域。所有类型名称的作用域必须是唯一的。
 默认类型 如果用户没有提供类型，则 Raku 假定类型为 Any。这包括容器，基类，参数和返回类型。
-my $a = 1; $a = Nil; say $a.^name; # OUTPUT: «Any» class C {}; say C.^parents(:all); # OUTPUT: «((Any) (Mu))»  对于容器，默认类型为 Any，但默认类型约束为 Mu。请注意，绑定会替换容器，而不仅仅是值。在这种情况下，类型约束可能会变。
+my $a = 1; $a = Nil; say $a.^name; # OUTPUT: «Any» class C {}; say C.^parents(:all); # OUTPUT: «((Any) (Mu))» 对于容器，默认类型为 Any，但默认类型约束为 Mu。请注意，绑定会替换容器，而不仅仅是值。在这种情况下，类型约束可能会变。
 类型对象 要测试对象是否为类型对象，请对使用类型为 smiley 或 .DEFINITE 方法约束的类型使用 smartmatch：
-my $a = Int; say $a ~~ Mu:U; # OUTPUT: «True» say not $a.DEFINITE; # OUTPUT: «True»  如果调用者是实例，则 .DEFINITE 将返回 True。如果它返回 False，则调用者是一个类型对象。
+my $a = Int; say $a ~~ Mu:U; # OUTPUT: «True» say not $a.DEFINITE; # OUTPUT: «True» 如果调用者是实例，则 .DEFINITE 将返回 True。如果它返回 False，则调用者是一个类型对象。
 Undefinedness 未定义的对象在 Raku 中维护类型信息。类型对象用于表示未定义值和未定义值的类型。要提供一般的未定义值，请使用 Any。如果要区分容器和参数的默认类型 Any，则需要使用 Mu。</description>
     </item>
     
@@ -98,10 +99,10 @@ Undefinedness 未定义的对象在 Raku 中维护类型信息。类型对象用
       <pubDate>Tue, 11 Dec 2018 21:13:31 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/post/67.traits/</guid>
-      <description>在 Raku 中，*traits*是附加到对象和类的编译器钩子，它们修改了类和对象的默认行为，功能或表示。作为这样的编译器钩子，它们是在编译时定义的，尽管它们可以用于运行时。
+      <description>在 Raku 中，traits是附加到对象和类的编译器钩子，它们修改了类和对象的默认行为，功能或表示。作为这样的编译器钩子，它们是在编译时定义的，尽管它们可以用于运行时。
 通过使用 trait_mod 关键字，已经将几个 traits 定义为语言或 Rakudo 编译器的一部分。接下来列出并解释它们。
 is trait 定义为
-proto sub trait_mod:&amp;lt;is&amp;gt;(Mu $, |) {*}  is 适用于任何类型的标量对象，并且可以接收任意数量的命名参数或位置参数。它是最常用的 trait，取决于第一个参数的类型，采用以下形式。
+proto sub trait_mod:&amp;lt;is&amp;gt;(Mu $, |) {*} is 适用于任何类型的标量对象，并且可以接收任意数量的命名参数或位置参数。它是最常用的 trait，取决于第一个参数的类型，采用以下形式。
 is 应用于类 最常见的形式涉及两个类，一个正在定义，另一个现有，定义为 defines parenthood。 A is B, 如果两个都是类，则将 A 定义为 B 的子类。
 is DEPRECATED 可以应用于类，属性或例程，将它们标记为已弃用并发出警告消息（如果提供了的话）。
 is 的几个实例被直接转换为它们引用的类的属性：rw，nativesize，ctype，unsigned，hidden，array_type。
@@ -116,12 +117,12 @@ constant @IMM = &amp;lt;Innie Minnie Moe&amp;gt;; class don&#39;t-instantiate is
       
       <guid>https://ohmysunny.github.io/post/66.system-interaction/</guid>
       <description>通过命令行获取参数 最简单的方法是使用 @*ARGS 变量从命令行获取参数;此数组将包含程序名称后面的字符串。 %*ENV 将包含环境变量，因此如果您使用：
-export API_KEY=1967196417966160761fabc1511067 ./consume_api.p6  您可以通过以下方式在程序中使用它们：
-my $api-key = %*ENV&amp;lt;API_KEY&amp;gt; // die &amp;quot;Need the API key&amp;quot;;  如果先前未定义环境变量 API_KEY，则此操作将失败。
+export API_KEY=1967196417966160761fabc1511067 ./consume_api.p6 您可以通过以下方式在程序中使用它们：
+my $api-key = %*ENV&amp;lt;API_KEY&amp;gt; // die &amp;quot;Need the API key&amp;quot;; 如果先前未定义环境变量 API_KEY，则此操作将失败。
 Raku 有一个更好的方法来处理命令行参数，如果它们代表文件名：那么使用 $*ARGFILES 动态变量。
-for $*ARGFILES.lines -&amp;gt; $l { say &amp;quot;Long lines in {$*ARGFILES.path}&amp;quot; if $l.chars &amp;gt; 72 ; }  例如，你可以用 argf​​iles.p6 *.p6 的方式运行这个程序，每次找到一个超过72个字符的行时，它就会打印一个文件名。 $*ARGFILES 包含命令行中描述的所有文件的文件句柄 - .lines 将依次读取每行文件的一行，每次处理新句柄时都会更改 $*ARGFILES.path 的值。通常，它为处理文件集的脚本提供了非常方便的 API。
+for $*ARGFILES.lines -&amp;gt; $l { say &amp;quot;Long lines in {$*ARGFILES.path}&amp;quot; if $l.chars &amp;gt; 72 ; } 例如，你可以用 argf​​iles.p6 *.p6 的方式运行这个程序，每次找到一个超过72个字符的行时，它就会打印一个文件名。 $*ARGFILES 包含命令行中描述的所有文件的文件句柄 - .lines 将依次读取每行文件的一行，每次处理新句柄时都会更改 $*ARGFILES.path 的值。通常，它为处理文件集的脚本提供了非常方便的 API。
 以交互方式获取参数 使用 prompt 让一个正在运行的程序向用户查询数据：
-my UInt $num-iters = prompt &amp;quot;How many iterations to run: &amp;quot;;  同步和异步运行程序 运行外部程序有两个例程：run 和 shell。两者都存在于 IO 角色中，因此包含在混合该角色的所有类中，如 IO::Path。两者都返回一个 Proc 对象，但主要区别在于 run 会尽可能避免系统 shell，而 shell 会通过默认系统 shell 运行命令。</description>
+my UInt $num-iters = prompt &amp;quot;How many iterations to run: &amp;quot;; 同步和异步运行程序 运行外部程序有两个例程：run 和 shell。两者都存在于 IO 角色中，因此包含在混合该角色的所有类中，如 IO::Path。两者都返回一个 Proc 对象，但主要区别在于 run 会尽可能避免系统 shell，而 shell 会通过默认系统 shell 运行命令。</description>
     </item>
     
     <item>
@@ -137,12 +138,12 @@ my UInt $num-iters = prompt &amp;quot;How many iterations to run: &amp;quot;;  �
 也参阅 Unicode versus ASCII symbols.
 自由形式 Raku 代码也是自由格式的，从某种意义上说，你可以自由选择你使用的空格量，尽管在某些情况下，空格的存在与否具有意义。
 所以你可以写
-if True { say &amp;quot;Hello&amp;quot;; }  或
-if True { say &amp;quot;Hello&amp;quot;; # Bad indentation intended }  或
-if True { say &amp;quot;Hello&amp;quot; }  或者甚至
-if True {say &amp;quot;Hello&amp;quot;}  虽然你不能省略任何剩余的空白。
+if True { say &amp;quot;Hello&amp;quot;; } 或
+if True { say &amp;quot;Hello&amp;quot;; # Bad indentation intended } 或
+if True { say &amp;quot;Hello&amp;quot; } 或者甚至
+if True {say &amp;quot;Hello&amp;quot;} 虽然你不能省略任何剩余的空白。
 Unspace 在编译器不允许空格的许多地方，只要用反斜杠引用，就可以使用任意数量的空格。不支持 token 中的空格。当编译器生成行号时，未空格的换行仍然计算。用于非空格的用例是后缀运算符和例程参数列表的分离。
-sub alignment(+@l) { +@l }; sub long-name-alignment(+@l) { +@l }; alignment\ (1,2,3,4).</description>
+sub alignment(+@l) { +@l }; sub long-name-alignment(+@l) { +@l }; alignment\ (1,2,3,4).say; long-name-alignment(3,5)\ .say; say Inf+Inf\i; 在这种情况下，我们的目的是让 .</description>
     </item>
     
     <item>
@@ -154,7 +155,7 @@ sub alignment(+@l) { +@l }; sub long-name-alignment(+@l) { +@l }; alignment\ (1,
       <description>Subscripts 通过索引或键访问数据结构中的元素。
 通常，人们需要引用集合或数据结构中的一个特定的元素（或特定的元素切片）。从数学标记法中偷学到的，向量 v 的组成部分用 v₁, v₂, v₃ 来引用，在 Raku 中这个概念叫做 “下标” （或“索引”）。
 Basics Raku 提供了两个通用的下标接口：
- elements are identified by interface name supported by [ ] zero-based indices Positional Array, List, Buf, Match, ... { } string or object keys Associative Hash, Bag, Mix, Match, ...   Positional 下标 (通过 postcircumfix [ ] 通过元素在有序集合中的位置来寻址元素。)索引 0 引用第一个元素， 索引 1 引用第二个元素， 以此类推：  my @chores = &amp;quot;buy groceries&amp;quot;, &amp;quot;feed dog&amp;quot;, &amp;quot;wash car&amp;quot;; say @chores[0]; #-&amp;gt; buy groceries say @chores[1]; #-&amp;gt; feed dog say @chores[2]; #-&amp;gt; wash car   Associative 下标 (通过 postcircumfix { }), 不要求集合以任何特定的顺序保存元素 - 相反，它使用一个唯一的键来寻址每个值。键的种类取决于使用的集合： 举个例子， 一个标准的散列 使用字符串作为键， 而一个 Mix 能使用任意的对象作为键， 等等:  my %grade = Zoe =&amp;gt; &amp;quot;C&amp;quot;, Ben =&amp;gt; &amp;quot;B+&amp;quot;; say %grade{&amp;quot;Zoe&amp;quot;}; #-&amp;gt; C say %grade{&amp;quot;Ben&amp;quot;}; #-&amp;gt; B+ my $stats = ( Date.</description>
+	elements are identified by interface name supported by[ ]	zero-based indices	Positional Array, List, Buf, Match, ...{ }	string or object keys Associative Hash, Bag, Mix, Match, ... Positional 下标 (通过 postcircumfix  通过元素在有序集合中的位置来寻址元素。)索引 0 引用第一个元素， 索引 1 引用第二个元素， 以此类推：  my @chores = &amp;quot;buy groceries&amp;quot;, &amp;quot;feed dog&amp;quot;, &amp;quot;wash car&amp;quot;;say @chores[0]; #-&amp;gt; buy groceriessay @chores[1]; #-&amp;gt; feed dogsay @chores[2]; #-&amp;gt; wash car Associative 下标 (通过 postcircumfix { }), 不要求集合以任何特定的顺序保存元素 - 相反，它使用一个唯一的键来寻址每个值。键的种类取决于使用的集合： 举个例子， 一个标准的散列 使用字符串作为键， 而一个 Mix 能使用任意的对象作为键， 等等:  my %grade = Zoe =&amp;gt; &amp;quot;C&amp;quot;, Ben =&amp;gt; &amp;quot;B+&amp;quot;;say %grade{&amp;quot;Zoe&amp;quot;}; #-&amp;gt; Csay %grade{&amp;quot;Ben&amp;quot;}; #-&amp;gt; B+my $stats = ( Date.</description>
     </item>
     
     <item>
@@ -164,8 +165,8 @@ Basics Raku 提供了两个通用的下标接口：
       
       <guid>https://ohmysunny.github.io/post/63.sets-bags-and-mixes/</guid>
       <description>简而言之，这些类通常包含无序的对象集合。Set 仅考虑这些对象是否存在，bags 可以容纳多个相同类型的对象，mixes 也允许分数（和负）权重。常规版本是不可变的，Hash 版本是可变的。
-让我们详细说明一下。如果要收集容器中的对象但不关心这些对象的顺序，Raku 提供*无序*集合类型 Set, SetHash, Bag, BagHash, Mix, 和 MixHash. 由于无序，这些容器可以比 Lists 更有效地查找元素或处理重复的项目。
-另一方面，如果你想获得包含的对象（元素）而没有重复并且你只关心元素*是否*在集合中，你可以使用 Set 或 SetHash。如果你想消除重复但仍保留顺序，请查看 List 的 unique 例程。
+让我们详细说明一下。如果要收集容器中的对象但不关心这些对象的顺序，Raku 提供无序集合类型 Set, SetHash, Bag, BagHash, Mix, 和 MixHash. 由于无序，这些容器可以比 Lists 更有效地查找元素或处理重复的项目。
+另一方面，如果你想获得包含的对象（元素）而没有重复并且你只关心元素是否在集合中，你可以使用 Set 或 SetHash。如果你想消除重复但仍保留顺序，请查看 List 的 unique 例程。
 如果你想跟踪每个对象出现的次数，你可以使用 Bag 或 BagHash。在这些Baggy 容器中，每个元素都有一个权重（无符号整数），表示同一个对象已包含在集合中的次数。
 类型 Mix 和 MixHash 类似于 Bag 和 BagHash，但它们也允许分数和负权重。
 Set，Bag 和 Mix 是 immutable 类型。如果要在构造容器后添加或删除元素，请使用可变变体 SetHash, BagHash, 和 MixHash 。
@@ -184,12 +185,12 @@ Set，Bag 和 Mix 是 immutable 类型。如果要在构造容器后添加或删
       <description>关于怎样定义例程和使用例程, 请参阅 Sub 。
 控制例程 控制例程是能改变程序流的例程, 它可能会返回一个值。
 sub exit 定义为:
-sub exit(Int() $status = 0)  使用返回码 $status 退出当前进程，如果未指定值，则返回码为 0。退出值 ($status)，当不同于零时，必须从捕获它的进程（例如，shell）进行适当的计算; 它是从Main 返回不同于零的退出代码的唯一方法。
+sub exit(Int() $status = 0) 使用返回码 $status 退出当前进程，如果未指定值，则返回码为 0。退出值 ($status)，当不同于零时，必须从捕获它的进程（例如，shell）进行适当的计算; 它是从Main 返回不同于零的退出代码的唯一方法。
 exit 防止 LEAVE phaser 被执行, 但是它会在 &amp;amp;*EXIT 变量中运行。
 exit 应该作为最后的手段用于向父进程发出关于退出代码不等于零的信号，而不是异常地终止方法或 sub, 使用 exceptions 代替。
 done 定义为:
-sub done(--&amp;gt; Nil)  如果用在任何 supply 或 react 块儿之外, 则抛出异常: done without supply or react。在 Supply 块儿里面, 它会指示该 supply 不会再发出任何东西. 还请参阅 documentation on method done.
-my $supply = supply { for 1 .</description>
+sub done(--&amp;gt; Nil) 如果用在任何 supply 或 react 块儿之外, 则抛出异常: done without supply or react。在 Supply 块儿里面, 它会指示该 supply 不会再发出任何东西. 还请参阅 documentation on method done.
+my $supply = supply { for 1 .. 3 { emit($_); } done; } $supply.</description>
     </item>
     
     <item>
@@ -200,12 +201,12 @@ my $supply = supply { for 1 .</description>
       <guid>https://ohmysunny.github.io/post/61.regexes/</guid>
       <description>正则表达式, 简称 regexes, 是描述文本模式的字符序列。模式匹配就是将这些模式和实际的文本进行匹配的过程。
 词法约定 Raku 正则表达式有特殊的写法:
-m/abc/; # a regex that is immediately matched against $_ rx/abc/; # a Regex object /abc/; # a Regex object  对于前两个例子, 分隔符还能用除了斜线之外的其它字符:
-m{abc}; rx{abc};  注意, 冒号和圆括号都不能用作分隔符; 禁止使用冒号作为正则表达式分割符是因为它和副词冲突, 例如 rx:i/abc/(忽略大小写的正则表达式), 而圆括号表明函数调用。
+m/abc/; # a regex that is immediately matched against $_ rx/abc/; # a Regex object /abc/; # a Regex object 对于前两个例子, 分隔符还能用除了斜线之外的其它字符:
+m{abc}; rx{abc}; 注意, 冒号和圆括号都不能用作分隔符; 禁止使用冒号作为正则表达式分割符是因为它和副词冲突, 例如 rx:i/abc/(忽略大小写的正则表达式), 而圆括号表明函数调用。
 空白符在正则表达式中通常被忽略(带有 :s 或 :sigspace 副词的正则表达式除外)。
 通常, 对于 Raku 来说, 正则表达式中的注释以 # 号开头, 直至行尾。
 字面值 正则表达式最简单的情况是匹配字符串字面值。
-if &#39;properly&#39; ~~ m/ perl / { say &amp;quot;&#39;properly&#39; contains &#39;perl&#39;&amp;quot;; }  字母数字和下划线 _ 按字面值匹配。所有其它字符要么使用反斜线转义(例如, \: 匹配一个冒号), 要么用引号引起来:</description>
+if &#39;properly&#39; ~~ m/ perl / { say &amp;quot;&#39;properly&#39; contains &#39;perl&#39;&amp;quot;; } 字母数字和下划线 _ 按字面值匹配。所有其它字符要么使用反斜线转义(例如, \: 匹配一个冒号), 要么用引号引起来:</description>
     </item>
     
     <item>
@@ -215,9 +216,9 @@ if &#39;properly&#39; ~~ m/ perl / { say &amp;quot;&#39;properly&#39; contains &
       
       <guid>https://ohmysunny.github.io/post/60.quoting-constructs/</guid>
       <description>The Q Lang 在 Raku 中, 字符串通常使用一些引号结构来表示. 这些引号结构中,最简单的就是 Q, 通过便捷方式 ｢…｣ 或 Q 后跟着由任意一对儿分隔符包围着的文本. 大多数时候, 你需要的只是 &#39;…&#39; 或 &amp;quot;…&amp;quot;.
-Literal strings: Q Q[A literal string] ｢More plainly.｣ Q ^Almost any non-word character can be a delimiter!^ Q ｢｢Delimiters can be repeated/nested if they are adjacent.｣｣  分隔符能够嵌套, 但是在普通的 Q 形式中, 反斜线转义是不允许的. 换种说法就是, Q 字符串尽可能被作为字面量.
+Literal strings: Q Q[A literal string]｢More plainly.｣Q ^Almost any non-word character can be a delimiter!^Q ｢｢Delimiters can be repeated/nested if they are adjacent.｣｣分隔符能够嵌套, 但是在普通的 Q 形式中, 反斜线转义是不允许的. 换种说法就是, Q 字符串尽可能被作为字面量.
 在 Q、q 或 qq 之后不允许立即使用一些分隔符。标识符中允许的任何字符都不允许使用，因为在这种情况下，引号结构和这些字符一起被解释为标识符。此外，( ) 是不允许的，因为它被解释为函数调用。如果你仍然希望使用这些字符作为分隔符，请用空格将它们与 Q、q 或 qq 分隔开。请注意，一些自然语言在字符串的右侧使用左分隔引号。Q 不支持这些，因为它依赖unicode 属性来区分左分隔符和右分隔符。
-Q&#39;this will not work!</description>
+Q&#39;this will not work!&#39;Q(this won&#39;t work either!</description>
     </item>
     
     <item>
@@ -227,7 +228,7 @@ Q&#39;this will not work!</description>
       
       <guid>https://ohmysunny.github.io/post/59.pragmas/</guid>
       <description>在 Raku 中，pragma 是用于识别要使用的 Raku 的特定版本或以某种方式修改编译器的正常行为的指令。use 关键字开启编译指示（类似于你怎么 use 一个模块）。要禁用 pragma，请使用 no 关键字：
-use v6.c; # use 6.c language version no worries; # don&#39;t issue compile time warnings  以下是一个编译指令列表，其中包含每个编译指令意图的简短描述或指向其使用的更多详细信息的链接。（注意：标记为“[NYI]”的编译指令尚未实现，标记为“[TBD]”的编号将在稍后定义。）
+use v6.c; # use 6.c language version no worries; # don&#39;t issue compile time warnings 以下是一个编译指令列表，其中包含每个编译指令意图的简短描述或指向其使用的更多详细信息的链接。（注意：标记为“[NYI]”的编译指令尚未实现，标记为“[TBD]”的编号将在稍后定义。）
 v6.x 该编译指令 声明了将要使用的编译器的版本，如果它们是可选的，则开启它的功能。
 use v6; # Load latest supported version (non-PREVIEW). # Also, useful for producing better errors when accidentally # executing the program with `perl` instead of `raku` use v6.c; # Use the &amp;quot;Christmas&amp;quot; version of Raku use v6.d; # Use the &amp;quot;Diwali&amp;quot; version of Raku use v6.</description>
     </item>
@@ -238,8 +239,8 @@ use v6; # Load latest supported version (non-PREVIEW). # Also, useful for produc
       <pubDate>Sun, 02 Dec 2018 21:13:31 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/post/58.phasers/</guid>
-      <description>程序的生命周期（执行时间表）分为几个阶段。*phaser*是在特定执行阶段调用的代码块。
-Phasers phaser 块只是包含它的闭包的 trait，并在适当的时刻自动调用。这些自动调用的块称为 *phasers*，因为它们通常标记从计算的一个阶段到另一个阶段的转换。例如，在编译编译单元结束时调用 CHECK 块。也可以安装其他类型的 phasers; 它们会在适当的时候自动调用，其中一些 phasers 响应各种控制异常和退出值。例如，如果块的退出成功或失败，则可能会调用某些 phasers，在这种情况下*成功*退出, 则在这时返回定义的值或列表，而不带任何 Failure 或异常。
+      <description>程序的生命周期（执行时间表）分为几个阶段。phaser是在特定执行阶段调用的代码块。
+Phasers phaser 块只是包含它的闭包的 trait，并在适当的时刻自动调用。这些自动调用的块称为 phasers，因为它们通常标记从计算的一个阶段到另一个阶段的转换。例如，在编译编译单元结束时调用 CHECK 块。也可以安装其他类型的 phasers; 它们会在适当的时候自动调用，其中一些 phasers 响应各种控制异常和退出值。例如，如果块的退出成功或失败，则可能会调用某些 phasers，在这种情况下成功退出, 则在这时返回定义的值或列表，而不带任何 Failure 或异常。
 以下是摘要：
 BEGIN {...} # * at compile time, as soon as possible, only ever runs once CHECK {...} # * at compile time, as late as possible, only ever runs once INIT {...} # * at runtime, as soon as possible, only ever runs once END {...} # at runtime, as late as possible, only ever runs once DOC [BEGIN|CHECK|INIT] {.</description>
     </item>
@@ -262,10 +263,10 @@ Types with native representation Raku 中的一些简单类型具有原生表示
       
       <guid>https://ohmysunny.github.io/post/56.performance/</guid>
       <description>该页面是关于在 Raku 上下文中 计算机性能 的。
-首先,剖析你的代码 确保你没有在错误的代码上浪费时间: 通过剖析你的代码的性能以从识别你的 &amp;ldquo;临界 3%&amp;rdquo; 开始。本文档的其余部分将向您展示如何执行此操作。
+首先,剖析你的代码 确保你没有在错误的代码上浪费时间: 通过剖析你的代码的性能以从识别你的 &amp;ldquo;临界 3%&amp;quot; 开始。本文档的其余部分将向您展示如何执行此操作。
 Time with now - INIT now 对于 now - INIT now 形式的表达式, 其中 INIT 是一个 Raku 程序中运行的 phase, 为计时代码片段提供了一个很好的习惯用法。
 使用 m: your code goes here raku 频道 evalbot 来写出这样的行:
-m: say now - INIT now rakudo-moar abc1234: OUTPUT«0.0018558␤»  INIT 左边的 now 比 INIT 右边的 now *晚*运行了 0.0018558 秒, 因为后者在INIT phase 期间出现。
+m: say now - INIT now rakudo-moar abc1234: OUTPUT«0.0018558␤» INIT 左边的 now 比 INIT 右边的 now 晚运行了 0.0018558 秒, 因为后者在INIT phase 期间出现。
 本地剖析 当使用 MoarVM 后端时, Rakudo 编译器的 --profile 命令行选项将剖析数据写到一个 HTML 文件中。</description>
     </item>
     
@@ -278,10 +279,10 @@ m: say now - INIT now rakudo-moar abc1234: OUTPUT«0.0018558␤»  INIT 左边�
       <description>Packages - Organizing and referencing namespaced program elements
  包是指定程序元素的嵌套命名空间。 模块，类，Grammar是包类型。 像目录中的文件一样，通常可以使用其短名称（如果它们是本地的）或使用较长的名称来消除歧义的引用具名元素。
 Names 名称是作为变量名称的合法部分的任何东西（不包括sigil符号）。 这包括：
-$foo # 简单标识符 $Foo::Bar::baz # 通过 :: 分割的组合标识符 $Foo::($bar)::baz # 执行插值的组合标识符 $42 # numeric names $! # 某些标点符号变量  :: 用于分割嵌套的包名。
+$foo # 简单标识符 $Foo::Bar::baz # 通过 :: 分割的组合标识符 $Foo::($bar)::baz # 执行插值的组合标识符 $42 # numeric names $! # 某些标点符号变量 :: 用于分割嵌套的包名。
 包限定名 普通的包限定名像这样:
-$Foo::Bar::baz # 包 Foo::Bar 中的 $baz 变量  有时保持sigil与变量名很清晰，所以来写这个的一个替代方式是：
-Foo::Bar::&amp;lt;$baz&amp;gt;  这在编译时解决，因为变量名是一个常量。
+$Foo::Bar::baz # 包 Foo::Bar 中的 $baz 变量 有时保持sigil与变量名很清晰，所以来写这个的一个替代方式是：
+Foo::Bar::&amp;lt;$baz&amp;gt; 这在编译时解决，因为变量名是一个常量。
 如果 :: 之前的名称部分为 null，则意味着包未指定并且必须搜索。 一般来说，这意味着跟在主sigil后面的初始 :: 是对编译时已知的名字的无操作(no-op)，但 ::() 也可以用来引入插值。 另外，在没有另一个sigil的情况下，:: 可以作为它自己的sigil，表明有意使用一个尚未声明的包名。
 伪包 在名称前面保留以下伪包名称：
 MY # 当前词法作用域中的符号 (aka $?SCOPE) OUR # 当前包中的符号 (aka $?</description>
@@ -294,7 +295,7 @@ MY # 当前词法作用域中的符号 (aka $?SCOPE) OUR # 当前包中的符号
       
       <guid>https://ohmysunny.github.io/post/54.operators/</guid>
       <description>操作符 操作符优先级 在像 1 + 2 * 3 这样的表达式中， 2 * 3 被首先计算， 因为中缀操作符 * 的优先级比 + 的优先级高。下面的表中总结了 Perl 6 中 的优先级级别， 从最牢固到最松散：
-A	Level	Examples N	Terms	42 3.14 &amp;quot;eek&amp;quot; qq[&amp;quot;foo&amp;quot;] $x :!verbose @$array L	方法后缀	.meth .+ .? .* .() .[] .{} .&amp;lt;&amp;gt; .«» .:: .= .^ .: N	自增	++ -- R	求幂	** L	Symbolic unary	! + - ~ ? | || +^ ~^ ?</description>
+A	Level	Examples N	Terms	42 3.14 &amp;quot;eek&amp;quot; qq[&amp;quot;foo&amp;quot;] $x :!verbose @$array L	方法后缀	.meth .+ .? .* .() .[] .{} .&amp;lt;&amp;gt; .«» .:: .= .^ .: N	自增	++ -- R	求幂	** L	Symbolic unary	! + - ~ ? | || +^ ~^ ?^ ^ L	乘法	* / % %% +&amp;amp; +&amp;lt; +&amp;gt; ~&amp;amp; ~&amp;lt; ~&amp;gt; ?</description>
     </item>
     
     <item>
@@ -306,12 +307,12 @@ A	Level	Examples N	Terms	42 3.14 &amp;quot;eek&amp;quot; qq[&amp;quot;foo&amp;qu
       <description>Object Orientation in Raku
 Raku 有很多预先定义好的类型，这些类型可以归为 2 类：普通类型和原生类型。原生类型用于底层类型（例如 uint 64）。原生类型没有和对象同样的功能，尽管你可以在它们身上调用方法， 它们还是被包装成普通的对象。所有你能存储到变量中的东西要么是一个原生的 value， 要么是一个对象。这包括字面值、类型（类型对象）、code 和容器。
 使用对象 方法可以有参数， 但是方法名和参数列表之间不可以有空格：
-say &amp;quot;abc&amp;quot;.uc; # ^^^ 不带参数的方法调用 my @words = $string.comb(/\w+/); # ^^^^^^^^^^^^ 带一个参数的方法调用  另外一种方法调用的语法将方法名和参数列表用一个冒号分开(冒号紧跟方法名, 中间不能有空格):
-say @*INC.join: &#39;:&#39;;  方法能返回一个可变容器, 这种情况下 你可以赋值给方法调用的返回值.
-$*IN.input-line-separator = &amp;quot;\r\n&amp;quot;;  类型对象 Types本身就是对象 ，你可以使用类型的名字获取 type object :
-my $int-type-obj = Int;  你可以通过调用 WHAT 方法查看任何对象的 type object(它实际上是一个方法形式的macro):
-my $int-type-obj = 1.WHAT;  使用 === 操作符可以比较 类型对象的相等性：
-sub f(Int $x) { if $x.</description>
+say &amp;quot;abc&amp;quot;.uc; # ^^^ 不带参数的方法调用 my @words = $string.comb(/\w+/); # ^^^^^^^^^^^^ 带一个参数的方法调用 另外一种方法调用的语法将方法名和参数列表用一个冒号分开(冒号紧跟方法名, 中间不能有空格):
+say @*INC.join: &#39;:&#39;; 方法能返回一个可变容器, 这种情况下 你可以赋值给方法调用的返回值.
+$*IN.input-line-separator = &amp;quot;\r\n&amp;quot;; 类型对象 Types本身就是对象 ，你可以使用类型的名字获取 type object :
+my $int-type-obj = Int; 你可以通过调用 WHAT 方法查看任何对象的 type object(它实际上是一个方法形式的macro):
+my $int-type-obj = 1.WHAT; 使用 === 操作符可以比较 类型对象的相等性：
+sub f(Int $x) { if $x.WHAT === Int { say &#39;you passed an Int&#39;; } else { say &#39;you passed a subtype of Int&#39;; } } 子类型可以使用 smart-matching来检查：</description>
     </item>
     
     <item>
@@ -321,8 +322,8 @@ sub f(Int $x) { if $x.</description>
       
       <guid>https://ohmysunny.github.io/post/52.numerics/</guid>
       <description>Int Int 类型提供任意大小的整数。它们可以像计算机内存允许的那样大，虽然有些实现在被要求生成真正惊人大小的整数时会选择抛出数字溢出错误：
-say 10**600**600 # OUTPUT: «Numeric overflow»  与某些语言不同，当两个操作数都是 Int 类型时，使用/运算符执行除法将生成小数，而不执行任何舍入。
-say 4/5; # OUTPUT: «0.8»  这种除法产生的类型是 Rat 或 Num 类型。换算后，如果分数的分母是小于64位，则产生 Rat, 否则产生 Num 类型。
+say 10**600**600 # OUTPUT: «Numeric overflow» 与某些语言不同，当两个操作数都是 Int 类型时，使用/运算符执行除法将生成小数，而不执行任何舍入。
+say 4/5; # OUTPUT: «0.8» 这种除法产生的类型是 Rat 或 Num 类型。换算后，如果分数的分母是小于64位，则产生 Rat, 否则产生 Num 类型。
 如果你想落得 Int 的结果，那么 div 和 narrow 例程可能会有帮助，只要有可能。div运算符执行整除，丢弃余数，而narrow 会把数拟合到它适合的最窄类型：
 say 5 div 2; # OUTPUT: «2» # Result `2` is narrow enough to be an Int: say (4/2).narrow; # OUTPUT: «2» say (4/2).narrow.^name; # OUTPUT: «Int» # But 2.5 has fractional part, so it ends up being a Rat type: say (5/2).</description>
     </item>
@@ -334,11 +335,9 @@ say 5 div 2; # OUTPUT: «2» # Result `2` is narrow enough to be an Int: say (4/
       
       <guid>https://ohmysunny.github.io/post/51.newline-handling-in-perl-6/</guid>
       <description>不同的操作系统使用不同的字符或字符的组合来表示换行符。每种语言都有自己的一套规则来处理这个问题。 Raku 有以下几个规则：
- 字符串字面量中的 \n 表示 Unicode 代码点 10。
- 由 say 附加到字符串的默认 nl-out 也是 \n。
- 在输出时，当在 Windows 上时，编码器默认将 \n 转换为 \r\n，当它转到文件，进程或终端时（但它不会在套接字上执行此操作）。 在输入时，在任何平台上，解码器默认将 \r\n 标准化为 \n，以便从文件，进程或终端（同样不是套接字）输入。 以上两点一起意味着你可以 - 把套接字编程放在一边 - 期望永远不会在你的程序中看到 \r\n（这也是许多其他语言的工作原理）。 :$translate-nl 命名参数存在于控制此转换的各个位置，例如，在 Proc::Async.new 和 Proc::Async.Supply 中。
- 正则表达式语言中的 \n 是合乎逻辑的，并且匹配 \r\n。  您可以通过在创建该句柄时设置 :nl-out 属性来更改特定句柄的默认行为。
-my $crlf-out = open(IO::Special.new(&#39;&amp;lt;STDOUT&amp;gt;&#39;), :nl-out(&amp;quot;\\\n\r&amp;quot;)); $*OUT.say: 1; #OUTPUT: «1␤» $crlf-out.say: 1; #OUTPUT: «1\␤␍»  在这个例子中，我们通过使用 IO::Special 将标准输出复制到新句柄，我们在字符串的末尾附加一个 \，然后是换行符 ␤ 和回车符 ␍; 我们打印到该句柄的所有内容都会在行尾添加这些字符，如图所示。</description>
+ 字符串字面量中的 \n 表示 Unicode 代码点 10。 由 say 附加到字符串的默认 nl-out 也是 \n。 在输出时，当在 Windows 上时，编码器默认将 \n 转换为 \r\n，当它转到文件，进程或终端时（但它不会在套接字上执行此操作）。 在输入时，在任何平台上，解码器默认将 \r\n 标准化为 \n，以便从文件，进程或终端（同样不是套接字）输入。 以上两点一起意味着你可以 - 把套接字编程放在一边 - 期望永远不会在你的程序中看到 \r\n（这也是许多其他语言的工作原理）。 :$translate-nl 命名参数存在于控制此转换的各个位置，例如，在 Proc::Async.new 和 Proc::Async.Supply 中。 正则表达式语言中的 \n 是合乎逻辑的，并且匹配 \r\n。  您可以通过在创建该句柄时设置 :nl-out 属性来更改特定句柄的默认行为。
+my $crlf-out = open(IO::Special.new(&#39;&amp;lt;STDOUT&amp;gt;&#39;), :nl-out(&amp;quot;\\\n\r&amp;quot;)); $*OUT.say: 1; #OUTPUT: «1␤» $crlf-out.say: 1; #OUTPUT: «1\␤␍» 在这个例子中，我们通过使用 IO::Special 将标准输出复制到新句柄，我们在字符串的末尾附加一个 \，然后是换行符 ␤ 和回车符 ␍; 我们打印到该句柄的所有内容都会在行尾添加这些字符，如图所示。
+在正则表达式中，\n 是根据逻辑换行符的Unicode定义定义的。它会匹配 ., 还有 \v，以及包含空格的任何类。</description>
     </item>
     
     <item>
@@ -348,13 +347,13 @@ my $crlf-out = open(IO::Special.new(&#39;&amp;lt;STDOUT&amp;gt;&#39;), :nl-out(&
       
       <guid>https://ohmysunny.github.io/post/50.native-calling-interface/</guid>
       <description>原生调用接口 入门指南 能想象出的最简单的 NativeCall 用法应该类似于这样的东西：
-use NativeCall; sub some_argless_function() is native(&#39;something&#39;) { * } some_argless_function();  第一行导入了各种 traits 和类型，接下来的一行看起来很像相对普通的 Raku 子例程声明 - 稍微有点变化。我们使用native这个 trait 是为了指定这个 sub 子例程实际上被定义在原生库中。Raku 会给你添加特定平台的扩展名（比如 .so 或者 .dll）还有任何惯常的前缀(例如: &amp;lsquo;lib&amp;rsquo;)。
+use NativeCall; sub some_argless_function() is native(&#39;something&#39;) { * } some_argless_function(); 第一行导入了各种 traits 和类型，接下来的一行看起来很像相对普通的 Raku 子例程声明 - 稍微有点变化。我们使用native这个 trait  是为了指定这个 sub 子例程实际上被定义在原生库中。Raku 会给你添加特定平台的扩展名（比如 .so 或者 .dll）还有任何惯常的前缀(例如: &amp;lsquo;lib&amp;rsquo;)。
 当你第一次调用 “some_argless_function” 时，“libsomething” 将会被加载，然后会在 libsomething 库中定位到 “some_argless_function” 函数，接下来将会进行一次调用。之后的调用将会更快，因为符号句柄会被保留。
 当然，大部分的函数都会接受参数或者返回值 - 但是你可以做的其他事情只是增加了这个声明Raku sub的简单模式
 但是一切你需要做的就是增加这个简单的模式，通过声明一个 Raku 的过程、在符号后面指出你想要调用的名字，并且使用 “native” trait。
 改变名字 有时你想要 Raku 子例程的名字和加载库中使用的名字不同，可能这个名字很长, 或者有不同的大小写或者在你想要创建的模块的上下文中, 这个名字很繁琐。
 NativeCall 为你提供了一个 symbol trait 以指定库中原生子例程的名字, 这个名字和你的 Raku 子例程名字不同。
-module Foo; use NativeCall; our sub init() is native(&#39;foo&#39;) is symbol(&#39;FOO_INIT&#39;) { * }  在 libfoo 库里面有一个子例程叫 FOO_INIT，因为我们创建了一个模块叫做 Foo，我们更愿意使用 Foo::init 调用子例程，我们使用 symbol trait 来指定在 libfoo 库名字符号的名字，然后以任何我们想要的方式调用这个子例程（这里是 “init”）。</description>
+module Foo; use NativeCall; our sub init() is native(&#39;foo&#39;) is symbol(&#39;FOO_INIT&#39;) { * } 在 libfoo 库里面有一个子例程叫 FOO_INIT，因为我们创建了一个模块叫做 Foo，我们更愿意使用 Foo::init 调用子例程，我们使用 symbol trait 来指定在 libfoo 库名字符号的名字，然后以任何我们想要的方式调用这个子例程（这里是 “init”）。</description>
     </item>
     
     <item>
@@ -365,8 +364,8 @@ module Foo; use NativeCall; our sub init() is native(&#39;foo&#39;) is symbol(&#
       <guid>https://ohmysunny.github.io/post/49.meta-object-protocol-mop/</guid>
       <description>自省和 Raku 的对象系统 Raku 是构建在元对象层上面的。那意味着有些对象(元对象)控制着各种面向对象结构(例如类、roles、方法、属性、枚举,…)怎样去表现。
 要感受类的元对象, 这儿有一个同样的例子出现2次: 一次一种 Raku中的普通声明, 一次通过元模型来表达:
-class A { method x() { say 42 } } A.x(); # 42  对应于:
-constant A := Metamodel::ClassHOW.new_type( name =&amp;gt; &#39;A&#39; ); # class A { A.^add_method(&#39;x&#39;, my method x(A:) { say 42 }); # method x() .. . A.^compose; # } A.x(); # 42  (除了声明形式的运行在编译时, 后面这种形式不是)
+class A {method x() { say 42 }}A.x(); # 42对应于:
+constant A := Metamodel::ClassHOW.new_type( name =&amp;gt; &#39;A&#39; ); # class A {A.^add_method(&#39;x&#39;, my method x(A:) { say 42 }); # method x() .. .A.^compose; # }A.x(); # 42(除了声明形式的运行在编译时, 后面这种形式不是)
 对象后面的元对象能使用 $obj.HOW获取, 这儿的 HOW 代表着 Higher Order Workings(或者 HOW the *%@$ does this work?</description>
     </item>
     
@@ -378,9 +377,9 @@ constant A := Metamodel::ClassHOW.new_type( name =&amp;gt; &#39;A&#39; ); # clas
       <guid>https://ohmysunny.github.io/post/48.lists-sequences-and-arrays/</guid>
       <description>列表一直是计算机的核心部分，因为之前有计算机，在这段时间里，许多恶魔占据了他们的细节。 它们实际上是 Raku 设计中最难的部分之一，但是通过坚持和耐心，Raku 已经使用了一个优雅的系统来处理它们。
 Literal Lists 字面上的列表用逗号和分号不是用圆括号创建，因此：
-1, 2 # This is two-element list (1, 2) # This is also a List, in parentheses (1; 2) # same List (1) # This is not a List, just a 1 in parentheses (1,) # This is a one-element List  括号可用于标记列表的开头和结尾，因此：
-(1, 2), (1, 2) # This is a list of two lists.  多维字面上的列表是通过逗号和分号组合而成的。 它们可以在常规参数列表和下标中使用。
-say so (1,2; 3,4) eqv ((1,2), (3,4)); # OUTPUT«True␤» say(&#39;foo&#39;;); # a list with one element and the empty list # OUTPUT«(foo)()␤»  单个元素可以使用下标从列表中拉出。 列表的第一个元素的索引号为零：</description>
+1, 2 # This is two-element list (1, 2) # This is also a List, in parentheses (1; 2) # same List (1) # This is not a List, just a 1 in parentheses (1,) # This is a one-element List 括号可用于标记列表的开头和结尾，因此：
+(1, 2), (1, 2) # This is a list of two lists. 多维字面上的列表是通过逗号和分号组合而成的。 它们可以在常规参数列表和下标中使用。
+say so (1,2; 3,4) eqv ((1,2), (3,4)); # OUTPUT«True␤» say(&#39;foo&#39;;); # a list with one element and the empty list # OUTPUT«(foo)()␤» 单个元素可以使用下标从列表中拉出。 列表的第一个元素的索引号为零：</description>
     </item>
     
     <item>
@@ -390,14 +389,14 @@ say so (1,2; 3,4) eqv ((1,2), (3,4)); # OUTPUT«True␤» say(&#39;foo&#39;;); #
       
       <guid>https://ohmysunny.github.io/post/47.input-and-output-the-definitive-guide/</guid>
       <description>基础知识 绝大多数常见的 IO 工作都是由IO::Path类型完成的。如果您想以某种形式或形状读取或写入文件，这就是您想要的类。它抽象出文件句柄（或“文件描述符”）的细节，因此你甚至不必考虑它们。
-在幕后，IO::Path 与 IO::Handle 一起使用 ; 一个你可以直接使用的类，如果你需要比 IO::Path 提供的更多控制。当与其他进程，例如通过 Proc 或 Proc::Async类型，您还可以处理IO::Handle 的*子类*：在IO::Pipe。
+在幕后，IO::Path 与 IO::Handle 一起使用 ; 一个你可以直接使用的类，如果你需要比 IO::Path 提供的更多控制。当与其他进程，例如通过 Proc 或 Proc::Async类型，您还可以处理IO::Handle 的子类：在IO::Pipe。
 最后，你有 IO::CatHandle，以及 IO::Spec 及其子类，你很少直接使用它们。这些类为您提供了高级功能，例如将多个文件作为一个句柄进行操作，或者进行低级路径操作。
 除了所有这些类之外，Raku 还提供了几个子程序，可以让您间接使用这些类。如果您喜欢函数式编程风格或 Raku 单行程序，这些就派上用场了。
 虽然 IO::Socket 及其子类也与输入和输出有关，但本指南并未涵盖它们。
 导航路径 What&amp;rsquo;s an IO::Path anyway? 要将路径表示为文件或目录，请使用 IO::Path 类型。获取该类型对象的最简单方法是通过在它身上调用 .IO 方法强制将 Str 类型转为路径类型：
-say &#39;my-file.txt&#39;.IO; # OUTPUT: «&amp;quot;my-file.txt&amp;quot;.IO␤»  看起来这里似乎缺少某些东西 - 没有卷或绝对路径 - 但该信息实际上存在于对象中。你可以通过使用 .perl 方法看到它：
-say &#39;my-file.txt&#39;.IO.perl; # OUTPUT: «IO::Path.new(&amp;quot;my-file.txt&amp;quot;, :SPEC(IO::Spec::Unix), :CWD(&amp;quot;/home/camelia&amp;quot;))␤»  这两个额外的属性 - SPEC 和 - CWD 指定路径应该使用的操作系统语义类型以及路径的“当前工作目录”，即如果它是相对路径，则它相对于该目录。
-这意味着无论你如何制作一个路径，IO::Path 对象在技术上总是指一个绝对路径。这就是它的 .</description>
+say &#39;my-file.txt&#39;.IO; # OUTPUT: «&amp;quot;my-file.txt&amp;quot;.IO␤» 看起来这里似乎缺少某些东西 - 没有卷或绝对路径 - 但该信息实际上存在于对象中。你可以通过使用 .perl 方法看到它：
+say &#39;my-file.txt&#39;.IO.perl; # OUTPUT: «IO::Path.new(&amp;quot;my-file.txt&amp;quot;, :SPEC(IO::Spec::Unix), :CWD(&amp;quot;/home/camelia&amp;quot;))␤» 这两个额外的属性 - SPEC 和 - CWD 指定路径应该使用的操作系统语义类型以及路径的“当前工作目录”，即如果它是相对路径，则它相对于该目录。
+这意味着无论你如何制作一个路径，IO::Path 对象在技术上总是指一个绝对路径。这就是它的 .absolute 和 .relative 方法返回 Str 对象的原因，它们是字符串化路径的正确方法。</description>
     </item>
     
     <item>
@@ -408,7 +407,7 @@ say &#39;my-file.txt&#39;.IO.perl; # OUTPUT: «IO::Path.new(&amp;quot;my-file.tx
       <guid>https://ohmysunny.github.io/post/46.hashes-and-maps/</guid>
       <description>关联角色和关联类 关联角色是 Hash 和 Map 以及 MixHash 等其他类的基础。它定义了将在关联类中使用的两种类型; 默认情况下，您可以使用任何内容（字面意思，因为任何 Any 子类的类都可以使用）作为键和 keyof 方法。
 默认情况下，使用 % sigil 声明的任何对象都将获得 Associative 角色，默认情况下将表现为散列，但此角色仅提供上述两种方法，以及默认的 Hash 行为。
-say (%).^name ; # 输出 Hash  相反，如果未混入 Associative 角色，则不能使用 % sigil，但由于此角色没有任何关联属性，因此你必须重新定义散列下标操作符的行为。为此，你必须重写几个函数：
+say (%).^name ; # 输出 Hash 相反，如果未混入 Associative 角色，则不能使用 % sigil，但由于此角色没有任何关联属性，因此你必须重新定义散列下标操作符的行为。为此，你必须重写几个函数：
 class Logger does Associative[Cool,DateTime] { has %.store; method log( Cool $event ) { %.store{ DateTime.new( now ) } = $event; } multi method AT-KEY ( ::?CLASS:D: $key) { my @keys = %.store.keys.grep( /$key/ ); %.store{ @keys }; } multi method EXISTS-KEY (::?</description>
     </item>
     
@@ -424,7 +423,7 @@ Grammars 是一个很强大的工具用于析构文本并通常返回数据结�
 对普通 Raku 使用者更实用的一个例子是 JSON::Tiny模块, 它能反序列化任何合法的 JSON 文件, 而反序列代码只有不到 100 行, 还能扩展。
 Grammars 允许你把 regexes 组织到一块儿, 就像类(class) 中组织方法那样。
 具名正则 (Named Regexes) 　grammars 的主要组成部分是 regexes。 而 Raku 的 regexes语法不在该文档的讨论范围, 具名正则(named regexes) 有它自己的特殊语法, 这跟子例程(subroutine) 的定义很像:
-my regex number { \d+ [ \. \d+ ]? } # 普通 regex 中空格被忽略, [] 是非捕获组  上面的代码使用 my 关键字指定了本地作用域的 regex, 因为具名正则(named regexes) 通常用在 grammars 里面。</description>
+my regex number { \d+ [ \. \d+ ]? } # 普通 regex 中空格被忽略, [] 是非捕获组 上面的代码使用 my 关键字指定了本地作用域的 regex, 因为具名正则(named regexes) 通常用在 grammars 里面。</description>
     </item>
     
     <item>
@@ -435,10 +434,10 @@ my regex number { \d+ [ \. \d+ ]? } # 普通 regex 中空格被忽略, [] 是非
       <guid>https://ohmysunny.github.io/post/44.functions/</guid>
       <description>Raku 中的函数 例程（Routines）是 Raku 中代码重用的最小手段。它们有几种形式，最明显的是属于类和角色并与对象相关联的方法，还有函数, 也叫做子例程或短子程序，它们独立于对象而存在。
 子例程默认是词法（my）作用域的，对它们的调用通常在编译时解析。
-子例程可以具有签名，也称为*参数列表*，其指定签名期望的参数（如果有的话）。 它可以指定（或保持打开）参数的数量和类型，以及返回值。
+子例程可以具有签名，也称为参数列表，其指定签名期望的参数（如果有的话）。 它可以指定（或保持打开）参数的数量和类型，以及返回值。
 子例程的内省通过例程提供。
 定义/创建/使用 函数 子例程 创建子例程的基本方法是使用 sub 声明符，后跟可选标识符
-sub my-func { say &amp;quot;Look ma, no args!&amp;quot; } my-func;  sub 声明符返回可以存储在任何容器中的 Sub 类型的值:
+sub my-func { say &amp;quot;Look ma, no args!&amp;quot; } my-func; sub 声明符返回可以存储在任何容器中的 Sub 类型的值:
 my &amp;amp;c = sub { say &amp;quot;Look ma, no name!&amp;quot; } c; # OUTPUT: «Look ma, no name!␤» my Any:D $f = sub { say &#39;Still nameless...&#39; } $f(); # OUTPUT: «Still nameless...␤» my Code \a = sub { say ‚raw containers don&#39;t implement postcircumfix:&amp;lt;( )&amp;gt;‘ }; a.</description>
     </item>
     
@@ -451,10 +450,10 @@ my &amp;amp;c = sub { say &amp;quot;Look ma, no name!&amp;quot; } c; # OUTPUT: �
       <description>Raku 中的异常是保存有关错误信息的对象。例如，错误可能是意外接收数据或网络连接不再可用，或者丢失文件。异常对象存储的信息是关于错误条件的人类可读消息，错误引发的回溯等等。
 所有内置异常都继承自 Exception，它提供了一些基本行为，包括回溯的存储和回溯打印机的接口。
 热异常 通过调用带有描述错误的 die 函数来使用热异常：
-die &amp;quot;oops, something went wrong&amp;quot;; # RESULT: «oops, something went wrong in block &amp;lt;unit&amp;gt; at my-script.p6:1␤»  值得注意的是，die 会将错误消息打印到标准错误 $*ERR。
+die &amp;quot;oops, something went wrong&amp;quot;; # RESULT: «oops, something went wrong in block &amp;lt;unit&amp;gt; at my-script.p6:1␤» 值得注意的是，die 会将错误消息打印到标准错误 $*ERR。
 类型化的异常 类型化异常提供有关异常对象中存储的错误的更多信息。
 例如，如果在对象上执行 .zombie copy 时，所需的路径 foo/bar 变得不可用，则可以引发 X::IO::DoesNotExist异常：
-die X::IO::DoesNotExist.new(:path(&amp;quot;foo/bar&amp;quot;), :trying(&amp;quot;zombie copy&amp;quot;)) # RESULT: «Failed to find &#39;foo/bar&#39; while trying to do &#39;.zombie copy&#39; # in block &amp;lt;unit&amp;gt; at my-script.p6:1»  请注意对象如何为回溯提供有关出错的信息。代码的用户现在可以更轻松地找到并纠正问题。
+die X::IO::DoesNotExist.new(:path(&amp;quot;foo/bar&amp;quot;), :trying(&amp;quot;zombie copy&amp;quot;)) # RESULT: «Failed to find &#39;foo/bar&#39; while trying to do &#39;.zombie copy&#39; # in block &amp;lt;unit&amp;gt; at my-script.p6:1» 请注意对象如何为回溯提供有关出错的信息。代码的用户现在可以更轻松地找到并纠正问题。
 捕获异常 通过提供 CATCH 块可以处理异常情况：
 die X::IO::DoesNotExist.new(:path(&amp;quot;foo/bar&amp;quot;), :trying(&amp;quot;zombie copy&amp;quot;)); CATCH { when X::IO { $*ERR.</description>
     </item>
@@ -468,7 +467,7 @@ die X::IO::DoesNotExist.new(:path(&amp;quot;foo/bar&amp;quot;), :trying(&amp;quo
       <description>在 Raku 中，枚举(enum)类型比其他语言复杂得多，详细信息可在此处的类型描述中找到。
 这个简短的文档将给出一个简单的使用示例，就像在 C 语言中一样。
 假设我们有一个需要写入各种目录的程序; 我们想要一个函数，给定一个目录名，测试它（1）是否存在（2）它是否可以被该程序的用户写入; 这意味着从用户的角度来看有三种可能的状态：要么你可以写（CanWrite），要么没有目录（NoDir）或者目录存在，但你不能写（NoWrite）。 测试结果将决定程序接下来要采取的操作。
-enum DirStat &amp;lt;CanWrite NoDir NoWrite&amp;gt;; sub check-dir-status($dir --&amp;gt; DirStat) { if $dir.IO.d { # dir exists, can the program user write to it? my $f = &amp;quot;$dir/.tmp&amp;quot;; spurt $f, &amp;quot;some text&amp;quot;; CATCH { # unable to write for some reason return NoWrite; } # if we get here we must have successfully written to the dir unlink $f; return CanWrite; } # if we get here the dir must not exist return NoDir; } # test each of three directories by a non-root user my $dirs = &#39;/tmp&#39;, # normally writable by any user &#39;/&#39;, # writable only by root &#39;~/tmp&#39;; # a non-existent dir in the user&#39;s home dir for $dirs -&amp;gt; $dir { my $stat = check-dir-status $dir; say &amp;quot;status of dir &#39;$dir&#39;: $stat&amp;quot;; if $stat ~~ CanWrite { say &amp;quot; user can write to dir: $dir&amp;quot;; } } # output # status of dir &#39;/tmp&#39;: CanWrite # user can write to dir: /tmp # status of dir &#39;/&#39;: NoWrite # status of dir &#39;~/tmp&#39;: NoDir  </description>
+enum DirStat &amp;lt;CanWrite NoDir NoWrite&amp;gt;; sub check-dir-status($dir --&amp;gt; DirStat) { if $dir.IO.d { # dir exists, can the program user write to it? my $f = &amp;quot;$dir/.tmp&amp;quot;; spurt $f, &amp;quot;some text&amp;quot;; CATCH { # unable to write for some reason return NoWrite; } # if we get here we must have successfully written to the dir unlink $f; return CanWrite; } # if we get here the dir must not exist return NoDir; } # test each of three directories by a non-root user my $dirs = &#39;/tmp&#39;, # normally writable by any user &#39;/&#39;, # writable only by root &#39;~/tmp&#39;; # a non-existent dir in the user&#39;s home dir for $dirs -&amp;gt; $dir { my $stat = check-dir-status $dir; say &amp;quot;status of dir &#39;$dir&#39;: $stat&amp;quot;; if $stat ~~ CanWrite { say &amp;quot; user can write to dir: $dir&amp;quot;; } } # output # status of dir &#39;/tmp&#39;: CanWrite # user can write to dir: /tmp # status of dir &#39;/&#39;: NoWrite # status of dir &#39;~/tmp&#39;: NoDir </description>
     </item>
     
     <item>
@@ -488,12 +487,12 @@ use v6; sub MAIN( $path = &amp;quot;.&amp;quot;, $extension = &amp;quot;p6&amp;q
       <pubDate>Thu, 15 Nov 2018 21:13:31 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/post/40.data-structures/</guid>
-      <description>标量结构 某些类没有任何*内部*结构, 访问它们的一部分必须使用特定的方法。数字，字符串和其他一些整体类包含在该类中。他们使用 $ sigil，虽然复杂的数据结构也可以使用它。
-my $just-a-number = 7; my $just-a-string = &amp;quot;8&amp;quot;;  有一个 Scalar 类，它在内部用于为使用 $ sigil 声明的变量赋值。
-my $just-a-number = 333; say $just-a-number.VAR.^name; # OUTPUT: «Scalar␤»  任何复杂数据结构都可以通过使用 $ 在项上下文中*标量化*。
-(1, 2, 3, $(4, 5))[3].VAR.^name.say; # OUTPUT: «Scalar␤»  但是，这意味着它将在它们的上下文中被视为标量。你仍然可以访问其内部结构。
-(1, 2, 3, $(4, 5))[3][0].say; # OUTPUT: «4␤»  有一个有趣的副作用，或者可能是故意的特性，是标量化保留了复杂结构的同一性。
-for ^2 { my @list = (1, 1); say @list.WHICH; } # OUTPUT: «Array|93947995146096␤Array|93947995700032␤»  每次 (1, 1) 被分配时，创建的变量在 === 上的意义上是不同的; 如它所示，打印了内部指针所表示的不同值。然而</description>
+      <description>标量结构 某些类没有任何内部结构, 访问它们的一部分必须使用特定的方法。数字，字符串和其他一些整体类包含在该类中。他们使用 $ sigil，虽然复杂的数据结构也可以使用它。
+my $just-a-number = 7; my $just-a-string = &amp;quot;8&amp;quot;; 有一个 Scalar 类，它在内部用于为使用 $ sigil 声明的变量赋值。
+my $just-a-number = 333; say $just-a-number.VAR.^name; # OUTPUT: «Scalar␤» 任何复杂数据结构都可以通过使用 $ 在项上下文中标量化。
+(1, 2, 3, $(4, 5))[3].VAR.^name.say; # OUTPUT: «Scalar␤» 但是，这意味着它将在它们的上下文中被视为标量。你仍然可以访问其内部结构。
+(1, 2, 3, $(4, 5))[3][0].say; # OUTPUT: «4␤» 有一个有趣的副作用，或者可能是故意的特性，是标量化保留了复杂结构的同一性。
+for ^2 { my @list = (1, 1); say @list.WHICH; } # OUTPUT: «Array|93947995146096␤Array|93947995700032␤» 每次 (1, 1) 被分配时，创建的变量在 === 上的意义上是不同的; 如它所示，打印了内部指针所表示的不同值。然而</description>
     </item>
     
     <item>
@@ -503,11 +502,11 @@ for ^2 { my @list = (1, 1); say @list.WHICH; } # OUTPUT: «Array|93947995146096�
       
       <guid>https://ohmysunny.github.io/post/39.control-flow/</guid>
       <description>语句 Raku 程序由一个或多个语句组成。简单语句由分号分隔。以下程序将打印 “Hello”，然后在下一行打印“World”。
-say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot;;  在语句中出现空白的大多数地方，且在分号之前，语句可能会分成许多行。此外，多个语句可能出现在同一行。这会很尴尬，但上面的内容也可以写成：
-say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot;;  块儿 与许多语言一样，Raku 使用 { 和 } 将 blocks括起来以将多个语句转换为单个语句。可以省略块中最后一个语句和闭合 }之间的分号。
-{ say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot; }  When a block stands alone as a statement, it will be entered immediately after the previous statement finishes, and the statements inside it will be executed.
+say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot;; 在语句中出现空白的大多数地方，且在分号之前，语句可能会分成许多行。此外，多个语句可能出现在同一行。这会很尴尬，但上面的内容也可以写成：
+say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot;; 块儿 与许多语言一样，Raku 使用 { 和 } 将 blocks括起来以将多个语句转换为单个语句。可以省略块中最后一个语句和闭合 }之间的分号。
+{ say &amp;quot;Hello&amp;quot;; say &amp;quot;World&amp;quot; } When a block stands alone as a statement, it will be entered immediately after the previous statement finishes, and the statements inside it will be executed.
 当块单独作为一个语句存在时，它将在前一个语句完成后立即进入，并且其中的语句将被执行。
-say 1; # OUTPUT: «1» { say 2; say 3 }; # OUTPUT: «23» say 4; # OUTPUT: «4»  除非它作为一个语句单独存在，否则一个块只会创建一个闭包。内部的语句不会立即执行。闭包是另一个主题，如何使用它们在别处有解释。现在，了解块何时运行以及何时不运行是非常重要的：</description>
+say 1; # OUTPUT: «1» { say 2; say 3 }; # OUTPUT: «23» say 4; # OUTPUT: «4» 除非它作为一个语句单独存在，否则一个块只会创建一个闭包。内部的语句不会立即执行。闭包是另一个主题，如何使用它们在别处有解释。现在，了解块何时运行以及何时不运行是非常重要的：</description>
     </item>
     
     <item>
@@ -518,10 +517,10 @@ say 1; # OUTPUT: «1» { say 2; say 3 }; # OUTPUT: «23» say 4; # OUTPUT: «4»
       <guid>https://ohmysunny.github.io/post/38.contexts-and-contextualizers/</guid>
       <description>在许多情况下，需要上下文来解释容器的值。在 Raku 中，我们将使用 context 将容器的值强制转换为某种类型或类，或者决定如何处理它，就像接收器(sink)上下文的情况一样。
 Sink 上下文 Sink 相当于 void 上下文，也就是说，我们抛出（在接收器下面）操作的结果或块的返回值的上下文。通常，当语句不知道如何处理该值时，将在警告和错误中调用此上下文。
-my $sub = -&amp;gt; $a { return $a² }; $sub; # OUTPUT: «WARNINGS: Useless use of $sub in sink context (line 1)»  您可以使用 sink-all 方法在 Iterator 上强制使用该接收器上下文。Proc也可以通过 sink 方法沉没，迫使它们引发异常而不返回任何东西。
+my $sub = -&amp;gt; $a { return $a² }; $sub; # OUTPUT: «WARNINGS: Useless use of $sub in sink context (line 1)» 您可以使用 sink-all 方法在 Iterator 上强制使用该接收器上下文。Proc也可以通过 sink 方法沉没，迫使它们引发异常而不返回任何东西。
 通常，如果在 sink 上下文中进行计算，则块将发出警告; 但是，在 sink 上下文中 gather/take 块是显式计算的，并使用 take 显式返回值。
 在 sink 上下文中，对象将调用其 sink 方法（如果存在）：
-sub foo { return [&amp;lt;a b c&amp;gt;] does role { method sink { say &amp;quot;sink called&amp;quot; } } } foo # OUTPUT: sink called  Number 上下文 这个上下文，可能除了上面的所有内容之外，都是*转换*或*解释*上下文，因为它们接收无类型或类型化的变量，并将其类型化为执行操作所需的任何内容。在某些情况下，这意味着转换（例如从 Str 到 Numeric）; 在其他情况下只是一种解释（IntStr 将被解释为 Int 或 Str）。</description>
+sub foo { return [&amp;lt;a b c&amp;gt;] does role { method sink { say &amp;quot;sink called&amp;quot; } } } foo # OUTPUT: sink called Number 上下文 这个上下文，可能除了上面的所有内容之外，都是转换或解释上下文，因为它们接收无类型或类型化的变量，并将其类型化为执行操作所需的任何内容。在某些情况下，这意味着转换（例如从 Str 到 Numeric）; 在其他情况下只是一种解释（IntStr 将被解释为 Int 或 Str）。</description>
     </item>
     
     <item>
@@ -533,14 +532,14 @@ sub foo { return [&amp;lt;a b c&amp;gt;] does role { method sink { say &amp;quot
       <description>本节介绍了处理变量和容器元素时所涉及的间接级别。解释了 Raku 中使用的容器的不同类型，以及适用于它们的操作，如赋值，绑定和展平。最后讨论了更多高级主题，如自引用数据，类型约束和自定义容器。
 变量是什么? 有些人喜欢说“一切都是对象”，但实际上在 Raku 中变量不是对用户暴露的对象。
 当编译器遇到类似 my $x 的变量声明时，它会将其注册到某个内部符号表中。此内部符号表用于检测未声明的变量，并将变量的代码生成与正确的作用域联系起来。
-在运行时，变量显示为*词法板中*的条目，或*简称*为*lexpad*。这是一个每个作用域的数据结构，它存储每个变量的指针。
-在 my $x 这种情况下，变量的 $x 的 lexpad 条目是指向 Scalar 类型对象的指针，通常称为*容器*。
-标量容器 虽然 Scalar 类型的对象在 Raku 中无处不在，但您很少直接将它们视为对象，因为大多数操作*都是去容器化的*，这意味着它们会对 Scalar 容器的内容而不是容器本身起作用。
+在运行时，变量显示为词法板中的条目，或简称为lexpad。这是一个每个作用域的数据结构，它存储每个变量的指针。
+在 my $x 这种情况下，变量的 $x 的 lexpad 条目是指向 Scalar 类型对象的指针，通常称为容器。
+标量容器 虽然 Scalar 类型的对象在 Raku 中无处不在，但您很少直接将它们视为对象，因为大多数操作都是去容器化的，这意味着它们会对 Scalar 容器的内容而不是容器本身起作用。
 在这样的代码中：
-my $x = 42; say $x;  赋值 $x = 42 在标量容器中存储指向 Int 对象 42 的指针，lexpad 条目 $x 指向该标量容器。
+my $x = 42; say $x; 赋值 $x = 42 在标量容器中存储指向 Int 对象 42 的指针，lexpad 条目 $x 指向该标量容器。
 赋值运算符要求左侧的容器将值存储在其右侧。究竟是什么意思取决于容器类型。因为 Scalar 它意味着“用新的值替换先前存储的值”。
 请注意，子例程签名允许传递容器：
-sub f($a is rw) { $a = 23; } my $x = 42; f($x); say $x; # OUTPUT: «23»  在子例程内部，lexpad 条目 $a 指向 $x 指向子例程外部的同一容器。这就是为什么给 $a 赋值也修改了 $x 的内容。</description>
+sub f($a is rw) { $a = 23; } my $x = 42; f($x); say $x; # OUTPUT: «23» 在子例程内部，lexpad 条目 $a 指向 $x 指向子例程外部的同一容器。这就是为什么给 $a 赋值也修改了 $x 的内容。</description>
     </item>
     
     <item>
@@ -553,10 +552,10 @@ sub f($a is rw) { $a = 23; } my $x = 42; f($x); say $x; # OUTPUT: «23»  在子
 本文件旨在展示常见的误解，以避免它们。
 在编写 Raku 的过程中，我们付出了巨大的努力来消除语法中的瑕疵。然而，当你消灭一个瑕疵的时候，有时另一个会突然冒出来。所以我们花了很多时间去寻找最小数量的瑕疵或者试图把它们放在它们很少被看到的地方。正因为如此，Raku 的瑕疵出现在了不同的地方，而不是来自另一种语言时所期望的那样。
 变量和常量 常量在编译时计算 常量是在编译时计算的，所以如果在模块中使用它们，请记住，由于模块本身的预编译，它们的值将被冻结:
-# WRONG (most likely): unit module Something::Or::Other; constant $config-file = &amp;quot;config.txt&amp;quot;.IO.slurp;  $config-file 将在预编译时一次性被读入。config.txt 文件的更改不会在你再次启动脚本时重新加载;只有当模块被重新编译时才会重新加载。
+# WRONG (most likely): unit module Something::Or::Other; constant $config-file = &amp;quot;config.txt&amp;quot;.IO.slurp; $config-file 将在预编译时一次性被读入。config.txt 文件的更改不会在你再次启动脚本时重新加载;只有当模块被重新编译时才会重新加载。
 避免使用容器，而倾向于将值绑定到提供类似于常量行为的变量上，但允许更新值:
-# Good; file gets updated from &#39;config.txt&#39; file on each script run: unit module Something::Or::Other; my $config-file := &amp;quot;config.txt&amp;quot;.IO.slurp;  赋值为 Nil 产生不同的值, 通常是 Any 实际上，赋给 Nil 会将变量还原为其默认值。所以:
-my @a = 4, 8, 15, 16; @a[2] = Nil; say @a; # OUTPUT: «[4 8 (Any) 16]␤»  在本例中，Any 是 Array 元素的默认值。</description>
+# Good; file gets updated from &#39;config.txt&#39; file on each script run: unit module Something::Or::Other; my $config-file := &amp;quot;config.txt&amp;quot;.IO.slurp; 赋值为 Nil 产生不同的值, 通常是 Any 实际上，赋给 Nil 会将变量还原为其默认值。所以:
+my @a = 4, 8, 15, 16; @a[2] = Nil; say @a; # OUTPUT: «[4 8 (Any) 16]␤» 在本例中，Any 是 Array 元素的默认值。</description>
     </item>
     
     <item>
@@ -568,8 +567,8 @@ my @a = 4, 8, 15, 16; @a[2] = Nil; say @a; # OUTPUT: «[4 8 (Any) 16]␤»  在�
       <description>测试代码是软件开发不可或缺的一部分。测试提供代码行为的自动，可重复的验证，并确保您的代码按预期工作。
 在 Raku 中，Test 模块提供了一个测试框架，也被 Raku 的官方 spectest 套件使用。
 测试函数发出符合 Test Anything Protocol 的输出。通常，它们用于 sink 上下文中：
-ok check-name($meta, :$relaxed-name), &amp;quot;name has a hyphen rather than &#39;::&#39;&amp;quot;  但是不论测试成功与否，所有函数都会返回布尔值，如果测试失败，可以使用它来打印消息：
-ok check-name($meta, :$relaxed-name), &amp;quot;name has a hyphen rather than &#39;::&#39;&amp;quot; \ or diag &amp;quot;\nTo use hyphen in name, pass :relaxed-name to meta-ok\n&amp;quot;;  写测试 与任何 Perl 项目一样，测试位于项目基本目录的 t 目录下。
+ok check-name($meta, :$relaxed-name), &amp;quot;name has a hyphen rather than &#39;::&#39;&amp;quot; 但是不论测试成功与否，所有函数都会返回布尔值，如果测试失败，可以使用它来打印消息：
+ok check-name($meta, :$relaxed-name), &amp;quot;name has a hyphen rather than &#39;::&#39;&amp;quot; \ or diag &amp;quot;\nTo use hyphen in name, pass :relaxed-name to meta-ok\n&amp;quot;; 写测试 与任何 Perl 项目一样，测试位于项目基本目录的 t 目录下。
 典型的测试文件看起来像这样：
 use v6.c; use Test; # a Standard module included with Rakudo use lib &#39;lib&#39;; plan $num-tests; # .</description>
     </item>
@@ -581,10 +580,10 @@ use v6.c; use Test; # a Standard module included with Rakudo use lib &#39;lib&#3
       
       <guid>https://ohmysunny.github.io/post/34.terms/</guid>
       <description>Raku 中的大部分句法结构能归类为项和操作符. 这儿你能找到各种不同类型的项的概览.
-Literals Int 42 12_300_00 :16&amp;lt;DEAD_BEEF&amp;gt; #十六进制  Int 字面量由数字组成, 并且能在数字之间包含下划线. 使用 :radix&amp;lt;number&amp;gt; 冒号对儿形式能指定 10 进制外的其它进制.
-Rat 有理数 12.34 1_200.345_678  Rat(有理数)字面量由一个点号分割的两部分整数组成. 注意尾部的点号是不允许的, 所以你必须写成 1.0 而非 1. ( 这个规则很重要, 因为有一个以点号开头的中缀操作符, 例如 .. 范围操作符 ).
-Num 浮点数 12.3e-32 3e8  Num(浮点数)字面量由 Rat 或 Int 字面量后面再跟着一个字母 e 和 一个指数(可能为负)组成. 3e8 使用 值 3* 10**8 构建了一个 Num.
-Str &#39;a string&#39;&#39;I\&#39;m escaped!&#39; &amp;quot;I don&#39;t need to be&amp;quot; &amp;quot;\&amp;quot;But I still can be,\&amp;quot; he said.</description>
+Literals Int 4212_300_00:16&amp;lt;DEAD_BEEF&amp;gt; #十六进制Int 字面量由数字组成, 并且能在数字之间包含下划线. 使用 :radix&amp;lt;number&amp;gt; 冒号对儿形式能指定 10 进制外的其它进制.
+Rat 有理数 12.341_200.345_678Rat(有理数)字面量由一个点号分割的两部分整数组成. 注意尾部的点号是不允许的, 所以你必须写成 1.0 而非 1. ( 这个规则很重要, 因为有一个以点号开头的中缀操作符, 例如 .. 范围操作符 ).
+Num 浮点数 12.3e-323e8Num(浮点数)字面量由 Rat 或 Int 字面量后面再跟着一个字母 e 和 一个指数(可能为负)组成. 3e8 使用 值 3* 10**8 构建了一个 Num.
+Str &#39;a string&#39;&#39;I\&#39;m escaped!&#39;&amp;quot;I don&#39;t need to be&amp;quot;&amp;quot;\&amp;quot;But I still can be,\&amp;quot; he said.&amp;quot;q|Other delimiters can be used too!</description>
     </item>
     
     <item>
@@ -595,7 +594,7 @@ Str &#39;a string&#39;&#39;I\&#39;m escaped!&#39; &amp;quot;I don&#39;t need to 
       <guid>https://ohmysunny.github.io/post/33.pod-6-tables/</guid>
       <description>Raku POD 表的官方规范位于文档规范中：表。虽然 Pod 6 的规格尚未完全妥善处理，但仍有几个项目正在进行纠正。一个这样的项目是确保正确处理 Pod 6 表。
 作为该工作的一部分，本文档通过示例解释了 Pod 6 表的当前状态：有效表，无效表和丑陋表（即，由于草率构造，可能导致与用户期望的不同的有效表） 。
-Restrictions 1.唯一有效的列分隔符要么是可见的（| 或 +）（注意在可见列分隔符之前和之后至少需要一个空格）或不可见[两个或多个连续的空格（WS）字符（例如， &amp;lsquo; &amp;lsquo;）]。在表格的左侧或右侧通常不会识别列分隔符，但是右侧的列分隔符可能会导致一个或多个空单元格，具体取决于其他行中单元格的数量。（请注意，作为单元格数据一部分的管道或加号字符将导致意外的额外列，除非使用反斜杠转义字符，例如 \| 或 \+。）
+Restrictions 1.唯一有效的列分隔符要么是可见的（| 或 +）（注意在可见列分隔符之前和之后至少需要一个空格）或不可见[两个或多个连续的空格（WS）字符（例如， &#39; &amp;lsquo;）]。在表格的左侧或右侧通常不会识别列分隔符，但是右侧的列分隔符可能会导致一个或多个空单元格，具体取决于其他行中单元格的数量。（请注意，作为单元格数据一部分的管道或加号字符将导致意外的额外列，除非使用反斜杠转义字符，例如 \| 或 \+。）
 2.在同一个表中混合可见和不可见的列分隔符是非法的。
 3.唯一有效的行分隔符字符是 _，-，+，&#39; &#39;，| 和 =。
 4.连续的内部行分隔符是非法的。
@@ -606,9 +605,8 @@ Restrictions 1.唯一有效的列分隔符要么是可见的（| 或 +）（注�
 1.对列分隔符使用 WS 很脆弱，它们只能用于简单表。以下 Ugly Tables 部分说明了这个问题。
 2.仔细对齐表格列和行。请参阅后面的最佳实践中的示例。
 3.不要在表上使用可见的边框。
-4.对于具有标题和单行或多行内容的表，在标题后使用一个或多个连续的等号（&amp;rsquo;=&amp;lsquo;）作为行分隔符，并使用一个或多个连续的连字符（&amp;rsquo;-&amp;lsquo;）作为表的内容部分中的行分隔符。例如，
- 标题和单行或多行内容
-  =begin table hdr col 0 | hdr col 1 ====================== row 0 | row 0 col 0 | col 1 ---------------------- row 1 | row 1 col 0 | col 1 ---------------------- =end table   标题和单行内容  =begin table hdr col 0 | hdr col 1 ====================== row 0 col 0 | row 0 col 1 row 1 col 0 | row 1 col 1 =end table  5.</description>
+4.对于具有标题和单行或多行内容的表，在标题后使用一个或多个连续的等号（&amp;lsquo;=&amp;rsquo;）作为行分隔符，并使用一个或多个连续的连字符（&#39;-&#39;）作为表的内容部分中的行分隔符。例如，
+ 标题和单行或多行内容  =begin table hdr col 0 | hdr col 1 ====================== row 0 | row 0 col 0 | col 1 ---------------------- row 1 | row 1 col 0 | col 1 ---------------------- =end table  标题和单行内容  =begin table hdr col 0 | hdr col 1 ====================== row 0 col 0 | row 0 col 1 row 1 col 0 | row 1 col 1 =end table 5.</description>
     </item>
     
     <item>
@@ -619,9 +617,9 @@ Restrictions 1.唯一有效的列分隔符要么是可见的（| 或 +）（注�
       <guid>https://ohmysunny.github.io/post/32.perl-6-pod/</guid>
       <description>Raku Pod 是一种易于使用的标记语言。 Pod 可用于编写语言文档，用于文档化程序和模块，以及其他类型的文档组合。
 每个 Pod 文档必须以 =begin pod 开头，以 =end pod 结束。这两个分隔符之间的所有内容都将被处理并用于生成文档。
-=begin pod A very simple Raku Pod document =end pod  块结构 Pod 文档可能包含多个 Pod 块。有四种方法可以定义块（分隔符，段落，缩写和声明符）; 前三个产生相同的结果，但第四个不同。你可以使用最方便你的特定文档任务的任何形式。
+=begin pod A very simple Raku Pod document =end pod 块结构 Pod 文档可能包含多个 Pod 块。有四种方法可以定义块（分隔符，段落，缩写和声明符）; 前三个产生相同的结果，但第四个不同。你可以使用最方便你的特定文档任务的任何形式。
 分割符块 分隔块由 =begin 和 =end 标记限定，两者都后跟有效的 Raku 标识符，后者是块的 typename。完全小写的类型名称（例如 =begin head1）或完全大写（例如：=begin SYNOPSIS）保留。
-=begin head1 Top Level Heading =end head1  配置信息 在 typename 之后， =begin 标记行的其余部分被视为块的配置信息。此信息由不同类型的块以不同方式使用，但始终使用 Raku-ish 选项对指定。也就是说，任何：
+=begin head1 Top Level Heading =end head1 配置信息 在 typename 之后， =begin 标记行的其余部分被视为块的配置信息。此信息由不同类型的块以不同方式使用，但始终使用 Raku-ish 选项对指定。也就是说，任何：
    alue is&amp;hellip; Specify with&amp;hellip; Or with&amp;hellip; Or with&amp;hellip;     List :key[$e1, $e2, &amp;hellip;] :key($e1, $e2, &amp;hellip;)    Hash :key{$k1=&amp;gt;$v1, $k2=&amp;gt;$v2}     Boolean (true) :key :key(True) :key[True]   Boolean (false) :!</description>
     </item>
     
@@ -632,9 +630,9 @@ Restrictions 1.唯一有效的列分隔符要么是可见的（| 或 +）（注�
       
       <guid>https://ohmysunny.github.io/post/31.glossary/</guid>
       <description>匿名 子例程、方法或子方法，当它们不能通过名字调用时，就被称为匿名的
-# named subroutine sub double($x) { 2 * $x }; # 匿名子例程,存储在一个具名的标量里 my $double = sub ($x) { 2 * $x };  注意，匿名子例程仍然可以有名字
-# 使用 anon 关键字使子例程匿名 my $s = anon sub triple($x) { 3 * $x } say $s.name; # triple  副词 通常, 副词是函数的命名参数. 也有一些其它特殊语法形式允许副词出现在某些合适的地方:
-q:w&amp;quot;foo bar&amp;quot; # &amp;quot;:w&amp;quot; is a Quotelike form modifier adverb m:g/a|b|c/ # &amp;quot;:g&amp;quot; is also 4 +&amp;gt; 5 :rotate # &amp;quot;:rotate&amp;quot; is an operator adverb @h{3}:exists # &amp;quot;:exists&amp;quot; is also, but is known as a subscript adverb  副词通常使用冒号对儿标记来表示, 因为这个原因, 冒号对儿标记法也以副词对儿形式著称:</description>
+# named subroutinesub double($x) { 2 * $x };# 匿名子例程,存储在一个具名的标量里my $double = sub ($x) { 2 * $x };注意，匿名子例程仍然可以有名字
+# 使用 anon 关键字使子例程匿名my $s = anon sub triple($x) { 3 * $x }say $s.name; # triple副词 通常, 副词是函数的命名参数. 也有一些其它特殊语法形式允许副词出现在某些合适的地方:
+q:w&amp;quot;foo bar&amp;quot; # &amp;quot;:w&amp;quot; is a Quotelike form modifier adverbm:g/a|b|c/ # &amp;quot;:g&amp;quot; is also4 +&amp;gt; 5 :rotate # &amp;quot;:rotate&amp;quot; is an operator adverb@h{3}:exists # &amp;quot;:exists&amp;quot; is also, but is known as a subscript adverb副词通常使用冒号对儿标记来表示, 因为这个原因, 冒号对儿标记法也以副词对儿形式著称:</description>
     </item>
     
     <item>
@@ -648,7 +646,7 @@ General Rakudo 和 Raku 的区别是什么？ Rakudo 是 Raku 的一个实现。
 这两个名字可以宽松地使用并互相替换。
 会有 Raku 版本 6.0.0 吗? 第一个稳定语言版本的版本称为 v6.c，而不是 6.0.0。 不同的命名方案使得不太可能发布具有精确版本 6.0.0 的语言。
 您可以使用下面的代码检查您的 Rakudo 编译器是当前至少是什么版本（注意这可能不是真正的供应商二进制文件）：
-raku -e &#39;say q[too old] if $*PERL.version before Version.new(q[6.c])&#39;  它首先由 Rakudo Raku 编译器版本的 2015.12 实现，并且可能通过使用 &amp;lsquo;use 6.c&amp;rsquo; 指令在可预见的未来支持后续版本。 下一个语言版本（无发布日期）为 v6.d.
+raku -e &#39;say q[too old] if $*PERL.version before Version.new(q[6.c])&#39;它首先由 Rakudo Raku 编译器版本的 2015.12 实现，并且可能通过使用 &amp;lsquo;use 6.c&amp;rsquo; 指令在可预见的未来支持后续版本。 下一个语言版本（无发布日期）为 v6.d.
 作为一个 Raku 初学者我应该安装什么？ 如果你是一个 Linux 或 Mac 用户, 你可能需要下载 Rakudo Star 并通过编译 MoarVM 版本安装（一个简单的处理）
 如果你是一个 Windows 32 或 64 位用户, 那么 Rakudo Star 二进制版本在 rakudo 网站也能获得。你需要 Windows Git 来使用 panda。</description>
     </item>
@@ -678,8 +676,8 @@ Raku 降临节日历 Raku 社区每年 12 月都会发布一个 Advent Calendar�
 结构 所有文档都是用 Raku Pod 编写的，并保存在 doc/ 目录 doc/Language/ 和 doc/Type/ 子目录中。这些文件作为定义集合或“文档”处理，然后进行后处理并链接在一起。
 从 Pod 生成 HTML 要从 Pod 文件生成 HTML，你需要：
  最新版本的 Rakudo Raku 编译器 Raku 模块Pod::To::HTML，Pod::To::BigPage 和 URI::Escape（可以通过zef安装）。 可选：GraphViz，用于创建 Raku 类型之间关系的图形 可选：Atom Highlights 和 language-raku，用于语法高亮显示  要在文件html/文件夹中生成文档，请运行：
-raku htmlify.p6  要从 Web 服务器托管文档，请安装 Perl 5 和 Mojolicious::Lite，然后运行：
-perl app.pl daemon  贡献 文档是用 Raku Pod 编写的。</description>
+raku htmlify.p6 要从 Web 服务器托管文档，请安装 Perl 5 和 Mojolicious::Lite，然后运行：
+perl app.pl daemon 贡献 文档是用 Raku Pod 编写的。</description>
     </item>
     
     <item>
@@ -691,11 +689,13 @@ perl app.pl daemon  贡献 文档是用 Raku Pod 编写的。</description>
       <description>为了提供强大的正则表达式和 grammar，这里有一些代码布局和可读性的最佳实践，实际匹配的内容，以及避免常见的陷阱。
 代码布局 如果没有 :sigspace 副词，在 Raku 正则表达式中空格并不重要。 使用它自己的优势，并插入空格，增加可读性。 此外，必要时插入注释。
 比较非常紧凑的写法
-my regex float { &amp;lt;[+-]&amp;gt;?\d*&#39;.&#39;\d+[e&amp;lt;[+-]&amp;gt;?\d+]? }  和这种可读性更好的写法：
-my regex float { &amp;lt;[+-]&amp;gt;? # optional sign \d* # leading digits, optional &#39;.&#39; \d+ [ # optional exponent e &amp;lt;[+-]&amp;gt;? \d+ ]? }  根据经验， 在原子周围和组的内部使用空白; 将量词直接放在原子之后; 并垂直对齐开口和闭合关方括号和括号。
+my regex float { &amp;lt;[+-]&amp;gt;?\d*&#39;.&#39;\d+[e&amp;lt;[+-]&amp;gt;?\d+]? } 和这种可读性更好的写法：
+my regex float { &amp;lt;[+-]&amp;gt;? # optional sign \d* # leading digits, optional &#39;.&#39; \d+ [ # optional exponent e &amp;lt;[+-]&amp;gt;? \d+ ]? } 根据经验， 在原子周围和组的内部使用空白; 将量词直接放在原子之后; 并垂直对齐开口和闭合关方括号和括号。
 在括号或方括号内使用替换列表时，请对齐竖线：
-my regex example { &amp;lt;preamble&amp;gt; [ || &amp;lt;choice_1&amp;gt; || &amp;lt;choice_2&amp;gt; || &amp;lt;choice_3&amp;gt; ]+ &amp;lt;postamble&amp;gt; }  保持短小 正则代码通常比常规代码更紧凑。 因为他们用这么少的字符就做得那么多，所以保持了正则表达式的简短。
-当你可以给正则表达式的一部分命名时，通常最好将它放入一个单独的，命名的正则表达式中。</description>
+my regex example { &amp;lt;preamble&amp;gt; [ || &amp;lt;choice_1&amp;gt; || &amp;lt;choice_2&amp;gt; || &amp;lt;choice_3&amp;gt; ]+ &amp;lt;postamble&amp;gt; } 保持短小 正则代码通常比常规代码更紧凑。 因为他们用这么少的字符就做得那么多，所以保持了正则表达式的简短。
+当你可以给正则表达式的一部分命名时，通常最好将它放入一个单独的，命名的正则表达式中。
+例如，您可以以前面获取浮点正则表达式为例：
+my regex float { &amp;lt;[+-]&amp;gt;?</description>
     </item>
     
     <item>
@@ -715,7 +715,7 @@ sub hello { say &amp;quot;Hello, world!&amp;quot;; } say &amp;amp;hello.^name; #
       
       <guid>https://ohmysunny.github.io/post/25.modules/</guid>
       <description>模块 导出和选择性导出 is export packages(包), subroutines(子例程), variables(变量), constants(常量) 和 enums(枚举) , 通过在它们的名字后面添加 is export 特性来导出。
-unit module MyModule; our $var is export = 3; sub foo is export { ... }; constant $FOO is export = &amp;quot;foobar&amp;quot;; enum FooBar is export &amp;lt;one two three&amp;gt;; # Packages like classes can be exported too class MyClass is export {}; # If a subpackage is in the namespace of the current package # it doesn&#39;t need to be explicitly exported class MyModule::MyClass {};  就像所有的 traits 一样, 如果应用到子例程(routine)上, &amp;ldquo;is export&amp;rdquo; 应该出现在参数列表的后面:</description>
+unit module MyModule;our $var is export = 3;sub foo is export { ... };constant $FOO is export = &amp;quot;foobar&amp;quot;;enum FooBar is export &amp;lt;one two three&amp;gt;;# Packages like classes can be exported tooclass MyClass is export {};# If a subpackage is in the namespace of the current package# it doesn&#39;t need to be explicitly exportedclass MyModule::MyClass {};就像所有的 traits 一样, 如果应用到子例程(routine)上, &amp;ldquo;is export&amp;rdquo; 应该出现在参数列表的后面:</description>
     </item>
     
     <item>
@@ -728,7 +728,7 @@ unit module MyModule; our $var is export = 3; sub foo is export { ... }; constan
 注意 “模块”是 Raku 中的重载术语; 本文档重点介绍 module 声明符的使用。
 什么是模块? 模块，如类和 grammars，是一种包。模块对象是 ModuleHOW 元类的实例; 这提供了某些功能，可用于创建命名空间，版本控制，代理和数据封装（另请参见类和角色）。
 要创建模块，请使用 module 声明符：
-module M {} say M.HOW; # OUTPUT: «Raku::Metamodel::ModuleHOW.new»  这里我们定义一个名为 M 的新模块; 内省 HOW 确认了底层的元类 M 是 Raku::Metamodel::ModuleHOW。
+module M {} say M.HOW; # OUTPUT: «Raku::Metamodel::ModuleHOW.new» 这里我们定义一个名为 M 的新模块; 内省 HOW 确认了底层的元类 M 是 Raku::Metamodel::ModuleHOW。
 何时使用模块 模块主要用于封装不属于类或角色定义的代码和数据。模块内容（类，子程序，变量等）可以从具有 is export trait 的模块中导出; 一旦import 或 use 了模块，这些内容在调用者的命名空间中就可用了。模块还可以选择性地在其命名空间中通过 our 暴露符号以进行限定引用。
 使用模块 为了说明模块作用域和导出规则，我们首先定义一个简单的模块 M：
 module M { sub greeting ($name = &#39;Camelia&#39;) { &amp;quot;Greetings, $name!</description>
@@ -742,14 +742,10 @@ module M { sub greeting ($name = &#39;Camelia&#39;) { &amp;quot;Greetings, $name
       <guid>https://ohmysunny.github.io/post/23.module-development-utilities/</guid>
       <description>以下是您可以在 Raku 生态系统中找到的模块列表，旨在使开发 Raku 模块的体验更加有趣。
 模块构建器和创作工具 一些模块和工具可帮助您生成属于模块分发的文件。
- App::Assixt 模块开发者的助手
- App::Mi6 Raku 的最小创作工具
- META6 用 Raku META 文件做事
- Module::Skeleton 生成骨架模块
- p6doc 生成文档最终产品
-  Tests 一些模块质量测试。
+ App::Assixt 模块开发者的助手 App::Mi6 Raku 的最小创作工具 META6 用 Raku META 文件做事 Module::Skeleton 生成骨架模块 p6doc 生成文档最终产品  Tests 一些模块质量测试。
  Test::META 测试您的 META6.json 文件 Test::Output 测试程序生成的 STDOUT 和 STDERR 的输出 Test::Screen 使用GNU screen测试全屏VT应用程序 Test::When 控制测试运行时间（作者测试，在线测试等）  NativeCall 这里有一些模块可以帮助您使用 NativeCall。
- NativeHelpers::Array 提供处理 CArray 的例程 App::GPTrixie 从 C 头文件生成 NativeCall 代码 NativeCall::TypeDiag 提供测试 CStruct 的例程  Sample modules 仅作为极简主义示例，安装程序测试或骨架的模块。</description>
+ NativeHelpers::Array 提供处理 CArray 的例程 App::GPTrixie 从 C 头文件生成 NativeCall 代码 NativeCall::TypeDiag 提供测试 CStruct 的例程  Sample modules 仅作为极简主义示例，安装程序测试或骨架的模块。
+ Foo 具有两个不同版本分布的模块  </description>
     </item>
     
     <item>
@@ -770,11 +766,12 @@ class DNA does Iterable { has $.chain; method new ($chain where { $chain ~~ /^^ 
       
       <guid>https://ohmysunny.github.io/post/21.inter-process-communication/</guid>
       <description>运行程序 许多程序需要能够运行其他程序，我们需要将信息传递给它们并接收它们的输出和退出状态。在 Raku 中运行程序非常简单：
-run &#39;git&#39;, &#39;status&#39;;  这一行运行名为 “git” 的程序，并将 “git” 和 “status” 传递给它的命令行。它将使用 %*ENV&amp;lt;PATH&amp;gt; 设置找到该 git 程序。
+run &#39;git&#39;, &#39;status&#39;; 这一行运行名为 “git” 的程序，并将 “git” 和 “status” 传递给它的命令行。它将使用 %*ENV&amp;lt;PATH&amp;gt; 设置找到该 git 程序。
 如果您想通过向 shell 发送命令行来运行程序，那么也有一个工具。所有 shell 元字符都由 shell 解释，包括管道，重定向，环境变量替换等。
-shell &#39;ls -lR | gzip -9 &amp;gt; ls-lR.gz&#39;;  使用 shell 用户输入时应小心。
+shell &#39;ls -lR | gzip -9 &amp;gt; ls-lR.gz&#39;; 使用 shell 用户输入时应小心。
 Proc对象 run 和 shell 都返回一个PROC对象，它可以使用具有更详细的进程进行通信。请注意，除非您关闭所有输出管道，否则程序通常不会终止。
-my $git = run &#39;git&#39;, &#39;log&#39;, &#39;--oneline&#39;, :out; for $git.out.lines -&amp;gt; $line { my ($sha, $subject) = $line.split: &#39; &#39;, 2; say &amp;quot;$subject [$sha]&amp;quot;; } $git.out.close();  如果程序失败（以非零退出码退出），它将在返回的Proc对象沉没时抛出异常。您可以将其保存为变量，甚至是匿名变量，以防止下沉：</description>
+my $git = run &#39;git&#39;, &#39;log&#39;, &#39;--oneline&#39;, :out; for $git.out.lines -&amp;gt; $line { my ($sha, $subject) = $line.split: &#39; &#39;, 2; say &amp;quot;$subject [$sha]&amp;quot;; } $git.out.close(); 如果程序失败（以非零退出码退出），它将在返回的Proc对象沉没时抛出异常。您可以将其保存为变量，甚至是匿名变量，以防止下沉：
+$ = run &#39;/bin/false&#39;; # does not sink the Proc and so does not throw 您可以通过传递 :out 和 :err 标志来告诉 Proc 对象将输出捕获为文件句柄。您也可以通过 :in 标记传递输入。</description>
     </item>
     
     <item>
@@ -785,10 +782,10 @@ my $git = run &#39;git&#39;, &#39;log&#39;, &#39;--oneline&#39;, :out; for $git.
       <guid>https://ohmysunny.github.io/post/20.input-and-output/</guid>
       <description>在这里，我们简要概述了与文件相关的输入/输出操作。详细信息可以在 IO 角色的文档中找到，也可以在 IO::Handle 和 IO::Path 类型中找到。
 读取文件 读取文件内容的一种方法是通过带有 :r（读取）文件模式选项的 open 函数打开文件，并吞噬内容：
-my $fh = open &amp;quot;testfile&amp;quot;, :r; my $contents = $fh.slurp; $fh.close;  这里我们使用 IO::Handle 对象上的 close 方法显式地关闭文件句柄。这是一种非常传统的读取文件内容的方法。但是，同样的事情可像这样更容易和更清楚地完成：
-my $contents = &amp;quot;testfile&amp;quot;.IO.slurp; # or in procedural form: $contents = slurp &amp;quot;testfile&amp;quot;  通过将 IO 角色添加到文件名字符串中，我们实际上能够将字符串作为文件对象本身引用，从而直接吞噬其内容中。请注意，slurp 负责为你打开和关闭文件。
+my $fh = open &amp;quot;testfile&amp;quot;, :r; my $contents = $fh.slurp; $fh.close; 这里我们使用 IO::Handle 对象上的 close 方法显式地关闭文件句柄。这是一种非常传统的读取文件内容的方法。但是，同样的事情可像这样更容易和更清楚地完成：
+my $contents = &amp;quot;testfile&amp;quot;.IO.slurp; # or in procedural form: $contents = slurp &amp;quot;testfile&amp;quot; 通过将 IO 角色添加到文件名字符串中，我们实际上能够将字符串作为文件对象本身引用，从而直接吞噬其内容中。请注意，slurp 负责为你打开和关闭文件。
 逐行读取 当然，我们也可以选择逐行读取文件。将排除新行分隔符（即 $*IN.nl-in）。
-for &#39;huge-csv&#39;.IO.lines -&amp;gt; $line { # Do something with $line } # or if you&#39;ll be processing later my @lines = &#39;huge-csv&#39;.</description>
+for &#39;huge-csv&#39;.IO.lines -&amp;gt; $line { # Do something with $line } # or if you&#39;ll be processing later my @lines = &#39;huge-csv&#39;.IO.lines; 写文件 要将数据写入文件，我们再次选择调用 open 函数的传统方法 - 这次使用 :w（write）选项 - 并将数据打印到文件中：</description>
     </item>
     
     <item>
@@ -821,8 +818,8 @@ grammar My::Gram { ..methods &#39;n stuff.</description>
       <description>输入 Unicode 字符 Raku 允许把 unicode 字符用作变量名. 很多操作符使用 unicode 符号(特别是在 set/bag 操作符中)还有一些引号结构. 因此, 知道如何把这些符号输入编辑器, Raku shell 和 命令行中是极好的, 特别是现实键盘中不存在那个符号的时候.
 在各种操作系统和环境下关于输入 unicode 字符的通用信息可以在 Wikipedia unicode 输入页 中找到.
 编辑器和 shell Vim 在 Vim 中, unicode 字符是通过先按 Ctrl-V(也表示为 ^V), 然后按下 u 和 要输入的 unicode 字符的十六进制值来输入的(在插入模式). 例如, 希腊字母 λ (lambda) 是通过组合键来输入的:
-^Vu03BB  更多关于在 Vim 中输入特殊字符的信息可以在 Vim Wikia 页 键入特殊字符 中找到.
-Emacs 在 Emacs 中, unicode 字符的输入是首先输入和弦 Ctrl-x 8 Enter , 然后再输入 unicode 代码点的十六进制数字, 然后回车.</description>
+^Vu03BB更多关于在 Vim 中输入特殊字符的信息可以在 Vim Wikia 页 键入特殊字符 中找到.
+Emacs 在 Emacs 中, unicode 字符的输入是首先输入和弦 Ctrl-x 8 Enter , 然后再输入 unicode 代码点的十六进制数字, 然后回车. 因此, 要输入希腊字母 λ (lambda) 使用下面的组合键(命令之间添加了空格以使清晰):</description>
     </item>
     
     <item>
@@ -841,7 +838,7 @@ my @arbitrary-numbers = ^100; my \U = @arbitrary-numbers.Set; my @sets; @sets.pu
       <pubDate>Mon, 22 Oct 2018 21:13:31 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/post/16.core-modules/</guid>
-      <description> Rakudo 实现包含一些您可能想要使用的模块。以下是它们的列表，以及它们的源代码的链接。
+      <description>Rakudo 实现包含一些您可能想要使用的模块。以下是它们的列表，以及它们的源代码的链接。
 CompUnit::* 模块和角色  这些模块主要由分发构建工具使用，并不打算由最终用户使用（至少在版本6.c之前）。
  CompUnit::Repository::Staging. CompUnit::Repository::(FileSystem|Installation|AbsolutePath|Unknown|NQP|Raku|RepositoryRegistry).  NativeCall 模块  NativeCall 原生调用接口 (docs) NativeCall::Types 由 NativeCall 使用 NativeCall::Compiler::GNU 由 NativeCall 使用 NativeCall::Compiler::MSVC 由 NativeCall 使用  Other modules  Pod::To::Text 由多个外部模块使用 Test Test 子例程 (docs) experimental newline  </description>
     </item>
@@ -856,7 +853,7 @@ CompUnit::* 模块和角色  这些模块主要由分发构建工具使用，并
 与大多数现代编程语言一样，Raku 被设计为支持并发（允许多个事件同时发生）和异步编程（有时称为事件驱动或反应式编程 - 即程序某些部分的事件或变化可能会导致程序流异步地改变程序的其它部分）。
 Perl 的并发设计的目的是提供一个高层级的，可组合的，一致的接口，而不管如下所述的虚拟机通过工具层怎样为特定操作的系统来实现它。
 此外，某些 Perl 的特性可以隐式地以异步的方式操作，所以为了确保这些特性可预测的互通，用户代码应在可能情况下，避免较低层级的并发的 API（即线程和调度器），并使用高层级接口。
-High-level APIs Promises Promise（在其他编程环境中也被称为 *future*）封装了在获得 promise 时可能尚未完成或甚至未开始的计算结果。Promise 从 Planned 状态开始, 结果要么是 Kept 状态, 这意味着该 promise 已成功完成, 要么是 Broken 状态, 意味着该 promise 已失败。 通常这就是用户代码需要以并行或异步方式操作的使用最多的功能。
+High-level APIs Promises Promise（在其他编程环境中也被称为 future）封装了在获得 promise 时可能尚未完成或甚至未开始的计算结果。Promise 从 Planned 状态开始, 结果要么是 Kept 状态, 这意味着该 promise 已成功完成, 要么是 Broken 状态, 意味着该 promise 已失败。 通常这就是用户代码需要以并行或异步方式操作的使用最多的功能。
 my $p1 = Promise.new; say $p1.status; # OUTPUT: «Planned␤» $p1.keep(&#39;Result&#39;); say $p1.status; # OUTPUT: «Kept␤» say $p1.result; # OUTPUT: «Result␤» # (since it has been kept, a result is available!) my $p2 = Promise.new; $p2.break(&#39;oh no&#39;); say $p2.</description>
     </item>
     
@@ -886,7 +883,7 @@ sub MAIN 在运行所有相关的输入phasers（BEGIN，CHECK，INIT，PRE，EN
       <guid>https://ohmysunny.github.io/post/13.classes-and-objects/</guid>
       <description>Raku 有一个丰富的内置语法来定义和使用类。
 默认构造函数允许为创建的对象设置属性:
-class Point { has Int $.x; has Int $.y; } class Rectangle { has Point $.lower; has Point $.upper; method area() returns Int { ($!upper.x - $!lower.x) * ( $!upper.y - $!lower.y); } } # Create a new Rectangle from two Points my $r = Rectangle.new(lower =&amp;gt; Point.new(x =&amp;gt; 0, y =&amp;gt; 0), upper =&amp;gt; Point.new(x =&amp;gt; 10, y =&amp;gt; 10)); say $r.area(); # OUTPUT: «100␤»  您也可以提供自己的构建和构建实现。下面更详细的例子展示了 Raku 中依赖处理器的外观。它展示了自定义构造函数，私有属性和公共属性，方法以及签名的各个方面。它代码不多，但结果是有趣和有用的。</description>
+class Point {has Int $.x;has Int $.y;}class Rectangle {has Point $.lower;has Point $.upper;method area() returns Int {($!upper.x - $!lower.x) * ( $!upper.y - $!lower.y);}}# Create a new Rectangle from two Points my $r = Rectangle.new(lower =&amp;gt; Point.new(x =&amp;gt; 0, y =&amp;gt; 0), upper =&amp;gt; Point.new(x =&amp;gt; 10, y =&amp;gt; 10));say $r.area(); # OUTPUT: «100␤» 您也可以提供自己的构建和构建实现。下面更详细的例子展示了 Raku 中依赖处理器的外观。它展示了自定义构造函数，私有属性和公共属性，方法以及签名的各个方面。它代码不多，但结果是有趣和有用的。</description>
     </item>
     
     <item>
@@ -897,9 +894,9 @@ class Point { has Int $.x; has Int $.y; } class Rectangle { has Point $.lower; h
       <guid>https://ohmysunny.github.io/post/12.ruby-to-perl-6/</guid>
       <description>Raku from Ruby - Nutshell
 基本语法 语句结束分号 Ruby 使用换行(有几个例外)来探测大部分语句的结束, 只要表达式已经完成。通过把运算符挂在行的末尾以保证解析会继续而打断一个长的表达式的做法很常见:
-foo + # 在 Ruby 中结尾的运算符意味着解析会继续 bar + baz  在 Raku 中你必须显式地使用 ; 来结束语句, 这允许更好的反馈和更灵活的断行。有两个例外不需要显式的 ;, 块儿中的最后一条语句, 在块自身的闭合花括号之后(如果那一行上没有任何其它东西):
-if 5 &amp;lt; $x &amp;lt; 10 { say &amp;quot;Yep!&amp;quot;; $x = 17 # 在闭合花括号 } 之前不需要分号 ; } # 因为换行, 在闭合花括号 } 之后不需要分号 ; say &amp;quot;Done!&amp;quot;; # 如果后面什么也没有, 那么这儿的分号也不需要  空白 Ruby 中允许使用大量令人吃惊的灵活的空白, 即使在开启了严格模式和警告的情况下:
-# 不符合习惯但是在 Ruby 中是合法的 puts&amp;quot;Hello &amp;quot;+ (people [ i] .</description>
+foo + # 在 Ruby 中结尾的运算符意味着解析会继续 bar + baz 在 Raku 中你必须显式地使用 ; 来结束语句, 这允许更好的反馈和更灵活的断行。有两个例外不需要显式的 ;, 块儿中的最后一条语句, 在块自身的闭合花括号之后(如果那一行上没有任何其它东西):
+if 5 &amp;lt; $x &amp;lt; 10 { say &amp;quot;Yep!&amp;quot;; $x = 17 # 在闭合花括号 } 之前不需要分号 ; } # 因为换行, 在闭合花括号 } 之后不需要分号 ; say &amp;quot;Done!&amp;quot;; # 如果后面什么也没有, 那么这儿的分号也不需要 空白 Ruby 中允许使用大量令人吃惊的灵活的空白, 即使在开启了严格模式和警告的情况下:
+# 不符合习惯但是在 Ruby 中是合法的 puts&amp;#34;Hello &amp;#34;+ (people [ i] .</description>
     </item>
     
     <item>
@@ -910,8 +907,8 @@ if 5 &amp;lt; $x &amp;lt; 10 { say &amp;quot;Yep!&amp;quot;; $x = 17 # 在闭合
       <guid>https://ohmysunny.github.io/post/11.python-to-perl6-nutshell/</guid>
       <description>此页面试图为来自 Python 背景的人们提供学习 Raku 的方法。我们在 Raku 中讨论了许多 Python 构造和惯用法的等价语法。
 基本语法 Hello, world 让我们从打印 &amp;ldquo;Hello, world!&amp;rdquo; 开始吧。 Raku 中的 put 关键字相当于 Python 中的 print。与 Python 2 一样，括号是可选的。换行符添加到行尾。
- Python 2  print &amp;quot;Hello, world!&amp;quot;   Python 3  print(&amp;quot;Hello, world!&amp;quot;)   Raku  put &amp;quot;Hello, world!&amp;quot;  还有 say 关键字，其行为类似，但会调用其参数的 gist 方法。
- Raku  my $hello = &amp;quot;Hello, world!&amp;quot;; say $hello; # also prints &amp;quot;Hello, world!&amp;quot; # same as: put $hello.</description>
+ Python 2  print &amp;#34;Hello, world!&amp;#34;  Python 3  print(&amp;#34;Hello, world!&amp;#34;)  Raku  put &amp;quot;Hello, world!&amp;quot; 还有 say 关键字，其行为类似，但会调用其参数的 gist 方法。
+ Raku  my $hello = &amp;quot;Hello, world!&amp;quot;; say $hello; # also prints &amp;quot;Hello, world!&amp;quot; # same as: put $hello.gist 在 Python 中 &#39; 和 &amp;quot; 是可互换的。在 Raku 中两者都可用于引用, 但双引号(&amp;quot;)表示应该进行插值。例如, 以 $ 开头的变量和包含在花括号中的表达式会被插值。</description>
     </item>
     
     <item>
@@ -923,9 +920,9 @@ if 5 &amp;lt; $x &amp;lt; 10 { say &amp;quot;Yep!&amp;quot;; $x = 17 # 在闭合
       <description>Haskell 和 Raku 是非常不同的语言。这很明显。 但是，这并不意味着没有相似之处或共同的想法！ 此页面尝试让一个 Haskell 用户启动并运行 Raku。Haskell 用户可能会发现，在用 Raku 编写脚本时，他们不需要放弃所有 Haskelly 的想法。
 请注意，这不应该被误认为是初学者教程或 Raku 概述; 它旨在作为具有强大 Haskell 背景的 Raku 学习者的技术参考。
 类型 类型 vs 值 在 Haskell 中, 您有类型级编程, 然后进行值级编程。
-plusTwo :: Integer -&amp;gt; Integer -- Types plusTwo x = x + 2 -- Values  您不要像下面那样在 Haskell 中混合类型和值。
-plusTwo 2 -- This is valid plusTwo Integer -- This is not valid  在 Raku 中, 类型(亦称为类型对象)和值处于同样的级别
-sub plus-two(Int $x --&amp;gt; Int) { $x + 2 } plus-two(2); # This is valid plus-two(Int); # This is valid  我将再用一个例子来说明 Raku 这个独特之处:</description>
+plusTwo :: Integer -&amp;gt; Integer -- Types plusTwo x = x + 2 -- Values 您不要像下面那样在 Haskell 中混合类型和值。
+plusTwo 2 -- This is valid plusTwo Integer -- This is not valid 在 Raku 中, 类型(亦称为类型对象)和值处于同样的级别
+sub plus-two(Int $x --&amp;gt; Int) { $x + 2 } plus-two(2); # This is valid plus-two(Int); # This is valid 我将再用一个例子来说明 Raku 这个独特之处:</description>
     </item>
     
     <item>
@@ -939,7 +936,7 @@ This page attempts to provide a way for users experienced in Node.js to learn Ra
 This is not a tutorial for learning Raku; this is a reference for users who are already at an intermediate to advanced skill level with Node.js.
 此页面试图为在Node.js中有经验的用户提供学习Raku的方法。这里将解释两种语言之间共享的功能，以及语法和功能的主要差异。
 这不是学习Raku的教程; 对于已经使用Node.js处于中级到高级技能级别的用户，这是一个参考。
-基础语法 &amp;ldquo;Hello, world!&amp;rdquo; Let&amp;rsquo;s start with the typical first program when learning new languages.</description>
+基础语法 &amp;ldquo;Hello, world!&amp;quot; Let&amp;rsquo;s start with the typical first program when learning new languages.</description>
     </item>
     
     <item>
@@ -950,12 +947,8 @@ This is not a tutorial for learning Raku; this is a reference for users who are 
       <guid>https://ohmysunny.github.io/post/8.perl-5-to-perl-6-guide-special-variables/</guid>
       <description>描述 一个（希望）全面的 Perl 5 特殊变量列表及其 Raku 等价物，并在必要时记录它们之间的变化。
 注意 本文档试图引导读者从 Perl 5 中的特殊变量到 Raku 中的等效变量。有关 Raku 特殊变量的完整文档，请参阅每个变量的 Raku 文档。
-特殊变量 通用变量  $ARG
- $_
-  值得庆幸的是， $_ 是 Perl 5 中的常规默认变量。Raku 的主要区别在于现在你可以在它身上调用方法。 例如，Perl 5 的 say $_ 可以在 Raku 中以 $_.say 表示。 此外，因为它是默认变量，您甚至不需要使用变量名称。 前面的例子也可以 通过使用 .say 实现。
- @ARG
- @_
-  由于 Raku 现在具有函数签名，您的参数可以去那里，而不是依赖于 @_。 事实上，如果你使用函数签名，使用 @_ 会吐出你告诉它不能覆盖一个现有签名。
+特殊变量 通用变量  $ARG $_  值得庆幸的是， $_ 是 Perl 5 中的常规默认变量。Raku 的主要区别在于现在你可以在它身上调用方法。 例如，Perl 5 的 say $_ 可以在 Raku 中以 $_.say 表示。 此外，因为它是默认变量，您甚至不需要使用变量名称。 前面的例子也可以 通过使用 .say 实现。
+ @ARG @_  由于 Raku 现在具有函数签名，您的参数可以去那里，而不是依赖于 @_。 事实上，如果你使用函数签名，使用 @_ 会吐出你告诉它不能覆盖一个现有签名。
 但是，如果您不使用函数签名，则 @_ 将包含您传递给函数的参数, 就像它在Perl 5中那样。再次，与 $_ 一样 ，您可以在其上调用方法。 与 $_ 不同，你不能假设 @_ 为 这些方法的默认变量（即 @_.</description>
     </item>
     
@@ -966,12 +959,12 @@ This is not a tutorial for learning Raku; this is a reference for users who are 
       
       <guid>https://ohmysunny.github.io/post/7.perl-5-to-perl-6-guide-syntax/</guid>
       <description>描述 关于 Perl 5 和 Raku 之间差异的全面（希望）描述。
-注意 我*不会*详细解释 Raku 语法。本文档旨在指导你从 Perl 5 中的工作原理过渡到 Raku 中的等效工具。有关 Raku 语法的完整文档，请参阅 Raku 文档。
-自由形式 Raku 仍然*主要是*自由形式。但是，有一些情况下，空白的存在或缺失现在很重要。例如，在 Perl 5 中，你可以省略关键字后面的空格（例如 while($x &amp;lt; 5) 或 my($x, $y)）。在 Raku 中，这个空白是必需的，因此 while ($x &amp;lt; 5) 或 my ($x, $y)。但是，在 Raku 中，你可以完全省略括号：while $x &amp;lt; 5。这适用于 if，for 等等。
+注意 我不会详细解释 Raku 语法。本文档旨在指导你从 Perl 5 中的工作原理过渡到 Raku 中的等效工具。有关 Raku 语法的完整文档，请参阅 Raku 文档。
+自由形式 Raku 仍然主要是自由形式。但是，有一些情况下，空白的存在或缺失现在很重要。例如，在 Perl 5 中，你可以省略关键字后面的空格（例如 while($x &amp;lt; 5) 或 my($x, $y)）。在 Raku 中，这个空白是必需的，因此 while ($x &amp;lt; 5) 或 my ($x, $y)。但是，在 Raku 中，你可以完全省略括号：while $x &amp;lt; 5 。这适用于 if，for 等等。
 奇怪的是，在 Perl 5 中，你可以在数组或散列与其下标之间以及后缀运算符之间留出空格。所以 $seen {$_} ++ 是有效的。Raku 再不这样了。Raku 中现在必须是 %seen{$_}++。
 如果能让你感觉更好，你可以使用反斜杠来 “unspace” 空格，这样你就可以使用空格，否则它将被禁止。
 有关详细信息，请参阅空白。
-声明 正如函数 指南中所述，Raku 中没有 undef 。声明但未初始化的标量变量将计算其类型。换句话说，my $x;say $x; 会给你&amp;rdquo;(Any)&amp;ldquo;。my Int $y;say $y; 会给你&amp;rdquo;(Int)&amp;ldquo;。</description>
+声明 正如函数 指南中所述，Raku 中没有 undef 。声明但未初始化的标量变量将计算其类型。换句话说，my $x;say $x; 会给你&amp;rdquo;(Any)&amp;quot;。my Int $y;say $y; 会给你&amp;rdquo;(Int)&amp;quot;。</description>
     </item>
     
     <item>
@@ -981,10 +974,10 @@ This is not a tutorial for learning Raku; this is a reference for users who are 
       
       <guid>https://ohmysunny.github.io/post/6.perl-5-to-perl-6-guide-operators/</guid>
       <description>描述 一个（希望）全面的 Perl 5 运算符列表及其 Raku 等价物，并在必要时记录它们之间的差异。
-注意 本文档*没有*详细解释运算符。本文档旨在指导您从 Perl 5 perlop 文档中的操作符过渡到 Raku 中的等效文档。有关 Raku 等效文档的完整文档，请参阅Raku文档。
+注意 本文档没有详细解释运算符。本文档旨在指导您从 Perl 5 perlop 文档中的操作符过渡到 Raku 中的等效文档。有关 Raku 等效文档的完整文档，请参阅Raku文档。
 运算符优先级和关联性 运算符优先级表在 Raku 中与在 Perl 5 中有所不同，因此这里不再详述。如果您需要知道 Raku 中给定运算符的优先级和关联性，请参阅运算符优先级。
 项和列表运算符 Perl 5 perlop 文档中列出的作为一元运算符和列表运算符的内容在这个章节里往往可以被视为函数，例如 print 和 chdir。因此，您可以在函数指南中找到有关它们的信息。括号仍用于分组。有一点需要注意：在 Raku 中，是,（逗号）创建列表而不是圆括号。所以：
-my @foo = 1,2,3,4,5; # no parentheses needed .say for 1,2,3,4,5; # also no parentheses my $scalar = (1); # *not* a list, as there is no comma my $list = (1,); # a List in a scalar container  箭头运算符 由于您通常不会在 Raku 中使用引用，因此箭头作为解除引用运算符可能不太有用。但是，如果您确实需要解引用某些内容，则箭头就是点号。它也是方法调用的中的点号。因此，Perl 5 中的 $arrayref-&amp;gt;[7] 在 Raku 中变成 $arrayref.</description>
+my @foo = 1,2,3,4,5; # no parentheses needed .say for 1,2,3,4,5; # also no parentheses my $scalar = (1); # *not* a list, as there is no comma my $list = (1,); # a List in a scalar container 箭头运算符 由于您通常不会在 Raku 中使用引用，因此箭头作为解除引用运算符可能不太有用。但是，如果您确实需要解引用某些内容，则箭头就是点号。它也是方法调用的中的点号。因此，Perl 5 中的 $arrayref-&amp;gt;[7]  在 Raku 中变成 $arrayref.</description>
     </item>
     
     <item>
@@ -1023,7 +1016,7 @@ CPAN 参考 https://modules.raku.org/
 如果您使用的模块尚未转换为 Raku，并且本文档中未列出任何替代方案，则可能尚未解决其在 Raku 下的使用问题。
 Inline::Perl5 项目通过使用 Perl 解释器的嵌入式实例来运行 Perl 5 代码，可以直接从 Raku 代码中使用 Perl 5 模块。
 这很简单：
-# the :from&amp;lt;Perl5&amp;gt; makes Raku load Inline::Perl5 first (if installed) # and then load the Scalar::Util module from Perl 5 use Scalar::Util:from&amp;lt;Perl5&amp;gt; &amp;lt;looks_like_number&amp;gt;; say looks_like_number &amp;quot;foo&amp;quot;; # 0 say looks_like_number &amp;quot;42&amp;quot;; # 1  许多 Perl 5 模块已经移植到 Raku，试图尽可能多地维护这些模块的 API，作为 CPAN Butterfly Plan 的一部分。 这些可以在 https://modules.</description>
+# the :from&amp;lt;Perl5&amp;gt; makes Raku load Inline::Perl5 first (if installed)  # and then load the Scalar::Util module from Perl 5  use Scalar::Util:from&amp;lt;Perl5&amp;gt; &amp;lt;looks_like_number&amp;gt;; say looks_like_number &amp;#34;foo&amp;#34;; # 0  say looks_like_number &amp;#34;42&amp;#34;; # 1  许多 Perl 5 模块已经移植到 Raku，试图尽可能多地维护这些模块的 API，作为 CPAN Butterfly Plan 的一部分。 这些可以在 https://modules.</description>
     </item>
     
     <item>
@@ -1034,7 +1027,7 @@ Inline::Perl5 项目通过使用 Perl 解释器的嵌入式实例来运行 Perl 
       <guid>https://ohmysunny.github.io/post/2.perl-6-by-example-p6-101/</guid>
       <description>假设您举办乒乓球锦标赛。裁判员以格式告诉你每场比赛的结果 Player1 Player2 | 3:2，这意味着 Player1 赢 Player2 了3到2局。你需要一个脚本来总结每个玩家赢得的比赛和数量，以确定总冠军。
 输入数据（存储在一个名为的文件中scores.txt）如下所示：
-Beth Ana Charlie Dave Ana Dave | 3:0 Charlie Beth | 3:1 Ana Beth | 2:3 Dave Charlie | 3:0 Ana Charlie | 3:1 Beth Dave | 0:3  第一行是球员名单。每个后续行记录匹配的结果。
+Beth Ana Charlie Dave Ana Dave | 3:0 Charlie Beth | 3:1 Ana Beth | 2:3 Dave Charlie | 3:0 Ana Charlie | 3:1 Beth Dave | 0:3 第一行是球员名单。每个后续行记录匹配的结果。
 这是在Raku中解决该问题的一种方法：
 use v6; my $file = open &#39;scores.txt&#39;; my @names = $file.get.words; my %matches; my %sets; for $file.lines -&amp;gt; $line { next unless $line; # ignore any empty lines my ($pairing, $result) = $line.</description>
     </item>
@@ -1051,11 +1044,7 @@ use v6; my $file = open &#39;scores.txt&#39;; my @names = $file.get.words; my %m
 许多教程涵盖了 Raku 特别具有创新性的几个领域。节标题应该有助于导航剩余的文档。
 raku.org 网站上的其他地方列出了许多有用的资源。这些包括文章，书籍，幻灯片演示和视频。
 已经发现，Raku 的新手经常会提出问题，这些问题表明了其他编程范例带来的假设。建议首先审查基本主题部分中的以下部分。
- 签名 - 每个例程（包括子例程和方法）都有签名。理解子或方法的签名中给出的信息提供了一种快速掌握例程的操作和效果的方法。
- 容器 - 变量，就像计算机语言的名词一样，是存储信息的容器。容器正式名称中的第一个字母，例如 $my-variable 的 &#39;$&#39;，或 @an-array-of-things 的 &#39;@&#39;，或 %the-score-in-the 的 &#39;％&#39; - 携带有关容器的信息。但是，Raku 比其他语言更抽象，可以存储在容器中。因此，例如，$scalar 容器可以包含实际上是数组的对象。
- 类和角色 - Raku 基本上基于对象，它们根据类和角色进行描述。与某些语言不同，Raku 并没有强制使用面向对象的编程实践，并且可以编写有用的程序，就好像 Raku 纯粹是程序性的。然而，复杂的软件，例如 Raku 的 Rakudo 编译器，通过编写面向对象的惯用法变得更加简单，这就是为什么通过查看类是什么以及角色是什么来更容易理解 Raku 文档。如果不了解类和角色，就很难理解类型，文档的整个部分都是专门用的。
- 要避免的陷阱 - 一些常见的假设导致代码无法像程序员想要的那样工作。本节标识了一些。当某些事情没有成功时，值得回顾一下。
-  </description>
+ 签名 - 每个例程（包括子例程和方法）都有签名。理解子或方法的签名中给出的信息提供了一种快速掌握例程的操作和效果的方法。 容器 - 变量，就像计算机语言的名词一样，是存储信息的容器。容器正式名称中的第一个字母，例如 $my-variable 的 &#39;$&#39;，或 @an-array-of-things 的 &#39;@&#39;，或 %the-score-in-the 的 &#39;％&#39; - 携带有关容器的信息。但是，Raku 比其他语言更抽象，可以存储在容器中。因此，例如，$scalar 容器可以包含实际上是数组的对象。 类和角色 - Raku 基本上基于对象，它们根据类和角色进行描述。与某些语言不同，Raku 并没有强制使用面向对象的编程实践，并且可以编写有用的程序，就好像 Raku 纯粹是程序性的。然而，复杂的软件，例如 Raku 的 Rakudo 编译器，通过编写面向对象的惯用法变得更加简单，这就是为什么通过查看类是什么以及角色是什么来更容易理解 Raku 文档。如果不了解类和角色，就很难理解类型，文档的整个部分都是专门用的。 要避免的陷阱 - 一些常见的假设导致代码无法像程序员想要的那样工作。本节标识了一些。当某些事情没有成功时，值得回顾一下。  </description>
     </item>
     
     <item>
@@ -1076,8 +1065,8 @@ raku.org 网站上的其他地方列出了许多有用的资源。这些包括�
       <description>Sub MAIN 在 Raku 中，命令行参数的解析是通过 MAIN 子例程完成的，MAIN 子例程是一种特殊的子例程，它根据 MAIN 子例程的签名解析命令行参数。与其他子例程一样，MAIN 子例程可以具有命名参数和位置参数、可选(和必需)参数、多重分派等等。
 有了 MAIN 子例程的定义，USAGE 子例程将由编译器自动生成。可以修改此子例程以返回定制的使用消息。所有命令行参数也可以在特殊变量 @*ARGS 中使用，它可以在 MAIN 处理之前发生转变。
 命名参数和位置参数 命名参数 让我们从一个简单的程序开始(保存为 prog.p6):
-use v6; sub MAIN( Str :$name = &#39;John&#39;, Str :$last-name = &#39;Doe&#39;, ) { my $formatted-name = &amp;quot;$name.tc() $last-name.tc()&amp;quot;; say $formatted-name; }  在这个 MAIN 子句中，我们通过前置 : 到子例程签名中的每个变量上，创建了两个带有类型约束(Str)的命名参数，$name 和 $last-name。这些参数也有默认值，这是通过给参数赋值来实现的。在本例中，我们将 $name 设置为默认值 “John”，将 $last-name 设置为 “Doe”。如果执行 prog.p6 时命令行参数与 MAIN 签名匹配，则会打印出一个格式化的全名:
-$ raku prog.p6 John Doe $ raku prog.</description>
+use v6; sub MAIN( Str :$name = &#39;John&#39;, Str :$last-name = &#39;Doe&#39;, ) { my $formatted-name = &amp;quot;$name.tc() $last-name.tc()&amp;quot;; say $formatted-name; } 在这个 MAIN 子句中，我们通过前置 : 到子例程签名中的每个变量上，创建了两个带有类型约束(Str)的命名参数，$name 和 $last-name。这些参数也有默认值，这是通过给参数赋值来实现的。在本例中，我们将 $name 设置为默认值 “John”，将 $last-name 设置为 “Doe”。如果执行 prog.p6 时命令行参数与 MAIN 签名匹配，则会打印出一个格式化的全名:
+$ raku prog.p6 John Doe $ raku prog.p6 --name=&#39;carl&#39; --last-name=&#39;sagan&#39; Carl Sagan $ raku prog.</description>
     </item>
     
     <item>
@@ -1087,7 +1076,7 @@ $ raku prog.p6 John Doe $ raku prog.</description>
       
       <guid>https://ohmysunny.github.io/post/2018-10-04-perl-6-code-in-rmarkdown/</guid>
       <description>安装 首先，首先安装 R 编程语言。在此之后，运行 R 并执行以下命令来安装 rmarkdown: install.packages(&amp;quot;rmarkdown&amp;quot;)。在安装 rmarkdown 时，我收到以下错误消息:
-Error: .onLoad failed in loadNamespace() for &#39;tcltk&#39;, details: call: dyn.load(file, DLLpath = DLLpath, ...) error: unable to load shared object &#39;/usr/lib/R/library/tcltk/libs/tcltk.so&#39;: libtk8.6.so: cannot open shared object file: No such file or directory  这可以通过安装包 tk 来解决，然后继续安装 rmarkdown。
+Error: .onLoad failed in loadNamespace() for &#39;tcltk&#39;, details: call: dyn.load(file, DLLpath = DLLpath, ...) error: unable to load shared object &#39;/usr/lib/R/library/tcltk/libs/tcltk.so&#39;: libtk8.6.so: cannot open shared object file: No such file or directory 这可以通过安装包 tk 来解决，然后继续安装 rmarkdown。
 Rmarkdown 的代码块 你可以用 rmarkdown 做的几乎所有都可以用“常规” markdown 来做的事情。然而，rmarkdown 的一个突出特性是它能够执行代码块并返回结果。为此，rmarkdown 使用了 knitr 包，这是一个使用 R 生成动态报告的引擎，除了 R 之外，它还支持其他语言引擎，您可以使用这些引擎来计算来自其他语言的代码。要列出可用引擎的名称，请在 R REPL 中执行 names(knitr::knit_engines$get()) 命令。就像“常规” markdown 一样，代码块可以用三个反勾号创建，然后是代码，最后是另外三个反勾号。如果希望计算代码块，请在花括号 {} 中指定语言，该语言位于前三个反勾号之后。例如，要执行 Perl 5 代码，可以在 {} 中指定 perl:</description>
     </item>
     

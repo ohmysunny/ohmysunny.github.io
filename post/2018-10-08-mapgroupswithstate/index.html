@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,9 +81,7 @@
       <h1>mapGroupsWithState</h1>
     </header>
 
-    
-
-<pre><code>  /**
+    <pre><code>  /**
    * ::Experimental::
    * (Scala-specific)
    * Applies the given function to each group of data, while maintaining a user-defined per-group
@@ -118,10 +116,7 @@
         timeoutConf,
         child = logicalPlan))
   }
-</code></pre>
-
-<p>看这个函数的注释：</p>
-
+</code></pre><p>看这个函数的注释：</p>
 <pre><code>  /**
    * ::Experimental::
    * (Scala-specific)
@@ -140,43 +135,29 @@
    * See [[Encoder]] for more details on what types are encodable to Spark SQL.
    * @since 2.2.0
    */
-</code></pre>
-
-<p>这个函数还是实验性质的，并且是 Scala 特定的，Spark 2.2.0 以后才支持这个 API。它还是个柯里化函数。</p>
-
+</code></pre><p>这个函数还是实验性质的，并且是 Scala 特定的，Spark 2.2.0 以后才支持这个 API。它还是个柯里化函数。</p>
 <p>将给定的函数应用于每组数据，同时维护每个组的用户定义状态。结果数据集将代表该函数返回的对象。对于静态批数据集，每组调用一次函数。对于流数据集，该函数将在每次触发时为每个组重复调用，并且对每组状态的更新将跨调用保存。</p>
-
 <h2 id="参数">参数</h2>
-
 <ul>
 <li>@tparam S 用户定义状态的<strong>类型</strong>。必须编码为 Spark SQL 类型。</li>
 <li>@tparam U 输出对象的<strong>类型</strong>。必须编码为 Saprk SQL 类型。</li>
 <li>@param func 每个组上调用的函数。</li>
 <li>@param timeoutConf 在一段时间内不接收数据的组的超时配置。</li>
 </ul>
-
 <p>注意 <code>tparam</code> 带了个字母 t, 说明这个参数是<strong>类型参数</strong>。 mapGroupsWithState 这个函数真正接收的是 2 个参数，一个是超时时间， 一个是 func 函数。</p>
-
 <pre><code>func: (K, Iterator[V], GroupState[S]) =&gt; U)
-</code></pre>
-
-<p>看一下这个函数的签名，函数的类型是含有三个元素的元组，函数的返回值是一个 <code>U</code>, 代表输出对象的<strong>类型</strong>。重点来看一下 func 这个函数的接收的参数：</p>
-
+</code></pre><p>看一下这个函数的签名，函数的类型是含有三个元素的元组，函数的返回值是一个 <code>U</code>, 代表输出对象的<strong>类型</strong>。重点来看一下 func 这个函数的接收的参数：</p>
 <ul>
 <li>K 明显是一个类型，例如 Int, String，用作 groupByKey 中的键的类型。</li>
 <li>Iterator[V] V incoming messages of type V</li>
 <li>GroupState[S] S 输出对象的类型</li>
 </ul>
-
 <p>我们来看一下 func</p>
-
 <pre><code>  def updateSessionEvents(
       id: Int,
       userEvents: Iterator[UserEvent],
       state: GroupState[UserSession]): Option[UserSession] = { ... }
-</code></pre>
-
-<p>看到 func 函数里面的参数都是普通的参数， 就是带了类型而已。但是 <code>func: (K, Iterator[V], GroupState[S]) =&gt; U)</code> 里面的参数，看着好像都是类型参数，而不是普通的函数参数。</p>
+</code></pre><p>看到 func 函数里面的参数都是普通的参数， 就是带了类型而已。但是 <code>func: (K, Iterator[V], GroupState[S]) =&gt; U)</code> 里面的参数，看着好像都是类型参数，而不是普通的函数参数。</p>
 
   </article>
 </section>

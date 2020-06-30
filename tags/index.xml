@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Rakudo Star</title>
@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Doc</title>
+      <title>doc</title>
       <link>https://ohmysunny.github.io/tags/doc/</link>
       <pubDate>Sun, 14 Jul 2019 21:13:31 +0800</pubDate>
       
@@ -21,20 +21,20 @@
     </item>
     
     <item>
-      <title>Hello</title>
-      <link>https://ohmysunny.github.io/tags/hello/</link>
-      <pubDate>Wed, 03 Oct 2018 19:15:00 +0800</pubDate>
-      
-      <guid>https://ohmysunny.github.io/tags/hello/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Main</title>
+      <title>MAIN</title>
       <link>https://ohmysunny.github.io/tags/main/</link>
       <pubDate>Wed, 03 Oct 2018 21:33:03 +0800</pubDate>
       
       <guid>https://ohmysunny.github.io/tags/main/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rmarkdown</title>
+      <link>https://ohmysunny.github.io/tags/rmarkdown/</link>
+      <pubDate>Wed, 03 Oct 2018 21:32:27 +0800</pubDate>
+      
+      <guid>https://ohmysunny.github.io/tags/rmarkdown/</guid>
       <description></description>
     </item>
     
@@ -48,11 +48,11 @@
     </item>
     
     <item>
-      <title>Rmarkdown</title>
-      <link>https://ohmysunny.github.io/tags/rmarkdown/</link>
-      <pubDate>Wed, 03 Oct 2018 21:32:27 +0800</pubDate>
+      <title>Hello</title>
+      <link>https://ohmysunny.github.io/tags/hello/</link>
+      <pubDate>Wed, 03 Oct 2018 19:15:00 +0800</pubDate>
       
-      <guid>https://ohmysunny.github.io/tags/rmarkdown/</guid>
+      <guid>https://ohmysunny.github.io/tags/hello/</guid>
       <description></description>
     </item>
     

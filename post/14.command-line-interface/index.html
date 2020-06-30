@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,77 +81,44 @@
       <h1>命令行接口</h1>
     </header>
 
-    
-
-<h2 id="命令行接口-概述">命令行接口 - 概述</h2>
-
+    <h2 id="命令行接口---概述">命令行接口 - 概述</h2>
 <p>Raku 脚本的默认命令行界面由三部分组成：</p>
-
 <h3 id="将命令行参数解析为捕获">将命令行参数解析为捕获</h3>
-
 <p>这将查看 <a href="https://docs.raku.org/language/variables#index-entry-%40%2AARGS">@*ARGS</a> 中的值，根据某些策略解释这些值，并创建一个 <code>Capture</code> 对象。解析器的替代方式可以由开发者提供或使用模块安装。</p>
-
 <h3 id="使用该捕获调用提供的main子例程">使用该捕获调用提供的MAIN子例程</h3>
-
 <p>标准多<a href="https://docs.raku.org/language/functions#index-entry-declarator_multi-Multi-dispatch">分重分派</a>用于使用生成的 <code>Capture</code> 对象调用 MAIN 子例程。这意味着您的 MAIN子 例程可能是一个 <code>multi sub</code>，其中每个候选程序负责处理给定命令行参数的某些部分。</p>
-
-<h3 id="如果调用-main-失败-则创建-显示使用信息">如果调用 MAIN 失败，则创建/显示使用信息</h3>
-
+<h3 id="如果调用-main-失败则创建显示使用信息">如果调用 MAIN 失败，则创建/显示使用信息</h3>
 <p>如果多重分派失败，则应尽可能通知脚本的用户失败的原因。默认情况下，这是通过检查每个 MAIN 候选 sub 的签名以及任何关联的 pod 信息来完成的。然后在 STDERR 上向用户显示结果（如果指定了 <code>--help</code>，则在 STDOUT 上显示）。生成使用信息的替代方式可以由开发者提供或使用模块安装。</p>
-
 <h2 id="sub-main">sub MAIN</h2>
-
 <p>在运行所有相关的输入phasers（<code>BEGIN</code>，<code>CHECK</code>，<code>INIT</code>，<code>PRE</code>，<code>ENTER</code>）并执行脚本的主线之后，将执行具有特殊名称 MAIN 的子程序。如果没有 MAIN sub，则不会发生错误：您的脚本只需要在脚本的主线中执行工作，例如参数解析。</p>
-
 <p>从 MAIN sub 的任何正常退出将导致退出代码为 <code>0</code>，表示成功。 MAIN 子的任何返回值都将被忽略。如果抛出未在 MAIN 子内部处理的异常，则退出代码将为 <code>1</code>。如果调度到 <code>MAIN</code> 失败，则在 STDERR 上将显示一条用法消息，退出代码将为 2。</p>
-
 <p>命令行参数存在于 <code>@*ARGS</code> 动态变量中，并且可以在调用 MAIN 单元之前在脚本的主线中进行更改。</p>
-
 <p>（多个子 MAIN 的候选者）的签名确定使用标准<a href="https://docs.raku.org/language/glossary#index-entry-Multi-Dispatch">多重分派</a>语义实际调用哪个候选者。</p>
-
 <p>一个简单的例子：</p>
-
-<pre><code class="language-raku"># inside file 'hello.p6' 
+<pre><code class="language-raku" data-lang="raku"># inside file 'hello.p6' 
 sub MAIN($name) {
     say &quot;Hello $name, how are you?&quot;
 }
-</code></pre>
-
-<p>如果您调用该脚本没有任何参数：</p>
-
-<pre><code class="language-shell">$ raku hello.p6
+</code></pre><p>如果您调用该脚本没有任何参数：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku hello.p6
 Usage:
   hello.p6 &lt;name&gt;
-</code></pre>
-
-<p>但是，如果为参数指定默认值，则无论是否指定名称，运行脚本始终有效：</p>
-
-<pre><code class="language-raku"># inside file 'hello.p6' 
+</code></pre></div><p>但是，如果为参数指定默认值，则无论是否指定名称，运行脚本始终有效：</p>
+<pre><code class="language-raku" data-lang="raku"># inside file 'hello.p6' 
 sub MAIN($name = 'bashful') {
     say &quot;Hello $name, how are you?&quot;
 }
-</code></pre>
-
-<pre><code class="language-shell">$ raku hello.p6
+</code></pre><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku hello.p6
 Hello bashful, how are you?
-</code></pre>
-
-<pre><code class="language-shell">$ raku hello.p6 Liz
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku hello.p6 Liz
 Hello Liz, how are you?
-</code></pre>
-
-<p>另一种方法是使 <code>sub MAIN</code> 成为一个 <code>multi sub</code>：</p>
-
-<pre><code class="language-raku"># inside file 'hello.p6' 
+</code></pre></div><p>另一种方法是使 <code>sub MAIN</code> 成为一个 <code>multi sub</code>：</p>
+<pre><code class="language-raku" data-lang="raku"># inside file 'hello.p6' 
 multi sub MAIN()      { say &quot;Hello bashful, how are you?&quot; }
 multi sub MAIN($name) { say &quot;Hello $name, how are you?&quot;   }
-</code></pre>
-
-<p>这将提供与上述示例相同的输出。您是否应该使用任何一种方法来实现预期目标完全取决于您。</p>
-
+</code></pre><p>这将提供与上述示例相同的输出。您是否应该使用任何一种方法来实现预期目标完全取决于您。</p>
 <p>使用单个位置和多个命名参数的更复杂的示例：</p>
-
-<pre><code class="language-raku"># inside &quot;frobnicate.p6&quot; 
+<pre><code class="language-raku" data-lang="raku"># inside &quot;frobnicate.p6&quot; 
 sub MAIN(
   Str   $file where *.IO.f = 'file.dat',
   Int  :$length = 24,
@@ -161,34 +128,22 @@ sub MAIN(
     say $file   if $file.defined;
     say 'Verbosity ', ($verbose ?? 'on' !! 'off');
 }
-</code></pre>
-
-<p>有了 <code>file.dat</code>，这将以这种方式工作：</p>
-
-<pre><code class="language-shell">$ raku frobnicate.p6
-24
+</code></pre><p>有了 <code>file.dat</code>，这将以这种方式工作：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku frobnicate.p6
+<span class="m">24</span>
 file.dat
 Verbosity off
-</code></pre>
-
-<p>或者这样 <code>--verbose</code>：</p>
-
-<pre><code class="language-shell">$ raku frobnicate.p6 --verbose
-24
+</code></pre></div><p>或者这样 <code>--verbose</code>：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku frobnicate.p6 --verbose
+<span class="m">24</span>
 file.dat
 Verbosity on
-</code></pre>
-
-<p>如果文件 <code>file.dat</code> 不存在，或者您指定了另一个不存在的文件名，您将获得从 <code>MAIN</code> 子的内省创建的标准用法消息：</p>
-
-<pre><code class="language-shell">$ raku frobnicate.p6 doesntexist.dat
+</code></pre></div><p>如果文件 <code>file.dat</code> 不存在，或者您指定了另一个不存在的文件名，您将获得从 <code>MAIN</code> 子的内省创建的标准用法消息：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku frobnicate.p6 doesntexist.dat
 Usage:
-  frobnicate.p6 [--length=&lt;Int&gt;] [--verbose] [&lt;file&gt;]
-</code></pre>
-
-<p>虽然您不必在代码中执行任何操作，但它仍然可能被视为有点简洁。但是通过使用 pod 功能提供提示，有一种简单的方法可以更好地使用该消息：</p>
-
-<pre><code class="language-raku"># inside &quot;frobnicate.p6&quot; 
+  frobnicate.p6 <span class="o">[</span>--length<span class="o">=</span>&lt;Int&gt;<span class="o">]</span> <span class="o">[</span>--verbose<span class="o">]</span> <span class="o">[</span>&lt;file&gt;<span class="o">]</span>
+</code></pre></div><p>虽然您不必在代码中执行任何操作，但它仍然可能被视为有点简洁。但是通过使用 pod 功能提供提示，有一种简单的方法可以更好地使用该消息：</p>
+<pre><code class="language-raku" data-lang="raku"># inside &quot;frobnicate.p6&quot; 
 sub MAIN(
   Str   $file where *.IO.f = 'file.dat',  #= an existing file to frobnicate 
   Int  :$length = 24,                     #= length needed for frobnication 
@@ -198,76 +153,49 @@ sub MAIN(
     say $file   if $file.defined;
     say 'Verbosity ', ($verbose ?? 'on' !! 'off');
 }
-</code></pre>
-
-<p>哪个会改善这样的用法消息：</p>
-
-<pre><code class="language-shell">$ raku frobnicate.p6 doesntexist.dat
+</code></pre><p>哪个会改善这样的用法消息：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku frobnicate.p6 doesntexist.dat
 Usage:
-  frobnicate.p6 [--length=&lt;Int&gt;] [--verbose] [&lt;file&gt;]
+  frobnicate.p6 <span class="o">[</span>--length<span class="o">=</span>&lt;Int&gt;<span class="o">]</span> <span class="o">[</span>--verbose<span class="o">]</span> <span class="o">[</span>&lt;file&gt;<span class="o">]</span>
  
-    [&lt;file&gt;]          an existing file to frobnicate
-    --length=&lt;Int&gt;    length needed for frobnication
+    <span class="o">[</span>&lt;file&gt;<span class="o">]</span>          an existing file to frobnicate
+    --length<span class="o">=</span>&lt;Int&gt;    length needed <span class="k">for</span> frobnication
     --verbose         required verbosity
-</code></pre>
-
-<h2 id="sub-main-opts">%*SUB-MAIN-OPTS</h2>
-
+</code></pre></div><h2 id="sub-main-opts">%*SUB-MAIN-OPTS</h2>
 <p>通过设置 <code>%*SUB-MAIN-OPTS</code> 哈希中的选项，可以在将参数传递给 <code>sub MAIN {}</code> 之前更改参数的处理方式。由于动态变量的性质，需要设置 <code>%*SUB-MAIN-OPTS</code> 哈希并使用适当的设置填充它。例如：</p>
-
-<pre><code class="language-raku">my %*SUB-MAIN-OPTS =
+<pre><code class="language-raku" data-lang="raku">my %*SUB-MAIN-OPTS =
   :named-anywhere,    # allow named variables at any location 
   # other possible future options / custom options 
 ;
 sub MAIN ($a, $b, :$c, :$d) {
     say &quot;Accepted!&quot;
 }
-</code></pre>
-
-<p>可用选项包括：</p>
-
+</code></pre><p>可用选项包括：</p>
 <h3 id="named-anywhere">named-anywhere</h3>
-
 <p>默认情况下，传递给程序的命名参数（即 <code>MAIN</code>）在任何位置参数后都不会出现。但是，如果将 <code>%*SUB-MAIN-OPTS&lt;named-anywhere&gt;</code> 设置为 true 值，则可以在任何位置指定命名参数，即使在位置参数之后也是如此。例如，可以使用以下命令调用上述程序：</p>
-
-<pre><code class="language-shell">$ raku example.p6 1 --c=2 3 --d=4
-</code></pre>
-
-<h3 id="is-hidden-from-usage">is hidden-from-USAGE</h3>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ raku example.p6 <span class="m">1</span> --c<span class="o">=</span><span class="m">2</span> <span class="m">3</span> --d<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h3 id="is-hidden-from-usage">is hidden-from-USAGE</h3>
 <p>有时您希望排除MAIN候选者显示在任何自动生成的使用消息中。这可以通过向您不想显示的 MAIN 候选者的规范添加 <code>hidden-from-USAGE</code> 特征来实现。扩展前面的例子：</p>
-
-<pre><code class="language-raku"># inside file 'hello.p6' 
+<pre><code class="language-raku" data-lang="raku"># inside file 'hello.p6' 
 multi sub MAIN() is hidden-from-USAGE {
     say &quot;Hello bashful, how are you?&quot;
 }
 multi sub MAIN($name) {  #= the name by which you would like to be called 
     say &quot;Hello $name, how are you?&quot;
 }
-</code></pre>
-
-<p>因此，如果您只使用命名变量调用此脚本，您将获得以下用法：</p>
-
-<pre><code class="language-raku">$ raku hello.p6 --verbose
+</code></pre><p>因此，如果您只使用命名变量调用此脚本，您将获得以下用法：</p>
+<pre><code class="language-raku" data-lang="raku">$ raku hello.p6 --verbose
 Usage:
   hello.p6 &lt;name&gt; -- the name by which you would like to be called
-</code></pre>
-
-<p>没有第一个候选者 <code>hidden-from-USAGE</code> 特征，它看起来像这样：</p>
-
-<pre><code class="language-raku">$ raku hello.p6 --verbose
+</code></pre><p>没有第一个候选者 <code>hidden-from-USAGE</code> 特征，它看起来像这样：</p>
+<pre><code class="language-raku" data-lang="raku">$ raku hello.p6 --verbose
 Usage:
   hello.p6
   hello.p6 &lt;name&gt; -- the name by which you would like to be called
-</code></pre>
-
-<p>虽然技术上是正确的，但也不能读。</p>
-
+</code></pre><p>虽然技术上是正确的，但也不能读。</p>
 <h3 id="main-的单位作用域定义">MAIN 的单位作用域定义</h3>
-
 <p>如果整个程序体驻留在 <code>MAIN</code> 中，则可以使用单位声明符，如下所示（调整前面的示例）：</p>
-
-<pre><code class="language-raku">unit sub MAIN(
+<pre><code class="language-raku" data-lang="raku">unit sub MAIN(
   Str   $file where *.IO.f = 'file.dat',
   Int  :$length = 24,
   Bool :$verbose,
@@ -277,15 +205,10 @@ say $length if $length.defined;
 say $file   if $file.defined;
 say 'Verbosity ', ($verbose ?? 'on' !! 'off');
 # rest of script is part of MAIN 
-</code></pre>
-
-<p>请注意，这只适用于只有一个（仅）<code>sub MAIN</code> 的情况。</p>
-
+</code></pre><p>请注意，这只适用于只有一个（仅）<code>sub MAIN</code> 的情况。</p>
 <h2 id="sub-usage">sub USAGE</h2>
-
 <p>如果找不到给定命令行参数的 <code>MAIN</code> 的多候选者，则调用 sub <code>USAGE</code>。如果未找到此类方法，编译器将输出默认用法消息。</p>
-
-<pre><code class="language-raku">#|(is it the answer) 
+<pre><code class="language-raku" data-lang="raku">#|(is it the answer) 
 multi MAIN(Int $i) { say $i == 42 ?? 'answer' !! 'dunno' }
 #|(divide two numbers) 
 multi MAIN($a, $b){ say $a/$b }
@@ -297,19 +220,12 @@ sub USAGE() {
     Prints the answer or 'dunno'.
 EOH
 }
-</code></pre>
-
-<p>通过只读 <code>$*USAGE</code> 变量，sub <code>USAGE</code> 内的默认用法消息可用。它将基于可用的 <code>sub MAIN</code> 候选者及其参数生成。如前所示，您可以使用 <code>#|(...)</code> Pod 块为每个候选项指定其他扩展描述以设置 <a href="https://docs.raku.org/routine/WHY">WHY</a>。</p>
-
-<h2 id="拦截-cli-参数解析-2018-10-v6-d-and-later">拦截 CLI 参数解析(2018.10, v6.d and later)</h2>
-
+</code></pre><p>通过只读 <code>$*USAGE</code> 变量，sub <code>USAGE</code> 内的默认用法消息可用。它将基于可用的 <code>sub MAIN</code> 候选者及其参数生成。如前所示，您可以使用 <code>#|(...)</code> Pod 块为每个候选项指定其他扩展描述以设置 <a href="https://docs.raku.org/routine/WHY">WHY</a>。</p>
+<h2 id="拦截-cli-参数解析201810-v6d-and-later">拦截 CLI 参数解析(2018.10, v6.d and later)</h2>
 <p>您可以通过自己提供 <code>ARGS-TO-CAPTURE</code> 子例程，或者从生态系统中可用的任何 <a href="https://modules.raku.org/search/?q=getopt">Getopt</a> 模块中导入一个子例程来替换或扩充参数解析的默认方式。</p>
-
 <h3 id="sub-args-to-capture">sub ARGS-TO-CAPTURE</h3>
-
 <p><code>ARGS-TO-CAPTURE</code> 子程序应该接受两个参数：一个 <a href="https://docs.raku.org/type/Callable">Callable</a> 表示要执行的 <code>MAIN</code> 单元（因此可以在必要时进行内省）和一个带有来自命令行的参数的数组。它应该返回一个将用于调度 <code>MAIN</code> 单元的 <a href="https://docs.raku.org/type/Capture">Capture</a> 对象。一个非常人为的例子，它将根据输入的某个关键字创建一个 <code>Capture</code>（在测试脚本的命令行界面时可以很方便）：</p>
-
-<pre><code class="language-raku">sub ARGS-TO-CAPTURE(&amp;main, @args --&gt; Capture) {
+<pre><code class="language-raku" data-lang="raku">sub ARGS-TO-CAPTURE(&amp;main, @args --&gt; Capture) {
     # if we only specified &quot;frobnicate&quot; as an argument 
     @args == 1 &amp;&amp; @args[0] eq 'frobnicate'
       # then dispatch as MAIN(&quot;foo&quot;,&quot;bar&quot;,verbose =&gt; 2) 
@@ -317,26 +233,15 @@ EOH
       # otherwise, use default processing of args 
       !! &amp;*ARGS-TO-CAPTURE(&amp;main, @args)
 }
-</code></pre>
-
-<p>请注意，动态变量 <a href="https://docs.raku.org/language/variables#%26%2AARGS-TO-CAPTURE">&amp;*ARGS-TO-CAPTURE</a> 可用于执行捕获处理的默认命令行参数，因此如果您不想，则不必重新发明整个轮子。</p>
-
-<h3 id="拦截使用消息生成-2018-10-v6-d及更高版本">拦截使用消息生成（2018.10，v6.d及更高版本）</h3>
-
+</code></pre><p>请注意，动态变量 <a href="https://docs.raku.org/language/variables#%26%2AARGS-TO-CAPTURE">&amp;*ARGS-TO-CAPTURE</a> 可用于执行捕获处理的默认命令行参数，因此如果您不想，则不必重新发明整个轮子。</p>
+<h3 id="拦截使用消息生成201810v6d及更高版本">拦截使用消息生成（2018.10，v6.d及更高版本）</h3>
 <p>您可以通过自己提供 <code>GENERATE-USAGE</code> 子例程，或者从生态系统中可用的任何 <a href="https://modules.raku.org/search/?q=getopt">Getopt</a> 模块导入一个子例程来替换或扩充默认的使用方式消息生成方式（在向 MAIN 发送失败之后）。</p>
-
 <h4 id="sub-run-main">sub RUN-MAIN</h4>
-
 <p>定义为：</p>
-
-<pre><code class="language-raku">sub RUN-MAIN(&amp;main, $mainline, :$in-as-argsfiles)
-</code></pre>
-
-<p>该程序允许完全控制 <code>MAIN</code> 的处理。它得到一个 <code>Callable</code>，它是应该执行的 <code>MAIN</code>，主线执行的返回值和其他命名变量:: <code>in-as-argsfiles</code> 如果 STDIN 应该被视为 <code>$*ARGFILES</code>，它将为 <code>True</code>。</p>
-
+<pre><code class="language-raku" data-lang="raku">sub RUN-MAIN(&amp;main, $mainline, :$in-as-argsfiles)
+</code></pre><p>该程序允许完全控制 <code>MAIN</code> 的处理。它得到一个 <code>Callable</code>，它是应该执行的 <code>MAIN</code>，主线执行的返回值和其他命名变量:: <code>in-as-argsfiles</code> 如果 STDIN 应该被视为 <code>$*ARGFILES</code>，它将为 <code>True</code>。</p>
 <p>如果未提供 <code>RUN-MAIN</code>，将运行默认的 <code>RUN-MAIN</code> 以查找旧接口的子例程，例如 <code>MAIN_HELPER</code> 和 <code>USAGE</code>。如果找到，将执行“旧”语义。</p>
-
-<pre><code class="language-raku">class Hero {
+<pre><code class="language-raku" data-lang="raku">class Hero {
     has @!inventory;
     has Str $.name;
     submethod BUILD( :$name, :@inventory ) {
@@ -350,41 +255,26 @@ sub new-main($name, *@stuff ) {
 }
  
 RUN-MAIN( &amp;new-main, Nil );
-</code></pre>
-
-<p>这将打印生成的对象的名称（第一个参数）。</p>
-
+</code></pre><p>这将打印生成的对象的名称（第一个参数）。</p>
 <h3 id="sub-generate-usage">sub GENERATE-USAGE</h3>
-
 <p><code>GENERATE-USAGE</code> 子例程应该接受一个 <code>Callable</code>，表示由于调度失败而未执行的 <code>MAIN</code> 子例程。这可以用于内省。所有其他参数都是设置为发送到MAIN的参数。它应该返回您想要显示给用户的使用信息的字符串。这个例子只是重新创建从处理参数创建的 <code>Capture</code>：</p>
-
-<pre><code class="language-raku">sub GENERATE-USAGE(&amp;main, |capture) {
+<pre><code class="language-raku" data-lang="raku">sub GENERATE-USAGE(&amp;main, |capture) {
     capture&lt;foo&gt;:exists
       ?? &quot;You're not allowed to specify a --foo&quot;
       !! &amp;*GENERATE-USAGE(&amp;main, |capture)
 }
-</code></pre>
-
-<p>您还可以使用 multi 子例程来创建相同的效果：</p>
-
-<pre><code class="language-raku">multi sub GENERATE-USAGE(&amp;main, :$foo!) {
+</code></pre><p>您还可以使用 multi 子例程来创建相同的效果：</p>
+<pre><code class="language-raku" data-lang="raku">multi sub GENERATE-USAGE(&amp;main, :$foo!) {
     &quot;You're not allowed to specify a --foo&quot;
 }
 multi sub GENERATE-USAGE(&amp;main, |capture) {
     &amp;*GENERATE-USAGE(&amp;main, |capture)
 }
-</code></pre>
-
-<p>请注意，动态变量 <a href="https://docs.raku.org/language/variables#%26%2AGENERATE-USAGE"><code>&amp;*GENERATE-USAGE</code></a> 可用于执行默认使用消息生成，因此您不必重新发明整个轮子。</p>
-
-<h3 id="拦截-main-调用-2018-10之前-v6-e">拦截 MAIN 调用（2018.10之前，v6.e）</h3>
-
+</code></pre><p>请注意，动态变量 <a href="https://docs.raku.org/language/variables#%26%2AGENERATE-USAGE"><code>&amp;*GENERATE-USAGE</code></a> 可用于执行默认使用消息生成，因此您不必重新发明整个轮子。</p>
+<h3 id="拦截-main-调用201810之前v6e">拦截 MAIN 调用（2018.10之前，v6.e）</h3>
 <p>较旧的接口使得一个接口完全拦截对 <code>MAIN</code> 的调用。这取决于是否存在 <code>MAIN_HELPER</code> 子程序，如果在程序的主线中找到 <code>MAIN</code> 子程序，则该子程序将被调用。</p>
-
 <p>此接口从未记录过。但是，使用此未记录的界面的任何程序将继续运行，直到 <code>v6.e</code>。从 <code>v6.d</code> 开始，使用未记录的 API 将导致 <code>DEPRECATED</code> 消息。</p>
-
 <p>生态系统模块可以提供新旧接口，以便与旧版本的 Raku 兼容：如果较新的 Raku 识别出新的（记录的）接口，它将使用它。如果没有可用的新接口子例程，但旧的 <code>MAIN_HELPER</code> 接口是，那么它将使用旧接口。</p>
-
 <p>如果模块开发人员决定仅为 <code>v6.d</code> 或更高版本提供模块，则可以从模块中删除对旧接口的支持。</p>
 
   </article>

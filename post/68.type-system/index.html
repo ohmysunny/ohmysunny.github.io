@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,17 +81,11 @@
       <h1>类型系统</h1>
     </header>
 
-    
-
-<h1 id="raku类型的定义-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Raku类型的定义</a></h1>
-
+    <h1 id="raku类型的定义httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Raku类型的定义</a></h1>
 <p>类型通过创建类型对象来定义新对象，该类型对象提供用于创建对象实例或检查值的接口。任何类型对象都是 <a href="https://docs.raku.org/type/Any">Any</a> 或 <a href="https://docs.raku.org/type/Mu">Mu</a> 的子类。通过从这些基类和内省后缀 <a href="https://docs.raku.org/language/operators#postfix_.%5E">.^</a> 继承来提供内省方法。在编译时由以下类型声明符之一或在运行时使用<a href="https://docs.raku.org/language/mop">元对象协议</a>将新类型引入当前作用域。所有类型名称的作用域必须是唯一的。</p>
-
-<h2 id="默认类型-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">默认类型</a></h2>
-
+<h2 id="默认类型httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">默认类型</a></h2>
 <p>如果用户没有提供类型，则 Raku 假定类型为 <code>Any</code>。这包括<a href="https://docs.raku.org/language/containers">容器</a>，基类，<a href="https://docs.raku.org/type/Signature#Type_constraints">参数</a>和返回类型。</p>
-
-<pre><code class="language-raku">my $a = 1;
+<pre><code class="language-raku" data-lang="raku">my $a = 1;
 $a = Nil;
 say $a.^name;
 # OUTPUT: «Any» 
@@ -99,43 +93,26 @@ say $a.^name;
 class C {};
 say C.^parents(:all);
 # OUTPUT: «((Any) (Mu))» 
-</code></pre>
-
-<p>对于容器，默认类型为 <code>Any</code>，但默认类型约束为 <code>Mu</code>。请注意，绑定会替换容器，而不仅仅是值。在这种情况下，类型约束可能会变。</p>
-
-<h2 id="类型对象-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">类型对象</a></h2>
-
+</code></pre><p>对于容器，默认类型为 <code>Any</code>，但默认类型约束为 <code>Mu</code>。请注意，绑定会替换容器，而不仅仅是值。在这种情况下，类型约束可能会变。</p>
+<h2 id="类型对象httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">类型对象</a></h2>
 <p>要测试对象是否为类型对象，请对使用类型为 <a href="https://docs.raku.org/type/Signature#Constraining_defined_and_undefined_values">smiley</a> 或 <a href="https://docs.raku.org/language/mop#index-entry-syntax_DEFINITE-DEFINITE"><code>.DEFINITE</code></a> 方法约束的类型使用 <a href="https://docs.raku.org/language/operators#index-entry-smartmatch_operator">smartmatch</a>：</p>
-
-<pre><code class="language-raku">my $a = Int;
+<pre><code class="language-raku" data-lang="raku">my $a = Int;
 say $a ~~ Mu:U;
 # OUTPUT: «True» 
 say not $a.DEFINITE;
 # OUTPUT: «True» 
-</code></pre>
-
-<p>如果调用者是实例，则 <code>.DEFINITE</code> 将返回 <code>True</code>。如果它返回 <code>False</code>，则调用者是一个类型对象。</p>
-
-<h3 id="undefinedness-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Undefinedness</a></h3>
-
+</code></pre><p>如果调用者是实例，则 <code>.DEFINITE</code> 将返回 <code>True</code>。如果它返回 <code>False</code>，则调用者是一个类型对象。</p>
+<h3 id="undefinednesshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Undefinedness</a></h3>
 <p>未定义的对象在 Raku 中维护类型信息。类型对象用于表示未定义值和未定义值的类型。要提供一般的未定义值，请使用 <a href="https://docs.raku.org/type/Any">Any</a>。如果要区分容器和参数的默认类型 <code>Any</code>，则需要使用 <code>Mu</code>。</p>
-
 <p>由 <a href="https://docs.raku.org/type/Mu#method_CREATE">.CREATE</a> 创建的对象实例是按惯例定义的。方法 <a href="https://docs.raku.org/type/Mu#routine_defined">.defined</a> 将返回 <code>Bool::True</code> 以指示定义。该规则的例外是 <a href="https://docs.raku.org/type/Nil">Nil</a> 和 <a href="https://docs.raku.org/type/Failure">Failure</a>。请注意，任何对象都可以重载 <code>.defined</code>，因此可以携带其他信息。此外，Raku 明确区分了定义和真假。很多值是有定义的, 即使它们具有错误或空值的含义。这些值为 <code>0</code>，<a href="https://docs.raku.org/type/Bool">Bool::False</a>, <a href="https://docs.raku.org/language/operators#term_%28_%29">()</a> (空列表) 和 <a href="https://docs.raku.org/type/Num#NaN">NaN</a>。</p>
-
 <p>值可以在运行时通过 <a href="https://docs.raku.org/language/operators#infix_but">mixin</a> 变为未定义。</p>
-
-<pre><code class="language-raku">my Int $i = 1 but role::{ method defined { False } };
+<pre><code class="language-raku" data-lang="raku">my Int $i = 1 but role::{ method defined { False } };
 say $i // &quot;undefined&quot;;
 # OUTPUT: «undefined» 
-</code></pre>
-
-<p>要测试定义需调用 <code>.defined</code>，请使用 <a href="https://docs.raku.org/language/operators#infix_%2F%2F">//</a>，<a href="https://docs.raku.org/language/control#with%2C_orwith%2C_without">with/without</a> 和 <a href="https://docs.raku.org/type/Signature#Constraining_defined_and_undefined_values">signatures</a>。</p>
-
-<h3 id="强制转换-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">强制转换</a></h3>
-
+</code></pre><p>要测试定义需调用 <code>.defined</code>，请使用 <a href="https://docs.raku.org/language/operators#infix_%2F%2F">//</a>，<a href="https://docs.raku.org/language/control#with%2C_orwith%2C_without">with/without</a> 和 <a href="https://docs.raku.org/type/Signature#Constraining_defined_and_undefined_values">signatures</a>。</p>
+<h3 id="强制转换httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">强制转换</a></h3>
 <p>将一种类型转换为另一种类型是使用与目标类型同名的强制方法完成的。<a href="https://docs.raku.org/type/Signature#Coercion_type">Signatures</a> 强制要求此约定。源类型必须知道如何将自身转换为目标类型。要允许内置类型将自己转换为用户定义的类型，请使用 <a href="https://docs.raku.org/language/variables#The_augment_declarator">augment</a> 或者 <a href="https://docs.raku.org/language/mop">MOP</a>。</p>
-
-<pre><code class="language-raku">class C {
+<pre><code class="language-raku" data-lang="raku">class C {
     has $.int;
     method this-is-c { put 'oi' x $!int ~ '‽' }
 }
@@ -149,85 +126,53 @@ my $i = 10;
 $i.=C;
 $i.this-is-c();
 # OUTPUT: «oioioioioioioioioioi‽» 
-</code></pre>
-
-<p>Raku 提供了在 <a href="https://docs.raku.org/type/Cool">Cool</a> 中定义的方法，以便在应用进一步操作之前转换为目标类型。大多数内置类型都来自 <code>Cool</code>，因此可能会提供可能不需要的隐式强制。用户有责任关心这些方法的无陷阱使用。</p>
-
-<pre><code class="language-raku">my $whatever = &quot;123.6&quot;;
+</code></pre><p>Raku 提供了在 <a href="https://docs.raku.org/type/Cool">Cool</a> 中定义的方法，以便在应用进一步操作之前转换为目标类型。大多数内置类型都来自 <code>Cool</code>，因此可能会提供可能不需要的隐式强制。用户有责任关心这些方法的无陷阱使用。</p>
+<pre><code class="language-raku" data-lang="raku">my $whatever = &quot;123.6&quot;;
 say $whatever.round;
 # OUTPUT: «124» 
 say &lt;a b c d&gt;.starts-with(&quot;ab&quot;);
 # OUTPUT: «False» 
-</code></pre>
-
-<h1 id="类型声明符-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">类型声明符</a></h1>
-
+</code></pre><h1 id="类型声明符httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">类型声明符</a></h1>
 <p>类型声明符将新类型引入给定作用域。嵌套作用域可以用 <code>::</code> 分隔。如果不存在此类作用域，则会自动创建新 <a href="https://docs.raku.org/language/packages">packages</a>。</p>
-
-<pre><code class="language-raku">class Foo::Bar::C {};
+<pre><code class="language-raku" data-lang="raku">class Foo::Bar::C {};
 put Foo::Bar::.keys;
 # OUTPUT: «C» 
-</code></pre>
-
-<p>可以使用仅包含 <code>...</code> 的块来提供前置声明。如果定义了类型，编译器将在当前作用域的末尾检查。</p>
-
-<pre><code class="language-raku">class C {...}
+</code></pre><p>可以使用仅包含 <code>...</code> 的块来提供前置声明。如果定义了类型，编译器将在当前作用域的末尾检查。</p>
+<pre><code class="language-raku" data-lang="raku">class C {...}
 # many lines later 
 class C { has $.attr }
-</code></pre>
-
-<h2 id="类-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>类</code></a></h2>
-
+</code></pre><h2 id="类httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>类</code></a></h2>
 <p><code>class</code> 声明符创建一个编译为类型对象的编译时构造。后者是一个简单的 Raku 对象，它提供了通过执行初始化程序和子方法来构造实例的方法，以填充在类中声明的所有属性，以及任何具有值的父类。初始化程序可以提供属性声明或构造函数。 <a href="https://docs.raku.org/type/Metamodel::ClassHOW">Metamodel::ClassHOW</a> 负责知道如何运行它们。这是在 Raku 中构建对象的唯一神奇部分。默认父类型是 <code>Any</code>，它继承自 <code>Mu</code>。后者提供了默认的按照惯例命名的构造函数 <code>.new</code>。除此之外，<code>.new</code> 不具有任何特殊含义，也不以任何特殊方式对待。</p>
-
 <p>有关如何使用类的更多信息，请参阅<a href="https://docs.raku.org/language/classtut">类和对象</a>教程。</p>
-
-<h3 id="mixins-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Mixins</a></h3>
-
+<h3 id="mixinshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Mixins</a></h3>
 <p><code>class</code> 引入的类型可以在运行时使用 <a href="https://docs.raku.org/language/operators#infix_but">infix:</a> 进行扩展。原始类型不会被修改，而是返回一个新的类型对象，并且可以存储在一个容器中，该容器对原始类型或混合的角色进行成功类型检查。</p>
-
-<pre><code class="language-raku">class A {}
+<pre><code class="language-raku" data-lang="raku">class A {}
 role R { method m { say 'oi‽' } }
 my R $A = A but R;
 my $a1 = $A.new;
 $a1.m;
 say [$A ~~ R, $a1 ~~ R];
 # OUTPUT: «oi‽[True True]» 
-</code></pre>
-
-<h3 id="自省-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">自省</a></h3>
-
-<h4 id="元类-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">元类</a></h4>
-
+</code></pre><h3 id="自省httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">自省</a></h3>
+<h4 id="元类httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">元类</a></h4>
 <p>要测试给定类型对象是否为类，请针对 <a href="https://docs.raku.org/type/Metamodel::ClassHOW">Metamodel::ClassHOW</a> 测试元对象方法 <code>.HOW</code>。</p>
-
-<pre><code class="language-raku">class C {};
+<pre><code class="language-raku" data-lang="raku">class C {};
 say C.HOW ~~ Metamodel::ClassHOW;
 # OUTPUT: «True» 
-</code></pre>
-
-<h3 id="私有属性-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">私有属性</a></h3>
-
+</code></pre><h3 id="私有属性httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">私有属性</a></h3>
 <p>私有<a href="https://docs.raku.org/type/Attribute">属性</a>用任何一个 <code>$!</code>，<code>@!</code> 和 <code>%!</code> twigils 来处理。它们没有自动生成的公共访问器方法。因此，它们不能从它们所定义的类的外面进行更改。</p>
-
-<pre><code class="language-raku">class C {
+<pre><code class="language-raku" data-lang="raku">class C {
     has $!priv;
     submethod BUILD { $!priv = 42 }
 };
  
 say (.name, .package, .has_accessor) for C.new.^attributes;
 # OUTPUT: «($!priv (C) False)» 
-</code></pre>
-
-<h3 id="方法-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">方法</a></h3>
-
+</code></pre><h3 id="方法httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">方法</a></h3>
 <p><code>method</code> 声明符定义 <a href="https://docs.raku.org/type/Method">Method</a> 类型的对象，并将其绑定到类的作用域中提供的名称上。默认情况下，类中的方法具有 <code>has</code> 作用域。<code>our</code> 作用域的那些方法默认不会添加到方法缓存中，因此不能使用访问器符号 <code>$.</code> 来调用。使用完全限定名称和调用者作为第一个参数来调用它们。</p>
-
-<h4 id="继承和-multis-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">继承和 multis</a></h4>
-
+<h4 id="继承和-multishttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">继承和 multis</a></h4>
 <p>子类中的普通方法不与父类中的 multis 竞争。</p>
-
-<pre><code class="language-raku">class A {
+<pre><code class="language-raku" data-lang="raku">class A {
     multi method m(Int $i){ say 'Int' }
     multi method m(int $i){ say 'int' }
 }
@@ -239,24 +184,16 @@ class B is A {
 my int $i;
 B.new.m($i);
 # OUTPUT: «B::Int» 
-</code></pre>
-
-<h4 id="only-方法-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Only 方法</a></h4>
-
+</code></pre><h4 id="only-方法httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Only 方法</a></h4>
 <p>要明确声明方法不是 multi 方法，请使用 <code>only</code> 方法声明符。</p>
-
-<pre><code class="language-raku">class C {
+<pre><code class="language-raku" data-lang="raku">class C {
     only method m {};
     multi method m {};
 };
 # OUTPUT: «X::Comp::AdHoc: Cannot have a multi candidate for 'm' when an only method is also in the package 'C'» 
-</code></pre>
-
-<h4 id="submethod-build-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Submethod BUILD</a></h4>
-
+</code></pre><h4 id="submethod-buildhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Submethod BUILD</a></h4>
 <p><a href="https://docs.raku.org/type/Submethod">submethod</a> <code>BUILD</code> 是（间接地）由被称为 <a href="https://docs.raku.org/type/Mu#method_bless">.bless</a> 的方法调用的。它旨在设置类的私有和公共属性，并接收传入 <code>.bless</code> 的所有名称属性。定义在 <code>Mu</code> 中的默认构造函数 <a href="https://docs.raku.org/type/Mu#method_new">.new</a> 是调用它的方法。鉴于公共访问器方法在 <code>BUILD</code> 中不可用，您必须使用私有属性表示法。</p>
-
-<pre><code class="language-raku">class C {
+<pre><code class="language-raku" data-lang="raku">class C {
     has $.attr;
     submethod BUILD (:$attr = 42) {
         $!attr = $attr
@@ -269,50 +206,34 @@ B.new.m($i);
 C.new.say; C.new('answer').say;
 # OUTPUT: «C.new(attr =&gt; 42)
 #          C.new(attr =&gt; &quot;answer&quot;)» 
-</code></pre>
-
-<h4 id="fallback-方法-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Fallback 方法 </a></h4>
-
+</code></pre><h4 id="fallback-方法-httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Fallback 方法 </a></h4>
 <p>当其他解析名称的方法不产生结果时，将调用具有特殊名称的 <code>FALLBACK</code> 方法。第一个参数保存名称，所有后续参数都从原始调用转发。支持 multi 方法和<a href="https://docs.raku.org/type/Signature#Destructuring_arguments">子签名</a>。</p>
-
-<pre><code class="language-raku">class Magic {
+<pre><code class="language-raku" data-lang="raku">class Magic {
     method FALLBACK ($name, |c(Int, Str)) {
     put &quot;$name called with parameters {c.perl}&quot;  }
 };
 Magic.new.simsalabim(42, &quot;answer&quot;);
  
 # OUTPUT: «simsalabim called with parameters ⌈\(42, &quot;answer&quot;)⌋» 
-</code></pre>
-
-<h4 id="保留方法名-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">保留方法名</a></h4>
-
+</code></pre><h4 id="保留方法名httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">保留方法名</a></h4>
 <p>一些内置的内省方法实际上是由编译器提供的特殊语法, 即 <code>WHAT</code>，<code>WHO</code>，<code>HOW</code> 和 <code>VAR</code>。使用这些名称声明的方法将无声地失败。动态调用将起作用，允许从外部对象调用方法。</p>
-
-<pre><code class="language-raku">class A {
+<pre><code class="language-raku" data-lang="raku">class A {
     method WHAT { &quot;ain't gonna happen&quot; }
 };
  
 say A.new.WHAT;    # OUTPUT: «(A)» 
 say A.new.&quot;WHAT&quot;() # OUTPUT: «ain't gonna happen» 
-</code></pre>
-
-<h4 id="包作用域中的方法-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">包作用域中的方法</a></h4>
-
+</code></pre><h4 id="包作用域中的方法httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">包作用域中的方法</a></h4>
 <p>任何 <code>our</code> 作用域方法都将在类的包作用域内可见。</p>
-
-<pre><code class="language-raku">class C {
+<pre><code class="language-raku" data-lang="raku">class C {
     our method packaged {};
     method loose {}
 };
 say C::.keys
 # OUTPUT: «(&amp;packaged)» 
-</code></pre>
-
-<h4 id="使用同名变量和方法设置属性-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">使用同名变量和方法设置属性</a></h4>
-
-<p>如果您用和属性属性同名的名字设置属性的变量（或方法调用），则可以节省一些输入，例如 <code>attr =&gt; $attr</code> 或 <code>:attr($attr)</code>：</p>
-
-<pre><code class="language-raku">class A { has $.i = 42 };
+</code></pre><h4 id="使用同名变量和方法设置属性httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">使用同名变量和方法设置属性</a></h4>
+<p>如果您用和属性属性同名的名字设置属性的变量（或方法调用），则可以节省一些输入，例如 <code>attr =&gt; $attr </code> 或 <code>:attr($attr)</code>：</p>
+<pre><code class="language-raku" data-lang="raku">class A { has $.i = 42 };
 class B {
     has $.i = &quot;answer&quot;;
     method m() { A.new(:$.i) }
@@ -320,41 +241,25 @@ class B {
 };
 my $a = B.new.m;
 say $a.i; # OUTPUT: «answer» 
-</code></pre>
-
-<p>由于 <code>$.i</code> 方法调用名字叫 <code>i</code> 且属性也叫 <code>i</code>，因此 Raku 允许我们使用快捷方式。这同样适用于 <code>:$var</code>，<code>:$!private-attribute</code>，<code>:&amp;attr-with-code-in-it</code>，等等。</p>
-
-<h3 id="trait-is-nodal-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is nodal</code></a></h3>
-
+</code></pre><p>由于 <code>$.i</code> 方法调用名字叫 <code>i</code> 且属性也叫 <code>i</code>，因此 Raku 允许我们使用快捷方式。这同样适用于 <code>:$var</code>，<code>:$!private-attribute</code>，<code>:&amp;attr-with-code-in-it</code>，等等。</p>
+<h3 id="trait-is-nodalhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is nodal</code></a></h3>
 <p>标记一个<a href="https://docs.raku.org/type/List">List</a>方法，指示 hyperoperator 不要进入内部 <a href="https://docs.raku.org/type/Iterable">Iterables</a> 以调用此方法。这个特性通常不是终端用户会使用的东西，除非他们子类化或扩展核心 <a href="https://docs.raku.org/type/List">List</a> 类型。</p>
-
 <p>为了证明差异，请考虑以下示例，第一个使用 <code>is nodal</code> 方法（<code>elems</code>），第二个使用方法 <code>Int</code> , 它不是节点方法。</p>
-
-<pre><code class="language-raku">say ((1.0, &quot;2&quot;, 3e0), [^4], '5')».elems; # OUTPUT: «(3, 4, 1)» 
+<pre><code class="language-raku" data-lang="raku">say ((1.0, &quot;2&quot;, 3e0), [^4], '5')».elems; # OUTPUT: «(3, 4, 1)» 
 say ((1.0, &quot;2&quot;, 3e0), [^4], '5')».Int    # OUTPUT: «((1 2 3) [0 1 2 3] 5)» 
-</code></pre>
-
-<h3 id="trait-handles-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>handles</code></a></h3>
-
+</code></pre><h3 id="trait-handleshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>handles</code></a></h3>
 <p>定义为:</p>
-
-<pre><code class="language-raku">multi sub trait_mod:&lt;handles&gt;(Attribute:D $target, $thunk)
-</code></pre>
-
-<p><a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>handles</code> 应用于类的属性，会将对提供的方法名称的所有调用代理给和属性同名名的方法。必须初始化属性引用的对象。可以提供代理调用的对象的类型约束。</p>
-
-<pre><code class="language-raku">class A      { method m(){ 'A::m has been called.' } }
+<pre><code class="language-raku" data-lang="raku">multi sub trait_mod:&lt;handles&gt;(Attribute:D $target, $thunk)
+</code></pre><p><a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>handles</code> 应用于类的属性，会将对提供的方法名称的所有调用代理给和属性同名名的方法。必须初始化属性引用的对象。可以提供代理调用的对象的类型约束。</p>
+<pre><code class="language-raku" data-lang="raku">class A      { method m(){ 'A::m has been called.' } }
 class B is A { method m(){ 'B::m has been called.' } }
 class C {
     has A $.delegate handles 'm';
     method new($delegate){ self.bless(delegate =&gt; $delegate) }
 };
 say C.new(B.new).m(); # OUTPUT: «B::m has been called.» 
-</code></pre>
-
-<p>可以提供一个 <code>Pair</code>（或用于重命名）或一个 <code>Pair</code>，<code>Regex</code> 或 <code>Whatever</code> 的列表而不是一个方法名。在后一种情况下，在类本身及其继承链中的现有方法将优先。如果 <code>FALLBACK</code> 要搜索本地，请使用 <code>HyperWhatever</code>。</p>
-
-<pre><code class="language-raku">class A {
+</code></pre><p>可以提供一个 <code>Pair</code>（或用于重命名）或一个 <code>Pair</code>，<code>Regex</code> 或 <code>Whatever</code> 的列表而不是一个方法名。在后一种情况下，在类本身及其继承链中的现有方法将优先。如果 <code>FALLBACK</code> 要搜索本地，请使用 <code>HyperWhatever</code>。</p>
+<pre><code class="language-raku" data-lang="raku">class A {
     method m1(){}
     method m2(){}
 }
@@ -373,20 +278,12 @@ class E {
     has $.delegate handles (em1 =&gt; 'm1') = A.new()
 }
 E.new.em1;
-</code></pre>
-
-<h3 id="trait-is">trait <code>is</code></h3>
-
+</code></pre><h3 id="trait-is">trait <code>is</code></h3>
 <p>定义为:</p>
-
-<pre><code class="language-raku">multi sub trait_mod:&lt;is&gt;(Mu:U $child, Mu:U $parent)
-</code></pre>
-
-<p><a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>is</code> 接受一个类型对象，该类型对象在其定义中被添加为类的父类。为了允许多重继承，可以多次应用 <code>is</code> trait。将父类添加到类中会将其方法导入目标类。如果在多个父类中出现同名方法，则第一个添加的父类将胜出。</p>
-
+<pre><code class="language-raku" data-lang="raku">multi sub trait_mod:&lt;is&gt;(Mu:U $child, Mu:U $parent)
+</code></pre><p><a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>is</code> 接受一个类型对象，该类型对象在其定义中被添加为类的父类。为了允许多重继承，可以多次应用 <code>is</code> trait。将父类添加到类中会将其方法导入目标类。如果在多个父类中出现同名方法，则第一个添加的父类将胜出。</p>
 <p>如果没有提供 <code>is</code> trait，则默认值 <a href="https://docs.raku.org/type/Any"><code>Any</code></a> 将用作父类。这迫使所有 Raku 对象具有相同的基本方法集，以提供内省和强制到基本类型的接口。</p>
-
-<pre><code class="language-raku">class A {
+<pre><code class="language-raku" data-lang="raku">class A {
     multi method from-a(){ 'A::from-a' }
 }
 say A.new.^parents(:all).perl;
@@ -400,35 +297,21 @@ class B {
 class C is A is B {}
 say C.new.from-a();
 # OUTPUT: «A::from-a» 
-</code></pre>
-
-<h3 id="trait-is-rw-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is rw</code></a></h3>
-
+</code></pre><h3 id="trait-is-rwhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is rw</code></a></h3>
 <p>定义为:</p>
-
-<pre><code class="language-raku">sub trait_mod:&lt;is&gt;(Mu:U $type, :$rw!)
-</code></pre>
-
-<p>类的<a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>is rw</code> 在该类的所有公共属性上创建可写的访问器方法。</p>
-
-<pre><code class="language-raku">class C is rw {
+<pre><code class="language-raku" data-lang="raku">sub trait_mod:&lt;is&gt;(Mu:U $type, :$rw!)
+</code></pre><p>类的<a href="https://docs.raku.org/type/Sub#Traits">trait</a> <code>is rw</code> 在该类的所有公共属性上创建可写的访问器方法。</p>
+<pre><code class="language-raku" data-lang="raku">class C is rw {
     has $.a;
 };
 my $c = C.new.a = 42;
 say $c; # OUTPUT: «42» 
-</code></pre>
-
-<h3 id="trait-is-required-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is required</code></a></h3>
-
+</code></pre><h3 id="trait-is-requiredhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>is required</code></a></h3>
 <p>定义为:</p>
-
-<pre><code class="language-raku">multi sub trait_mod:&lt;is&gt;(Attribute $attr, :$required!)
+<pre><code class="language-raku" data-lang="raku">multi sub trait_mod:&lt;is&gt;(Attribute $attr, :$required!)
 multi sub trait_mod:&lt;is&gt;(Parameter:D $param, :$required!)
-</code></pre>
-
-<p>将类或角色属性标记为必要的。如果在对象构造时未初始化该属性，则抛出 <a href="https://docs.raku.org/type/X::Attribute::Required">X::Attribute::Required</a>。</p>
-
-<pre><code class="language-raku">class Correct {
+</code></pre><p>将类或角色属性标记为必要的。如果在对象构造时未初始化该属性，则抛出 <a href="https://docs.raku.org/type/X::Attribute::Required">X::Attribute::Required</a>。</p>
+<pre><code class="language-raku" data-lang="raku">class Correct {
     has $.attr is required;
     submethod BUILD (:$attr) { $!attr = $attr }
 }
@@ -441,22 +324,15 @@ class C {
 C.new;
 CATCH { default { say .^name =&gt; .Str } }
 # OUTPUT: «X::Attribute::Required =&gt; The attribute '$!attr' is required, but you did not provide a value for it.» 
-</code></pre>
-
-<p>你可以为 <code>is required</code> 提供一个理由作为参数，说明它为什么是必须的。</p>
-
-<pre><code class="language-raku">class Correct {
+</code></pre><p>你可以为 <code>is required</code> 提供一个理由作为参数，说明它为什么是必须的。</p>
+<pre><code class="language-raku" data-lang="raku">class Correct {
     has $.attr is required(&quot;it's so cool&quot;)
 };
 say Correct.new();
 # OUTPUT: «The attribute '$!attr' is required because it's so cool,but you did not provide a value for it.» 
-</code></pre>
-
-<h3 id="trait-hides-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>hides</code></a></h3>
-
+</code></pre><h3 id="trait-hideshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>hides</code></a></h3>
 <p>trait <code>hides</code> 提供继承而不需要<a href="https://docs.raku.org/language/functions#Re-dispatching">重新分派</a>。</p>
-
-<pre><code class="language-raku">class A {
+<pre><code class="language-raku" data-lang="raku">class A {
     method m { say 'i am hidden' }
 }
 class B hides A {
@@ -467,11 +343,8 @@ class B hides A {
 B.new.m;
 B.new.n;
 # OUTPUT: «i am hidden» 
-</code></pre>
-
-<p>trait <code>is hidden</code> 允许类从 <a href="https://docs.raku.org/language/functions#Re-dispatching">重新分派</a> 中隐藏自己。</p>
-
-<pre><code class="language-raku">class A is hidden {
+</code></pre><p>trait <code>is hidden</code> 允许类从 <a href="https://docs.raku.org/language/functions#Re-dispatching">重新分派</a> 中隐藏自己。</p>
+<pre><code class="language-raku" data-lang="raku">class A is hidden {
     method m { say 'i am hidden' }
 }
 class B is A {
@@ -482,13 +355,9 @@ class B is A {
 B.new.m;
 B.new.n;
 # OUTPUT: «i am hidden» 
-</code></pre>
-
-<h3 id="trait-trusts-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>trusts</code></a></h3>
-
+</code></pre><h3 id="trait-trustshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>trusts</code></a></h3>
 <p>要允许一个类访问另一个类的私有方法，请使用该 trait <code>trusts</code>。可能需要可信类的前置声明。</p>
-
-<pre><code class="language-raku">class B {...};
+<pre><code class="language-raku" data-lang="raku">class B {...};
 class A {
     trusts B;
     has $!foo;
@@ -501,13 +370,9 @@ class B {
 };
 say B.new.change;
 # OUTPUT: «B.new(a =&gt; A.new(foo =&gt; 42))» 
-</code></pre>
-
-<h3 id="扩展类-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">扩展类</a></h3>
-
+</code></pre><h3 id="扩展类httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">扩展类</a></h3>
 <p>要在编译时向类添加方法和属性，请在类定义片段前面使用 <code>augment</code>。编译器将要求编译指令 <code>use MONKEY-TYPING</code> 或 <code>use MONKEY</code> 早一点出现在同一作用域中。请注意，可能会对性能产生影响，因此可能会出现问题。</p>
-
-<pre><code class="language-raku">use MONKEY; augment class Str {
+<pre><code class="language-raku" data-lang="raku">use MONKEY; augment class Str {
     method mark(Any :$set){
         state $mark //= $set; $mark
     }
@@ -516,24 +381,15 @@ my $s = &quot;42&quot;;
 $s.mark(set =&gt; &quot;answer&quot;);
 say $s.mark
 # OUTPUT: «answer» 
-</code></pre>
-
-<p>在类片段内可以做什么的限制很少。其中之一是将方法或子方法重新声明为 <code>multi</code> 方法。使用添加的属性尚未被实现。请注意，添加仅在其命名参数方面不同的多候选项将在已定义的候选项后面添加该候选项，因此调度程序不会选择该候选项。</p>
-
-<h3 id="版本和作者-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">版本和作者</a></h3>
-
+</code></pre><p>在类片段内可以做什么的限制很少。其中之一是将方法或子方法重新声明为 <code>multi</code> 方法。使用添加的属性尚未被实现。请注意，添加仅在其命名参数方面不同的多候选项将在已定义的候选项后面添加该候选项，因此调度程序不会选择该候选项。</p>
+<h3 id="版本和作者httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">版本和作者</a></h3>
 <p>版权和作者身份可以通过副词 <code>:ver&lt;&gt;</code> 和 <code>:auth&lt;&gt;</code> 应用。两者都以字符串作为参数，对于 <code>:ver</code>, 字符串被转换为 <a href="https://docs.raku.org/type/Version">Version</a> 对象。查询类版本和作者请使用 <code>.^ver</code> 和 <code>^.auth</code>。</p>
-
-<pre><code class="language-raku">class C:ver&lt;4.2.3&gt;:auth&lt;me@here.local&gt; {}
+<pre><code class="language-raku" data-lang="raku">class C:ver&lt;4.2.3&gt;:auth&lt;me@here.local&gt; {}
 say [C.^ver, C.^auth];
 # OUTPUT: «[v4.2.3 me@here.local]» 
-</code></pre>
-
-<h2 id="role-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>role</code></a></h2>
-
+</code></pre><h2 id="rolehttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>role</code></a></h2>
 <p>角色是类片段，它允许定义类共享的接口。<code>role</code> 声明符还引入了可用于类型检查的类型对象。角色可以在运行时和编译时混合到类和对象中。<code>role</code> 声明符返回创建的类型对象因而允许匿名角色和就地混入定义。</p>
-
-<pre><code class="language-raku">role Serialize {
+<pre><code class="language-raku" data-lang="raku">role Serialize {
     method to-string { self.Str }
     method to-number { self.Num }
 }
@@ -547,77 +403,51 @@ my Serialize @list;
  
 say @list».to-string;
 # OUTPUT: «[A&lt;57192848&gt; B&lt;57192880&gt;]» 
-</code></pre>
-
-<p>使用 <code>...</code> 作为方法体的唯一元素声明一个要抽象的方法。任何混合使用这种方法的类都必须重载它。如果在编译单元结束之前该方法没有被重载，则抛出 <code>X::Comp::AdHoc</code>。</p>
-
-<pre><code class="language-raku">EVAL 'role R { method overload-this(){...} }; class A does R {}; ';
+</code></pre><p>使用 <code>...</code> 作为方法体的唯一元素声明一个要抽象的方法。任何混合使用这种方法的类都必须重载它。如果在编译单元结束之前该方法没有被重载，则抛出 <code>X::Comp::AdHoc</code>。</p>
+<pre><code class="language-raku" data-lang="raku">EVAL 'role R { method overload-this(){...} }; class A does R {}; ';
 CATCH { default { say .^name, ' ', .Str } }
 # OUTPUT: «X::Comp::AdHoc Method 'overload-this' must be implemented by A because it is required by roles: R.» 
-</code></pre>
-
-<h3 id="自动双关-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">自动双关</a></h3>
-
+</code></pre><h3 id="自动双关httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">自动双关</a></h3>
 <p>可以使用角色而不是类来创建对象。由于角色在运行时不能存在，因此会创建一个同名的类，该类将对角色类型检查成功。</p>
-
-<pre><code class="language-raku">role R { method m { say 'oi‽' } };
+<pre><code class="language-raku" data-lang="raku">role R { method m { say 'oi‽' } };
 R.new.^mro.say;
 # OUTPUT: «((R) (Any) (Mu))» 
 say R.new.^mro[0].HOW.^name;
 # OUTPUT: «Raku::Metamodel::ClassHOW» 
 say R.new ~~ R;
 # OUTPUT: «True» 
-</code></pre>
-
-<h3 id="trait-does-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>does</code></a></h3>
-
+</code></pre><h3 id="trait-doeshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">trait <code>does</code></a></h3>
 <p>trait <code>does</code> 可以应用于提供编译时混合的角色和类。要引用尚未定义的角色，请使用前置声明。混合角色的类的类型名称不反射 mixin，类型检查反射。如果在多个混合角色中提供方法，则首先定义的方法优先。可以提供以逗号分隔的角色列表。在这种情况下，将在编译时报告冲突。</p>
-
-<pre><code class="language-raku">role R2 {...};
+<pre><code class="language-raku" data-lang="raku">role R2 {...};
 role R1 does R2 {};
 role R2 {};
 class C does R1 {};
  
 say [C ~~ R1, C ~~ R2];
 # OUTPUT: «[True True]» 
-</code></pre>
-
-<p>对于运行时混入请参阅<a href="https://docs.raku.org/language/operators#infix_but">but</a> 和 <a href="https://docs.raku.org/language/operators#infix_does">does</a>。</p>
-
-<h3 id="参数化-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">参数化</a></h3>
-
+</code></pre><p>对于运行时混入请参阅<a href="https://docs.raku.org/language/operators#infix_but">but</a> 和 <a href="https://docs.raku.org/language/operators#infix_does">does</a>。</p>
+<h3 id="参数化httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">参数化</a></h3>
 <p>可以在角色名称后面的 <code>[]</code> 之间提供角色的参数。支持<a href="https://docs.raku.org/type/Signature#Type_captures">类型捕获</a>。</p>
-
-<pre><code class="language-raku">role R[$d] { has $.a = $d };
+<pre><code class="language-raku" data-lang="raku">role R[$d] { has $.a = $d };
 class C does R[&quot;default&quot;] { };
  
 my $c = C.new;
 say $c;
 # OUTPUT: «C.new(a =&gt; &quot;default&quot;)» 
-</code></pre>
-
-<p>参数可以有类型约束，类型不支持 <code>where</code> 子句，但可以通过 <code>subset</code> 实现。</p>
-
-<pre><code class="language-raku">class A {};
+</code></pre><p>参数可以有类型约束，类型不支持 <code>where</code> 子句，但可以通过 <code>subset</code> 实现。</p>
+<pre><code class="language-raku" data-lang="raku">class A {};
 class B {};
 subset A-or-B where * ~~ A|B;
 role R[A-or-B ::T] {};
 R[A.new].new;
-</code></pre>
-
-<p>可以提供默认参数。</p>
-
-<pre><code class="language-raku">role R[$p = fail(&quot;Please provide a parameter to role R&quot;)] {};
+</code></pre><p>可以提供默认参数。</p>
+<pre><code class="language-raku" data-lang="raku">role R[$p = fail(&quot;Please provide a parameter to role R&quot;)] {};
 my $i = 1 does R;
 CATCH { default { say .^name, ': ', .Str} }
 # OUTPUT: «X::AdHoc: Could not instantiate role 'R':Please provide a parameter to role R» 
-</code></pre>
-
-<h3 id="as-类型约束-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">As 类型约束</a></h3>
-
+</code></pre><h3 id="as-类型约束httpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">As 类型约束</a></h3>
 <p>在期望类型的任何地方，角色都可以用作类型约束。如果使用 <code>does</code> 或 <code>but</code> 混合角色，则其 type-object 将添加到相关对象的 type-object 列表中。如果使用角色而不是类（使用自动生成），则自动生成的类与角色同名的类型对象将添加到继承链中。</p>
-
-<pre><code class="language-raku">role Unitish[$unit = fail('Please provide a SI unit quantifier as a parameter to the role Unitish')] {
+<pre><code class="language-raku" data-lang="raku">role Unitish[$unit = fail('Please provide a SI unit quantifier as a parameter to the role Unitish')] {
     has $.SI-unit-symbol = $unit;
     method gist {
         given self {
@@ -650,22 +480,14 @@ say [75kg, N(75kg)];
 # OUTPUT: «[75kg 735.49875kN]» 
 say [(75kg).^name, N(75kg).^name];
 # OUTPUT: «[Int+{SI-kilogram} Rat+{SI-Newton}]» 
-</code></pre>
-
-<h2 id="enum-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>enum</code></a></h2>
-
+</code></pre><h2 id="enumhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>enum</code></a></h2>
 <p>枚举提供具有关联类型的常量键-值对。任何键都属于该类型，并作为符号注入当前作用域。如果使用该符号，则将其视为常量表达式，并将该符号替换为枚举对的值。任何枚举都从角色 <a href="https://docs.raku.org/type/Enumeration"><code>Enumeration</code></a> 继承方法。不支持用于生成键值对的复杂表达式。通常，<code>enum</code> 是一个 <a href="https://docs.raku.org/type/Map">Map</a> 其元素具有混合的<code>Enumeration</code> 角色; 对于每个元素，此角色包括在 map 上创建顺序的索引。</p>
-
 <p>符号的字符串化，在字符串上下文中自动完成，并且与其名称完全相同，这也是枚举对的键。</p>
-
-<pre><code class="language-raku">enum Names ( name1 =&gt; 1, name2 =&gt; 2 );
+<pre><code class="language-raku" data-lang="raku">enum Names ( name1 =&gt; 1, name2 =&gt; 2 );
 say name1, ' ', name2; # OUTPUT: «name1 name2» 
 say name1.value, ' ', name2.value; # OUTPUT: «1 2» 
-</code></pre>
-
-<p>比较符号将使用类型信息和枚举对的值。支持 <code>Num</code> 类型和 <code>Str</code> 类型。</p>
-
-<pre><code class="language-raku">enum Names ( name1 =&gt; 1, name2 =&gt; 2 );
+</code></pre><p>比较符号将使用类型信息和枚举对的值。支持 <code>Num</code> 类型和 <code>Str</code> 类型。</p>
+<pre><code class="language-raku" data-lang="raku">enum Names ( name1 =&gt; 1, name2 =&gt; 2 );
 sub same(Names $a, Names $b){
    $a eqv $b
 }
@@ -675,151 +497,90 @@ say same(name1, name2); # OUTPUT: «False»
 my $a = name1;
 say $a ~~ Names; # OUTPUT: «True» 
 say $a.^name;    # OUTPUT: «Names» 
-</code></pre>
-
-<p>所有键必须属于同一类型。</p>
-
-<pre><code class="language-raku">enum Mass ( mg =&gt; 1/1000, g =&gt; 1/1, kg =&gt; 1000/1 );
+</code></pre><p>所有键必须属于同一类型。</p>
+<pre><code class="language-raku" data-lang="raku">enum Mass ( mg =&gt; 1/1000, g =&gt; 1/1, kg =&gt; 1000/1 );
  
 say Mass.enums;
 # OUTPUT: «Map.new((g =&gt; 1, kg =&gt; 1000, mg =&gt; 0.001))» 
-</code></pre>
-
-<p>如果没有给出值，则 <code>Int</code> 将假定为值类型，并且每个键从零开始递增 1。作为枚举键类型 <code>Int</code>，<code>Num</code>，<code>Rat</code> 和 <code>Str</code> 都被支持。</p>
-
-<pre><code class="language-raku">enum Numbers &lt;one two three four&gt;;
+</code></pre><p>如果没有给出值，则 <code>Int</code> 将假定为值类型，并且每个键从零开始递增 1。作为枚举键类型 <code>Int</code>，<code>Num</code>，<code>Rat</code> 和 <code>Str</code> 都被支持。</p>
+<pre><code class="language-raku" data-lang="raku">enum Numbers &lt;one two three four&gt;;
  
 say Numbers.enums;
 # OUTPUT: «Map.new((four =&gt; 3, one =&gt; 0, three =&gt; 2, two =&gt; 1))» 
-</code></pre>
-
-<p>可以提供不同的起始值。</p>
-
-<pre><code class="language-raku">enum Numbers «:one(1) two three four»;
+</code></pre><p>可以提供不同的起始值。</p>
+<pre><code class="language-raku" data-lang="raku">enum Numbers «:one(1) two three four»;
  
 say Numbers.enums;
 # OUTPUT: «Map.new((four =&gt; 4, one =&gt; 1, three =&gt; 3, two =&gt; 2))» 
-</code></pre>
-
-<p>枚举也可以是匿名的，和具名 <code>enum</code> 的唯一的区别在于您不能在签名中使用它或用它声明变量。</p>
-
-<pre><code class="language-raku">my $e = enum &lt;one two three&gt;;
+</code></pre><p>枚举也可以是匿名的，和具名 <code>enum</code> 的唯一的区别在于您不能在签名中使用它或用它声明变量。</p>
+<pre><code class="language-raku" data-lang="raku">my $e = enum &lt;one two three&gt;;
 say two;       # OUTPUT: «two» 
 say one.^name; # OUTPUT: «» 
 say $e.^name;  # OUTPUT: «Map» 
-</code></pre>
-
-<p>有多种方法可以访问已定义的符号的键和值。所有这些都将值转换为 <code>Str</code>，这可能是不可取的。通过将枚举视为包，我们可以获得键的类型列表。</p>
-
-<pre><code class="language-raku">enum E(&lt;one two&gt;);
+</code></pre><p>有多种方法可以访问已定义的符号的键和值。所有这些都将值转换为 <code>Str</code>，这可能是不可取的。通过将枚举视为包，我们可以获得键的类型列表。</p>
+<pre><code class="language-raku" data-lang="raku">enum E(&lt;one two&gt;);
 my @keys = E::.values;
 say @keys.map: *.enums;
 # OUTPUT: «(Map.new((one =&gt; 0, two =&gt; 1)) Map.new((one =&gt; 0, two =&gt; 1)))» 
-</code></pre>
-
-<h3 id="元类-https-docs-raku-org-language-typesystem-top-1"><a href="https://docs.raku.org/language/typesystem#___top">元类</a></h3>
-
+</code></pre><h3 id="元类httpsdocsrakuorglanguagetypesystem___top-1"><a href="https://docs.raku.org/language/typesystem#___top">元类</a></h3>
 <p>要测试给定类型对象是否为 <code>enum</code>，请 <code>.HOW</code> 针对 <a href="https://docs.raku.org/type/Metamodel::EnumHOW">Metamodel::EnumHOW</a> 测试元对象方法，或者仅针对该 <code>Enumeration</code> 角色进行测试。</p>
-
-<pre><code class="language-raku">enum E(&lt;a b c&gt;);
+<pre><code class="language-raku" data-lang="raku">enum E(&lt;a b c&gt;);
 say E.HOW ~~ Metamodel::EnumHOW; # OUTPUT: «True» 
 say E ~~ Enumeration;            # OUTPUT: «True» 
-</code></pre>
-
-<h3 id="methods-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Methods</a></h3>
-
-<h4 id="method-enums-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">method enums</a></h4>
-
+</code></pre><h3 id="methodshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Methods</a></h3>
+<h4 id="method-enumshttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">method enums</a></h4>
 <p>定义为:</p>
-
-<pre><code class="language-raku">method enums()
-</code></pre>
-
-<p>返回枚举对列表。</p>
-
-<pre><code class="language-raku">enum Mass ( mg =&gt; 1/1000, g =&gt; 1/1, kg =&gt; 1000/1 );
+<pre><code class="language-raku" data-lang="raku">method enums()
+</code></pre><p>返回枚举对列表。</p>
+<pre><code class="language-raku" data-lang="raku">enum Mass ( mg =&gt; 1/1000, g =&gt; 1/1, kg =&gt; 1000/1 );
 say Mass.enums; # OUTPUT: «{g =&gt; 1, kg =&gt; 1000, mg =&gt; 0.001}» 
-</code></pre>
-
-<h3 id="coercion-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top">Coercion</a></h3>
-
+</code></pre><h3 id="coercionhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top">Coercion</a></h3>
 <p>如果要将枚举元素的值强制转换为其合适的枚举对象，请使用带有枚举名称的 coercer：</p>
-
-<pre><code class="language-raku">my enum A (sun =&gt; 42, mon =&gt; 72);
+<pre><code class="language-raku" data-lang="raku">my enum A (sun =&gt; 42, mon =&gt; 72);
 A(72).pair.say;   # OUTPUT: «mon =&gt; 72» 
 A(1000).say; # OUTPUT: «(A)» 
-</code></pre>
-
-<p>最后一个示例显示了如果没有枚举对包含它作为值会发生什么。</p>
-
-<h2 id="module-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>module</code></a></h2>
-
+</code></pre><p>最后一个示例显示了如果没有枚举对包含它作为值会发生什么。</p>
+<h2 id="modulehttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>module</code></a></h2>
 <p>模块通常是一个或多个公开 Raku 结构的源文件，例如类，角色，grammars，子例程和变量。模块通常用于将 Raku 代码分发为可在另一个 Raku 程序中使用的库。</p>
-
 <p>有关完整说明，请参阅<a href="https://docs.raku.org/language/modules">模块</a>。</p>
-
-<h2 id="package-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>package</code></a></h2>
-
+<h2 id="packagehttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>package</code></a></h2>
 <p>Packages are nested namespaces of named program elements. Modules, classes and grammars are all types of package.</p>
-
 <p>For a full explanation see <a href="https://docs.raku.org/language/packages">Packages</a>.</p>
-
 <p>包是命名程序元素的嵌套命名空间。模块，类和语法都是所有类型的包。</p>
-
 <p>有关完整说明，请参阅<a href="https://docs.raku.org/language/packages">包</a>。</p>
-
-<h2 id="grammar-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>grammar</code></a></h2>
-
+<h2 id="grammarhttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>grammar</code></a></h2>
 <p>Grammar 是用于解析文本的特定类型。Grammars 由 rule，token 和 regex 组成，它们实际上是方法，因为 grammars 是类。</p>
-
 <p>有关完整说明，请参阅<a href="https://docs.raku.org/language/grammars">Grammars</a>。</p>
-
-<h3 id="版本和作者-https-docs-raku-org-language-typesystem-top-1"><a href="https://docs.raku.org/language/typesystem#___top">版本和作者</a></h3>
-
+<h3 id="版本和作者httpsdocsrakuorglanguagetypesystem___top-1"><a href="https://docs.raku.org/language/typesystem#___top">版本和作者</a></h3>
 <p>版权和作者身份可以通过副词 <code>:ver&lt;&gt;</code> 和 <code>:auth&lt;&gt;</code> 应用。两者都以字符串作为参数，对于 <code>:ver</code>, 字符串被转换为 <a href="https://docs.raku.org/type/Version">Version</a>对象。查询语法版本和作者使用 <code>.^ver</code> 和 <code>^.auth</code>。</p>
-
-<pre><code class="language-raku">grammar G:ver&lt;4.2.3&gt;:auth&lt;me@here.local&gt; {}
+<pre><code class="language-raku" data-lang="raku">grammar G:ver&lt;4.2.3&gt;:auth&lt;me@here.local&gt; {}
 say [G.^ver, G.^auth];
 # OUTPUT: «[v4.2.3 me@here.local]» 
-</code></pre>
-
-<h2 id="subset-https-docs-raku-org-language-typesystem-top"><a href="https://docs.raku.org/language/typesystem#___top"><code>subset</code></a></h2>
-
+</code></pre><h2 id="subsethttpsdocsrakuorglanguagetypesystem___top"><a href="https://docs.raku.org/language/typesystem#___top"><code>subset</code></a></h2>
 <p><code>subset</code> 声明一个会重新分配到其基类型的新类型。如果提供了 <a href="https://docs.raku.org/type/Signature#where"><code>where</code></a> 子句，则将针对给定的代码对象检查任何赋值。</p>
-
-<pre><code class="language-raku">subset Positive of Int where * &gt; -1;
+<pre><code class="language-raku" data-lang="raku">subset Positive of Int where * &gt; -1;
 my Positive $i = 1;
 $i = -42;
 CATCH { default { put .^name,': ', .Str } }
 # OUTPUT: «X::TypeCheck::Assignment: Type check failed in assignment to $i; expected Positive but got Int (-42)» 
-</code></pre>
-
-<p>Subsets 可用于签名，例如通过键入下面的输出：</p>
-
-<pre><code class="language-raku">subset Foo of List where (Int,Str);
+</code></pre><p>Subsets 可用于签名，例如通过键入下面的输出：</p>
+<pre><code class="language-raku" data-lang="raku">subset Foo of List where (Int,Str);
 sub a($a, $b, --&gt; Foo) { $a, $b }
 # Only a List with the first element being an Int and the second a Str will pass the type check. 
 a(1, &quot;foo&quot;);  # passes 
 a(&quot;foo&quot;, 1);  # fails 
-</code></pre>
-
-<p>Subsets 可以是匿名的，允许在需要 subset 的情况下进行内联放置，但名字既不需要也不值得。</p>
-
-<pre><code class="language-raku">my enum E1 &lt;A B&gt;;
+</code></pre><p>Subsets 可以是匿名的，允许在需要 subset 的情况下进行内联放置，但名字既不需要也不值得。</p>
+<pre><code class="language-raku" data-lang="raku">my enum E1 &lt;A B&gt;;
 my enum E2 &lt;C D&gt;;
 sub g(@a where { .all ~~ subset::where E1|E2 } ) {
     say @a
 }
 g([A, C]);
 # OUTPUT: «[A C]» 
-</code></pre>
-
-<p>Subsets 可用于动态检查类型，这可以与 <a href="https://docs.raku.org/language/modules#require">require</a> 结合使用。</p>
-
-<pre><code class="language-raku">require ::('YourModule');
+</code></pre><p>Subsets 可用于动态检查类型，这可以与 <a href="https://docs.raku.org/language/modules#require">require</a> 结合使用。</p>
+<pre><code class="language-raku" data-lang="raku">require ::('YourModule');
 subset C where ::('YourModule::C');
 </code></pre>
-
   </article>
 </section>
 

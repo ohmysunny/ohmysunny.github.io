@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,40 +81,22 @@
       <h1>Unicode vs. ASCII 符号</h1>
     </header>
 
-    
-
-<p>可以在 Raku 中使用以下 Unicode 符号，而无需加载任何其他模块。其中一些具有可以使用 ASCII 独有字符键入的等效物。这些变体通常由比 Unicode 版本更多的字符组成，因此它们看起来更大。</p>
-
+    <p>可以在 Raku 中使用以下 Unicode 符号，而无需加载任何其他模块。其中一些具有可以使用 ASCII 独有字符键入的等效物。这些变体通常由比 Unicode 版本更多的字符组成，因此它们看起来更大。</p>
 <p>下面参考 unicode 码点的各种属性。最终列表可以在这里找到：<a href="https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt">https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt</a>.</p>
-
-<h1 id="字母字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">字母字符</a></h1>
-
+<h1 id="字母字符httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">字母字符</a></h1>
 <p>任何具有 <code>Ll</code>（字母，小写），<code>Lu</code>（字母，大写），<code>Lt</code>（字母，标题），<code>Lm</code>（字母，修饰符）或 <code>Lo</code>（字母，其他）属性的代码点都可以像任何其他字母一样使用 ASCII 范围内的字符。</p>
-
-<h1 id="数字字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字字符</a></h1>
-
+<h1 id="数字字符httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字字符</a></h1>
 <p>任何具有 <code>Nd</code>（数字，十进制数字）属性的代码点都可以用作任何数字的数字。例如：</p>
-
-<pre><code class="language-raku">my $var = １９; # U+FF11 U+FF19 
+<pre><code class="language-raku" data-lang="raku">my $var = １９; # U+FF11 U+FF19 
 say $var + 2;  # OUTPUT: «21␤» 
-</code></pre>
-
-<h1 id="数字值-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字值</a></h1>
-
+</code></pre><h1 id="数字值httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">数字值</a></h1>
 <p>任何具有 <code>No</code>（Number，other）或 <code>Nl</code>（Number，letter）属性的代码点都可以单独用作数值，例如 ½ 和 ⅓。 （这些不是十进制数字，因此不能组合。）例如：</p>
-
-<pre><code class="language-raku">my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int 
+<pre><code class="language-raku" data-lang="raku">my $var = ⅒ + 2 + Ⅻ; # here ⅒ is No and Rat and Ⅻ is Nl and Int 
 say $var;            # OUTPUT: «14.1␤» 
-</code></pre>
-
-<h1 id="空白字符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">空白字符</a></h1>
-
+</code></pre><h1 id="空白字符httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">空白字符</a></h1>
 <p>除了空格和制表符，您还可以使用具有 <code>Zs</code>（分隔符，空格），<code>Zl</code>（分隔符，行）或 <code>Zp</code>（分隔符，段落）属性的任何其他 unicode 空白字符。</p>
-
-<h1 id="其它可接受的单代码点-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">其它可接受的单代码点</a></h1>
-
+<h1 id="其它可接受的单代码点httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">其它可接受的单代码点</a></h1>
 <p>此列表包含 Raku 中具有特殊含义的单个代码点及其 ASCII 等价物。</p>
-
 <table>
 <thead>
 <tr>
@@ -124,386 +106,331 @@ say $var;            # OUTPUT: «14.1␤»
 <th align="left">Remarks</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">«</td>
 <td align="left">U+00AB</td>
-<td align="left">&lt;&lt;</td>
+<td align="left">&laquo;</td>
 <td align="left">as part of «» or .« or regex left word boundary</td>
 </tr>
-
 <tr>
 <td align="left">¯</td>
 <td align="left">U+00AF</td>
 <td align="left">-</td>
 <td align="left">(must use explicit number) as part of exponentiation (macron is an alternative way of writing a minus)</td>
 </tr>
-
 <tr>
 <td align="left">²</td>
 <td align="left">U+00B2</td>
 <td align="left">**2</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">³</td>
 <td align="left">U+00B3</td>
 <td align="left">**3</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">¹</td>
 <td align="left">U+00B9</td>
 <td align="left">**1</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">»</td>
 <td align="left">U+00BB</td>
-<td align="left">&gt;&gt;</td>
+<td align="left">&raquo;</td>
 <td align="left">as part of «» or .» or regex right word boundary</td>
 </tr>
-
 <tr>
 <td align="left">×</td>
 <td align="left">U+00D7</td>
 <td align="left">*</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">÷</td>
 <td align="left">U+00F7</td>
 <td align="left">/</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">π</td>
 <td align="left">U+03C0</td>
 <td align="left">pi</td>
 <td align="left">3.14159_26535_89793_238e0</td>
 </tr>
-
 <tr>
 <td align="left">τ</td>
 <td align="left">U+03C4</td>
 <td align="left">tau</td>
 <td align="left">6.28318_53071_79586_476e0</td>
 </tr>
-
 <tr>
 <td align="left">‘</td>
 <td align="left">U+2018</td>
-<td align="left">&lsquo;</td>
+<td align="left">'</td>
 <td align="left">as part of ‘’ or ’‘</td>
 </tr>
-
 <tr>
 <td align="left">’</td>
 <td align="left">U+2019</td>
-<td align="left">&lsquo;</td>
+<td align="left">'</td>
 <td align="left">as part of ‘’ or ‚’ or ’‘</td>
 </tr>
-
 <tr>
 <td align="left">‚</td>
 <td align="left">U+201A</td>
-<td align="left">&lsquo;</td>
+<td align="left">'</td>
 <td align="left">as part of ‚‘ or ‚’</td>
 </tr>
-
 <tr>
 <td align="left">“</td>
 <td align="left">U+201C</td>
-<td align="left">&ldquo;</td>
+<td align="left">&quot;</td>
 <td align="left">as part of “” or ”“</td>
 </tr>
-
 <tr>
 <td align="left">”</td>
 <td align="left">U+201D</td>
-<td align="left">&ldquo;</td>
+<td align="left">&quot;</td>
 <td align="left">as part of “” or ”“ or ””</td>
 </tr>
-
 <tr>
 <td align="left">„</td>
 <td align="left">U+201E</td>
-<td align="left">&ldquo;</td>
+<td align="left">&quot;</td>
 <td align="left">as part of „“ or „”</td>
 </tr>
-
 <tr>
 <td align="left">…</td>
 <td align="left">U+2026</td>
 <td align="left">&hellip;</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⁰</td>
 <td align="left">U+2070</td>
 <td align="left">**0</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁴</td>
 <td align="left">U+2074</td>
 <td align="left">**4</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁵</td>
 <td align="left">U+2075</td>
 <td align="left">**5</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁶</td>
 <td align="left">U+2076</td>
 <td align="left">**6</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁷</td>
 <td align="left">U+2077</td>
 <td align="left">**7</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁸</td>
 <td align="left">U+2078</td>
 <td align="left">**8</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁹</td>
 <td align="left">U+2079</td>
 <td align="left">**9</td>
 <td align="left">can be combined with ⁰..⁹</td>
 </tr>
-
 <tr>
 <td align="left">⁺</td>
 <td align="left">U+207A</td>
 <td align="left">|</td>
 <td align="left">(must use explicit number) as part of exponentiation</td>
 </tr>
-
 <tr>
 <td align="left">⁻</td>
 <td align="left">U+207B</td>
 <td align="left">-</td>
 <td align="left">(must use explicit number) as part of exponentiation</td>
 </tr>
-
 <tr>
 <td align="left">∅</td>
 <td align="left">U+2205</td>
 <td align="left">set()</td>
 <td align="left">(empty set)</td>
 </tr>
-
 <tr>
 <td align="left">∈</td>
 <td align="left">U+2208</td>
 <td align="left">(elem)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∉</td>
 <td align="left">U+2209</td>
 <td align="left">!(elem)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∋</td>
 <td align="left">U+220B</td>
 <td align="left">(cont)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∌</td>
 <td align="left">U+220C</td>
 <td align="left">!(cont)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">−</td>
 <td align="left">U+2212</td>
 <td align="left">-</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∖</td>
 <td align="left">U+2216</td>
 <td align="left">(-)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∘</td>
 <td align="left">U+2218</td>
 <td align="left">o</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∞</td>
 <td align="left">U+221E</td>
 <td align="left">Inf</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∩</td>
 <td align="left">U+2229</td>
 <td align="left">(&amp;)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">∪</td>
 <td align="left">U+222A</td>
 <td align="left">(|)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">≅</td>
 <td align="left">U+2245</td>
 <td align="left">=~=</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">≠</td>
 <td align="left">U+2260</td>
 <td align="left">!=</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">≤</td>
 <td align="left">U+2264</td>
 <td align="left">&lt;=</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">≥</td>
 <td align="left">U+2265</td>
 <td align="left">&gt;=</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊂</td>
 <td align="left">U+2282</td>
 <td align="left">(&lt;)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊃</td>
 <td align="left">U+2283</td>
 <td align="left">(&gt;)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊄</td>
 <td align="left">U+2284</td>
 <td align="left">!(&lt;)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊅</td>
 <td align="left">U+2285</td>
 <td align="left">!(&gt;)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊆</td>
 <td align="left">U+2286</td>
 <td align="left">(&lt;=)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊇</td>
 <td align="left">U+2287</td>
 <td align="left">(&gt;=)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊈</td>
 <td align="left">U+2288</td>
 <td align="left">!(&lt;=)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊉</td>
 <td align="left">U+2289</td>
 <td align="left">!(&gt;=)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊍</td>
 <td align="left">U+228D</td>
 <td align="left">(.)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊎</td>
 <td align="left">U+228E</td>
 <td align="left">(+)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⊖</td>
 <td align="left">U+2296</td>
 <td align="left">(^)</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">𝑒</td>
 <td align="left">U+1D452</td>
 <td align="left">e</td>
 <td align="left">2.71828_18284_59045_235e0</td>
 </tr>
-
 <tr>
 <td align="left">｢</td>
 <td align="left">U+FF62</td>
 <td align="left">Q//</td>
 <td align="left">as part of ｢｣ (Note: Q// variant cannot be used bare in regexes)</td>
 </tr>
-
 <tr>
 <td align="left">｣</td>
 <td align="left">U+FF63</td>
@@ -512,18 +439,12 @@ say $var;            # OUTPUT: «14.1␤»
 </tr>
 </tbody>
 </table>
-
-<h2 id="原子运算符-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">原子运算符</a></h2>
-
+<h2 id="原子运算符httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">原子运算符</a></h2>
 <p>原子运算符将 <code>U+269B</code> ⚛ ATOM SYMBOL 合并到其中。它们的 ASCII 等价物是普通的子程序，而不是运算符：</p>
-
-<pre><code class="language-raku">my atomicint $x = 42;
+<pre><code class="language-raku" data-lang="raku">my atomicint $x = 42;
 $x⚛++;                # Unicode version 
 atomic-fetch-inc($x); # ASCII version 
-</code></pre>
-
-<p>ASCII 替代方案如下：</p>
-
+</code></pre><p>ASCII 替代方案如下：</p>
 <table>
 <thead>
 <tr>
@@ -532,56 +453,47 @@ atomic-fetch-inc($x); # ASCII version
 <th align="left">Remarks</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">⚛=</td>
 <td align="left">atomic-assign</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⚛</td>
 <td align="left">atomic-fetch</td>
 <td align="left">this is the prefix:&lt;⚛&gt; operator</td>
 </tr>
-
 <tr>
 <td align="left">⚛+=</td>
 <td align="left">atomic-add-fetch</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⚛-=</td>
 <td align="left">atomic-sub-fetch</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⚛−=</td>
 <td align="left">atomic-sub-fetch</td>
 <td align="left">this operator uses U+2212 minus sign</td>
 </tr>
-
 <tr>
 <td align="left">++⚛</td>
 <td align="left">atomic-inc-fetch</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⚛++</td>
 <td align="left">atomic-fetch-inc</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">&ndash;⚛</td>
 <td align="left">atomic-dec-fetch</td>
 <td align="left"></td>
 </tr>
-
 <tr>
 <td align="left">⚛&ndash;</td>
 <td align="left">atomic-fetch-dec</td>
@@ -589,11 +501,8 @@ atomic-fetch-inc($x); # ASCII version
 </tr>
 </tbody>
 </table>
-
-<h1 id="多代码点-https-docs-raku-org-language-unicode-ascii-top"><a href="https://docs.raku.org/language/unicode_ascii#___top">多代码点</a></h1>
-
+<h1 id="多代码点httpsdocsrakuorglanguageunicode_ascii___top"><a href="https://docs.raku.org/language/unicode_ascii#___top">多代码点</a></h1>
 <p>此列表包含多个代码点运算符，这些运算符需要对其 ASCII 等价物项进行特殊组合。请注意，代码点以空格分隔显示，但在使用时应作为相邻代码点输入。</p>
-
 <table>
 <thead>
 <tr>
@@ -604,36 +513,32 @@ atomic-fetch-inc($x); # ASCII version
 <th align="left">Remarks</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">»=»</td>
 <td align="left">U+00BB = U+00BB</td>
-<td align="left">&gt;&gt;[=]&gt;&gt;</td>
+<td align="left">&raquo;[=]&raquo;</td>
 <td align="left">v6.c</td>
 <td align="left">uses ASCII &lsquo;=&rsquo;</td>
 </tr>
-
 <tr>
 <td align="left">«=«</td>
 <td align="left">U+00AB = U+00AB</td>
-<td align="left">&lt;&lt;[=]&lt;&lt;</td>
+<td align="left">&laquo;[=]&laquo;</td>
 <td align="left">v6.c</td>
 <td align="left">uses ASCII &lsquo;=&rsquo;</td>
 </tr>
-
 <tr>
 <td align="left">«=»</td>
 <td align="left">U+00AB = U+00BB</td>
-<td align="left">&lt;&lt;[=]&gt;&gt;</td>
+<td align="left">&laquo;[=]&raquo;</td>
 <td align="left">v6.c</td>
 <td align="left">uses ASCII &lsquo;=&rsquo;</td>
 </tr>
-
 <tr>
 <td align="left">»=«</td>
 <td align="left">U+00BB = U+00AB</td>
-<td align="left">&gt;&gt;[=]&lt;&lt;</td>
+<td align="left">&raquo;[=]&laquo;</td>
 <td align="left">v6.c</td>
 <td align="left">uses ASCII &lsquo;=&rsquo;</td>
 </tr>

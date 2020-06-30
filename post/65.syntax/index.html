@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,160 +81,89 @@
       <h1>语法</h1>
     </header>
 
-    
-
-<p>Raku 借用了人类语言中的许多概念。考虑到它是由语言学家设计的，这并不奇怪。</p>
-
+    <p>Raku 借用了人类语言中的许多概念。考虑到它是由语言学家设计的，这并不奇怪。</p>
 <p>它重用不同语境中的共同元素，具有名词（术语）和动词（运算符）的概念，是上下文敏感的（在日常意义上，不一定在计算机科学解释中），因此符号可以具有不同的含义取决于名词或动词是否是预期的。</p>
-
 <p>它也是自同步的，因此解析器可以检测大多数常见错误并提供良好的错误消息。</p>
-
 <h2 id="词法约定">词法约定</h2>
-
 <p>Raku 代码是 Unicode 文本。当前的实现支持 UTF-8 作为输入编码。</p>
-
 <p>也参阅 <a href="https://docs.raku.org/language/unicode_ascii">Unicode versus ASCII symbols</a>.</p>
-
 <h3 id="自由形式">自由形式</h3>
-
 <p>Raku 代码也是自由格式的，从某种意义上说，你可以自由选择你使用的空格量，尽管在某些情况下，空格的存在与否具有意义。</p>
-
 <p>所以你可以写</p>
-
-<pre><code class="language-raku">if True {
+<pre><code class="language-raku" data-lang="raku">if True {
     say &quot;Hello&quot;;
 }
-</code></pre>
-
-<p>或</p>
-
-<pre><code class="language-raku">    if True {
+</code></pre><p>或</p>
+<pre><code class="language-raku" data-lang="raku">    if True {
 say &quot;Hello&quot;; # Bad indentation intended 
         }
-</code></pre>
-
-<p>或</p>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; }
-</code></pre>
-
-<p>或者甚至</p>
-
-<pre><code class="language-raku">if True {say &quot;Hello&quot;}
-</code></pre>
-
-<p>虽然你不能省略任何剩余的空白。</p>
-
+</code></pre><p>或</p>
+<pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; }
+</code></pre><p>或者甚至</p>
+<pre><code class="language-raku" data-lang="raku">if True {say &quot;Hello&quot;}
+</code></pre><p>虽然你不能省略任何剩余的空白。</p>
 <h3 id="unspace">Unspace</h3>
-
 <p>在编译器不允许空格的许多地方，只要用反斜杠引用，就可以使用任意数量的空格。不支持 token 中的空格。当编译器生成行号时，未空格的换行仍然计算。用于非空格的用例是后缀运算符和例程参数列表的分离。</p>
-
-<pre><code class="language-raku">sub alignment(+@l) { +@l };
+<pre><code class="language-raku" data-lang="raku">sub alignment(+@l) { +@l };
 sub long-name-alignment(+@l) { +@l };
 alignment\         (1,2,3,4).say;
 long-name-alignment(3,5)\   .say;
 say Inf+Inf\i;
-</code></pre>
-
-<p>在这种情况下，我们的目的是让 <code>.</code> 两个语句以及括号都对齐，所以我们在用于填充的空格之前加上 <code>\</code>。</p>
-
+</code></pre><p>在这种情况下，我们的目的是让 <code>.</code> 两个语句以及括号都对齐，所以我们在用于填充的空格之前加上 <code>\</code>。</p>
 <h3 id="用分号分割语句">用分号分割语句</h3>
-
 <p>Raku 程序是一组由分号 <code>;</code> 分割的语句。</p>
-
-<pre><code class="language-raku">say &quot;Hello&quot;;
+<pre><code class="language-raku" data-lang="raku">say &quot;Hello&quot;;
 say &quot;world&quot;;
-</code></pre>
-
-<p>最后一个语句之后（或在块内的最终语句之后）的分号是可选的。</p>
-
-<pre><code class="language-raku">say &quot;Hello&quot;;
+</code></pre><p>最后一个语句之后（或在块内的最终语句之后）的分号是可选的。</p>
+<pre><code class="language-raku" data-lang="raku">say &quot;Hello&quot;;
 say &quot;world&quot;
-</code></pre>
-
-<pre><code class="language-raku">if True {
+</code></pre><pre><code class="language-raku" data-lang="raku">if True {
     say &quot;Hello&quot;
 }
 say &quot;world&quot;
-</code></pre>
-
-<h3 id="隐式分隔符规则-对于以块结尾的语句">隐式分隔符规则（对于以块结尾的语句）</h3>
-
+</code></pre><h3 id="隐式分隔符规则对于以块结尾的语句">隐式分隔符规则（对于以块结尾的语句）</h3>
 <p>以裸块结尾的完整语句可以省略尾随分号，如果同一行上没有其他语句跟随块的结束大括号 <code>}</code>。 这称为“隐式分隔符规则”。例如，您不需要在 <code>if</code> 语句块之后写一个分号，如上所示，以及下面所示。</p>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; }
+<pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; }
 say &quot;world&quot;;
-</code></pre>
-
-<p>但是，需要使用分号将块与同一行中的尾随语句分开。</p>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; }; say &quot;world&quot;;
+</code></pre><p>但是，需要使用分号将块与同一行中的尾随语句分开。</p>
+<pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; }; say &quot;world&quot;;
 #                     ^^^ this ; is required 
-</code></pre>
-
-<p>此隐式语句分隔符规则除了控制语句之外还以其他方式应用，可能以裸块结束。例如，结合冒号：方法调用的语法。</p>
-
-<pre><code class="language-raku">my @names = &lt;Foo Bar Baz&gt;;
+</code></pre><p>此隐式语句分隔符规则除了控制语句之外还以其他方式应用，可能以裸块结束。例如，结合冒号：方法调用的语法。</p>
+<pre><code class="language-raku" data-lang="raku">my @names = &lt;Foo Bar Baz&gt;;
 my @upper-case-names = @names.map: { .uc }    # OUTPUT: [FOO BAR BAZ] 
-</code></pre>
-
-<p>对于属于同一 <code>if/elsif/else</code>（或类似）构造的一系列块，隐式分隔符规则仅适用于该系列的最后一个块的末尾。这三个是等价的：</p>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; } else { say &quot;Goodbye&quot; }; say &quot;world&quot;;
+</code></pre><p>对于属于同一 <code>if/elsif/else</code>（或类似）构造的一系列块，隐式分隔符规则仅适用于该系列的最后一个块的末尾。这三个是等价的：</p>
+<pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; } else { say &quot;Goodbye&quot; }; say &quot;world&quot;;
 #                                            ^^^ this ; is required 
-</code></pre>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; } else { say &quot;Goodbye&quot; } # &lt;- implied statement separator 
+</code></pre><pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; } else { say &quot;Goodbye&quot; } # &lt;- implied statement separator 
 say &quot;world&quot;;
-</code></pre>
-
-<pre><code class="language-raku">if True { say &quot;Hello&quot; }   # still in the middle of an if/else statement 
+</code></pre><pre><code class="language-raku" data-lang="raku">if True { say &quot;Hello&quot; }   # still in the middle of an if/else statement 
 else    { say &quot;Goodbye&quot; } # &lt;- no semicolon required because it ends in a block 
                           #    without trailing statements in the same line 
 say &quot;world&quot;;
-</code></pre>
-
-<h3 id="注释">注释</h3>
-
+</code></pre><h3 id="注释">注释</h3>
 <p>注释是程序文本的一部分，仅供人类读者阅读; Raku 编译器不会将它们当作程序文本。</p>
-
 <p>在缺少或存在空白消除可能的解析的地方，注释计为空格。</p>
-
 <h4 id="单行注释">单行注释</h4>
-
 <p>Raku 中最常见的注释形式以单个哈希字符 <code>#</code> 开头，直到该行的结尾。</p>
-
-<pre><code class="language-raku">if $age &gt; 250 {     # catch obvious outliers 
+<pre><code class="language-raku" data-lang="raku">if $age &gt; 250 {     # catch obvious outliers 
     # this is another comment! 
     die &quot;That doesn't look right&quot;
 }
-</code></pre>
-
-<h4 id="多行-嵌套注释">多行 / 嵌套注释</h4>
-
+</code></pre><h4 id="多行--嵌套注释">多行 / 嵌套注释</h4>
 <p>多行和嵌入式注释以井号字符开头，然后是反引号，然后是一些开口括号字符，并以匹配的闭合括号字符结束。内容不仅可以跨越多行，还可以嵌入内联。</p>
-
-<pre><code class="language-raku">if #`( why would I ever write an inline comment here? ) True {
+<pre><code class="language-raku" data-lang="raku">if #`( why would I ever write an inline comment here? ) True {
     say &quot;something stupid&quot;;
 }
-</code></pre>
-
-<p>这些注释可以扩展到多行</p>
-
-<pre><code class="language-raku">#`[
+</code></pre><p>这些注释可以扩展到多行</p>
+<pre><code class="language-raku" data-lang="raku">#`[
 And this is how a multi would work.
 That says why we do what we do below.
 ]
 say &quot;No more&quot;;
-</code></pre>
-
-<p>注释中的大括号可以嵌套，因此在  #<code>{ a { b } c }, 中，注释一直持续到字符串的最后。 您也可以使用多个花括号，例如 #</code>{{ double-curly-brace }}，这可能有助于消除嵌套分隔符的歧义。 您可以在表达式中嵌入这些注释，只要不将它们插入关键字或标识符的中间即可。</p>
-
+</code></pre><p>注释中的大括号可以嵌套，因此在  #<code>{ a { b } c }, 中，注释一直持续到字符串的最后。 您也可以使用多个花括号，例如 #</code>{{ double-curly-brace }}，这可能有助于消除嵌套分隔符的歧义。 您可以在表达式中嵌入这些注释，只要不将它们插入关键字或标识符的中间即可。</p>
 <h4 id="pod-注释">Pod 注释</h4>
-
 <p>Pod 语法可用于多行注释</p>
-
-<pre><code class="language-raku">say &quot;this is code&quot;;
+<pre><code class="language-raku" data-lang="raku">say &quot;this is code&quot;;
  
 =begin comment
  
@@ -245,26 +174,16 @@ of comment
 =end comment
  
 say 'code again';
-</code></pre>
-
-<h3 id="标识符">标识符</h3>
-
+</code></pre><h3 id="标识符">标识符</h3>
 <p>标识符是语法构建块，可用于为实体/对象赋予名称，例如常量，变量（例如标量）和例程（例如，Subs 和方法）。在变量名中，任何sigil（和twigil）都在标识符之前，并且不形成其一部分。</p>
-
-<pre><code class="language-raku">constant c = 299792458;     # identifier &quot;c&quot; names an Int 
+<pre><code class="language-raku" data-lang="raku">constant c = 299792458;     # identifier &quot;c&quot; names an Int 
 my $a = 123;                # identifier &quot;a&quot; in the name &quot;$a&quot; of a Scalar 
 sub hello { say &quot;Hello!&quot; }; # identifier &quot;hello&quot; names a Sub 
-</code></pre>
-
-<p>标识符有不同的形式：普通标识符，扩展标识符和复合标识符。</p>
-
+</code></pre><p>标识符有不同的形式：普通标识符，扩展标识符和复合标识符。</p>
 <h4 id="普通标识符">普通标识符</h4>
-
 <p>普通标识符由前导字母字符组成，后面可以跟着一个或多个字母数字字符。它也可能包含单独的，嵌入的撇号 <code>'</code> 和/或连字符 <code>-</code>,  前提是下一个字符每次都是字母。</p>
-
 <p>“字母”和“字母数字”的定义包括适当的 Unicode 字符。哪些字符“合适”取决于实现。在 Rakudo/MoarVM Raku 实现中，字母字符包括具有 Unicode 通用类别值 Letter(L) 和下划线 <code>_</code> 的字符。字母数字字符还包括具有 Unicode 通用类别值编号，十进制数字(Nd) 的字符。</p>
-
-<pre><code class="language-raku"># valid ordinary identifiers: 
+<pre><code class="language-raku" data-lang="raku"># valid ordinary identifiers: 
 x
 _snake_oil
 something-longer
@@ -272,20 +191,14 @@ with-numbers1234
 don't-do-that
 piece_of_π
 駱駝道              # &quot;Rakuda-dō&quot;, Japanese for &quot;Way of the camel&quot; 
-</code></pre>
-
-<pre><code class="language-raku"># invalid ordinary identifiers: 
+</code></pre><pre><code class="language-raku" data-lang="raku"># invalid ordinary identifiers: 
 42                 # identifier does not start with alphabetic character 
 with-numbers1234-5 # embedded hyphen not followed by alphabetic character 
 is-prime?          # question mark is not alphanumeric 
 x²                 # superscript 2 is not alphanumeric (explained above) 
-</code></pre>
-
-<h4 id="扩展标识符">扩展标识符</h4>
-
+</code></pre><h4 id="扩展标识符">扩展标识符</h4>
 <p>使名称包含普通标识符中不允许的字符通常很方便。用例包括一组实体共享一个共同的“短”名称但仍需要单独识别其每个元素的情况。例如，您可以使用短名称为 <code>Dog</code> 的模块，而其长名称包括其命名所有权和版本号：</p>
-
-<pre><code class="language-raku">Dog:auth&lt;Somebody&gt;:ver&lt;1.0&gt;  # long module names including author and version 
+<pre><code class="language-raku" data-lang="raku">Dog:auth&lt;Somebody&gt;:ver&lt;1.0&gt;  # long module names including author and version 
 Dog:auth&lt;Somebody&gt;:ver&lt;2.0&gt;
  
 use Dog:auth&lt;Somebody&gt;:ver&lt;2.0&gt;;
@@ -293,20 +206,13 @@ use Dog:auth&lt;Somebody&gt;:ver&lt;2.0&gt;;
 # short name for the rest of # the lexical scope, allowing a declaration 
 # like this. 
 my Dog $spot .= new(&quot;woof&quot;);
-</code></pre>
-
-<p>类似地，运算符集在各种语法类别中一起工作，其名称如 prefix，infix 和 postfix。这些运算符的官方名称通常包含从普通标识符中排除的字符。长名称是扩展标识符的构成，包括这个句法类别;短名称将包含在定义中的引号中：</p>
-
-<pre><code class="language-raku">infix:&lt;+&gt;                 # the official name of the operator in $a + $b 
+</code></pre><p>类似地，运算符集在各种语法类别中一起工作，其名称如 prefix，infix 和 postfix。这些运算符的官方名称通常包含从普通标识符中排除的字符。长名称是扩展标识符的构成，包括这个句法类别;短名称将包含在定义中的引号中：</p>
+<pre><code class="language-raku" data-lang="raku">infix:&lt;+&gt;                 # the official name of the operator in $a + $b 
 infix:&lt;*&gt;                 # the official name of the operator in $a * $b 
 infix:«&lt;=»                # the official name of the operator in $a &lt;= $b 
-</code></pre>
-
-<p>对于所有此类用途，您可以将一个或多个冒号分隔的字符串附加到普通标识符，以创建所谓的扩展标识符。 附加到标识符（即后缀位置）时，此冒号分隔的字符串会生成该标识符的唯一变体。</p>
-
+</code></pre><p>对于所有此类用途，您可以将一个或多个冒号分隔的字符串附加到普通标识符，以创建所谓的扩展标识符。 附加到标识符（即后缀位置）时，此冒号分隔的字符串会生成该标识符的唯一变体。</p>
 <p>这些字符串的格式为 <code>:key&lt;value&gt;</code>，其中 key 或 value 是可选的; 也就是说，在将它与常规标识符分开的冒号之后，将存在一个键和/或引用包围结构，例如 &lt;&gt;，«» 或 [&rsquo; &lsquo;]，它引用一个或多个任意字符值。[1]</p>
-
-<pre><code class="language-raku"># exemplary valid extended identifiers: 
+<pre><code class="language-raku" data-lang="raku"># exemplary valid extended identifiers: 
 postfix:&lt;²&gt;               # the official long name of the operator in $x² 
 WOW:That'sAwesome
 WOW:That's&lt;&lt;🆒&gt;&gt;
@@ -317,149 +223,85 @@ party:16&lt;sweet&gt;           # 16 is not an ordinary identifier
 party:16sweet
 party:!a                  # ...and neither is !a 
 party:$a                  # ...nor $a 
-</code></pre>
-
-<p>在扩展标识符中，后缀字符串被视为名称的组成部分，因此 <code>infix:&lt;+&gt;</code> 和 <code>infix:&lt;-&gt;</code> 是两个不同的运算符。但是，使用的包围字符不算作其中的一部分;只有引用的数据很重要。所以这些都是同一个名字：</p>
-
-<pre><code class="language-raku">infix:&lt;+&gt;
+</code></pre><p>在扩展标识符中，后缀字符串被视为名称的组成部分，因此 <code>infix:&lt;+&gt;</code> 和 <code>infix:&lt;-&gt;</code> 是两个不同的运算符。但是，使用的包围字符不算作其中的一部分;只有引用的数据很重要。所以这些都是同一个名字：</p>
+<pre><code class="language-raku" data-lang="raku">infix:&lt;+&gt;
 infix:&lt;&lt;+&gt;&gt;
 infix:«+»
 infix:['+']
 infix:('+')
-</code></pre>
-
-<p>同样，所有这些都有效：</p>
-
-<pre><code class="language-raku">my $foo:bar&lt;baz&gt; = 'quux';
+</code></pre><p>同样，所有这些都有效：</p>
+<pre><code class="language-raku" data-lang="raku">my $foo:bar&lt;baz&gt; = 'quux';
 say $foo:bar«baz»;                               # OUTPUT: «quux␤» 
 my $take-me:&lt;home&gt; = 'Where the glory has no end';
 say $take-me:['home'];                           # OUTPUT: «Where [...]␤» 
 my $foo:bar&lt;2&gt; = 5;
 say $foo:bar(1+1);                               # OUTPUT: «5␤» 
-</code></pre>
-
-<p>如果扩展标识符包含两个或更多个冒号对，则它们的顺序通常很重要：</p>
-
-<pre><code class="language-raku">my $a:b&lt;c&gt;:d&lt;e&gt; = 100;
+</code></pre><p>如果扩展标识符包含两个或更多个冒号对，则它们的顺序通常很重要：</p>
+<pre><code class="language-raku" data-lang="raku">my $a:b&lt;c&gt;:d&lt;e&gt; = 100;
 my $a:d&lt;e&gt;:b&lt;c&gt; = 200;
 say $a:b&lt;c&gt;:d&lt;e&gt;;               # OUTPUT: «100␤», NOT: «200␤» 
-</code></pre>
-
-<p>此规则的一个例外是模块版本控制;所以这些标识符有效地命名相同的模块：</p>
-
-<pre><code class="language-raku">use ThatModule:auth&lt;Somebody&gt;:ver&lt;2.7.18.28.18&gt;
+</code></pre><p>此规则的一个例外是模块版本控制;所以这些标识符有效地命名相同的模块：</p>
+<pre><code class="language-raku" data-lang="raku">use ThatModule:auth&lt;Somebody&gt;:ver&lt;2.7.18.28.18&gt;
 use ThatModule:ver&lt;2.7.18.28.18&gt;:auth&lt;Somebody&gt;
-</code></pre>
-
-<p>此外，扩展标识符支持编译时插值;这需要使用常量作为插值：</p>
-
-<pre><code class="language-raku">constant $c = 42;  # Constant binds to Int; $-sigil enables interpolation 
+</code></pre><p>此外，扩展标识符支持编译时插值;这需要使用常量作为插值：</p>
+<pre><code class="language-raku" data-lang="raku">constant $c = 42;  # Constant binds to Int; $-sigil enables interpolation 
 my $a:foo&lt;42&gt; = &quot;answer&quot;;
 say $a:foo«$c»;    # OUTPUT: «answer␤» 
-</code></pre>
-
-<p>虽然引用包围结构在标识符的上下文中通常是可互换的，但它们并不相同。特别是，尖括号 <code>&lt;&gt;</code>（模仿单引号插值特征）不能用于常量名称的插值。</p>
-
-<pre><code class="language-raku">constant $what = 'are';
+</code></pre><p>虽然引用包围结构在标识符的上下文中通常是可互换的，但它们并不相同。特别是，尖括号 <code>&lt;&gt;</code>（模仿单引号插值特征）不能用于常量名称的插值。</p>
+<pre><code class="language-raku" data-lang="raku">constant $what = 'are';
 my @we:&lt;are&gt;= &lt;the champions&gt;;
 say @we:«$what»;     # OUTPUT: «[the champions]␤» 
 say @we:&lt;$what&gt;;
 # Compilation error: Variable '@we:&lt;$what&gt;' is not declared 
-</code></pre>
-
-<h4 id="组合标识符">组合标识符</h4>
-
+</code></pre><h4 id="组合标识符">组合标识符</h4>
 <p>复合标识符是由两个或多个普通和/或扩展标识符组成的标识符，这些标识符通过双冒号 <code>::</code> 彼此分开。</p>
-
 <p>双冒号 <code>::</code> 被称为命名空间分隔符或包分隔符，它在名称中阐明了它的语义功能：强制将名称的前一部分视为包名/命名空间，名称的后续部分通过该包/命名空间位于：</p>
-
-<pre><code class="language-raku">module MyModule {               # declare a module package 
+<pre><code class="language-raku" data-lang="raku">module MyModule {               # declare a module package 
     our $var = &quot;Hello&quot;;         # declare package-scoped variable 
 }
 say $MyModule::var              # OUTPUT: «Hello␤» 
-</code></pre>
-
-<p>在上面的示例中，<code>MyModule::var</code> 是一个复合标识符，由包名称标识符 <code>MyModule</code> 和变量名称 <code>var</code> 的标识符部分组成。加在一块, <code>$MyModule::var</code> 通常被称为包限定名。</p>
-
+</code></pre><p>在上面的示例中，<code>MyModule::var</code> 是一个复合标识符，由包名称标识符 <code>MyModule</code> 和变量名称 <code>var</code> 的标识符部分组成。加在一块, <code>$MyModule::var</code> 通常被称为包限定名。</p>
 <p>使用双冒号分隔标识符会导致最右边的名称插入到现有包（参见上面的示例）或自动创建的包中：</p>
-
-<pre><code class="language-raku">my $foo::bar = 1;
+<pre><code class="language-raku" data-lang="raku">my $foo::bar = 1;
 say OUR::.keys;           # OUTPUT: «(foo)␤» 
 say OUR::foo.HOW          # OUTPUT: «Raku::Metamodel::PackageHOW.new␤» 
-</code></pre>
-
-<p>最后几行显示了如何自动创建 <code>foo</code> 包，作为该命名空间中变量的存放。</p>
-
+</code></pre><p>最后几行显示了如何自动创建 <code>foo</code> 包，作为该命名空间中变量的存放。</p>
 <p>双冒号语法允许使用 <code>::($expr)</code> 将字符串运行时插入到包或变量名中，您通常会在其中放置包或变量名：</p>
-
-<pre><code class="language-raku">my $buz = &quot;quux&quot;;
+<pre><code class="language-raku" data-lang="raku">my $buz = &quot;quux&quot;;
 my $bur::quux = 7;
 say $bur::($buz);               # OUTPUT: «7␤» 
-</code></pre>
-
-<h3 id="项-term">项 term:&lt;&gt;</h3>
-
+</code></pre><h3 id="项-term">项 term:&lt;&gt;</h3>
 <p>您可以使用 <code>term:&lt;&gt;</code> 来引入新的项，这对于引入违反常规标识符规则的常量非常方便：</p>
-
-<pre><code class="language-raku">use Test; plan 1; constant &amp;term:&lt;👍&gt; = &amp;ok.assuming(True);
+<pre><code class="language-raku" data-lang="raku">use Test; plan 1; constant &amp;term:&lt;👍&gt; = &amp;ok.assuming(True);
 👍
 # OUTPUT: «1..1␤ok 1 - ␤» 
-</code></pre>
-
-<p>但是项不必是常量：您也可以将它们用于不带任何参数的函数，并强制解析器在它们之后期望运算符。例如：</p>
-
-<pre><code class="language-raku">sub term:&lt;dice&gt; { (1..6).pick };
+</code></pre><p>但是项不必是常量：您也可以将它们用于不带任何参数的函数，并强制解析器在它们之后期望运算符。例如：</p>
+<pre><code class="language-raku" data-lang="raku">sub term:&lt;dice&gt; { (1..6).pick };
 say dice + dice;
-</code></pre>
-
-<p>可以打印 2 到 12 之间的任何数字。</p>
-
+</code></pre><p>可以打印 2 到 12 之间的任何数字。</p>
 <p>相反，我们已经声明 dice 为常规子例程</p>
-
-<pre><code class="language-raku">sub dice() {(1...6).pick }
-</code></pre>
-
-<p>表达式 <code>dice + dice</code> 将被解析为 <code>dice(+(dice()))</code>，导致错误，因为子 <code>dice</code> 需要零个参数。</p>
-
+<pre><code class="language-raku" data-lang="raku">sub dice() {(1...6).pick }
+</code></pre><p>表达式 <code>dice + dice</code> 将被解析为 <code>dice(+(dice()))</code>，导致错误，因为子 <code>dice</code> 需要零个参数。</p>
 <h2 id="语句和表达式">语句和表达式</h2>
-
-<p>Raku 程序由一组组成。语句的一个特例是表达式，它返回一个值。例如，<code>if True { say 42 }</code> 在语法上是一个语句，而不是一个表达式，而 <code>1 + 2</code> 是一个表达式（因此也是一个语句）。</p>
-
+<p>Raku 程序由一组组成。语句的一个特例是表达式，它返回一个值。例如，<code> if True { say 42 }</code> 在语法上是一个语句，而不是一个表达式，而 <code>1 + 2</code> 是一个表达式（因此也是一个语句）。</p>
 <p><code>do</code> 前缀将语句转换为表达式。所以虽然</p>
-
-<pre><code class="language-raku">my $x = if True { 42 };     # Syntax error! 
-</code></pre>
-
-<p>是一个错误,</p>
-
-<pre><code class="language-raku">my $x = do if True { 42 };
-</code></pre>
-
-<p>将 <code>if</code> 语句（此处为 42）的返回值赋给变量 <code>$x</code>。</p>
-
+<pre><code class="language-raku" data-lang="raku">my $x = if True { 42 };     # Syntax error! 
+</code></pre><p>是一个错误,</p>
+<pre><code class="language-raku" data-lang="raku">my $x = do if True { 42 };
+</code></pre><p>将 <code>if</code> 语句（此处为 42）的返回值赋给变量 <code>$x</code>。</p>
 <h2 id="项">项</h2>
-
 <p>项是基本名词，可选地与运算符一起形成表达式。项的示例是变量（<code>$x</code>），诸如类型名称（Int），字面量（42），声明（<code>sub f() { }</code>）和调用（<code>f()</code>）之类的裸字。</p>
-
 <p>例如，在表达式 <code>2 * $salary</code> 中，<code>2</code> 和 <code>$salary</code> 是两个项（整数字面量和变量）。</p>
-
 <h3 id="变量">变量</h3>
-
 <p>变量通常以称为 sigil 的特殊字符开头，后跟一个标识符。必须先声明变量才能使用它们。</p>
-
-<pre><code class="language-raku"># declaration: 
+<pre><code class="language-raku" data-lang="raku"># declaration: 
 my $number = 21;
 # usage: 
 say $number * 2;
-</code></pre>
-
-<p>有关更多详细信息，请参阅变量文档。</p>
-
-<h3 id="裸字-常量-类型名">裸字 (常量,类型名)</h3>
-
+</code></pre><p>有关更多详细信息，请参阅变量文档。</p>
+<h3 id="裸字-常量类型名">裸字 (常量,类型名)</h3>
 <p>预先声明的标识符可以是它们自己的术语。这些通常是类型名称或常量，但也是术语 <code>self</code>，它指的是调用方法的对象（请参阅对象）和无符号变量：</p>
-
-<pre><code class="language-raku">say Int;                # OUTPUT: «(Int)␤» 
+<pre><code class="language-raku" data-lang="raku">say Int;                # OUTPUT: «(Int)␤» 
 #   ^^^ type name (built in) 
  
 constant answer = 42;
@@ -474,205 +316,117 @@ class Foo {
 }
 say Foo.type-name;     # OUTPUT: «Foo␤» 
 #   ^^^ type name 
-</code></pre>
-
-<h3 id="包和限定名">包和限定名</h3>
-
+</code></pre><h3 id="包和限定名">包和限定名</h3>
 <p>命名实体（如变量，常量，类，模块或子）是命名空间的一部分。名称的嵌套部分使用 <code>::</code> 来分隔层次结构。一些例子：</p>
-
-<pre><code class="language-raku">$foo                # simple identifiers 
+<pre><code class="language-raku" data-lang="raku">$foo                # simple identifiers 
 $Foo::Bar::baz      # compound identifiers separated by :: 
 $Foo::($bar)::baz   # compound identifiers that perform interpolations 
 Foo::Bar::bob(23)   # function invocation given qualified name 
-</code></pre>
-
-<p>有关更多详细信息，请参阅包中的文档。</p>
-
+</code></pre><p>有关更多详细信息，请参阅包中的文档。</p>
 <h3 id="字面量">字面量</h3>
-
 <p>字面量是源代码中常量值的表示。 Raku 具有几种内置类型的字面量，如字符串，几种数字类型，pair 对儿等等。</p>
-
 <h4 id="字符串字面量">字符串字面量</h4>
-
 <p>字符串字面量用引号括起来：</p>
-
-<pre><code class="language-raku">say 'a string literal';
+<pre><code class="language-raku" data-lang="raku">say 'a string literal';
 say &quot;a string literal\nthat interprets escape sequences&quot;;
-</code></pre>
-
-<p>请参阅引用以获取更多选项，包括转义引用 <code>q</code>。 Raku 在字面量中使用标准转义字符 \a \b \t \n \f \r \e, 与设计文档中指定的 ASCII 转义码具有相同的含义。</p>
-
-<pre><code class="language-raku">say &quot;🔔\a&quot;;  # OUTPUT: «🔔␇␤» 
-</code></pre>
-
-<h4 id="数字字面量">数字字面量</h4>
-
+</code></pre><p>请参阅引用以获取更多选项，包括转义引用 <code>q</code>。 Raku 在字面量中使用标准转义字符 \a \b \t \n \f \r \e, 与设计文档中指定的 ASCII 转义码具有相同的含义。</p>
+<pre><code class="language-raku" data-lang="raku">say &quot;🔔\a&quot;;  # OUTPUT: «🔔␇␤» 
+</code></pre><h4 id="数字字面量">数字字面量</h4>
 <p>数字字面量通常用十进制表示（除非前缀为 <code>0x</code>（十六进制，基数为16），<code>0o</code>（八进制，基数为8）或 <code>0b</code>（二进制，基数为2），否则可以通过前缀0d逐字地使用（如果需要，可以使用前缀 <code>0d</code>）。 ）或状语符号中的显式基数，如 <code>:16&lt;A0&gt;</code> 另有说明。与其他编程语言不同，前导零不表示基数 8;而是发出编译时警告。</p>
-
 <p>在所有字面量格式中，你可以使用下划线来分组数字;他们没有任何语义信息;以下字面量都计算为相同的数字：</p>
-
-<pre><code class="language-raku">1000000
+<pre><code class="language-raku" data-lang="raku">1000000
 1_000_000
 10_00000
 100_00_00
-</code></pre>
-
-<h5 id="int-字面量">Int 字面量</h5>
-
+</code></pre><h5 id="int-字面量">Int 字面量</h5>
 <p>整数默认为有符号十进制的，但您可以使用其他基数。有关详细信息，请参阅 Int。</p>
-
-<pre><code class="language-raku"># actually not a literal, but unary - operator applied to numeric literal 2 
+<pre><code class="language-raku" data-lang="raku"># actually not a literal, but unary - operator applied to numeric literal 2 
 -2
 12345
 0xBEEF      # base 16 
 0o755       # base 8 
 :3&lt;1201&gt;    # arbitrary base, here base 3 
-</code></pre>
-
-<h5 id="rat-字面量">Rat 字面量</h5>
-
+</code></pre><h5 id="rat-字面量">Rat 字面量</h5>
 <p>Rat 字面量（有理数）非常常见，取代许多其他语言中的小数或浮点数。整除也会产生 Rat。</p>
-
-<pre><code class="language-raku">1.0
+<pre><code class="language-raku" data-lang="raku">1.0
 3.14159
 -2.5        # Not actually a literal, but still a Rat 
 :3&lt;21.0012&gt; # Base 3 rational 
 ⅔
 2/3         # Not actually a literal, but still a Rat 
-</code></pre>
-
-<h5 id="num-字面量">Num 字面量</h5>
-
+</code></pre><h5 id="num-字面量">Num 字面量</h5>
 <p>在 <code>e</code> 产生浮点数后，使用整数指数到十进制的科学记数法：</p>
-
-<pre><code class="language-raku">1e0
+<pre><code class="language-raku" data-lang="raku">1e0
 6.022e23
 1e-9
 -2e48
 2e2.5       # error 
-</code></pre>
-
-<h5 id="complex-字面量">Complex 字面量</h5>
-
+</code></pre><h5 id="complex-字面量">Complex 字面量</h5>
 <p>复数可以写为虚数（只是附加后缀 <code>i</code> 的有理数），也可以是实数和虚数之和：</p>
-
-<pre><code class="language-raku">1+2i
+<pre><code class="language-raku" data-lang="raku">1+2i
 6.123e5i    # note that this is 6.123e5 * i, not 6.123 * 10 ** (5i) 
-</code></pre>
-
-<h4 id="pair-字面量">Pair 字面量</h4>
-
+</code></pre><h4 id="pair-字面量">Pair 字面量</h4>
 <p>对由键和值组成，构造它们有两种基本形式：<code>key =&gt; 'value'</code> 和 <code>:key('value')</code>。</p>
-
 <h5 id="arrow-pairs">Arrow pairs</h5>
-
 <p>箭头对可以有一个表达式，一个字符串字面量或一个“裸标识符”，这是一个普通标识符语法的字符串，左侧不需要引号：</p>
-
-<pre><code class="language-raku">like-an-identifier-ain't-it =&gt; 42
+<pre><code class="language-raku" data-lang="raku">like-an-identifier-ain't-it =&gt; 42
 &quot;key&quot; =&gt; 42
 ('a' ~ 'b') =&gt; 1
-</code></pre>
-
-<h5 id="副词对儿-colon-pairs">副词对儿 (colon pairs)</h5>
-
+</code></pre><h5 id="副词对儿-colon-pairs">副词对儿 (colon pairs)</h5>
 <p>没有显式值的简短形式：</p>
-
-<pre><code class="language-raku">my $thing = 42;
+<pre><code class="language-raku" data-lang="raku">my $thing = 42;
 :$thing                 # same as  thing =&gt; $thing 
 :thing                  # same as  thing =&gt; True 
 :!thing                 # same as  thing =&gt; False 
-</code></pre>
-
-<p>变量形式也适用于其他符号，例如：<code>:&amp;callback</code> 或 <code>:@elements</code>。如果值是数字字面量，它也可以用这种简短形式表示：</p>
-
-<pre><code class="language-raku">:42thing            # same as  thing =&gt; 42 
+</code></pre><p>变量形式也适用于其他符号，例如：<code>:&amp;callback</code> 或 <code>:@elements</code>。如果值是数字字面量，它也可以用这种简短形式表示：</p>
+<pre><code class="language-raku" data-lang="raku">:42thing            # same as  thing =&gt; 42 
 :٤٢thing            # same as  thing =&gt; 42 
-</code></pre>
-
-<p>如果您使用其他字母，则此顺序将被反转：</p>
-
-<pre><code class="language-raku">:٤٢ث              # same as   ث =&gt; ٤٢ 
-</code></pre>
-
-<p>thaa 字母在数字之前。</p>
-
+</code></pre><p>如果您使用其他字母，则此顺序将被反转：</p>
+<pre><code class="language-raku" data-lang="raku">:٤٢ث              # same as   ث =&gt; ٤٢ 
+</code></pre><p>thaa 字母在数字之前。</p>
 <p>具有显式值的长形式：</p>
-
-<pre><code class="language-raku">:thing($value)              # same as  thing =&gt; $value 
+<pre><code class="language-raku" data-lang="raku">:thing($value)              # same as  thing =&gt; $value 
 :thing&lt;quoted list&gt;         # same as  thing =&gt; &lt;quoted list&gt; 
 :thing['some', 'values']    # same as  thing =&gt; ['some', 'values'] 
 :thing{a =&gt; 'b'}            # same as  thing =&gt; { a =&gt; 'b' } 
-</code></pre>
-
-<h4 id="boolean-字面量">Boolean 字面量</h4>
-
+</code></pre><h4 id="boolean-字面量">Boolean 字面量</h4>
 <p>True 和 False 是 Boolean 字面量; 他们始终是首字母大写的。</p>
-
 <h4 id="array-字面量">Array 字面量</h4>
-
 <p>一对方括号可以围绕表达式以形成逐项数组字面量; 通常在里面有一个以逗号分隔的列表：</p>
-
-<pre><code class="language-raku">say ['a', 'b', 42].join(' ');   # OUTPUT: «a b 42␤» 
+<pre><code class="language-raku" data-lang="raku">say ['a', 'b', 42].join(' ');   # OUTPUT: «a b 42␤» 
 #   ^^^^^^^^^^^^^^ Array constructor 
-</code></pre>
-
-<p>如果构造函数被赋予单个 Iterable，它将克隆并展平它。如果你想要一个只有 1 个 Iterable 元素的数组，请确保在它之后使用逗号：</p>
-
-<pre><code class="language-raku">my @a = 1, 2;
+</code></pre><p>如果构造函数被赋予单个 Iterable，它将克隆并展平它。如果你想要一个只有 1 个 Iterable 元素的数组，请确保在它之后使用逗号：</p>
+<pre><code class="language-raku" data-lang="raku">my @a = 1, 2;
 say [@a].perl;  # OUTPUT: «[1, 2]␤» 
 say [@a,].perl; # OUTPUT: «[[1, 2],]␤» 
-</code></pre>
-
-<p>Array 构造函数不会展平其他类型的内容。使用 Slip 前缀运算符(<code>|</code>)展平所需项：</p>
-
-<pre><code class="language-raku">my @a = 1, 2;
+</code></pre><p>Array 构造函数不会展平其他类型的内容。使用 Slip 前缀运算符(<code>|</code>)展平所需项：</p>
+<pre><code class="language-raku" data-lang="raku">my @a = 1, 2;
 say [@a, 3, 4].perl;  # OUTPUT: «[[1, 2], 3, 4]␤» 
 say [|@a, 3, 4].perl; # OUTPUT: «[1, 2, 3, 4]␤» 
-</code></pre>
-
-<h4 id="hash-字面量">Hash 字面量</h4>
-
+</code></pre><h4 id="hash-字面量">Hash 字面量</h4>
 <p>一个前导的关联符号和一对括号 <code>%( )</code> 可以包围一对列表以形成一个哈希字面量; 通常在里面有一个以逗号分隔的 Pairs 列表。如果使用非 pair 对，则假定它是一个键，下一个元素是值。大多数情况下，它与简单的箭头对一起使用。</p>
-
-<pre><code class="language-raku">say %( a =&gt; 3, b =&gt; 23, :foo, :dog&lt;cat&gt;, &quot;french&quot;, &quot;fries&quot; );
+<pre><code class="language-raku" data-lang="raku">say %( a =&gt; 3, b =&gt; 23, :foo, :dog&lt;cat&gt;, &quot;french&quot;, &quot;fries&quot; );
 # OUTPUT: «a =&gt; 3, b =&gt; 23, dog =&gt; cat, foo =&gt; True, french =&gt; fries␤» 
  
 say %(a =&gt; 73, foo =&gt; &quot;fish&quot;).keys.join(&quot; &quot;);   # OUTPUT: «a foo␤» 
 #   ^^^^^^^^^^^^^^^^^^^^^^^^^ Hash constructor 
-</code></pre>
-
-<p>当赋值给左侧的 <code>%</code> sigiled 变量时，右侧 Pairs 周围的符号和括号是可选的。</p>
-
-<pre><code class="language-raku">my %ages = fred =&gt; 23, jean =&gt; 87, ann =&gt; 4;
-</code></pre>
-
-<p>默认情况下, <code>%( )</code> 中的键被强制为字符串。要使用非字符串键组合散列，请使用带有冒号前缀的花括号分隔符 <code>:{}</code>。</p>
-
-<pre><code class="language-raku">my $when = :{ (now) =&gt; &quot;Instant&quot;, (DateTime.now) =&gt; &quot;DateTime&quot; };
-</code></pre>
-
-<p>请注意，将对象作为键，您不能将非字符串键作为字符串访问：</p>
-
-<pre><code class="language-raku">say :{ -1 =&gt; 41, 0 =&gt; 42, 1 =&gt; 43 }&lt;0&gt;;  # OUTPUT: «(Any)␤» 
+</code></pre><p>当赋值给左侧的 <code>%</code> sigiled 变量时，右侧 Pairs 周围的符号和括号是可选的。</p>
+<pre><code class="language-raku" data-lang="raku">my %ages = fred =&gt; 23, jean =&gt; 87, ann =&gt; 4;
+</code></pre><p>默认情况下, <code>%( )</code> 中的键被强制为字符串。要使用非字符串键组合散列，请使用带有冒号前缀的花括号分隔符 <code>:{}</code>。</p>
+<pre><code class="language-raku" data-lang="raku">my $when = :{ (now) =&gt; &quot;Instant&quot;, (DateTime.now) =&gt; &quot;DateTime&quot; };
+</code></pre><p>请注意，将对象作为键，您不能将非字符串键作为字符串访问：</p>
+<pre><code class="language-raku" data-lang="raku">say :{ -1 =&gt; 41, 0 =&gt; 42, 1 =&gt; 43 }&lt;0&gt;;  # OUTPUT: «(Any)␤» 
 say :{ -1 =&gt; 41, 0 =&gt; 42, 1 =&gt; 43 }{0};  # OUTPUT: «42␤» 
-</code></pre>
-
-<h4 id="regex-字面量">Regex 字面量</h4>
-
+</code></pre><h4 id="regex-字面量">Regex 字面量</h4>
 <p>使用 <code>/foo/</code> 等斜杠声明正则表达式。请注意，此 <code>//</code> 语法是完整的 <code>rx//</code> 语法的简写。</p>
-
-<pre><code class="language-raku">/foo/          # Short version 
+<pre><code class="language-raku" data-lang="raku">/foo/          # Short version 
 rx/foo/        # Longer version 
 Q :regex /foo/ # Even longer version
  
 my $r = /foo/; # Regexes can be assigned to variables
-</code></pre>
-
-<h4 id="签名字面量">签名字面量</h4>
-
+</code></pre><h4 id="签名字面量">签名字面量</h4>
 <p>除了 sub 和块声明中的典型用法之外，签名可以单独用于模式匹配。从冒号开始声明独立签名：</p>
-
-<pre><code class="language-raku">say &quot;match!&quot; if 5, &quot;fish&quot; ~~ :(Int, Str); # OUTPUT: «match!␤» 
+<pre><code class="language-raku" data-lang="raku">say &quot;match!&quot; if 5, &quot;fish&quot; ~~ :(Int, Str); # OUTPUT: «match!␤» 
  
 my $sig = :(Int $a, Str);
 say &quot;match!&quot; if (5, &quot;fish&quot;) ~~ $sig; # OUTPUT: «match!␤» 
@@ -681,44 +435,28 @@ given &quot;foo&quot;, 42 {
   when :(Str, Str) { &quot;This won't match&quot; }
   when :(Str, Int $n where $n &gt; 20) { &quot;This will!&quot; }
 }
-</code></pre>
-
-<p>有关签名的更多信息，请参阅签名文档。</p>
-
+</code></pre><p>有关签名的更多信息，请参阅签名文档。</p>
 <h3 id="声明">声明</h3>
-
 <h4 id="变量声明">变量声明</h4>
-
-<pre><code class="language-raku">my $x;                          # simple lexical variable 
+<pre><code class="language-raku" data-lang="raku">my $x;                          # simple lexical variable 
 my $x = 7;                      # initialize the variable 
 my Int $x = 7;                  # declare the type 
 my Int:D $x = 7;                # specify that the value must be defined (not undef) 
 my Int $x where { $_ &gt; 3 } = 7; # constrain the value based on a function 
 my Int $x where * &gt; 3 = 7;      # same constraint, but using Whatever shorthand 
-</code></pre>
-
-<p>有关其他作用域的更多详细信息，请参阅变量声明符和作用域（<code>our</code>，<code>has</code>）。</p>
-
+</code></pre><p>有关其他作用域的更多详细信息，请参阅变量声明符和作用域（<code>our</code>，<code>has</code>）。</p>
 <h4 id="子例程声明">子例程声明</h4>
-
-<pre><code class="language-raku"># The signature is optional 
+<pre><code class="language-raku" data-lang="raku"># The signature is optional 
 sub foo { say &quot;Hello!&quot; }
  
 sub say-hello($to-whom) { say &quot;Hello $to-whom!&quot; }
-</code></pre>
-
-<p>您还可以将子例程赋值给变量。</p>
-
-<pre><code class="language-raku">my &amp;f = sub { say &quot;Hello!&quot; } # Un-named sub 
+</code></pre><p>您还可以将子例程赋值给变量。</p>
+<pre><code class="language-raku" data-lang="raku">my &amp;f = sub { say &quot;Hello!&quot; } # Un-named sub 
 my &amp;f = -&gt; { say &quot;Hello!&quot; }  # Lambda style syntax. The &amp; sigil indicates the variable holds a function 
 my $f = -&gt; { say &quot;Hello!&quot; }  # Functions can also be put into scalars 
-</code></pre>
-
-<h4 id="包-模块-类-角色-和-grammar-声明">包, 模块, 类, 角色 和 Grammar 声明</h4>
-
+</code></pre><h4 id="包-模块-类-角色-和-grammar-声明">包, 模块, 类, 角色 和 Grammar 声明</h4>
 <p>有几种类型的包，每种类型都使用关键字，名称，一些可选特征以及子例程，方法或规则体声明。</p>
-
-<pre><code class="language-raku">package P { }
+<pre><code class="language-raku" data-lang="raku">package P { }
  
 module M { }
  
@@ -727,112 +465,65 @@ class C { }
 role R { }
  
 grammar G { }
-</code></pre>
-
-<p>可以在单个文件中声明多个包。但是，您可以在文件的开头声明一个单元包（仅在注释或 <code>use</code> 语句之前），并且该文件的其余部分将被视为包的主体。在这种情况下，不需要花括号。</p>
-
-<pre><code class="language-raku">unit module M;
+</code></pre><p>可以在单个文件中声明多个包。但是，您可以在文件的开头声明一个单元包（仅在注释或 <code>use</code> 语句之前），并且该文件的其余部分将被视为包的主体。在这种情况下，不需要花括号。</p>
+<pre><code class="language-raku" data-lang="raku">unit module M;
 # ... stuff goes here instead of in {}'s 
-</code></pre>
-
-<h4 id="多重分派的声明">多重分派的声明</h4>
-
+</code></pre><h4 id="多重分派的声明">多重分派的声明</h4>
 <p>另请参见多重分派。</p>
-
 <p>可以使用多个签名声明同名子例程。</p>
-
-<pre><code class="language-raku">multi sub foo() { say &quot;Hello!&quot; }
+<pre><code class="language-raku" data-lang="raku">multi sub foo() { say &quot;Hello!&quot; }
 multi sub foo($name) { say &quot;Hello $name!&quot; }
-</code></pre>
-
-<p>在类里面, 你还可以声明多重分派方法。</p>
-
-<pre><code class="language-raku">multi method greet { }
+</code></pre><p>在类里面, 你还可以声明多重分派方法。</p>
+<pre><code class="language-raku" data-lang="raku">multi method greet { }
 multi method greet(Str $name) { }
-</code></pre>
-
-<h3 id="子例程调用">子例程调用</h3>
-
+</code></pre><h3 id="子例程调用">子例程调用</h3>
 <p>子程序使用关键字 <code>sub</code> 创建，后跟可选名称，可选签名和代码块。子例程是词法作用域的，因此如果在声明时指定了名称，则可以在词法作用域中使用相同的名称来调用子例程。子例程是 <code>Sub</code> 类型的实例，可以赋值给任何容器。</p>
-
-<pre><code class="language-raku">foo;   # Invoke the function foo with no arguments 
+<pre><code class="language-raku" data-lang="raku">foo;   # Invoke the function foo with no arguments 
 foo(); # Invoke the function foo with no arguments 
 &amp;f();  # Invoke &amp;f, which contains a function 
 &amp;f.(); # Same as above, needed to make the following work 
 my @functions = ({say 1}, {say 2}, {say 3});
 @functions&gt;&gt;.(); # hyper method call operator 
-</code></pre>
-
-<p>当在类中声明时，子例程被命名为“方法”：方法是针对对象（即，类实例）调用的子例程。在方法中，特殊变量 <code>self</code> 包含对象实例（请参阅方法）。</p>
-
-<pre><code class="language-raku"># Method invocation. Object (instance) is $person, method is set-name-age 
+</code></pre><p>当在类中声明时，子例程被命名为“方法”：方法是针对对象（即，类实例）调用的子例程。在方法中，特殊变量 <code>self</code> 包含对象实例（请参阅方法）。</p>
+<pre><code class="language-raku" data-lang="raku"># Method invocation. Object (instance) is $person, method is set-name-age 
 $person.set-name-age('jane', 98);   # Most common way 
 $person.set-name-age: 'jane', 98;   # Precedence drop 
 set-name-age($person: 'jane', 98);  # Invocant marker 
 set-name-age $person: 'jane', 98;   # Indirect invocation 
-</code></pre>
-
-<p>有关更多信息，请参阅函数。</p>
-
+</code></pre><p>有关更多信息，请参阅函数。</p>
 <h4 id="优先级下降">优先级下降</h4>
-
 <p>在方法调用的情况下（即，在针对类实例调用子例程时），可以应用由冒号标识的优先级下降：在方法名称之后和参数列表之前。参数列表优先于方法调用，另一方面“降低”其优先级。为了更好地理解，请考虑以下简单示例（仅添加额外空格以对齐方法调用）：</p>
-
-<pre><code class="language-raku">my $band = 'Foo Fighters';
+<pre><code class="language-raku" data-lang="raku">my $band = 'Foo Fighters';
 say $band.substr( 0, 3 ) .substr( 0, 1 ); # F 
 say $band.substr: 0, 3   .substr( 0, 1 ); # Foo 
-</code></pre>
-
-<p>在第二种方法调用中，最右边的 <code>substr</code> 应用于“3”，而不是最左边的 substr 的结果，另一方面，它产生优先级最右边的 substr。</p>
-
+</code></pre><p>在第二种方法调用中，最右边的 <code>substr</code> 应用于“3”，而不是最左边的 substr 的结果，另一方面，它产生优先级最右边的 substr。</p>
 <h3 id="运算符">运算符</h3>
-
 <p>有关详细信息，请参阅运算符。</p>
-
 <p>运算符是具有更多符号重和可组合语法的函数。与其他函数一样，运算符可以进行多重分派以允许特定于上下文的使用。</p>
-
 <p>运算符有五种类型（排列），每种类型都有一个或两个参数。</p>
-
-<pre><code class="language-raku">++$x           # prefix, operator comes before single input 
+<pre><code class="language-raku" data-lang="raku">++$x           # prefix, operator comes before single input 
 5 + 3          # infix, operator is between two inputs 
 $x++           # postfix, operator is after single input 
 &lt;the blue sky&gt; # circumfix, operator surrounds single input 
 %foo&lt;bar&gt;      # postcircumfix, operator comes after first input and surrounds second 
-</code></pre>
-
-<h4 id="元运算符">元运算符</h4>
-
+</code></pre><h4 id="元运算符">元运算符</h4>
 <p>运算符可以组合。一个常见的例子是将中缀（二元）运算符与赋值相结合。您可以将赋值与任何二元运算符组合。</p>
-
-<pre><code class="language-raku">$x += 5     # Adds 5 to $x, same as $x = $x + 5 
+<pre><code class="language-raku" data-lang="raku">$x += 5     # Adds 5 to $x, same as $x = $x + 5 
 $x min= 3   # Sets $x to the smaller of $x and 3, same as $x = $x min 3 
 $x .= child # Equivalent to $x = $x.child 
-</code></pre>
-
-<p>在 <code>[ ]</code> 中包装中缀运算符以创建一个新的化简运算符，该运算符在单个输入列表上工作，从而产生单个值。</p>
-
-<pre><code class="language-raku">say [+] &lt;1 2 3 4 5&gt;;    # OUTPUT: «15␤» 
+</code></pre><p>在 <code>[ ]</code> 中包装中缀运算符以创建一个新的化简运算符，该运算符在单个输入列表上工作，从而产生单个值。</p>
+<pre><code class="language-raku" data-lang="raku">say [+] &lt;1 2 3 4 5&gt;;    # OUTPUT: «15␤» 
 (((1 + 2) + 3) + 4) + 5 # equivalent expanded version 
-</code></pre>
-
-<p>用 <code>« »</code>（或等效的 ASCII）包装一个中缀运算符，以创建一个在两个列表上成对工作的新超运算符。</p>
-
-<pre><code class="language-raku">say &lt;1 2 3&gt; «+» &lt;4 5 6&gt; # OUTPUT: «(5 7 9)␤» 
-</code></pre>
-
-<p>箭头的方向表示当列表的大小不同时该怎么做。</p>
-
-<pre><code class="language-raku">@a «+« @b # Result is the size of @b, elements from @a will be re-used 
+</code></pre><p>用 <code>« »</code>（或等效的 ASCII）包装一个中缀运算符，以创建一个在两个列表上成对工作的新超运算符。</p>
+<pre><code class="language-raku" data-lang="raku">say &lt;1 2 3&gt; «+» &lt;4 5 6&gt; # OUTPUT: «(5 7 9)␤» 
+</code></pre><p>箭头的方向表示当列表的大小不同时该怎么做。</p>
+<pre><code class="language-raku" data-lang="raku">@a «+« @b # Result is the size of @b, elements from @a will be re-used 
 @a »+» @b # Result is the size of @a, elements from @b will be re-used 
 @a «+» @b # Result is the size of the biggest input, the smaller one is re-used 
 @a »+« @b # Exception if @a and @b are different sizes 
+</code></pre><p>您还可以使用超运算符包装一元运算符。</p>
+<pre><code class="language-raku" data-lang="raku">say -« &lt;1 2 3&gt; # OUTPUT: «(-1 -2 -3)␤» 
 </code></pre>
-
-<p>您还可以使用超运算符包装一元运算符。</p>
-
-<pre><code class="language-raku">say -« &lt;1 2 3&gt; # OUTPUT: «(-1 -2 -3)␤» 
-</code></pre>
-
   </article>
 </section>
 

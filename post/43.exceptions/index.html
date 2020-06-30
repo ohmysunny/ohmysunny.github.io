@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,56 +81,34 @@
       <h1>异常</h1>
     </header>
 
-    
-
-<p>Raku 中的异常是保存有关错误信息的对象。例如，错误可能是意外接收数据或网络连接不再可用，或者丢失文件。异常对象存储的信息是关于错误条件的人类可读消息，错误引发的回溯等等。</p>
-
+    <p>Raku 中的异常是保存有关错误信息的对象。例如，错误可能是意外接收数据或网络连接不再可用，或者丢失文件。异常对象存储的信息是关于错误条件的人类可读消息，错误引发的回溯等等。</p>
 <p>所有内置异常都继承自 <a href="https://docs.raku.org/type/Exception">Exception</a>，它提供了一些基本行为，包括回溯的存储和回溯打印机的接口。</p>
-
 <h2 id="热异常">热异常</h2>
-
 <p>通过调用带有描述错误的 <a href="https://docs.raku.org/routine/die">die</a> 函数来使用热异常：</p>
-
-<pre><code class="language-raku">die &quot;oops, something went wrong&quot;;
+<pre><code class="language-raku" data-lang="raku">die &quot;oops, something went wrong&quot;;
 # RESULT: «oops, something went wrong in block &lt;unit&gt; at my-script.p6:1␤» 
-</code></pre>
-
-<p>值得注意的是，<code>die</code> 会将错误消息打印到标准错误 <code>$*ERR</code>。</p>
-
+</code></pre><p>值得注意的是，<code>die</code> 会将错误消息打印到标准错误 <code>$*ERR</code>。</p>
 <h2 id="类型化的异常">类型化的异常</h2>
-
 <p>类型化异常提供有关异常对象中存储的错误的更多信息。</p>
-
 <p>例如，如果在对象上执行 <code>.zombie copy</code> 时，所需的路径 <code>foo/bar</code> 变得不可用，则可以引发 <a href="https://docs.raku.org/type/X::IO::DoesNotExist">X::IO::DoesNotExist</a>异常：</p>
-
-<pre><code class="language-raku">die X::IO::DoesNotExist.new(:path(&quot;foo/bar&quot;), :trying(&quot;zombie copy&quot;))
+<pre><code class="language-raku" data-lang="raku">die X::IO::DoesNotExist.new(:path(&quot;foo/bar&quot;), :trying(&quot;zombie copy&quot;))
  
 # RESULT: «Failed to find 'foo/bar' while trying to do '.zombie copy' 
 #          in block &lt;unit&gt; at my-script.p6:1» 
-</code></pre>
-
-<p>请注意对象如何为回溯提供有关出错的信息。代码的用户现在可以更轻松地找到并纠正问题。</p>
-
+</code></pre><p>请注意对象如何为回溯提供有关出错的信息。代码的用户现在可以更轻松地找到并纠正问题。</p>
 <h2 id="捕获异常">捕获异常</h2>
-
 <p>通过提供 <code>CATCH</code> 块可以处理异常情况：</p>
-
-<pre><code class="language-raku">die X::IO::DoesNotExist.new(:path(&quot;foo/bar&quot;), :trying(&quot;zombie copy&quot;));
+<pre><code class="language-raku" data-lang="raku">die X::IO::DoesNotExist.new(:path(&quot;foo/bar&quot;), :trying(&quot;zombie copy&quot;));
  
 CATCH {
     when X::IO { $*ERR.say: &quot;some kind of IO exception was caught!&quot; }
 }
  
 # OUTPUT: «some kind of IO exception was caught!» 
-</code></pre>
-
-<p>在这里，我们说如果发生 <code>X::IO</code> 类型的任何异常，那么消息 <code>some kind of IO exception was caught!</code> 会被发送到 *stderr*，这是 <code>$*ERR.say</code> 所做的事情，在那一刻构成标准错误设备的任何内容上显示，默认情况下可能是控制台。</p>
-
+</code></pre><p>在这里，我们说如果发生 <code>X::IO</code> 类型的任何异常，那么消息 <code>some kind of IO exception was caught!</code> 会被发送到 <em>stderr</em>，这是 <code>$*ERR.say</code> 所做的事情，在那一刻构成标准错误设备的任何内容上显示，默认情况下可能是控制台。</p>
 <p><code>CATCH</code> 块使用类似于 <code>given/when</code> 对选项进行智能匹配的智能匹配，因此可以捕获和处理 <code>when</code> 块内的各种类别的异常。</p>
-
 <p>要处理所有异常，请使用 <code>default</code> 语句。此示例打印出与普通回溯打印机几乎相同的信息。</p>
-
-<pre><code class="language-raku">CATCH {
+<pre><code class="language-raku" data-lang="raku">CATCH {
      default {
          $*ERR.say: .message;
          for .backtrace.reverse {
@@ -140,17 +118,11 @@ CATCH {
          }
      }
 }
-</code></pre>
-
-<p>请注意，匹配目标是一个角色。要允许用户定义的异常以相同的方式匹配，它们必须实现给定的角色。仅存在于同一名称空间中看起来相似但在 <code>CATCH</code> 块中不匹配。</p>
-
+</code></pre><p>请注意，匹配目标是一个角色。要允许用户定义的异常以相同的方式匹配，它们必须实现给定的角色。仅存在于同一名称空间中看起来相似但在 <code>CATCH</code> 块中不匹配。</p>
 <h2 id="异常处理程序和闭合块">异常处理程序和闭合块</h2>
-
 <p>在 <code>CATCH</code> 处理异常之后，退出包围 <code>CATCH</code> 块的块。</p>
-
 <p>换句话说，即使成功处理异常，封闭块中的其余代码也永远不会被执行。</p>
-
-<pre><code class="language-raku">die &quot;something went wrong ...&quot;;
+<pre><code class="language-raku" data-lang="raku">die &quot;something went wrong ...&quot;;
  
 CATCH {
     # will definitely catch all the exception 
@@ -160,11 +132,8 @@ CATCH {
 say &quot;This won't be said.&quot;;   # but this line will be never reached since 
                              # the enclosing block will be exited immediately 
 # OUTPUT: «something went wrong ...␤» 
-</code></pre>
-
-<p>和这个作对比：</p>
-
-<pre><code class="language-raku">CATCH {
+</code></pre><p>和这个作对比：</p>
+<pre><code class="language-raku" data-lang="raku">CATCH {
  
   CATCH {
       default { .Str.say; }
@@ -175,36 +144,24 @@ say &quot;This won't be said.&quot;;   # but this line will be never reached sin
 }
  
 say &quot;Hi! I am at the outer block!&quot;; # OUTPUT: «Hi! I am at the outer block!␤» 
-</code></pre>
-
-<p>有关如何将控制权返回到发生异常的位置，请参阅<a href="https://docs.raku.org/language/exceptions#Resuming_of_exceptions">恢复异常</a>。</p>
-
+</code></pre><p>有关如何将控制权返回到发生异常的位置，请参阅<a href="https://docs.raku.org/language/exceptions#Resuming_of_exceptions">恢复异常</a>。</p>
 <h2 id="try-块">try 块</h2>
-
 <p><code>try</code> 块是一个普通块，它隐式打开 <a href="https://docs.raku.org/language/pragmas#index-entry-fatal-fatal">use fatal pragma</a> 编译指示，并包含一个隐式 <code>CATCH</code> 块，它会删除异常，这意味着您可以使用它来包含它们。 捕获的异常存储在$中！ 变量，它包含 <code>Exception</code> 类型的值。</p>
-
 <p>像这样的普通块将会失败：</p>
-
-<pre><code class="language-raku">{
+<pre><code class="language-raku" data-lang="raku">{
     my $x = +&quot;a&quot;;
     say $x.^name;
 } # OUTPUT: «Failure␤» 
-</code></pre>
-
-<p>但是，<code>try</code> 块将包含异常并将其放入 <code>$!</code> 变量：</p>
-
-<pre><code class="language-raku">try {
+</code></pre><p>但是，<code>try</code> 块将包含异常并将其放入 <code>$!</code> 变量：</p>
+<pre><code class="language-raku" data-lang="raku">try {
     my $x = +&quot;a&quot;;
     say $x.^name;
 }
  
 if $! { say &quot;Something failed!&quot; } # OUTPUT: «Something failed!␤» 
 say $!.^name;                     # OUTPUT: «X::Str::Numeric␤» 
-</code></pre>
-
-<p>在这样的块中抛出的任何异常都将被 <code>CATCH</code> 块捕获，无论是隐式的还是由用户提供的。在后一种情况下，任何未处理的异常都将被重新抛出。如果您选择不处理异常，则它们将被块包含。</p>
-
-<pre><code class="language-raku">try {
+</code></pre><p>在这样的块中抛出的任何异常都将被 <code>CATCH</code> 块捕获，无论是隐式的还是由用户提供的。在后一种情况下，任何未处理的异常都将被重新抛出。如果您选择不处理异常，则它们将被块包含。</p>
+<pre><code class="language-raku" data-lang="raku">try {
     die &quot;Tough luck&quot;;
     say &quot;Not gonna happen&quot;;
 }
@@ -212,11 +169,8 @@ say $!.^name;                     # OUTPUT: «X::Str::Numeric␤»
 try {
     fail &quot;FUBAR&quot;;
 }
-</code></pre>
-
-<p>在上面的两个 <code>try</code> 块中，异常将包含在块中，但不会运行 <code>say</code> 语句。但我们可以处理它们：</p>
-
-<pre><code class="language-raku">class E is Exception { method message() { &quot;Just stop already!&quot; } }
+</code></pre><p>在上面的两个 <code>try</code> 块中，异常将包含在块中，但不会运行 <code>say</code> 语句。但我们可以处理它们：</p>
+<pre><code class="language-raku" data-lang="raku">class E is Exception { method message() { &quot;Just stop already!&quot; } }
  
 try {
     E.new.throw; # this will be local 
@@ -239,44 +193,28 @@ try {
  
     say &quot;No, you don't!&quot;;
 }
-</code></pre>
-
-<p>这会输出：</p>
-
+</code></pre><p>这会输出：</p>
 <pre><code>I'm alive!
 No, I expect you to DIE Mr. Bond!
 I'm immortal.
 Just stop already!
   in block &lt;unit&gt; at exception.p6 line 21
-</code></pre>
-
-<p>由于 <code>CATCH</code> 块只处理 <code>die</code> 语句抛出的 <code>X::AdHoc</code> 异常，而不处理 <code>E</code> 异常。 如果没有 <code>CATCH</code> 块，所有异常都将被包含和删除，如上所示。 恢复将在异常抛出后立即恢复执行; 在这种情况下，在 <code>die</code> 语句中。 有关详细信息，请参阅有关<a href="https://docs.raku.org/language/exceptions#Resuming_of_exceptions">恢复异常</a>的部分。</p>
-
+</code></pre><p>由于 <code>CATCH</code> 块只处理 <code>die</code> 语句抛出的 <code>X::AdHoc</code> 异常，而不处理 <code>E</code> 异常。 如果没有 <code>CATCH</code> 块，所有异常都将被包含和删除，如上所示。 恢复将在异常抛出后立即恢复执行; 在这种情况下，在 <code>die</code> 语句中。 有关详细信息，请参阅有关<a href="https://docs.raku.org/language/exceptions#Resuming_of_exceptions">恢复异常</a>的部分。</p>
 <p><code>try-block</code> 是一个普通的块，因此将其最后一个语句视为自身的返回值。 因此，我们可以将其用作右手边。</p>
-
-<pre><code class="language-raku">say try { +&quot;99999&quot; } // &quot;oh no&quot;; # OUTPUT: «99999␤» 
+<pre><code class="language-raku" data-lang="raku">say try { +&quot;99999&quot; } // &quot;oh no&quot;; # OUTPUT: «99999␤» 
 say try { +&quot;hello&quot; } // &quot;oh no&quot;; # OUTPUT: «oh no␤» 
-</code></pre>
-
-<p>通过返回表达式的返回值来间接尝试块支持 <code>else</code> 块，如果抛出异常，则返回 <a href="https://docs.raku.org/type/Nil">Nil</a>。</p>
-
-<pre><code class="language-raku">with try +&quot;♥&quot; {
+</code></pre><p>通过返回表达式的返回值来间接尝试块支持 <code>else</code> 块，如果抛出异常，则返回 <a href="https://docs.raku.org/type/Nil">Nil</a>。</p>
+<pre><code class="language-raku" data-lang="raku">with try +&quot;♥&quot; {
     say &quot;this is my number: $_&quot;
 } else {
     say &quot;not my number!&quot;
 }
 # OUTPUT: «not my number!␤» 
-</code></pre>
-
-<p><code>try</code> 也可以和语句一块用而非块：</p>
-
-<pre><code class="language-raku">say try &quot;some-filename.txt&quot;.IO.slurp // &quot;sane default&quot;;
+</code></pre><p><code>try</code> 也可以和语句一块用而非块：</p>
+<pre><code class="language-raku" data-lang="raku">say try &quot;some-filename.txt&quot;.IO.slurp // &quot;sane default&quot;;
 # OUTPUT: «sane default␤» 
-</code></pre>
-
-<p><code>try</code> 实际导致的是，通过 <code>use fatal pragma</code>，立即抛出在其范围内发生的异常，但通过这样做，从抛出异常的点调用 <code>CATCH</code> 块，定义其范围。</p>
-
-<pre><code class="language-raku">my $error-code = &quot;333&quot;;
+</code></pre><p><code>try</code> 实际导致的是，通过 <code>use fatal pragma</code>，立即抛出在其范围内发生的异常，但通过这样做，从抛出异常的点调用 <code>CATCH</code> 块，定义其范围。</p>
+<pre><code class="language-raku" data-lang="raku">my $error-code = &quot;333&quot;;
 sub bad-sub {
     die &quot;Something bad happened&quot;;
 }
@@ -291,15 +229,10 @@ try {
     }
 }
 # OUTPUT: «Error 111 X::AdHoc: Something bad happened␤» 
-</code></pre>
-
-<h2 id="抛出异常">抛出异常</h2>
-
+</code></pre><h2 id="抛出异常">抛出异常</h2>
 <p>可以使用Exception对象的 <code>.throw</code> 方法显式抛出异常。</p>
-
 <p>此示例抛出 AdHoc 异常，捕获它并允许代码通过调用 <code>.resume</code> 方法从异常点继续。</p>
-
-<pre><code class="language-raku">{
+<pre><code class="language-raku" data-lang="raku">{
     X::AdHoc.new(:payload&lt;foo&gt;).throw;
     &quot;OHAI&quot;.say;
     CATCH {
@@ -310,11 +243,8 @@ try {
 &quot;OBAI&quot;.say;
  
 # OUTPUT: «OHAI␤OBAI␤» 
-</code></pre>
-
-<p>如果 CATCH 块与抛出的异常不匹配，则将异常的有效负载传递给回溯打印机制。</p>
-
-<pre><code class="language-raku">{
+</code></pre><p>如果 CATCH 块与抛出的异常不匹配，则将异常的有效负载传递给回溯打印机制。</p>
+<pre><code class="language-raku" data-lang="raku">{
     X::AdHoc.new(:payload&lt;foo&gt;).throw;
     &quot;OHAI&quot;.say;
     CATCH {  }
@@ -324,11 +254,8 @@ try {
  
 # RESULT: «foo 
 #          in block &lt;unit&gt; at my-script.p6:1» 
-</code></pre>
-
-<p>下一个示例不会从异常点恢复。相反，它会在封闭块之后继续，因为捕获了异常，然后在 CATC H块之后控制继续。</p>
-
-<pre><code class="language-raku">{
+</code></pre><p>下一个示例不会从异常点恢复。相反，它会在封闭块之后继续，因为捕获了异常，然后在 CATC H块之后控制继续。</p>
+<pre><code class="language-raku" data-lang="raku">{
     X::AdHoc.new(:payload&lt;foo&gt;).throw;
     &quot;OHAI&quot;.say;
     CATCH {
@@ -339,24 +266,16 @@ try {
 &quot;OBAI&quot;.say;
  
 # OUTPUT: «OBAI␤» 
-</code></pre>
-
-<p>throw 可以被视为 die 的方法形式，只是在这种特殊情况下，例程的 sub 和 method 形式有不同的名称。</p>
-
+</code></pre><p>throw 可以被视为 die 的方法形式，只是在这种特殊情况下，例程的 sub 和 method 形式有不同的名称。</p>
 <h2 id="异常恢复">异常恢复</h2>
-
 <p>异常会中断控制流并将其从抛出语句后的语句中转移出去。可以恢复用户处理的任何异常，并且控制流将继续使用抛出异常的语句之后的语句。为此，请在异常对象上调用方法 <code>.resume</code>。</p>
-
-<pre><code class="language-raku">CATCH { when X::AdHoc { .resume } }         # this is step 2 
+<pre><code class="language-raku" data-lang="raku">CATCH { when X::AdHoc { .resume } }         # this is step 2 
  
 die &quot;We leave control after this.&quot;;         # this is step 1 
  
 say &quot;We have continued with control flow.&quot;; # this is step 3 
-</code></pre>
-
-<p>恢复将在导致异常的语句之后和最里面的调用帧中发生</p>
-
-<pre><code class="language-raku">sub bad-sub {
+</code></pre><p>恢复将在导致异常的语句之后和最里面的调用帧中发生</p>
+<pre><code class="language-raku" data-lang="raku">sub bad-sub {
     die &quot;Something bad happened&quot;;
     return &quot;not returning&quot;;
 }
@@ -376,15 +295,10 @@ say &quot;We have continued with control flow.&quot;; # this is step 3
 # OUTPUT: 
 # Error X::AdHoc: Something bad happened 
 # Returned not returning 
-</code></pre>
-
-<p>在这种情况下，<code>.resume</code> 将转到在 <code>die</code> 语句之后发生的 <code>return</code> 语句。请注意，<code>$return</code> 的赋值不起作用，因为 CATCH 语句发生在对 <code>bad-sub</code> 的调用中，<code>bad-sub</code> 通过 <code>return</code> 语句为其分配不返回的值。</p>
-
+</code></pre><p>在这种情况下，<code>.resume</code> 将转到在 <code>die</code> 语句之后发生的 <code>return</code> 语句。请注意，<code>$return</code> 的赋值不起作用，因为 CATCH 语句发生在对 <code>bad-sub</code> 的调用中，<code>bad-sub</code> 通过 <code>return</code> 语句为其分配不返回的值。</p>
 <h2 id="未捕获的异常">未捕获的异常</h2>
-
 <p>如果抛出异常但未捕获异常，则会导致程序以非零状态代码退出，并且通常会将消息输出到程序的标准错误流。通过在异常对象上调用 <code>gist</code> 方法获得此消息。您可以使用它来抑制打印回溯的默认行为以及消息：</p>
-
-<pre><code class="language-raku">class X::WithoutLineNumber is X::AdHoc {
+<pre><code class="language-raku" data-lang="raku">class X::WithoutLineNumber is X::AdHoc {
     multi method gist(X::WithoutLineNumber:D:) {
             $.payload
     }
@@ -392,18 +306,13 @@ say &quot;We have continued with control flow.&quot;; # this is step 3
 die X::WithoutLineNumber.new(payload =&gt; &quot;message&quot;)
  
 # prints &quot;message\n&quot; to $*ERR and exits, no backtrace 
-</code></pre>
-
-<h2 id="控制异常">控制异常</h2>
-
+</code></pre><h2 id="控制异常">控制异常</h2>
 <p>某些关键字会引发控制异常，并自动或由相应的 phaser 处理。任何未处理的控制异常都将转换为正常异常。</p>
-
-<pre><code class="language-raku">{ return; CATCH { default { $*ERR.say: .^name, ': ',.Str } } }
+<pre><code class="language-raku" data-lang="raku">{ return; CATCH { default { $*ERR.say: .^name, ': ',.Str } } }
  
 # OUTPUT: «X::ControlFlow::Return: Attempt to return outside of any Routine␤» 
 # was CX::Return 
 </code></pre>
-
   </article>
 </section>
 

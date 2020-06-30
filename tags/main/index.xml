@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Main on Rakudo Star</title>
+    <title>MAIN on Rakudo Star</title>
     <link>https://ohmysunny.github.io/tags/main/</link>
-    <description>Recent content in Main on Rakudo Star</description>
+    <description>Recent content in MAIN on Rakudo Star</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 03 Oct 2018 21:33:03 +0800</lastBuildDate>
@@ -20,8 +20,8 @@
       <description>Sub MAIN 在 Raku 中，命令行参数的解析是通过 MAIN 子例程完成的，MAIN 子例程是一种特殊的子例程，它根据 MAIN 子例程的签名解析命令行参数。与其他子例程一样，MAIN 子例程可以具有命名参数和位置参数、可选(和必需)参数、多重分派等等。
 有了 MAIN 子例程的定义，USAGE 子例程将由编译器自动生成。可以修改此子例程以返回定制的使用消息。所有命令行参数也可以在特殊变量 @*ARGS 中使用，它可以在 MAIN 处理之前发生转变。
 命名参数和位置参数 命名参数 让我们从一个简单的程序开始(保存为 prog.p6):
-use v6; sub MAIN( Str :$name = &#39;John&#39;, Str :$last-name = &#39;Doe&#39;, ) { my $formatted-name = &amp;quot;$name.tc() $last-name.tc()&amp;quot;; say $formatted-name; }  在这个 MAIN 子句中，我们通过前置 : 到子例程签名中的每个变量上，创建了两个带有类型约束(Str)的命名参数，$name 和 $last-name。这些参数也有默认值，这是通过给参数赋值来实现的。在本例中，我们将 $name 设置为默认值 “John”，将 $last-name 设置为 “Doe”。如果执行 prog.p6 时命令行参数与 MAIN 签名匹配，则会打印出一个格式化的全名:
-$ raku prog.p6 John Doe $ raku prog.</description>
+use v6; sub MAIN( Str :$name = &#39;John&#39;, Str :$last-name = &#39;Doe&#39;, ) { my $formatted-name = &amp;quot;$name.tc() $last-name.tc()&amp;quot;; say $formatted-name; } 在这个 MAIN 子句中，我们通过前置 : 到子例程签名中的每个变量上，创建了两个带有类型约束(Str)的命名参数，$name 和 $last-name。这些参数也有默认值，这是通过给参数赋值来实现的。在本例中，我们将 $name 设置为默认值 “John”，将 $last-name 设置为 “Doe”。如果执行 prog.p6 时命令行参数与 MAIN 签名匹配，则会打印出一个格式化的全名:
+$ raku prog.p6 John Doe $ raku prog.p6 --name=&#39;carl&#39; --last-name=&#39;sagan&#39; Carl Sagan $ raku prog.</description>
     </item>
     
   </channel>

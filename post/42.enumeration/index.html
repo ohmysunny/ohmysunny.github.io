@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -82,12 +82,9 @@
     </header>
 
     <p>在 Raku 中，枚举(<code>enum</code>)类型比其他语言复杂得多，详细信息可在<a href="https://docs.raku.org/language/typesystem#enum">此处</a>的类型描述中找到。</p>
-
 <p>这个简短的文档将给出一个简单的使用示例，就像在 C 语言中一样。</p>
-
 <p>假设我们有一个需要写入各种目录的程序; 我们想要一个函数，给定一个目录名，测试它（1）是否存在（2）它是否可以被该程序的用户写入; 这意味着从用户的角度来看有三种可能的状态：要么你可以写（<code>CanWrite</code>），要么没有目录（<code>NoDir</code>）或者目录存在，但你不能写（<code>NoWrite</code>）。 测试结果将决定程序接下来要采取的操作。</p>
-
-<pre><code class="language-raku">enum DirStat &lt;CanWrite NoDir NoWrite&gt;;
+<pre><code class="language-raku" data-lang="raku">enum DirStat &lt;CanWrite NoDir NoWrite&gt;;
 sub check-dir-status($dir --&gt; DirStat) {
     if $dir.IO.d {
         # dir exists, can the program user write to it? 
@@ -123,7 +120,6 @@ for $dirs -&gt; $dir {
 #   status of dir '/': NoWrite 
 #   status of dir '~/tmp': NoDir 
 </code></pre>
-
   </article>
 </section>
 

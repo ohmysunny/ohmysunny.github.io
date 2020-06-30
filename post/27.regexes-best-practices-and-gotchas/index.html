@@ -35,7 +35,7 @@
 
     
 
-    <meta name="generator" content="Hugo 0.53" />
+    <meta name="generator" content="Hugo 0.63.2" />
   </head>
 
   <body class="">
@@ -81,22 +81,13 @@
       <h1>正则表达式最佳实践</h1>
     </header>
 
-    
-
-<p>为了提供强大的正则表达式和 grammar，这里有一些代码布局和可读性的最佳实践，实际匹配的内容，以及避免常见的陷阱。</p>
-
+    <p>为了提供强大的正则表达式和 grammar，这里有一些代码布局和可读性的最佳实践，实际匹配的内容，以及避免常见的陷阱。</p>
 <h2 id="代码布局">代码布局</h2>
-
 <p>如果没有 <code>:sigspace</code> 副词，在 Raku 正则表达式中空格并不重要。 使用它自己的优势，并插入空格，增加可读性。 此外，必要时插入注释。</p>
-
 <p>比较非常紧凑的写法</p>
-
-<pre><code class="language-raku">my regex float { &lt;[+-]&gt;?\d*'.'\d+[e&lt;[+-]&gt;?\d+]? }
-</code></pre>
-
-<p>和这种可读性更好的写法：</p>
-
-<pre><code class="language-raku">my regex float {
+<pre><code class="language-raku" data-lang="raku">my regex float { &lt;[+-]&gt;?\d*'.'\d+[e&lt;[+-]&gt;?\d+]? }
+</code></pre><p>和这种可读性更好的写法：</p>
+<pre><code class="language-raku" data-lang="raku">my regex float {
      &lt;[+-]&gt;?        # optional sign 
      \d*            # leading digits, optional 
      '.'
@@ -105,13 +96,9 @@
         e &lt;[+-]&gt;?  \d+
      ]?
 }
-</code></pre>
-
-<p>根据经验， 在原子周围和组的内部使用空白; 将量词直接放在原子之后; 并垂直对齐开口和闭合关方括号和括号。</p>
-
+</code></pre><p>根据经验， 在原子周围和组的内部使用空白; 将量词直接放在原子之后; 并垂直对齐开口和闭合关方括号和括号。</p>
 <p>在括号或方括号内使用替换列表时，请对齐竖线：</p>
-
-<pre><code class="language-raku">my regex example {
+<pre><code class="language-raku" data-lang="raku">my regex example {
     &lt;preamble&gt;
     [
     || &lt;choice_1&gt;
@@ -120,17 +107,11 @@
     ]+
     &lt;postamble&gt;
 }
-</code></pre>
-
-<h2 id="保持短小">保持短小</h2>
-
+</code></pre><h2 id="保持短小">保持短小</h2>
 <p>正则代码通常比常规代码更紧凑。 因为他们用这么少的字符就做得那么多，所以保持了正则表达式的简短。</p>
-
 <p>当你可以给正则表达式的一部分命名时，通常最好将它放入一个单独的，命名的正则表达式中。</p>
-
 <p>例如，您可以以前面获取浮点正则表达式为例：</p>
-
-<pre><code class="language-raku">my regex float {
+<pre><code class="language-raku" data-lang="raku">my regex float {
      &lt;[+-]&gt;?        # optional sign 
      \d*            # leading digits, optional 
      '.'
@@ -139,11 +120,8 @@
         e &lt;[+-]&gt;?  \d+
      ]?
 }
-</code></pre>
-
-<p>并将其分解为部件：</p>
-
-<pre><code class="language-raku">my token sign { &lt;[+-]&gt; }
+</code></pre><p>并将其分解为部件：</p>
+<pre><code class="language-raku" data-lang="raku">my token sign { &lt;[+-]&gt; }
 my token decimal { \d+ }
 my token exponent { 'e' &lt;sign&gt;? &lt;decimal&gt; }
 my regex float {
@@ -153,75 +131,40 @@ my regex float {
     &lt;decimal&gt;
     &lt;exponent&gt;?
 }
-</code></pre>
-
-<p>这有助于，特别是当正则表达式变得更加复杂时。 例如，您可能希望在存在指数的情况下使小数点可选。</p>
-
-<pre><code class="language-raku">my regex float {
+</code></pre><p>这有助于，特别是当正则表达式变得更加复杂时。 例如，您可能希望在存在指数的情况下使小数点可选。</p>
+<pre><code class="language-raku" data-lang="raku">my regex float {
     &lt;sign&gt;?
     [
     || &lt;decimal&gt;?  '.' &lt;decimal&gt; &lt;exponent&gt;?
     || &lt;decimal&gt; &lt;exponent&gt;
     ]
 }
-</code></pre>
-
-<h2 id="要匹配什么">要匹配什么</h2>
-
+</code></pre><h2 id="要匹配什么">要匹配什么</h2>
 <p>输入数据格式通常没有明确的规范，或者程序员不知道规范。 然后，按照你的期望自由是好的，但只要没有可能的含糊之处。</p>
-
 <p>例如，在 <code>ini</code> 文件中：</p>
-
 <pre><code>[section]
 key=value
-</code></pre>
-
-<p>section 标题内可以有什么内容？ 只允许一个词可能限制性太强。 有人可能会写<code>[two words]</code>，或使用破折号等。而不是问内部允许什么，可能值得问一下：什么是不允许的？</p>
-
+</code></pre><p>section 标题内可以有什么内容？ 只允许一个词可能限制性太强。 有人可能会写<code>[two words]</code>，或使用破折号等。而不是问内部允许什么，可能值得问一下：什么是不允许的？</p>
 <p>显然，不允许闭合方括号，因为 <code>[a]b]</code> 是不明确的。 根据同一论点，应禁止开口方括号。 这让我们失望了</p>
-
-<pre><code class="language-raku">token header { '[' &lt;-[ \[\] ]&gt;+ ']' }
-</code></pre>
-
-<p>如果你只处理一行就没问题。 但是，如果您正在处理整个文件，那么正则表达式会解析</p>
-
+<pre><code class="language-raku" data-lang="raku">token header { '[' &lt;-[ \[\] ]&gt;+ ']' }
+</code></pre><p>如果你只处理一行就没问题。 但是，如果您正在处理整个文件，那么正则表达式会解析</p>
 <pre><code>[with a
 newline in between]
-</code></pre>
-
-<p>这可能不是一个好主意。妥协是</p>
-
-<pre><code class="language-raku">token header { '[' &lt;-[ \[\] \n ]&gt;+ ']' }
-</code></pre>
-
-<p>然后，在后处理中，从 section 标题中删除前导和尾随空格和制表符。</p>
-
+</code></pre><p>这可能不是一个好主意。妥协是</p>
+<pre><code class="language-raku" data-lang="raku">token header { '[' &lt;-[ \[\] \n ]&gt;+ ']' }
+</code></pre><p>然后，在后处理中，从 section 标题中删除前导和尾随空格和制表符。</p>
 <h2 id="匹配空白">匹配空白</h2>
-
 <p><code>:sigspace</code> 副词（或使用 <code>rule</code> 声明符而不是 <code>token</code> 或 <code>regex</code>）非常便于隐式解析可能出现在许多地方的空格。</p>
-
 <p>回到解析 <code>ini</code> 文件的例子，我们有</p>
-
-<pre><code class="language-raku">my regex kvpair { \s* &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
-</code></pre>
-
-<p>这可能不像我们想要的那样的文字，因为用户可能在等号周围放置空格。 那么，我们可以试试这个：</p>
-
-<pre><code class="language-raku">my regex kvpair { \s* &lt;key=identifier&gt; \s* '=' \s* &lt;value=identifier&gt; \n+ }
-</code></pre>
-
-<p>但那看起来很笨重，所以我们尝试别的东西：</p>
-
-<pre><code class="language-raku">my rule kvpair { &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
-</code></pre>
-
-<p>可是等等！ 值之后的隐式空格匹配会占用所有空格，包括换行符，因此 <code>\n+</code> 没有任何东西可以匹配（并且 <code>rule</code> 也禁用了回溯，因此没有运气）。</p>
-
+<pre><code class="language-raku" data-lang="raku">my regex kvpair { \s* &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
+</code></pre><p>这可能不像我们想要的那样的文字，因为用户可能在等号周围放置空格。 那么，我们可以试试这个：</p>
+<pre><code class="language-raku" data-lang="raku">my regex kvpair { \s* &lt;key=identifier&gt; \s* '=' \s* &lt;value=identifier&gt; \n+ }
+</code></pre><p>但那看起来很笨重，所以我们尝试别的东西：</p>
+<pre><code class="language-raku" data-lang="raku">my rule kvpair { &lt;key=identifier&gt; '=' &lt;value=identifier&gt; \n+ }
+</code></pre><p>可是等等！ 值之后的隐式空格匹配会占用所有空格，包括换行符，因此 <code>\n+</code> 没有任何东西可以匹配（并且 <code>rule</code> 也禁用了回溯，因此没有运气）。</p>
 <p>因此，将隐式空格的定义重新定义为输入格式中不重要的空白非常重要。</p>
-
 <p>这通过重新定义 token <code>ws</code> 来工作; 但是，它只适用于 <a href="https://docs.raku.org/language/grammars">grammars</a>：</p>
-
-<pre><code class="language-raku">grammar IniFormat {
+<pre><code class="language-raku" data-lang="raku">grammar IniFormat {
     token ws { &lt;!ww&gt; \h* }
     rule header { \s* '[' (\w+) ']' \n+ }
     token identifier  { \w+ }
@@ -245,15 +188,9 @@ my $contents = q:to/EOI/;
         joy = 42
 EOI
 say so IniFormat.parse($contents);
-</code></pre>
-
-<p>除了将所有正则表达式都放入 grammar 并将其转换为 tokens（因为它们无论如何都不需要回溯），有趣的一点是</p>
-
-<pre><code class="language-raku">token ws { &lt;!ww&gt; \h* }
-</code></pre>
-
-<p>在进行隐式空格分析的时候会调用该 token。 当它不在两个单词字符之间（ <code>&lt;!ww&gt;</code>，&rdquo;在单词中&rdquo;的否定断言）和零个或多个水平空格字符之间匹配。 对水平空格的限制很重要，因为换行符（垂直空格）会分隔记录，不应被隐式匹配。</p>
-
+</code></pre><p>除了将所有正则表达式都放入 grammar 并将其转换为 tokens（因为它们无论如何都不需要回溯），有趣的一点是</p>
+<pre><code class="language-raku" data-lang="raku">token ws { &lt;!ww&gt; \h* }
+</code></pre><p>在进行隐式空格分析的时候会调用该 token。 当它不在两个单词字符之间（ <code>&lt;!ww&gt;</code>，&ldquo;在单词中&quot;的否定断言）和零个或多个水平空格字符之间匹配。 对水平空格的限制很重要，因为换行符（垂直空格）会分隔记录，不应被隐式匹配。</p>
 <p>不过，潜伏着一些与空白相关的麻烦。 正则表达式 <code>\n+</code> 与 <code>\n \n</code> 之类的字符串不匹配，因为两个换行符之间有空白。 要允许此类输入字符串，请将 <code>\n+</code> 替换为 <code>\n\s*</code>。</p>
 
   </article>
